@@ -1,0 +1,5140 @@
+{
+  "schema": "travelomore/hotel/1.0.0",
+  "notes": "Hotels inherit every unspecified inheritable signal from their parent city, and the city from country:TH. Only attributes that DIFFER from the city baseline need to be present. price_inr_per_night is domain data, not a signal — cost_efficiency/value_for_money signals read avg_daily_cost_per_pax_inr / value_index_0_100 instead so hotel cost compares on the same footing as activities and daily budget.",
+  "entities": [
+    {
+      "id": "hotel:TH:BKK:riverside-five-star",
+      "type": "hotel",
+      "name": "Riverside Five-Star (Mandarin Oriental / Peninsula class)",
+      "parent_id": "city:TH:BKK",
+      "category": "luxury_riverside",
+      "star_rating": 5,
+      "price_inr_per_night": 14000,
+      "room_types": [
+        "deluxe_river_view",
+        "suite",
+        "family_connecting"
+      ],
+      "tags": [
+        "luxury",
+        "romantic",
+        "photogenic",
+        "family_friendly",
+        "accessible_certified",
+        "resort_stay"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 88,
+        "nearest_intl_hospital_km": 2,
+        "wheelchair_infrastructure_index_0_100": 82,
+        "step_free_ratio_0_1": 0.85,
+        "elevator_availability_index_0_100": 95,
+        "accessible_toilet_index_0_100": 80,
+        "stroller_friendly_index_0_100": 80,
+        "noise_index_0_100": 20,
+        "avg_daily_cost_per_pax_inr": 14000,
+        "value_index_0_100": 68,
+        "group_value_index_0_100": 55,
+        "wellness_spa_index_0_100": 92,
+        "kids_dining_index_0_100": 85,
+        "family_room_index_0_100": 82,
+        "infant_amenity_index_0_100": 78,
+        "veg_food_index_0_100": 78,
+        "photogenic_index_0_100": 92,
+        "avg_wifi_mbps": 120
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6919,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.9,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "140 direct weekly flights from India",
+              "Extremely photogenic",
+              "Short hop from India (~4.2 h)"
+            ],
+            "cautions": [
+              "Expensive (~₹14000/person/day)",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7196,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.2,
+            "reasons": [
+              "Dense nightlife scene",
+              "Plenty to do as a group",
+              "World-class party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Expensive (~₹14000/person/day)",
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7288,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.3,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "International-standard hospitals (quality index 95/100)",
+              "Mild, kid-friendly food easy to order",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children",
+              "Heavily crowded (82/100 crowd pressure)",
+              "High heat stress (peak heat index 40°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7422,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.4,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Alcohol is freely available",
+              "Adult entertainment districts are established and legal"
+            ],
+            "cautions": [
+              "Expensive (~₹14000/person/day)",
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8028,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8,
+            "reasons": [
+              "Dense nightlife scene",
+              "Well established as safe for solo female travellers (88/100)",
+              "Extremely photogenic",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7755,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.8,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "140 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.2 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6594,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Fast connectivity (~120 Mbps) — uploads are painless",
+              "Instantly recognisable landmarks",
+              "Easy golden-hour access to hero locations"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (82/100 crowd pressure)",
+              "Expensive (~₹14000/person/day)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7431,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.4,
+            "reasons": [
+              "International-standard hospital within 2 km",
+              "International-standard hospitals (quality index 95/100)",
+              "Comfortable, air-conditioned transport",
+              "Lifts available where needed"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 40°C)",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6582,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.6,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Mild, kid-friendly food easy to order",
+              "Paediatric care readily available",
+              "International-standard hospital within 2 km"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children",
+              "Heavily crowded (82/100 crowd pressure)",
+              "High heat stress (peak heat index 40°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7825,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.8,
+            "reasons": [
+              "International-standard hospital within 2 km",
+              "Cots, changing rooms and formula readily available",
+              "Paediatric care readily available",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 40°C)",
+              "Tap water not potable — bottled water only",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7805,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Excellent local transport (metro/ride-hailing)",
+              "Mature, well-oiled tourist infrastructure",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7887,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 7.9,
+            "reasons": [
+              "Wheelchair access is well provided for (82/100)",
+              "Mostly step-free routes",
+              "Lifts available where needed",
+              "flat terrain"
+            ],
+            "cautions": [
+              "Heavily crowded (82/100 crowd pressure)",
+              "Parking is a real problem"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5211,
+          "score_0_10": 5.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.2,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Comfortable, air-conditioned transport",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": [
+              "Expensive (~₹14000/person/day)",
+              "Little scenic driving value",
+              "Self-drive is impractical here"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:BKK:sukhumvit-value",
+      "type": "hotel",
+      "name": "Sukhumvit Business-Value Hotel (Amari / Novotel class)",
+      "parent_id": "city:TH:BKK",
+      "category": "midscale_city",
+      "star_rating": 4,
+      "price_inr_per_night": 5200,
+      "room_types": [
+        "standard",
+        "twin",
+        "family_connecting"
+      ],
+      "tags": [
+        "value",
+        "walkable",
+        "family_friendly",
+        "beginner_friendly",
+        "group_friendly"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 75,
+        "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 60,
+        "step_free_ratio_0_1": 0.6,
+        "elevator_availability_index_0_100": 85,
+        "accessible_toilet_index_0_100": 55,
+        "stroller_friendly_index_0_100": 58,
+        "noise_index_0_100": 55,
+        "avg_daily_cost_per_pax_inr": 5200,
+        "value_index_0_100": 88,
+        "group_value_index_0_100": 82,
+        "wellness_spa_index_0_100": 55,
+        "kids_dining_index_0_100": 68,
+        "family_room_index_0_100": 75,
+        "infant_amenity_index_0_100": 55,
+        "veg_food_index_0_100": 65,
+        "photogenic_index_0_100": 58,
+        "avg_wifi_mbps": 80
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7564,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.6,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Strong value for money",
+              "140 direct weekly flights from India",
+              "Low daily spend (~₹5200/person/day)"
+            ],
+            "cautions": [
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8413,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.4,
+            "reasons": [
+              "Dense nightlife scene",
+              "Plenty to do as a group",
+              "Villas and group rates bring per-head cost down",
+              "World-class party scene"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7103,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.1,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "International-standard hospitals (quality index 95/100)",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "International-standard hospital within 3 km"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children",
+              "Heavily crowded (82/100 crowd pressure)",
+              "High heat stress (peak heat index 40°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8031,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Alcohol is freely available",
+              "Adult entertainment districts are established and legal"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7091,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.1,
+            "reasons": [
+              "Dense nightlife scene",
+              "Well established as safe for solo female travellers (75/100)",
+              "World-class party scene",
+              "Villas and group rates bring per-head cost down"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.819,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 8.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "140 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.2 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5699,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.7,
+            "reasons": [
+              "Instantly recognisable landmarks",
+              "Fast connectivity (~80 Mbps) — uploads are painless",
+              "Easy golden-hour access to hero locations",
+              "Excellent local transport (metro/ride-hailing)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (82/100 crowd pressure)",
+              "Drone use is restricted"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.717,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.2,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "International-standard hospitals (quality index 95/100)",
+              "Comfortable, air-conditioned transport",
+              "flat terrain"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 40°C)",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6417,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.4,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Paediatric care readily available",
+              "Strong general safety record (safety index 70/100)",
+              "International-standard hospital within 3 km"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children",
+              "Heavily crowded (82/100 crowd pressure)",
+              "High heat stress (peak heat index 40°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.667,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 6.7,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "Paediatric care readily available",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "Connecting/family rooms widely available"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 40°C)",
+              "Tap water not potable — bottled water only",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7685,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.7,
+            "reasons": [
+              "Well established as safe for solo female travellers (75/100)",
+              "Excellent local transport (metro/ride-hailing)",
+              "Mature, well-oiled tourist infrastructure",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6161,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 6.2,
+            "reasons": [
+              "flat terrain",
+              "Lifts available where needed",
+              "International-standard hospital within 3 km",
+              "Wheelchair access is well provided for (60/100)"
+            ],
+            "cautions": [
+              "Heavily crowded (82/100 crowd pressure)",
+              "Parking is a real problem"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5685,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Low daily spend (~₹5200/person/day)",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": [
+              "Little scenic driving value",
+              "Self-drive is impractical here",
+              "Heavily crowded (82/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:HKT:patong-family-resort",
+      "type": "hotel",
+      "name": "Patong Family Beach Resort (Novotel Phuket Vacation Club class)",
+      "parent_id": "city:TH:HKT",
+      "category": "family_beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 8500,
+      "room_types": [
+        "family_suite",
+        "connecting_twin",
+        "swim_up"
+      ],
+      "tags": [
+        "family_friendly",
+        "beach",
+        "resort_stay",
+        "package_ready",
+        "calm_beach"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 72,
+        "nearest_intl_hospital_km": 5,
+        "wheelchair_infrastructure_index_0_100": 55,
+        "step_free_ratio_0_1": 0.55,
+        "elevator_availability_index_0_100": 65,
+        "accessible_toilet_index_0_100": 50,
+        "stroller_friendly_index_0_100": 65,
+        "noise_index_0_100": 45,
+        "avg_daily_cost_per_pax_inr": 8500,
+        "value_index_0_100": 80,
+        "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 78,
+        "kids_dining_index_0_100": 88,
+        "family_room_index_0_100": 92,
+        "infant_amenity_index_0_100": 82,
+        "veg_food_index_0_100": 68,
+        "photogenic_index_0_100": 82,
+        "avg_wifi_mbps": 65
+      },
+      "meta": {
+        "data_confidence": 0.8,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7113,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.1,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Strong value for money",
+              "42 direct weekly flights from India",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7821,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.8,
+            "reasons": [
+              "Plenty to do as a group",
+              "Dense nightlife scene",
+              "Villas and group rates bring per-head cost down",
+              "World-class party scene"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8222,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8.2,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Mild, kid-friendly food easy to order",
+              "International-standard hospitals (quality index 88/100)",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8018,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8,
+            "reasons": [
+              "World-class party scene",
+              "Dense nightlife scene",
+              "Alcohol is freely available",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7794,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.8,
+            "reasons": [
+              "Dense nightlife scene",
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Well established as safe for solo female travellers (72/100)"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7798,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.8,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "42 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.6 h)"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5703,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks",
+              "Fast connectivity (~65 Mbps) — uploads are painless"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7054,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.1,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "International-standard hospital within 5 km",
+              "Low walking requirement (~3 km/day)",
+              "No altitude risk (120 m)"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7537,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.5,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Mild, kid-friendly food easy to order",
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7915,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.9,
+            "reasons": [
+              "Cots, changing rooms and formula readily available",
+              "International-standard hospital within 5 km",
+              "Quick transfer from the gateway airport (~1 h)",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6759,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 6.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Dedicated tourist police on the ground",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5611,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 5.6,
+            "reasons": [
+              "International-standard hospital within 5 km",
+              "Lifts available where needed",
+              "Frequent seating and rest stops",
+              "rolling terrain"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.16666666666666663
+            }
+          ],
+          "score_0_1": 0.5924,
+          "score_0_10": 5.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.9,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes",
+              "Self-drive is practical (IDP accepted, easy rentals)"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (30 per 100k) — self-drive risk",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:HKT:kata-adults-only-boutique",
+      "type": "hotel",
+      "name": "Kata Adults-Only Boutique Resort",
+      "parent_id": "city:TH:HKT",
+      "category": "adults_only_boutique",
+      "star_rating": 5,
+      "price_inr_per_night": 11000,
+      "room_types": [
+        "pool_villa",
+        "suite"
+      ],
+      "tags": [
+        "adult_only",
+        "romantic",
+        "wellness",
+        "photogenic",
+        "beach_club"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 78,
+        "nearest_intl_hospital_km": 6,
+        "wheelchair_infrastructure_index_0_100": 45,
+        "step_free_ratio_0_1": 0.4,
+        "elevator_availability_index_0_100": 40,
+        "accessible_toilet_index_0_100": 40,
+        "stroller_friendly_index_0_100": 20,
+        "noise_index_0_100": 15,
+        "avg_daily_cost_per_pax_inr": 11000,
+        "value_index_0_100": 72,
+        "group_value_index_0_100": 60,
+        "wellness_spa_index_0_100": 95,
+        "kids_dining_index_0_100": 20,
+        "family_room_index_0_100": 10,
+        "infant_amenity_index_0_100": 10,
+        "veg_food_index_0_100": 65,
+        "photogenic_index_0_100": 95,
+        "avg_wifi_mbps": 75
+      },
+      "meta": {
+        "data_confidence": 0.76,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6929,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.9,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic",
+              "42 direct weekly flights from India",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "Expensive (~₹11000/person/day)",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7442,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.4,
+            "reasons": [
+              "Plenty to do as a group",
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Expensive (~₹11000/person/day)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5838,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 5.8,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "International-standard hospitals (quality index 88/100)",
+              "Quick transfer from the gateway airport (~1 h)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "Food is spicy/unfamiliar — fussy-eater risk",
+              "Family room supply is tight",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8342,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.3,
+            "reasons": [
+              "World-class party scene",
+              "Dense nightlife scene",
+              "Alcohol is freely available",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
+              "Expensive (~₹11000/person/day)"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8225,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Excellent spa and wellness options",
+              "Well established as safe for solo female travellers (78/100)"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7443,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.4,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "42 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.6 h)"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6417,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks",
+              "Fast connectivity (~75 Mbps) — uploads are painless"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (80/100 crowd pressure)",
+              "Expensive (~₹11000/person/day)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6798,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.8,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "International-standard hospital within 6 km",
+              "Low walking requirement (~3 km/day)",
+              "No altitude risk (120 m)"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5443,
+          "score_0_10": 5.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 5.4,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Calm, shallow water suitable for children"
+            ],
+            "cautions": [
+              "Food is spicy/unfamiliar — fussy-eater risk",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4921,
+          "score_0_10": 4.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 4.9,
+            "reasons": [
+              "International-standard hospital within 6 km",
+              "Quick transfer from the gateway airport (~1 h)",
+              "Paediatric care readily available",
+              "Quiet environment"
+            ],
+            "cautions": [
+              "Infant amenities (changing, cots, formula) are hard to find",
+              "Stroller-hostile — carry the child or use a carrier",
+              "Family room supply is tight"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6508,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 6.5,
+            "reasons": [
+              "Well established as safe for solo female travellers (78/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Dedicated tourist police on the ground",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "High scam and tout pressure (70/100 incidence)"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4815,
+          "score_0_10": 4.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.8,
+            "reasons": [
+              "International-standard hospital within 6 km",
+              "Frequent seating and rest stops",
+              "rolling terrain",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.16666666666666663
+            }
+          ],
+          "score_0_1": 0.5789,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.8,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes",
+              "Self-drive is practical (IDP accepted, easy rentals)"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (30 per 100k) — self-drive risk",
+              "Expensive (~₹11000/person/day)",
+              "Heavily crowded (80/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:KBV:aonang-resort",
+      "type": "hotel",
+      "name": "Ao Nang Beachfront Resort",
+      "parent_id": "city:TH:KBV",
+      "category": "beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 6800,
+      "room_types": [
+        "deluxe_seaview",
+        "family_suite"
+      ],
+      "tags": [
+        "beach",
+        "family_friendly",
+        "photogenic",
+        "honeymoon",
+        "value"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 74,
+        "nearest_intl_hospital_km": 18,
+        "wheelchair_infrastructure_index_0_100": 40,
+        "step_free_ratio_0_1": 0.4,
+        "elevator_availability_index_0_100": 45,
+        "accessible_toilet_index_0_100": 38,
+        "stroller_friendly_index_0_100": 42,
+        "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 6800,
+        "value_index_0_100": 85,
+        "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 80,
+        "kids_dining_index_0_100": 75,
+        "family_room_index_0_100": 80,
+        "infant_amenity_index_0_100": 62,
+        "veg_food_index_0_100": 68,
+        "photogenic_index_0_100": 90,
+        "avg_wifi_mbps": 50
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6526,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.5,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6422,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.4,
+            "reasons": [
+              "Plenty to do as a group",
+              "Villas and group rates bring per-head cost down",
+              "Extremely photogenic",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7231,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.2,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 72/100)",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 18 km away",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5646,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 5.6,
+            "reasons": [
+              "Alcohol is freely available",
+              "Villas and group rates bring per-head cost down",
+              "Cheap drinks (~₹200 a beer)",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "Little adult entertainment infrastructure",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7332,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Well established as safe for solo female travellers (74/100)",
+              "Excellent spa and wellness options",
+              "Villas and group rates bring per-head cost down"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6216,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Strong value for money",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6517,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5755,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 5.8,
+            "reasons": [
+              "International-standard hospitals (quality index 70/100)",
+              "No altitude risk (200 m)",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Low walking requirement (~3.5 km/day)"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 18 km away",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6802,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.8,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 72/100)",
+              "Calm, shallow water suitable for children",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 18 km away",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Paediatric emergency access is inadequate",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.29166666666666663
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Paediatric emergency access is inadequate"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6705,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 6.7,
+            "reasons": [
+              "Well established as safe for solo female travellers (74/100)",
+              "Low reported street harassment",
+              "Comfortable to move around after dark",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4371,
+          "score_0_10": 4.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.4,
+            "reasons": [
+              "Parking is easy to find",
+              "Frequent seating and rest stops",
+              "rolling terrain",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": [
+              "Accessible transport must be specially arranged",
+              "Nearest international-standard hospital is 18 km away",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.23333333333333328
+            }
+          ],
+          "score_0_1": 0.6142,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.1,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Self-drive is practical (IDP accepted, easy rentals)"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (28 per 100k) — self-drive risk",
+              "Heavily crowded (68/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:PHI:phi-phi-boutique",
+      "type": "hotel",
+      "name": "Phi Phi Cliffside Boutique (Zeavola class)",
+      "parent_id": "city:TH:PHI",
+      "category": "boutique_island",
+      "star_rating": 4,
+      "price_inr_per_night": 9500,
+      "room_types": [
+        "beach_cottage",
+        "cliff_villa"
+      ],
+      "tags": [
+        "island",
+        "photogenic",
+        "romantic",
+        "boat_only_access",
+        "honeymoon"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 62,
+        "nearest_intl_hospital_km": 45,
+        "wheelchair_infrastructure_index_0_100": 15,
+        "step_free_ratio_0_1": 0.1,
+        "elevator_availability_index_0_100": 10,
+        "accessible_toilet_index_0_100": 15,
+        "stroller_friendly_index_0_100": 12,
+        "noise_index_0_100": 40,
+        "avg_daily_cost_per_pax_inr": 9500,
+        "value_index_0_100": 70,
+        "group_value_index_0_100": 55,
+        "wellness_spa_index_0_100": 78,
+        "kids_dining_index_0_100": 45,
+        "family_room_index_0_100": 40,
+        "infant_amenity_index_0_100": 22,
+        "veg_food_index_0_100": 60,
+        "photogenic_index_0_100": 96,
+        "avg_wifi_mbps": 25
+      },
+      "meta": {
+        "data_confidence": 0.74,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5739,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 5.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 65/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (92/100 crowd pressure)",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6907,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.9,
+            "reasons": [
+              "Plenty to do as a group",
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "No hospital within a reasonable radius",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.25,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0.4781,
+          "score_0_10": 4.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 4.8,
+            "reasons": [
+              "Strong general safety record (safety index 65/100)",
+              "Calm, shallow water suitable for children",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~3.2 h)"
+            ],
+            "cautions": [
+              "Caution: No hospital within a reasonable radius",
+              "Nearest international-standard hospital is 45 km away",
+              "Heavily crowded (92/100 crowd pressure)",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7254,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.3,
+            "reasons": [
+              "World-class party scene",
+              "Dense nightlife scene",
+              "Alcohol is freely available",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7919,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Excellent spa and wellness options",
+              "World-class party scene"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5544,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 5.5,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Simple entry process for Indian passports",
+              "English widely understood in tourist areas",
+              "Short hop from India (~5.5 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Bandwidth too low for video upload workflows",
+              "signal": "wifi_quality",
+              "op": ">=",
+              "required_value": 0.25,
+              "actual_value": 0.21052631578947367
+            }
+          ],
+          "score_0_1": 0.5504,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Instantly recognisable landmarks",
+              "Easy golden-hour access to hero locations",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "Caution: Bandwidth too low for video upload workflows",
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (92/100 crowd pressure)",
+              "Slow connectivity (~25 Mbps) — large uploads will hurt"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "No reachable hospital in an emergency",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.2,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: No reachable hospital in an emergency"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4469,
+          "score_0_10": 4.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Strong general safety record (safety index 65/100)",
+              "Calm, shallow water suitable for children"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 45 km away",
+              "Heavily crowded (92/100 crowd pressure)",
+              "Paediatric care is limited"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Paediatric emergency access is inadequate",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Paediatric emergency access is inadequate"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5426,
+          "score_0_10": 5.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 5.4,
+            "reasons": [
+              "Well established as safe for solo female travellers (62/100)",
+              "Extremely photogenic",
+              "Low reported street harassment",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": [
+              "Local transport is weak — private vehicle needed",
+              "Slow connectivity (~25 Mbps) — large uploads will hurt",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "hard",
+              "reason": "No reliable obstetric care within reach",
+              "signal": "obstetric_care_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.25
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy",
+              "Excluded: No reliable obstetric care within reach"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Wheelchair access is not viable at this entity",
+              "signal": "wheelchair_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.15
+            },
+            {
+              "kind": "hard",
+              "reason": "No step-free route exists",
+              "signal": "step_free_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.1
+            },
+            {
+              "kind": "soft",
+              "reason": "Accessible toilets are not reliably available",
+              "signal": "accessible_toilets",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.15
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Wheelchair access is not viable at this entity",
+              "Excluded: No step-free route exists"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Self-drive is not practical or legal for this traveller here",
+              "signal": "self_drive_feasibility",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.05
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Self-drive is not practical or legal for this traveller here"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:USM:chaweng-wellness-resort",
+      "type": "hotel",
+      "name": "Chaweng Wellness & Spa Resort",
+      "parent_id": "city:TH:USM",
+      "category": "wellness_resort",
+      "star_rating": 5,
+      "price_inr_per_night": 10500,
+      "room_types": [
+        "pool_villa",
+        "spa_suite"
+      ],
+      "tags": [
+        "wellness",
+        "honeymoon",
+        "romantic",
+        "photogenic",
+        "resort_stay"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 80,
+        "nearest_intl_hospital_km": 6,
+        "wheelchair_infrastructure_index_0_100": 58,
+        "step_free_ratio_0_1": 0.55,
+        "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 55,
+        "stroller_friendly_index_0_100": 55,
+        "noise_index_0_100": 20,
+        "avg_daily_cost_per_pax_inr": 10500,
+        "value_index_0_100": 74,
+        "group_value_index_0_100": 65,
+        "wellness_spa_index_0_100": 96,
+        "kids_dining_index_0_100": 55,
+        "family_room_index_0_100": 55,
+        "infant_amenity_index_0_100": 55,
+        "veg_food_index_0_100": 80,
+        "photogenic_index_0_100": 90,
+        "avg_wifi_mbps": 70
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6142,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.1,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 74/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6322,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.3,
+            "reasons": [
+              "Plenty to do as a group",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Villas and group rates bring per-head cost down"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7246,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.2,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Strong general safety record (safety index 74/100)",
+              "Calm, shallow water suitable for children"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6647,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 6.6,
+            "reasons": [
+              "Alcohol is freely available",
+              "Dense nightlife scene",
+              "Strong beach-club and day-party scene",
+              "World-class party scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8427,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8.4,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Extremely photogenic",
+              "Well established as safe for solo female travellers (80/100)",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6445,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.4,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "English widely understood in tourist areas",
+              "Indian restaurants widely available",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6401,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Fast connectivity (~70 Mbps) — uploads are painless",
+              "Instantly recognisable landmarks"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7099,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.1,
+            "reasons": [
+              "International-standard hospital within 6 km",
+              "International-standard hospitals (quality index 80/100)",
+              "Low walking requirement (~2.5 km/day)",
+              "No altitude risk (60 m)"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6881,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.9,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Calm, shallow water suitable for children",
+              "Strong general safety record (safety index 74/100)",
+              "Low walking requirement (~2.5 km/day)"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6657,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "International-standard hospital within 6 km",
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7055,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.1,
+            "reasons": [
+              "Well established as safe for solo female travellers (80/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5833,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 5.8,
+            "reasons": [
+              "gentle terrain",
+              "International-standard hospital within 6 km",
+              "Frequent seating and rest stops",
+              "Parking is easy to find"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.16666666666666663
+            }
+          ],
+          "score_0_1": 0.5774,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.8,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (30 per 100k) — self-drive risk",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:USM:bophut-family-resort",
+      "type": "hotel",
+      "name": "Bophut Family Beach Resort",
+      "parent_id": "city:TH:USM",
+      "category": "family_beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 7200,
+      "room_types": [
+        "family_suite",
+        "connecting_twin"
+      ],
+      "tags": [
+        "family_friendly",
+        "calm_beach",
+        "resort_stay",
+        "value"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 76,
+        "nearest_intl_hospital_km": 8,
+        "wheelchair_infrastructure_index_0_100": 48,
+        "step_free_ratio_0_1": 0.45,
+        "elevator_availability_index_0_100": 50,
+        "accessible_toilet_index_0_100": 45,
+        "stroller_friendly_index_0_100": 58,
+        "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 7200,
+        "value_index_0_100": 82,
+        "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 75,
+        "kids_dining_index_0_100": 85,
+        "family_room_index_0_100": 90,
+        "infant_amenity_index_0_100": 78,
+        "veg_food_index_0_100": 72,
+        "photogenic_index_0_100": 80,
+        "avg_wifi_mbps": 55
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6412,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 74/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.672,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.7,
+            "reasons": [
+              "Villas and group rates bring per-head cost down",
+              "Plenty to do as a group",
+              "Dense nightlife scene",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8276,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8.3,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Mild, kid-friendly food easy to order",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Strong general safety record (safety index 74/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6604,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 6.6,
+            "reasons": [
+              "Alcohol is freely available",
+              "Dense nightlife scene",
+              "Villas and group rates bring per-head cost down",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7482,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.5,
+            "reasons": [
+              "Well established as safe for solo female travellers (76/100)",
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6445,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.4,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "English widely understood in tourist areas",
+              "Indian restaurants widely available",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5732,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks",
+              "Strong general safety record (safety index 74/100)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6902,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.9,
+            "reasons": [
+              "International-standard hospitals (quality index 80/100)",
+              "Low walking requirement (~2.5 km/day)",
+              "International-standard hospital within 8 km",
+              "No altitude risk (60 m)"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.759,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.6,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Calm, shallow water suitable for children",
+              "Mild, kid-friendly food easy to order",
+              "Strong general safety record (safety index 74/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.779,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.8,
+            "reasons": [
+              "Cots, changing rooms and formula readily available",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "International-standard hospital within 8 km",
+              "Connecting/family rooms widely available"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.693,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 6.9,
+            "reasons": [
+              "Well established as safe for solo female travellers (76/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5276,
+          "score_0_10": 5.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 5.3,
+            "reasons": [
+              "gentle terrain",
+              "Frequent seating and rest stops",
+              "International-standard hospital within 8 km",
+              "Parking is easy to find"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.16666666666666663
+            }
+          ],
+          "score_0_1": 0.5952,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (30 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:PHA:haadrin-backpacker",
+      "type": "hotel",
+      "name": "Haad Rin Backpacker Beach Hotel",
+      "parent_id": "city:TH:PHA",
+      "category": "backpacker",
+      "star_rating": 2,
+      "price_inr_per_night": 1800,
+      "room_types": [
+        "dorm",
+        "double_fan",
+        "double_ac"
+      ],
+      "tags": [
+        "backpacker",
+        "nightlife",
+        "party",
+        "solo_friendly",
+        "hostel_scene",
+        "adult_only"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 55,
+        "nearest_intl_hospital_km": 30,
+        "wheelchair_infrastructure_index_0_100": 10,
+        "step_free_ratio_0_1": 0.1,
+        "elevator_availability_index_0_100": 5,
+        "accessible_toilet_index_0_100": 12,
+        "stroller_friendly_index_0_100": 8,
+        "noise_index_0_100": 85,
+        "avg_daily_cost_per_pax_inr": 1800,
+        "value_index_0_100": 82,
+        "group_value_index_0_100": 88,
+        "wellness_spa_index_0_100": 30,
+        "kids_dining_index_0_100": 20,
+        "family_room_index_0_100": 10,
+        "infant_amenity_index_0_100": 5,
+        "veg_food_index_0_100": 60,
+        "photogenic_index_0_100": 55,
+        "avg_wifi_mbps": 30
+      },
+      "meta": {
+        "data_confidence": 0.7,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6004,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6,
+            "reasons": [
+              "Low daily spend (~₹1800/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7934,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.9,
+            "reasons": [
+              "Low daily spend (~₹1800/person/day)",
+              "Dense nightlife scene",
+              "Villas and group rates bring per-head cost down",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "No hospital within a reasonable radius",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.25,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0.3437,
+          "score_0_10": 3.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 3.4,
+            "reasons": [
+              "Strong value for money",
+              "Calm, shallow water suitable for children",
+              "Quick transfer from the gateway airport (~2.5 h)",
+              "Low walking requirement (~3.5 km/day)"
+            ],
+            "cautions": [
+              "Caution: No hospital within a reasonable radius",
+              "Nearest international-standard hospital is 30 km away",
+              "Food is spicy/unfamiliar — fussy-eater risk",
+              "Family room supply is tight"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.941,
+          "score_0_10": 9.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 9.4,
+            "reasons": [
+              "World-class party scene",
+              "Dense nightlife scene",
+              "Alcohol is freely available",
+              "Villas and group rates bring per-head cost down"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6563,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 6.6,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Villas and group rates bring per-head cost down",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
+              "Limited spa/wellness options"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5499,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 5.5,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Simple entry process for Indian passports",
+              "English widely understood in tourist areas",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5021,
+          "score_0_10": 5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5,
+            "reasons": [
+              "Low daily spend (~₹1800/person/day)",
+              "Easy golden-hour access to hero locations",
+              "Strong coworking/creator ecosystem",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Slow connectivity (~30 Mbps) — large uploads will hurt",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "No reachable hospital in an emergency",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.2,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: No reachable hospital in an emergency"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.332,
+          "score_0_10": 3.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 3.3,
+            "reasons": [
+              "Calm, shallow water suitable for children",
+              "Low walking requirement (~3.5 km/day)"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 30 km away",
+              "Food is spicy/unfamiliar — fussy-eater risk",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Paediatric emergency access is inadequate",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Paediatric emergency access is inadequate"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5554,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 5.6,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": [
+              "Local transport is weak — private vehicle needed",
+              "Slow connectivity (~30 Mbps) — large uploads will hurt"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "hard",
+              "reason": "No reliable obstetric care within reach",
+              "signal": "obstetric_care_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy",
+              "Excluded: No reliable obstetric care within reach"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Wheelchair access is not viable at this entity",
+              "signal": "wheelchair_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.1
+            },
+            {
+              "kind": "hard",
+              "reason": "No step-free route exists",
+              "signal": "step_free_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.1
+            },
+            {
+              "kind": "soft",
+              "reason": "Accessible toilets are not reliably available",
+              "signal": "accessible_toilets",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.12
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Wheelchair access is not viable at this entity",
+              "Excluded: No step-free route exists"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.033333333333333326
+            }
+          ],
+          "score_0_1": 0.465,
+          "score_0_10": 4.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 4.7,
+            "reasons": [
+              "Low daily spend (~₹1800/person/day)",
+              "Genuinely scenic driving routes",
+              "Parking is easy to find"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (34 per 100k) — self-drive risk",
+              "Self-drive is impractical here",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:KTO:sairee-dive-resort",
+      "type": "hotel",
+      "name": "Sairee Beach Dive Resort",
+      "parent_id": "city:TH:KTO",
+      "category": "dive_resort",
+      "star_rating": 3,
+      "price_inr_per_night": 3200,
+      "room_types": [
+        "standard_bungalow",
+        "dive_package_room"
+      ],
+      "tags": [
+        "diving",
+        "backpacker",
+        "solo_friendly",
+        "hostel_scene",
+        "value"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 66,
+        "nearest_intl_hospital_km": 60,
+        "wheelchair_infrastructure_index_0_100": 15,
+        "step_free_ratio_0_1": 0.15,
+        "elevator_availability_index_0_100": 8,
+        "accessible_toilet_index_0_100": 15,
+        "stroller_friendly_index_0_100": 10,
+        "noise_index_0_100": 55,
+        "avg_daily_cost_per_pax_inr": 3200,
+        "value_index_0_100": 88,
+        "group_value_index_0_100": 82,
+        "wellness_spa_index_0_100": 45,
+        "kids_dining_index_0_100": 35,
+        "family_room_index_0_100": 25,
+        "infant_amenity_index_0_100": 15,
+        "veg_food_index_0_100": 65,
+        "photogenic_index_0_100": 70,
+        "avg_wifi_mbps": 35
+      },
+      "meta": {
+        "data_confidence": 0.74,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6167,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.2,
+            "reasons": [
+              "Strong value for money",
+              "Low daily spend (~₹3200/person/day)",
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6838,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.8,
+            "reasons": [
+              "Low daily spend (~₹3200/person/day)",
+              "Villas and group rates bring per-head cost down",
+              "Plenty to do as a group",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "No hospital within a reasonable radius",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.25,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0.4806,
+          "score_0_10": 4.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 4.8,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 64/100)",
+              "Calm, shallow water suitable for children",
+              "Vegetarian food easy to source"
+            ],
+            "cautions": [
+              "Caution: No hospital within a reasonable radius",
+              "Nearest international-standard hospital is 60 km away",
+              "Family room supply is tight",
+              "Food is spicy/unfamiliar — fussy-eater risk"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6673,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 6.7,
+            "reasons": [
+              "Alcohol is freely available",
+              "Villas and group rates bring per-head cost down",
+              "Dense nightlife scene",
+              "World-class party scene"
+            ],
+            "cautions": [
+              "Little adult entertainment infrastructure",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6576,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 6.6,
+            "reasons": [
+              "Well established as safe for solo female travellers (66/100)",
+              "Villas and group rates bring per-head cost down",
+              "Extremely photogenic",
+              "Dense nightlife scene"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.56,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 5.6,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "English widely understood in tourist areas",
+              "Strong value for money",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5455,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Low daily spend (~₹3200/person/day)",
+              "Strong general safety record (safety index 64/100)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Slow connectivity (~35 Mbps) — large uploads will hurt",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "No reachable hospital in an emergency",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.2,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: No reachable hospital in an emergency"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4584,
+          "score_0_10": 4.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 4.6,
+            "reasons": [
+              "Calm, shallow water suitable for children",
+              "Strong general safety record (safety index 64/100)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Nearest international-standard hospital is 60 km away",
+              "Paediatric care is limited",
+              "Food is spicy/unfamiliar — fussy-eater risk"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Paediatric emergency access is inadequate",
+              "signal": "hospital_proximity",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Paediatric emergency access is inadequate"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6434,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 6.4,
+            "reasons": [
+              "Well established as safe for solo female travellers (66/100)",
+              "Strong value for money",
+              "Low reported street harassment",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": [
+              "Local transport is weak — private vehicle needed",
+              "Slow connectivity (~35 Mbps) — large uploads will hurt",
+              "Limited international-standard healthcare"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "hard",
+              "reason": "No reliable obstetric care within reach",
+              "signal": "obstetric_care_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.22
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy",
+              "Excluded: No reliable obstetric care within reach"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Wheelchair access is not viable at this entity",
+              "signal": "wheelchair_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.15
+            },
+            {
+              "kind": "hard",
+              "reason": "No step-free route exists",
+              "signal": "step_free_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.15
+            },
+            {
+              "kind": "soft",
+              "reason": "Accessible toilets are not reliably available",
+              "signal": "accessible_toilets",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.15
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Wheelchair access is not viable at this entity",
+              "Excluded: No step-free route exists"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Self-drive is not practical or legal for this traveller here",
+              "signal": "self_drive_feasibility",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.3
+            },
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.09999999999999998
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Self-drive is not practical or legal for this traveller here"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:CNX:old-city-heritage-boutique",
+      "type": "hotel",
+      "name": "Old City Heritage Boutique Hotel",
+      "parent_id": "city:TH:CNX",
+      "category": "heritage_boutique",
+      "star_rating": 4,
+      "price_inr_per_night": 4800,
+      "room_types": [
+        "heritage_room",
+        "garden_suite"
+      ],
+      "tags": [
+        "heritage",
+        "cultural",
+        "walkable",
+        "slow_travel",
+        "solo_friendly",
+        "digital_nomad"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 85,
+        "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 35,
+        "step_free_ratio_0_1": 0.35,
+        "elevator_availability_index_0_100": 30,
+        "accessible_toilet_index_0_100": 35,
+        "stroller_friendly_index_0_100": 40,
+        "noise_index_0_100": 30,
+        "avg_daily_cost_per_pax_inr": 4800,
+        "value_index_0_100": 90,
+        "group_value_index_0_100": 72,
+        "wellness_spa_index_0_100": 82,
+        "kids_dining_index_0_100": 65,
+        "family_room_index_0_100": 60,
+        "infant_amenity_index_0_100": 50,
+        "veg_food_index_0_100": 88,
+        "photogenic_index_0_100": 88,
+        "avg_wifi_mbps": 85
+      },
+      "meta": {
+        "data_confidence": 0.8,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7301,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.3,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Extremely photogenic",
+              "Low daily spend (~₹4800/person/day)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6705,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.7,
+            "reasons": [
+              "Plenty to do as a group",
+              "Low daily spend (~₹4800/person/day)",
+              "Villas and group rates bring per-head cost down",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7013,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "International-standard hospitals (quality index 85/100)"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5889,
+          "score_0_10": 5.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 5.9,
+            "reasons": [
+              "Alcohol is freely available",
+              "Cheap drinks (~₹160 a beer)",
+              "Villas and group rates bring per-head cost down",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7049,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (85/100)",
+              "Extremely photogenic",
+              "Excellent spa and wellness options",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7034,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.8 h)",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6924,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Fast connectivity (~85 Mbps) — uploads are painless",
+              "Instantly recognisable landmarks"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7434,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.4,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "International-standard hospitals (quality index 85/100)",
+              "flat terrain",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": [
+              "Wheelchair infrastructure is poor (35/100)",
+              "Lifts frequently absent"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.635,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.3,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 78/100)",
+              "International-standard hospital within 3 km",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6316,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 6.3,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8473,
+          "score_0_10": 8.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 8.5,
+            "reasons": [
+              "Well established as safe for solo female travellers (85/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7058,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7.1,
+            "reasons": [
+              "Obstetric/maternity care available locally",
+              "International-standard hospital within 3 km",
+              "No meaningful Zika signal",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Wheelchair access is not viable at this entity",
+              "signal": "wheelchair_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "hard",
+              "reason": "No step-free route exists",
+              "signal": "step_free_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Wheelchair access is not viable at this entity",
+              "Excluded: No step-free route exists"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6913,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.9,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": [
+              "High road fatality rate (26 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:CNX:nimman-family-resort",
+      "type": "hotel",
+      "name": "Nimman Family Resort & Pool Villas",
+      "parent_id": "city:TH:CNX",
+      "category": "family_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 6200,
+      "room_types": [
+        "family_villa",
+        "connecting_twin"
+      ],
+      "tags": [
+        "family_friendly",
+        "resort_stay",
+        "walkable",
+        "wildlife"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 82,
+        "nearest_intl_hospital_km": 4,
+        "wheelchair_infrastructure_index_0_100": 55,
+        "step_free_ratio_0_1": 0.5,
+        "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 50,
+        "stroller_friendly_index_0_100": 60,
+        "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 6200,
+        "value_index_0_100": 86,
+        "group_value_index_0_100": 76,
+        "wellness_spa_index_0_100": 75,
+        "kids_dining_index_0_100": 82,
+        "family_room_index_0_100": 88,
+        "infant_amenity_index_0_100": 72,
+        "veg_food_index_0_100": 90,
+        "photogenic_index_0_100": 78,
+        "avg_wifi_mbps": 80
+      },
+      "meta": {
+        "data_confidence": 0.8,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7065,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.1,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 78/100)",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6562,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.6,
+            "reasons": [
+              "Plenty to do as a group",
+              "Villas and group rates bring per-head cost down",
+              "Cheap drinks (~₹160 a beer)",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7899,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.9,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5775,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 5.8,
+            "reasons": [
+              "Alcohol is freely available",
+              "Cheap drinks (~₹160 a beer)",
+              "Villas and group rates bring per-head cost down",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6835,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 6.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (82/100)",
+              "Extremely photogenic",
+              "Comfortable to move around after dark",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": [
+              "No real beach-club scene"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7024,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.8 h)",
+              "Vegetarian food easy to source"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6632,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks",
+              "Fast connectivity (~80 Mbps) — uploads are painless"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7164,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.2,
+            "reasons": [
+              "International-standard hospital within 4 km",
+              "International-standard hospitals (quality index 85/100)",
+              "flat terrain",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7271,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.3,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 78/100)",
+              "Mild, kid-friendly food easy to order",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "Surf/currents make the water unsuitable for small children"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7661,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.7,
+            "reasons": [
+              "International-standard hospital within 4 km",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Cots, changing rooms and formula readily available",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7848,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (82/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7006,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7,
+            "reasons": [
+              "Obstetric/maternity care available locally",
+              "International-standard hospital within 4 km",
+              "No meaningful Zika signal",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5764,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 5.8,
+            "reasons": [
+              "flat terrain",
+              "International-standard hospital within 4 km",
+              "Frequent seating and rest stops",
+              "Parking is easy to find"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6838,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.8,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": [
+              "High road fatality rate (26 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:HHQ:senior-friendly-resort",
+      "type": "hotel",
+      "name": "Hua Hin Senior-Friendly Beach Resort",
+      "parent_id": "city:TH:HHQ",
+      "category": "senior_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 5800,
+      "room_types": [
+        "ground_floor_accessible",
+        "standard_seaview"
+      ],
+      "tags": [
+        "senior_focused",
+        "step_free",
+        "calm_beach",
+        "slow_travel",
+        "accessible_certified"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 82,
+        "nearest_intl_hospital_km": 4,
+        "wheelchair_infrastructure_index_0_100": 78,
+        "step_free_ratio_0_1": 0.8,
+        "elevator_availability_index_0_100": 82,
+        "accessible_toilet_index_0_100": 75,
+        "stroller_friendly_index_0_100": 65,
+        "noise_index_0_100": 15,
+        "avg_daily_cost_per_pax_inr": 5800,
+        "value_index_0_100": 86,
+        "group_value_index_0_100": 70,
+        "wellness_spa_index_0_100": 80,
+        "kids_dining_index_0_100": 70,
+        "family_room_index_0_100": 72,
+        "infant_amenity_index_0_100": 60,
+        "veg_food_index_0_100": 75,
+        "photogenic_index_0_100": 72,
+        "avg_wifi_mbps": 60
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6737,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.7,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 80/100)",
+              "Short hop from India (~4.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5405,
+          "score_0_10": 5.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 5.4,
+            "reasons": [
+              "Villas and group rates bring per-head cost down",
+              "Strong value for money",
+              "Low daily spend (~₹5800/person/day)",
+              "Cheap drinks (~₹180 a beer)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
+              "Very little nightlife"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7764,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.8,
+            "reasons": [
+              "Strong general safety record (safety index 80/100)",
+              "Lots that children actively enjoy",
+              "Calm, shallow water suitable for children",
+              "International-standard hospitals (quality index 82/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4985,
+          "score_0_10": 5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 5,
+            "reasons": [
+              "Alcohol is freely available",
+              "Cheap drinks (~₹180 a beer)",
+              "Villas and group rates bring per-head cost down",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "Party scene is thin",
+              "Very little nightlife",
+              "Little adult entertainment infrastructure"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6591,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 6.6,
+            "reasons": [
+              "Well established as safe for solo female travellers (82/100)",
+              "Excellent spa and wellness options",
+              "Comfortable to move around after dark",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.654,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.5,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~4.2 h)",
+              "Strong general safety record (safety index 80/100)",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5801,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 5.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Easy golden-hour access to hero locations",
+              "Low daily spend (~₹5800/person/day)",
+              "Strong general safety record (safety index 80/100)"
+            ],
+            "cautions": [
+              "Drone use is restricted"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8865,
+          "score_0_10": 8.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 8.9,
+            "reasons": [
+              "International-standard hospital within 4 km",
+              "Low walking requirement (~2 km/day)",
+              "International-standard hospitals (quality index 82/100)",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7398,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.4,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 80/100)",
+              "Calm, shallow water suitable for children",
+              "Low walking requirement (~2 km/day)"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7,
+            "reasons": [
+              "International-standard hospital within 4 km",
+              "Paediatric care readily available",
+              "Low walking requirement (~2 km/day)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7419,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.4,
+            "reasons": [
+              "Well established as safe for solo female travellers (82/100)",
+              "Low reported street harassment",
+              "Comfortable to move around after dark",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7349,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7.3,
+            "reasons": [
+              "International-standard hospital within 4 km",
+              "Obstetric/maternity care available locally",
+              "No meaningful Zika signal",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8746,
+          "score_0_10": 8.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 8.7,
+            "reasons": [
+              "Wheelchair access is well provided for (78/100)",
+              "Mostly step-free routes",
+              "flat terrain",
+              "Lifts available where needed"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7193,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 7.2,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": []
+          }
+        }
+      }
+    },
+    {
+      "id": "hotel:TH:PYX:pattaya-nightlife-hotel",
+      "type": "hotel",
+      "name": "Central Pattaya Nightlife-District Hotel",
+      "parent_id": "city:TH:PYX",
+      "category": "nightlife_district",
+      "star_rating": 3,
+      "price_inr_per_night": 3400,
+      "room_types": [
+        "standard",
+        "twin"
+      ],
+      "tags": [
+        "nightlife",
+        "party",
+        "group_friendly",
+        "adult_only",
+        "value"
+      ],
+      "attributes": {
+        "female_solo_safety_index_0_100": 55,
+        "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 35,
+        "step_free_ratio_0_1": 0.35,
+        "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 35,
+        "stroller_friendly_index_0_100": 30,
+        "noise_index_0_100": 90,
+        "avg_daily_cost_per_pax_inr": 3400,
+        "value_index_0_100": 85,
+        "group_value_index_0_100": 90,
+        "wellness_spa_index_0_100": 50,
+        "kids_dining_index_0_100": 40,
+        "family_room_index_0_100": 55,
+        "infant_amenity_index_0_100": 30,
+        "veg_food_index_0_100": 62,
+        "photogenic_index_0_100": 45,
+        "avg_wifi_mbps": 55
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6597,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Low daily spend (~₹3400/person/day)",
+              "Short hop from India (~4.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8662,
+          "score_0_10": 8.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.7,
+            "reasons": [
+              "Dense nightlife scene",
+              "Plenty to do as a group",
+              "Villas and group rates bring per-head cost down",
+              "Low daily spend (~₹3400/person/day)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.513,
+          "score_0_10": 5.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 5.1,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "International-standard hospitals (quality index 85/100)",
+              "International-standard hospital within 3 km",
+              "Quick transfer from the gateway airport (~2 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)",
+              "High heat stress (peak heat index 39°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 1,
+          "score_0_10": 10,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 10,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Alcohol is freely available",
+              "Villas and group rates bring per-head cost down"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6785,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 6.8,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Villas and group rates bring per-head cost down",
+              "Alcohol is freely available"
+            ],
+            "cautions": [
+              "High scam and tout pressure (78/100 incidence)"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6654,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.2 h)",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "High scam and tout pressure (78/100 incidence)"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4615,
+          "score_0_10": 4.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 4.6,
+            "reasons": [
+              "Low daily spend (~₹3400/person/day)",
+              "Easy golden-hour access to hero locations",
+              "Excellent local transport (metro/ride-hailing)",
+              "Strong general safety record (safety index 60/100)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Drone use is restricted",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6433,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.4,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "International-standard hospitals (quality index 85/100)",
+              "flat terrain",
+              "No altitude risk (10 m)"
+            ],
+            "cautions": [
+              "Wheelchair infrastructure is poor (35/100)",
+              "Heavily crowded (78/100 crowd pressure)",
+              "High heat stress (peak heat index 39°C)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4678,
+          "score_0_10": 4.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 4.7,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "International-standard hospital within 3 km",
+              "Paediatric care readily available",
+              "Strong general safety record (safety index 60/100)"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)",
+              "High heat stress (peak heat index 39°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.452,
+          "score_0_10": 4.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 4.5,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "Paediatric care readily available",
+              "Quick transfer from the gateway airport (~2 h)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Infant amenities (changing, cots, formula) are hard to find",
+              "Stroller-hostile — carry the child or use a carrier",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5722,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 5.7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Dedicated tourist police on the ground",
+              "Strong value for money",
+              "International-standard hospitals (quality index 85/100)"
+            ],
+            "cautions": [
+              "High scam and tout pressure (78/100 incidence)"
+            ]
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Wheelchair access is not viable at this entity",
+              "signal": "wheelchair_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "hard",
+              "reason": "No step-free route exists",
+              "signal": "step_free_access",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Wheelchair access is not viable at this entity",
+              "Excluded: No step-free route exists"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Road fatality rate is high — recommend a driver rather than self-drive",
+              "signal": "road_safety",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.23333333333333328
+            }
+          ],
+          "score_0_1": 0.5887,
+          "score_0_10": 5.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 5.9,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Low daily spend (~₹3400/person/day)",
+              "Frequent seating and rest stops"
+            ],
+            "cautions": [
+              "Caution: Road fatality rate is high — recommend a driver rather than self-drive",
+              "High road fatality rate (28 per 100k) — self-drive risk",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

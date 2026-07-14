@@ -1,0 +1,919 @@
+{
+  "$id": "travelomore/ontology/signal_dictionary",
+  "version": "1.0.0",
+  "updated_at": "2026-07-13",
+  "description": "Canonical list of normalized ranking signals. Every persona weight key MUST exist here. Every raw attribute on an entity MUST map to exactly one signal. Engine contract: raw attribute -> normalizer -> signal value in [0,1] where 1 is always 'better for the traveller'.",
+  "normalizer_types": {
+    "index_100": "value / 100, clamped to [0,1]",
+    "index_100_inverse": "1 - (value / 100), clamped to [0,1]",
+    "linear_clamp": "(v - min) / (max - min), clamped to [0,1]",
+    "linear_inverse_clamp": "1 - (v - min) / (max - min), clamped to [0,1]",
+    "ratio": "value already in [0,1], clamped",
+    "scale_1_5": "(v - 1) / 4",
+    "scale_1_5_inverse": "1 - (v - 1) / 4",
+    "boolean": "true -> 1, false -> 0",
+    "enum_map": "explicit map from enum literal to [0,1]",
+    "count_saturating": "1 - exp(-v / k), diminishing returns on counts"
+  },
+  "scopes": ["country", "city", "hotel", "activity", "flight", "visa"],
+  "inheritance": {
+    "chain": ["country", "city", "activity|hotel"],
+    "rule": "A signal marked inheritable=true resolves bottom-up: entity value overrides parent value overrides country value. Non-inheritable signals must be present on the entity itself or are treated as missing (neutral prior + coverage penalty)."
+  },
+  "signals": [
+    {
+      "id": "safety_general",
+      "facet": "safety",
+      "label": "General safety",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "safety_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Strong general safety record (safety index {safety_index_0_100}/100)",
+      "negative_template": "General safety is a concern here (safety index {safety_index_0_100}/100)"
+    },
+    {
+      "id": "safety_female_solo",
+      "facet": "safety",
+      "label": "Safety for solo female travellers",
+      "scope": ["country", "city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "female_solo_safety_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Well established as safe for solo female travellers ({female_solo_safety_index_0_100}/100)",
+      "negative_template": "Weaker track record for solo female travellers ({female_solo_safety_index_0_100}/100)"
+    },
+    {
+      "id": "night_safety",
+      "facet": "safety",
+      "label": "Night-time safety",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "night_safety_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Comfortable to move around after dark",
+      "negative_template": "Night-time movement needs caution"
+    },
+    {
+      "id": "scam_pressure_low",
+      "facet": "safety",
+      "label": "Low scam / tout pressure",
+      "scope": ["country", "city", "activity"],
+      "inheritable": true,
+      "attribute": "scam_incidence_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Low tout and scam pressure",
+      "negative_template": "High scam and tout pressure ({scam_incidence_index_0_100}/100 incidence)"
+    },
+    {
+      "id": "street_harassment_low",
+      "facet": "safety",
+      "label": "Low street harassment",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "street_harassment_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Low reported street harassment",
+      "negative_template": "Elevated reports of street harassment"
+    },
+    {
+      "id": "water_activity_safety",
+      "facet": "safety",
+      "label": "Water activity safety standards",
+      "scope": ["country", "city", "activity"],
+      "inheritable": true,
+      "attribute": "water_safety_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Regulated, well-run water operators",
+      "negative_template": "Water operator standards are inconsistent"
+    },
+    {
+      "id": "road_safety",
+      "facet": "safety",
+      "label": "Road safety",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "road_fatality_per_100k",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 5, "max": 35 },
+      "positive_template": "Comparatively safe roads",
+      "negative_template": "High road fatality rate ({road_fatality_per_100k} per 100k) — self-drive risk"
+    },
+    {
+      "id": "emergency_response",
+      "facet": "safety",
+      "label": "Emergency response capability",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "emergency_response_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Fast emergency response and tourist assistance",
+      "negative_template": "Emergency response can be slow"
+    },
+
+    {
+      "id": "healthcare_quality",
+      "facet": "health",
+      "label": "Healthcare quality",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "intl_hospital_quality_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "International-standard hospitals (quality index {intl_hospital_quality_index_0_100}/100)",
+      "negative_template": "Limited international-standard healthcare"
+    },
+    {
+      "id": "hospital_proximity",
+      "facet": "health",
+      "label": "Proximity to international-standard hospital",
+      "scope": ["country", "city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "nearest_intl_hospital_km",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 1, "max": 25 },
+      "positive_template": "International-standard hospital within {nearest_intl_hospital_km} km",
+      "negative_template": "Nearest international-standard hospital is {nearest_intl_hospital_km} km away"
+    },
+    {
+      "id": "pharmacy_access",
+      "facet": "health",
+      "label": "Pharmacy access",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "pharmacy_density_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Pharmacies widely available",
+      "negative_template": "Pharmacy access is thin"
+    },
+    {
+      "id": "medevac_ease",
+      "facet": "health",
+      "label": "Medical evacuation ease",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "medevac_ease_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Straightforward medical evacuation routes",
+      "negative_template": "Medical evacuation would be slow and complex"
+    },
+    {
+      "id": "vector_disease_risk_low",
+      "facet": "health",
+      "label": "Low vector-borne disease risk",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "dengue_malaria_risk_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Low dengue/malaria risk",
+      "negative_template": "Meaningful dengue risk — mosquito precautions required"
+    },
+    {
+      "id": "zika_risk_low",
+      "facet": "health",
+      "label": "Low Zika risk",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "zika_risk_level",
+      "normalizer": {
+        "type": "enum_map",
+        "map": { "none": 1, "low": 0.7, "moderate": 0.35, "high": 0.05 }
+      },
+      "positive_template": "No meaningful Zika signal",
+      "negative_template": "Zika risk classified as {zika_risk_level} — material for pregnancy"
+    },
+    {
+      "id": "food_hygiene",
+      "facet": "health",
+      "label": "Food hygiene",
+      "scope": ["country", "city", "activity"],
+      "inheritable": true,
+      "attribute": "food_hygiene_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Reliable food hygiene standards",
+      "negative_template": "Food hygiene is inconsistent — stomach-upset risk"
+    },
+    {
+      "id": "tap_water_safety",
+      "facet": "health",
+      "label": "Tap water safety",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "tap_water_potable",
+      "normalizer": {
+        "type": "enum_map",
+        "map": { "safe": 1, "filtered_only": 0.5, "unsafe": 0.2 }
+      },
+      "positive_template": "Tap water is potable",
+      "negative_template": "Tap water not potable — bottled water only"
+    },
+    {
+      "id": "air_quality",
+      "facet": "health",
+      "label": "Air quality",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "pm25_annual_ug_m3",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 5, "max": 60 },
+      "positive_template": "Clean air (PM2.5 {pm25_annual_ug_m3} µg/m³ annual)",
+      "negative_template": "Air quality dips seasonally (PM2.5 {pm25_annual_ug_m3} µg/m³ annual)"
+    },
+    {
+      "id": "pediatric_care_access",
+      "facet": "health",
+      "label": "Paediatric care access",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "pediatric_care_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Paediatric care readily available",
+      "negative_template": "Paediatric care is limited"
+    },
+    {
+      "id": "obstetric_care_access",
+      "facet": "health",
+      "label": "Obstetric care access",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "obstetric_care_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Obstetric/maternity care available locally",
+      "negative_template": "No reliable obstetric care nearby"
+    },
+
+    {
+      "id": "wheelchair_access",
+      "facet": "accessibility",
+      "label": "Wheelchair infrastructure",
+      "scope": ["country", "city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "wheelchair_infrastructure_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Wheelchair access is well provided for ({wheelchair_infrastructure_index_0_100}/100)",
+      "negative_template": "Wheelchair infrastructure is poor ({wheelchair_infrastructure_index_0_100}/100)"
+    },
+    {
+      "id": "step_free_access",
+      "facet": "accessibility",
+      "label": "Step-free access ratio",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "step_free_ratio_0_1",
+      "normalizer": { "type": "ratio" },
+      "positive_template": "Mostly step-free routes",
+      "negative_template": "Stairs and kerbs dominate — limited step-free routing"
+    },
+    {
+      "id": "elevator_availability",
+      "facet": "accessibility",
+      "label": "Elevator availability",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "elevator_availability_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Lifts available where needed",
+      "negative_template": "Lifts frequently absent"
+    },
+    {
+      "id": "accessible_transport",
+      "facet": "accessibility",
+      "label": "Accessible transport",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "accessible_transport_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Accessible taxis/transfers can be booked",
+      "negative_template": "Accessible transport must be specially arranged"
+    },
+    {
+      "id": "accessible_toilets",
+      "facet": "accessibility",
+      "label": "Accessible toilets",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "accessible_toilet_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Accessible toilets available at key sites",
+      "negative_template": "Accessible toilets are rare"
+    },
+    {
+      "id": "public_toilet_availability",
+      "facet": "accessibility",
+      "label": "Public toilet availability",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "public_toilet_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Clean public toilets are easy to find",
+      "negative_template": "Public toilets are scarce"
+    },
+    {
+      "id": "walking_load_low",
+      "facet": "accessibility",
+      "label": "Low walking load",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "typical_walking_km_per_day",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 1, "max": 8 },
+      "positive_template": "Low walking requirement (~{typical_walking_km_per_day} km/day)",
+      "negative_template": "Heavy walking load (~{typical_walking_km_per_day} km/day)"
+    },
+    {
+      "id": "terrain_ease",
+      "facet": "accessibility",
+      "label": "Terrain ease",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "terrain_type",
+      "normalizer": {
+        "type": "enum_map",
+        "map": {
+          "flat": 1,
+          "gentle": 0.8,
+          "rolling": 0.6,
+          "hilly": 0.35,
+          "steep": 0.15
+        }
+      },
+      "positive_template": "{terrain_type} terrain",
+      "negative_template": "{terrain_type} terrain — hard going"
+    },
+    {
+      "id": "physical_exertion_low",
+      "facet": "accessibility",
+      "label": "Low physical exertion",
+      "scope": ["activity", "city"],
+      "inheritable": false,
+      "attribute": "exertion_level_1_5",
+      "normalizer": { "type": "scale_1_5_inverse" },
+      "positive_template": "Low physical exertion (level {exertion_level_1_5}/5)",
+      "negative_template": "Physically demanding (exertion level {exertion_level_1_5}/5)"
+    },
+    {
+      "id": "altitude_safety",
+      "facet": "accessibility",
+      "label": "Altitude safety",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "max_altitude_m",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 500, "max": 3500 },
+      "positive_template": "No altitude risk ({max_altitude_m} m)",
+      "negative_template": "Altitude exposure at {max_altitude_m} m"
+    },
+    {
+      "id": "rest_stop_availability",
+      "facet": "accessibility",
+      "label": "Rest stop availability",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "rest_stop_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Frequent seating and rest stops",
+      "negative_template": "Few places to sit and rest"
+    },
+    {
+      "id": "seating_shade_availability",
+      "facet": "accessibility",
+      "label": "Shade and seating",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "shade_seating_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Shade and seating available throughout",
+      "negative_template": "Little shade — sun exposure is sustained"
+    },
+    {
+      "id": "stroller_friendliness",
+      "facet": "accessibility",
+      "label": "Stroller friendliness",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "stroller_friendly_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Stroller-friendly paths and entrances",
+      "negative_template": "Stroller-hostile — carry the child or use a carrier"
+    },
+
+    {
+      "id": "heat_stress_low",
+      "facet": "comfort",
+      "label": "Low heat stress",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "peak_heat_index_c",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 27, "max": 45 },
+      "positive_template": "Manageable heat (peak heat index {peak_heat_index_c}°C)",
+      "negative_template": "High heat stress (peak heat index {peak_heat_index_c}°C)"
+    },
+    {
+      "id": "weather_comfort",
+      "facet": "comfort",
+      "label": "Weather comfort",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "weather_comfort_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Long comfortable-weather window",
+      "negative_template": "Narrow comfortable-weather window"
+    },
+    {
+      "id": "crowd_pressure_low",
+      "facet": "comfort",
+      "label": "Low crowding",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "crowd_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Rarely overcrowded",
+      "negative_template": "Heavily crowded ({crowd_index_0_100}/100 crowd pressure)"
+    },
+    {
+      "id": "noise_low",
+      "facet": "comfort",
+      "label": "Low noise",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "noise_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Quiet environment",
+      "negative_template": "Noisy environment, especially at night"
+    },
+
+    {
+      "id": "direct_flight_access",
+      "facet": "connectivity",
+      "label": "Direct flight access from India",
+      "scope": ["country", "city", "flight"],
+      "inheritable": true,
+      "attribute": "direct_flights_from_india_weekly",
+      "normalizer": { "type": "count_saturating", "k": 20 },
+      "positive_template": "{direct_flights_from_india_weekly} direct weekly flights from India",
+      "negative_template": "No direct flights from India — connection required"
+    },
+    {
+      "id": "flight_time_ease",
+      "facet": "connectivity",
+      "label": "Short flight time",
+      "scope": ["country", "city", "flight"],
+      "inheritable": true,
+      "attribute": "avg_flight_hours_from_india",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 3, "max": 12 },
+      "positive_template": "Short hop from India (~{avg_flight_hours_from_india} h)",
+      "negative_template": "Long journey (~{avg_flight_hours_from_india} h in the air)"
+    },
+    {
+      "id": "arrival_transfer_ease",
+      "facet": "connectivity",
+      "label": "Easy arrival transfer",
+      "scope": ["city", "hotel"],
+      "inheritable": true,
+      "attribute": "transfer_time_from_gateway_hours",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 0.5, "max": 8 },
+      "positive_template": "Quick transfer from the gateway airport (~{transfer_time_from_gateway_hours} h)",
+      "negative_template": "Long onward transfer (~{transfer_time_from_gateway_hours} h) after landing"
+    },
+    {
+      "id": "intracity_transport_quality",
+      "facet": "connectivity",
+      "label": "Local transport quality",
+      "scope": ["city"],
+      "inheritable": true,
+      "attribute": "intracity_transport_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Excellent local transport (metro/ride-hailing)",
+      "negative_template": "Local transport is weak — private vehicle needed"
+    },
+    {
+      "id": "transport_comfort",
+      "facet": "connectivity",
+      "label": "Transport comfort",
+      "scope": ["city", "activity", "flight"],
+      "inheritable": true,
+      "attribute": "transport_comfort_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Comfortable, air-conditioned transport",
+      "negative_template": "Transport is uncomfortable or cramped"
+    },
+    {
+      "id": "motion_sickness_low",
+      "facet": "connectivity",
+      "label": "Low motion-sickness risk",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "motion_sickness_risk_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Little motion-sickness exposure",
+      "negative_template": "Boat/winding-road legs carry motion-sickness risk"
+    },
+    {
+      "id": "self_drive_feasibility",
+      "facet": "road_trip",
+      "label": "Self-drive feasibility",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "self_drive_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Self-drive is practical (IDP accepted, easy rentals)",
+      "negative_template": "Self-drive is impractical here"
+    },
+    {
+      "id": "road_quality",
+      "facet": "road_trip",
+      "label": "Road quality",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "road_quality_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Well-surfaced, well-signed roads",
+      "negative_template": "Poor road surface and signage"
+    },
+    {
+      "id": "scenic_drive_quality",
+      "facet": "road_trip",
+      "label": "Scenic driving",
+      "scope": ["country", "city", "activity"],
+      "inheritable": true,
+      "attribute": "scenic_drive_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Genuinely scenic driving routes",
+      "negative_template": "Little scenic driving value"
+    },
+    {
+      "id": "fuel_stop_density",
+      "facet": "road_trip",
+      "label": "Fuel/rest stop density",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "fuel_stop_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Fuel and rest stops at regular intervals",
+      "negative_template": "Long gaps between fuel stops"
+    },
+    {
+      "id": "parking_availability",
+      "facet": "road_trip",
+      "label": "Parking availability",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "parking_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Parking is easy to find",
+      "negative_template": "Parking is a real problem"
+    },
+
+    {
+      "id": "cost_efficiency",
+      "facet": "cost",
+      "label": "Daily cost efficiency",
+      "scope": ["country", "city", "hotel", "activity", "flight"],
+      "inheritable": true,
+      "attribute": "avg_daily_cost_per_pax_inr",
+      "normalizer": {
+        "type": "linear_inverse_clamp",
+        "min": 2000,
+        "max": 15000
+      },
+      "positive_template": "Low daily spend (~₹{avg_daily_cost_per_pax_inr}/person/day)",
+      "negative_template": "Expensive (~₹{avg_daily_cost_per_pax_inr}/person/day)"
+    },
+    {
+      "id": "value_for_money",
+      "facet": "cost",
+      "label": "Value for money",
+      "scope": ["country", "city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "value_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Strong value for money",
+      "negative_template": "Weak value for money"
+    },
+    {
+      "id": "group_cost_efficiency",
+      "facet": "cost",
+      "label": "Group cost efficiency",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "group_value_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Villas and group rates bring per-head cost down",
+      "negative_template": "Little group pricing advantage"
+    },
+    {
+      "id": "alcohol_affordability",
+      "facet": "cost",
+      "label": "Alcohol affordability",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "beer_500ml_price_inr",
+      "normalizer": { "type": "linear_inverse_clamp", "min": 100, "max": 600 },
+      "positive_template": "Cheap drinks (~₹{beer_500ml_price_inr} a beer)",
+      "negative_template": "Expensive drinks (~₹{beer_500ml_price_inr} a beer)"
+    },
+
+    {
+      "id": "nightlife_density",
+      "facet": "social",
+      "label": "Nightlife density",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "nightlife_venue_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Dense nightlife scene",
+      "negative_template": "Very little nightlife"
+    },
+    {
+      "id": "party_scene_quality",
+      "facet": "social",
+      "label": "Party scene quality",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "party_scene_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "World-class party scene",
+      "negative_template": "Party scene is thin"
+    },
+    {
+      "id": "alcohol_availability",
+      "facet": "social",
+      "label": "Alcohol availability",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "alcohol_access_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Alcohol is freely available",
+      "negative_template": "Alcohol access is restricted"
+    },
+    {
+      "id": "late_night_food",
+      "facet": "social",
+      "label": "Late-night food",
+      "scope": ["city"],
+      "inheritable": true,
+      "attribute": "late_night_food_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Food available all night",
+      "negative_template": "Kitchens close early"
+    },
+    {
+      "id": "group_activity_density",
+      "facet": "social",
+      "label": "Group activity density",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "group_activity_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Plenty to do as a group",
+      "negative_template": "Few group-friendly activities"
+    },
+    {
+      "id": "adult_entertainment_access",
+      "facet": "social",
+      "label": "Adult entertainment access",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "adult_entertainment_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Adult entertainment districts are established and legal",
+      "negative_template": "Little adult entertainment infrastructure"
+    },
+    {
+      "id": "wellness_spa_quality",
+      "facet": "social",
+      "label": "Wellness and spa quality",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "wellness_spa_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Excellent spa and wellness options",
+      "negative_template": "Limited spa/wellness options"
+    },
+    {
+      "id": "beach_club_quality",
+      "facet": "social",
+      "label": "Beach club quality",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "beach_club_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Strong beach-club and day-party scene",
+      "negative_template": "No real beach-club scene"
+    },
+
+    {
+      "id": "kid_activity_density",
+      "facet": "family",
+      "label": "Kid activity density",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "kid_activity_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Lots that children actively enjoy",
+      "negative_template": "Little that holds a child's attention"
+    },
+    {
+      "id": "infant_amenities",
+      "facet": "family",
+      "label": "Infant amenities",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "infant_amenity_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Cots, changing rooms and formula readily available",
+      "negative_template": "Infant amenities (changing, cots, formula) are hard to find"
+    },
+    {
+      "id": "kids_dining_ease",
+      "facet": "family",
+      "label": "Kid-friendly dining",
+      "scope": ["city", "hotel"],
+      "inheritable": true,
+      "attribute": "kids_dining_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Mild, kid-friendly food easy to order",
+      "negative_template": "Food is spicy/unfamiliar — fussy-eater risk"
+    },
+    {
+      "id": "shallow_calm_beach",
+      "facet": "family",
+      "label": "Calm, shallow beaches",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "calm_beach_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Calm, shallow water suitable for children",
+      "negative_template": "Surf/currents make the water unsuitable for small children"
+    },
+    {
+      "id": "family_room_availability",
+      "facet": "family",
+      "label": "Family room availability",
+      "scope": ["city", "hotel"],
+      "inheritable": true,
+      "attribute": "family_room_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Connecting/family rooms widely available",
+      "negative_template": "Family room supply is tight"
+    },
+
+    {
+      "id": "english_prevalence",
+      "facet": "first_timer",
+      "label": "English prevalence",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "english_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "English widely understood in tourist areas",
+      "negative_template": "Limited English — expect friction"
+    },
+    {
+      "id": "tourist_infrastructure",
+      "facet": "first_timer",
+      "label": "Tourist infrastructure maturity",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "tourist_infra_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Mature, well-oiled tourist infrastructure",
+      "negative_template": "Tourist infrastructure still developing"
+    },
+    {
+      "id": "tourist_police_presence",
+      "facet": "first_timer",
+      "label": "Tourist police presence",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "tourist_police_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Dedicated tourist police on the ground",
+      "negative_template": "No visible tourist police support"
+    },
+    {
+      "id": "payment_ease",
+      "facet": "first_timer",
+      "label": "Payment ease",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "card_upi_acceptance_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Cards/UPI widely accepted",
+      "negative_template": "Cash-first economy — carry currency"
+    },
+    {
+      "id": "visa_ease",
+      "facet": "first_timer",
+      "label": "Visa ease for the traveller's passport",
+      "scope": ["country", "visa"],
+      "inheritable": true,
+      "attribute": "visa_ease_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Simple entry process for Indian passports",
+      "negative_template": "Entry process adds paperwork and cost"
+    },
+    {
+      "id": "vegetarian_food_access",
+      "facet": "first_timer",
+      "label": "Vegetarian/Jain food access",
+      "scope": ["country", "city", "hotel"],
+      "inheritable": true,
+      "attribute": "veg_food_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Vegetarian food easy to source",
+      "negative_template": "Vegetarian options are limited or cross-contaminated"
+    },
+    {
+      "id": "indian_food_availability",
+      "facet": "first_timer",
+      "label": "Indian food availability",
+      "scope": ["country", "city"],
+      "inheritable": true,
+      "attribute": "indian_food_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Indian restaurants widely available",
+      "negative_template": "Few Indian food options"
+    },
+
+    {
+      "id": "photogenic_quality",
+      "facet": "content",
+      "label": "Photogenic quality",
+      "scope": ["city", "hotel", "activity"],
+      "inheritable": true,
+      "attribute": "photogenic_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Extremely photogenic",
+      "negative_template": "Visually unremarkable on camera"
+    },
+    {
+      "id": "iconic_landmark_density",
+      "facet": "content",
+      "label": "Iconic landmark density",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "iconic_landmark_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Instantly recognisable landmarks",
+      "negative_template": "No instantly recognisable hero shot"
+    },
+    {
+      "id": "content_novelty",
+      "facet": "content",
+      "label": "Content novelty (low saturation)",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "content_saturation_index_0_100",
+      "normalizer": { "type": "index_100_inverse" },
+      "positive_template": "Under-shot — content still feels fresh",
+      "negative_template": "Saturated on social — hard to stand out"
+    },
+    {
+      "id": "drone_permissiveness",
+      "facet": "content",
+      "label": "Drone permissiveness",
+      "scope": ["country", "city", "activity"],
+      "inheritable": true,
+      "attribute": "drone_policy",
+      "normalizer": {
+        "type": "enum_map",
+        "map": {
+          "permissive": 1,
+          "permit_required": 0.5,
+          "restricted": 0.25,
+          "banned": 0
+        }
+      },
+      "positive_template": "Drone flying is workable ({drone_policy})",
+      "negative_template": "Drone use is {drone_policy}"
+    },
+    {
+      "id": "wifi_quality",
+      "facet": "content",
+      "label": "Wi-Fi / data quality",
+      "scope": ["country", "city", "hotel"],
+      "inheritable": true,
+      "attribute": "avg_wifi_mbps",
+      "normalizer": { "type": "linear_clamp", "min": 5, "max": 100 },
+      "positive_template": "Fast connectivity (~{avg_wifi_mbps} Mbps) — uploads are painless",
+      "negative_template": "Slow connectivity (~{avg_wifi_mbps} Mbps) — large uploads will hurt"
+    },
+    {
+      "id": "coworking_density",
+      "facet": "content",
+      "label": "Coworking density",
+      "scope": ["city"],
+      "inheritable": true,
+      "attribute": "coworking_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Strong coworking/creator ecosystem",
+      "negative_template": "No real coworking ecosystem"
+    },
+    {
+      "id": "golden_hour_access",
+      "facet": "content",
+      "label": "Golden hour access",
+      "scope": ["city", "activity"],
+      "inheritable": true,
+      "attribute": "golden_hour_index_0_100",
+      "normalizer": { "type": "index_100" },
+      "positive_template": "Easy golden-hour access to hero locations",
+      "negative_template": "Hero locations are hard to reach at golden hour"
+    }
+  ]
+}

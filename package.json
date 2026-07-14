@@ -1,0 +1,14 @@
+{
+  "name": "@travelomore/core-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic travel intelligence layer — ontology, persona scoring engine, and explainability layer that future AI agents (destination, hotel, flight, itinerary, etc.) consume. No LLM in the ranking path.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generate": "node engine/generate.js",
+    "query": "node engine/cli.js"
+  }
+}

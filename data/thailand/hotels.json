@@ -1,0 +1,286 @@
+{
+  "schema": "travelomore/hotel/1.0.0",
+  "notes": "Hotels inherit every unspecified inheritable signal from their parent city, and the city from country:TH. Only attributes that DIFFER from the city baseline need to be present. price_inr_per_night is domain data, not a signal — cost_efficiency/value_for_money signals read avg_daily_cost_per_pax_inr / value_index_0_100 instead so hotel cost compares on the same footing as activities and daily budget.",
+  "entities": [
+    {
+      "id": "hotel:TH:BKK:riverside-five-star",
+      "type": "hotel",
+      "name": "Riverside Five-Star (Mandarin Oriental / Peninsula class)",
+      "parent_id": "city:TH:BKK",
+      "category": "luxury_riverside",
+      "star_rating": 5,
+      "price_inr_per_night": 14000,
+      "room_types": ["deluxe_river_view", "suite", "family_connecting"],
+      "tags": ["luxury", "romantic", "photogenic", "family_friendly", "accessible_certified", "resort_stay"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 88, "nearest_intl_hospital_km": 2,
+        "wheelchair_infrastructure_index_0_100": 82, "step_free_ratio_0_1": 0.85, "elevator_availability_index_0_100": 95,
+        "accessible_toilet_index_0_100": 80, "stroller_friendly_index_0_100": 80, "noise_index_0_100": 20,
+        "avg_daily_cost_per_pax_inr": 14000, "value_index_0_100": 68, "group_value_index_0_100": 55,
+        "wellness_spa_index_0_100": 92, "kids_dining_index_0_100": 85, "family_room_index_0_100": 82,
+        "infant_amenity_index_0_100": 78, "veg_food_index_0_100": 78, "photogenic_index_0_100": 92, "avg_wifi_mbps": 120
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:BKK:sukhumvit-value",
+      "type": "hotel",
+      "name": "Sukhumvit Business-Value Hotel (Amari / Novotel class)",
+      "parent_id": "city:TH:BKK",
+      "category": "midscale_city",
+      "star_rating": 4,
+      "price_inr_per_night": 5200,
+      "room_types": ["standard", "twin", "family_connecting"],
+      "tags": ["value", "walkable", "family_friendly", "beginner_friendly", "group_friendly"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 75, "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 60, "step_free_ratio_0_1": 0.6, "elevator_availability_index_0_100": 85,
+        "accessible_toilet_index_0_100": 55, "stroller_friendly_index_0_100": 58, "noise_index_0_100": 55,
+        "avg_daily_cost_per_pax_inr": 5200, "value_index_0_100": 88, "group_value_index_0_100": 82,
+        "wellness_spa_index_0_100": 55, "kids_dining_index_0_100": 68, "family_room_index_0_100": 75,
+        "infant_amenity_index_0_100": 55, "veg_food_index_0_100": 65, "photogenic_index_0_100": 58, "avg_wifi_mbps": 80
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:HKT:patong-family-resort",
+      "type": "hotel",
+      "name": "Patong Family Beach Resort (Novotel Phuket Vacation Club class)",
+      "parent_id": "city:TH:HKT",
+      "category": "family_beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 8500,
+      "room_types": ["family_suite", "connecting_twin", "swim_up"],
+      "tags": ["family_friendly", "beach", "resort_stay", "package_ready", "calm_beach"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 72, "nearest_intl_hospital_km": 5,
+        "wheelchair_infrastructure_index_0_100": 55, "step_free_ratio_0_1": 0.55, "elevator_availability_index_0_100": 65,
+        "accessible_toilet_index_0_100": 50, "stroller_friendly_index_0_100": 65, "noise_index_0_100": 45,
+        "avg_daily_cost_per_pax_inr": 8500, "value_index_0_100": 80, "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 78, "kids_dining_index_0_100": 88, "family_room_index_0_100": 92,
+        "infant_amenity_index_0_100": 82, "veg_food_index_0_100": 68, "photogenic_index_0_100": 82, "avg_wifi_mbps": 65
+      },
+      "meta": { "data_confidence": 0.8, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:HKT:kata-adults-only-boutique",
+      "type": "hotel",
+      "name": "Kata Adults-Only Boutique Resort",
+      "parent_id": "city:TH:HKT",
+      "category": "adults_only_boutique",
+      "star_rating": 5,
+      "price_inr_per_night": 11000,
+      "room_types": ["pool_villa", "suite"],
+      "tags": ["adult_only", "romantic", "wellness", "photogenic", "beach_club"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 78, "nearest_intl_hospital_km": 6,
+        "wheelchair_infrastructure_index_0_100": 45, "step_free_ratio_0_1": 0.4, "elevator_availability_index_0_100": 40,
+        "accessible_toilet_index_0_100": 40, "stroller_friendly_index_0_100": 20, "noise_index_0_100": 15,
+        "avg_daily_cost_per_pax_inr": 11000, "value_index_0_100": 72, "group_value_index_0_100": 60,
+        "wellness_spa_index_0_100": 95, "kids_dining_index_0_100": 20, "family_room_index_0_100": 10,
+        "infant_amenity_index_0_100": 10, "veg_food_index_0_100": 65, "photogenic_index_0_100": 95, "avg_wifi_mbps": 75
+      },
+      "meta": { "data_confidence": 0.76, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:KBV:aonang-resort",
+      "type": "hotel",
+      "name": "Ao Nang Beachfront Resort",
+      "parent_id": "city:TH:KBV",
+      "category": "beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 6800,
+      "room_types": ["deluxe_seaview", "family_suite"],
+      "tags": ["beach", "family_friendly", "photogenic", "honeymoon", "value"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 74, "nearest_intl_hospital_km": 18,
+        "wheelchair_infrastructure_index_0_100": 40, "step_free_ratio_0_1": 0.4, "elevator_availability_index_0_100": 45,
+        "accessible_toilet_index_0_100": 38, "stroller_friendly_index_0_100": 42, "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 6800, "value_index_0_100": 85, "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 80, "kids_dining_index_0_100": 75, "family_room_index_0_100": 80,
+        "infant_amenity_index_0_100": 62, "veg_food_index_0_100": 68, "photogenic_index_0_100": 90, "avg_wifi_mbps": 50
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:PHI:phi-phi-boutique",
+      "type": "hotel",
+      "name": "Phi Phi Cliffside Boutique (Zeavola class)",
+      "parent_id": "city:TH:PHI",
+      "category": "boutique_island",
+      "star_rating": 4,
+      "price_inr_per_night": 9500,
+      "room_types": ["beach_cottage", "cliff_villa"],
+      "tags": ["island", "photogenic", "romantic", "boat_only_access", "honeymoon"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 62, "nearest_intl_hospital_km": 45,
+        "wheelchair_infrastructure_index_0_100": 15, "step_free_ratio_0_1": 0.1, "elevator_availability_index_0_100": 10,
+        "accessible_toilet_index_0_100": 15, "stroller_friendly_index_0_100": 12, "noise_index_0_100": 40,
+        "avg_daily_cost_per_pax_inr": 9500, "value_index_0_100": 70, "group_value_index_0_100": 55,
+        "wellness_spa_index_0_100": 78, "kids_dining_index_0_100": 45, "family_room_index_0_100": 40,
+        "infant_amenity_index_0_100": 22, "veg_food_index_0_100": 60, "photogenic_index_0_100": 96, "avg_wifi_mbps": 25
+      },
+      "meta": { "data_confidence": 0.74, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:USM:chaweng-wellness-resort",
+      "type": "hotel",
+      "name": "Chaweng Wellness & Spa Resort",
+      "parent_id": "city:TH:USM",
+      "category": "wellness_resort",
+      "star_rating": 5,
+      "price_inr_per_night": 10500,
+      "room_types": ["pool_villa", "spa_suite"],
+      "tags": ["wellness", "honeymoon", "romantic", "photogenic", "resort_stay"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 80, "nearest_intl_hospital_km": 6,
+        "wheelchair_infrastructure_index_0_100": 58, "step_free_ratio_0_1": 0.55, "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 55, "stroller_friendly_index_0_100": 55, "noise_index_0_100": 20,
+        "avg_daily_cost_per_pax_inr": 10500, "value_index_0_100": 74, "group_value_index_0_100": 65,
+        "wellness_spa_index_0_100": 96, "kids_dining_index_0_100": 55, "family_room_index_0_100": 55,
+        "infant_amenity_index_0_100": 55, "veg_food_index_0_100": 80, "photogenic_index_0_100": 90, "avg_wifi_mbps": 70
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:USM:bophut-family-resort",
+      "type": "hotel",
+      "name": "Bophut Family Beach Resort",
+      "parent_id": "city:TH:USM",
+      "category": "family_beach_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 7200,
+      "room_types": ["family_suite", "connecting_twin"],
+      "tags": ["family_friendly", "calm_beach", "resort_stay", "value"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 76, "nearest_intl_hospital_km": 8,
+        "wheelchair_infrastructure_index_0_100": 48, "step_free_ratio_0_1": 0.45, "elevator_availability_index_0_100": 50,
+        "accessible_toilet_index_0_100": 45, "stroller_friendly_index_0_100": 58, "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 7200, "value_index_0_100": 82, "group_value_index_0_100": 78,
+        "wellness_spa_index_0_100": 75, "kids_dining_index_0_100": 85, "family_room_index_0_100": 90,
+        "infant_amenity_index_0_100": 78, "veg_food_index_0_100": 72, "photogenic_index_0_100": 80, "avg_wifi_mbps": 55
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:PHA:haadrin-backpacker",
+      "type": "hotel",
+      "name": "Haad Rin Backpacker Beach Hotel",
+      "parent_id": "city:TH:PHA",
+      "category": "backpacker",
+      "star_rating": 2,
+      "price_inr_per_night": 1800,
+      "room_types": ["dorm", "double_fan", "double_ac"],
+      "tags": ["backpacker", "nightlife", "party", "solo_friendly", "hostel_scene", "adult_only"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 55, "nearest_intl_hospital_km": 30,
+        "wheelchair_infrastructure_index_0_100": 10, "step_free_ratio_0_1": 0.1, "elevator_availability_index_0_100": 5,
+        "accessible_toilet_index_0_100": 12, "stroller_friendly_index_0_100": 8, "noise_index_0_100": 85,
+        "avg_daily_cost_per_pax_inr": 1800, "value_index_0_100": 82, "group_value_index_0_100": 88,
+        "wellness_spa_index_0_100": 30, "kids_dining_index_0_100": 20, "family_room_index_0_100": 10,
+        "infant_amenity_index_0_100": 5, "veg_food_index_0_100": 60, "photogenic_index_0_100": 55, "avg_wifi_mbps": 30
+      },
+      "meta": { "data_confidence": 0.7, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:KTO:sairee-dive-resort",
+      "type": "hotel",
+      "name": "Sairee Beach Dive Resort",
+      "parent_id": "city:TH:KTO",
+      "category": "dive_resort",
+      "star_rating": 3,
+      "price_inr_per_night": 3200,
+      "room_types": ["standard_bungalow", "dive_package_room"],
+      "tags": ["diving", "backpacker", "solo_friendly", "hostel_scene", "value"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 66, "nearest_intl_hospital_km": 60,
+        "wheelchair_infrastructure_index_0_100": 15, "step_free_ratio_0_1": 0.15, "elevator_availability_index_0_100": 8,
+        "accessible_toilet_index_0_100": 15, "stroller_friendly_index_0_100": 10, "noise_index_0_100": 55,
+        "avg_daily_cost_per_pax_inr": 3200, "value_index_0_100": 88, "group_value_index_0_100": 82,
+        "wellness_spa_index_0_100": 45, "kids_dining_index_0_100": 35, "family_room_index_0_100": 25,
+        "infant_amenity_index_0_100": 15, "veg_food_index_0_100": 65, "photogenic_index_0_100": 70, "avg_wifi_mbps": 35
+      },
+      "meta": { "data_confidence": 0.74, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:CNX:old-city-heritage-boutique",
+      "type": "hotel",
+      "name": "Old City Heritage Boutique Hotel",
+      "parent_id": "city:TH:CNX",
+      "category": "heritage_boutique",
+      "star_rating": 4,
+      "price_inr_per_night": 4800,
+      "room_types": ["heritage_room", "garden_suite"],
+      "tags": ["heritage", "cultural", "walkable", "slow_travel", "solo_friendly", "digital_nomad"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 85, "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 35, "step_free_ratio_0_1": 0.35, "elevator_availability_index_0_100": 30,
+        "accessible_toilet_index_0_100": 35, "stroller_friendly_index_0_100": 40, "noise_index_0_100": 30,
+        "avg_daily_cost_per_pax_inr": 4800, "value_index_0_100": 90, "group_value_index_0_100": 72,
+        "wellness_spa_index_0_100": 82, "kids_dining_index_0_100": 65, "family_room_index_0_100": 60,
+        "infant_amenity_index_0_100": 50, "veg_food_index_0_100": 88, "photogenic_index_0_100": 88, "avg_wifi_mbps": 85
+      },
+      "meta": { "data_confidence": 0.8, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:CNX:nimman-family-resort",
+      "type": "hotel",
+      "name": "Nimman Family Resort & Pool Villas",
+      "parent_id": "city:TH:CNX",
+      "category": "family_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 6200,
+      "room_types": ["family_villa", "connecting_twin"],
+      "tags": ["family_friendly", "resort_stay", "walkable", "wildlife"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 82, "nearest_intl_hospital_km": 4,
+        "wheelchair_infrastructure_index_0_100": 55, "step_free_ratio_0_1": 0.5, "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 50, "stroller_friendly_index_0_100": 60, "noise_index_0_100": 35,
+        "avg_daily_cost_per_pax_inr": 6200, "value_index_0_100": 86, "group_value_index_0_100": 76,
+        "wellness_spa_index_0_100": 75, "kids_dining_index_0_100": 82, "family_room_index_0_100": 88,
+        "infant_amenity_index_0_100": 72, "veg_food_index_0_100": 90, "photogenic_index_0_100": 78, "avg_wifi_mbps": 80
+      },
+      "meta": { "data_confidence": 0.8, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:HHQ:senior-friendly-resort",
+      "type": "hotel",
+      "name": "Hua Hin Senior-Friendly Beach Resort",
+      "parent_id": "city:TH:HHQ",
+      "category": "senior_resort",
+      "star_rating": 4,
+      "price_inr_per_night": 5800,
+      "room_types": ["ground_floor_accessible", "standard_seaview"],
+      "tags": ["senior_focused", "step_free", "calm_beach", "slow_travel", "accessible_certified"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 82, "nearest_intl_hospital_km": 4,
+        "wheelchair_infrastructure_index_0_100": 78, "step_free_ratio_0_1": 0.8, "elevator_availability_index_0_100": 82,
+        "accessible_toilet_index_0_100": 75, "stroller_friendly_index_0_100": 65, "noise_index_0_100": 15,
+        "avg_daily_cost_per_pax_inr": 5800, "value_index_0_100": 86, "group_value_index_0_100": 70,
+        "wellness_spa_index_0_100": 80, "kids_dining_index_0_100": 70, "family_room_index_0_100": 72,
+        "infant_amenity_index_0_100": 60, "veg_food_index_0_100": 75, "photogenic_index_0_100": 72, "avg_wifi_mbps": 60
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "hotel:TH:PYX:pattaya-nightlife-hotel",
+      "type": "hotel",
+      "name": "Central Pattaya Nightlife-District Hotel",
+      "parent_id": "city:TH:PYX",
+      "category": "nightlife_district",
+      "star_rating": 3,
+      "price_inr_per_night": 3400,
+      "room_types": ["standard", "twin"],
+      "tags": ["nightlife", "party", "group_friendly", "adult_only", "value"],
+      "attributes": {
+        "female_solo_safety_index_0_100": 55, "nearest_intl_hospital_km": 3,
+        "wheelchair_infrastructure_index_0_100": 35, "step_free_ratio_0_1": 0.35, "elevator_availability_index_0_100": 55,
+        "accessible_toilet_index_0_100": 35, "stroller_friendly_index_0_100": 30, "noise_index_0_100": 90,
+        "avg_daily_cost_per_pax_inr": 3400, "value_index_0_100": 85, "group_value_index_0_100": 90,
+        "wellness_spa_index_0_100": 50, "kids_dining_index_0_100": 40, "family_room_index_0_100": 55,
+        "infant_amenity_index_0_100": 30, "veg_food_index_0_100": 62, "photogenic_index_0_100": 45, "avg_wifi_mbps": 55
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    }
+  ]
+}

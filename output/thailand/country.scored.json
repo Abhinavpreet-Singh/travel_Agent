@@ -1,0 +1,474 @@
+{
+  "schema": "travelomore/destination_country/1.0.0",
+  "entities": [
+    {
+      "id": "country:TH",
+      "type": "destination_country",
+      "iso2": "TH",
+      "iso3": "THA",
+      "name": "Thailand",
+      "aliases": [
+        "Siam",
+        "Land of Smiles"
+      ],
+      "region": "South East Asia",
+      "currency": "THB",
+      "primary_language": [
+        "th"
+      ],
+      "timezone": "Asia/Bangkok",
+      "utc_offset_from_ist": "+1:30",
+      "gateway_airports": [
+        "BKK",
+        "DMK",
+        "HKT",
+        "CNX",
+        "USM",
+        "KBV"
+      ],
+      "summary": "Thailand is India's highest-volume outbound leisure market: 4-5 hour flights, dense direct connectivity from six Indian metros, mature tourist infrastructure, low daily cost, and a spread that covers beaches, nightlife, temples, mountains, diving and family resorts inside one country.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "shoulder_months": [
+        4,
+        10
+      ],
+      "avoid_months": [
+        9
+      ],
+      "seasonality_note": "NE monsoon flips the coasts: Andaman (Phuket/Krabi/Phi Phi) is best Nov-Apr; the Gulf (Samui/Phangan/Tao) is best Feb-Apr and Jul-Sep, and is at its worst Oct-Dec.",
+      "tags": [
+        "beginner_friendly",
+        "package_ready",
+        "nightlife",
+        "island",
+        "family_friendly",
+        "value",
+        "photogenic",
+        "food"
+      ],
+      "attributes": {
+        "safety_index_0_100": 68,
+        "female_solo_safety_index_0_100": 72,
+        "night_safety_index_0_100": 66,
+        "scam_incidence_index_0_100": 55,
+        "street_harassment_index_0_100": 30,
+        "water_safety_index_0_100": 62,
+        "road_fatality_per_100k": 25.4,
+        "emergency_response_index_0_100": 65,
+        "intl_hospital_quality_index_0_100": 88,
+        "pharmacy_density_index_0_100": 88,
+        "medevac_ease_index_0_100": 82,
+        "dengue_malaria_risk_index_0_100": 45,
+        "zika_risk_level": "moderate",
+        "food_hygiene_index_0_100": 62,
+        "tap_water_potable": "unsafe",
+        "pm25_annual_ug_m3": 23,
+        "pediatric_care_index_0_100": 80,
+        "obstetric_care_index_0_100": 82,
+        "wheelchair_infrastructure_index_0_100": 42,
+        "accessible_transport_index_0_100": 40,
+        "weather_comfort_index_0_100": 62,
+        "direct_flights_from_india_weekly": 190,
+        "avg_flight_hours_from_india": 4.3,
+        "transport_comfort_index_0_100": 74,
+        "self_drive_index_0_100": 62,
+        "road_quality_index_0_100": 72,
+        "scenic_drive_index_0_100": 68,
+        "fuel_stop_index_0_100": 82,
+        "avg_daily_cost_per_pax_inr": 4800,
+        "value_index_0_100": 88,
+        "beer_500ml_price_inr": 190,
+        "alcohol_access_index_0_100": 85,
+        "english_index_0_100": 58,
+        "tourist_infra_index_0_100": 93,
+        "tourist_police_index_0_100": 80,
+        "card_upi_acceptance_index_0_100": 70,
+        "visa_ease_index_0_100": 62,
+        "veg_food_index_0_100": 60,
+        "indian_food_index_0_100": 85,
+        "drone_policy": "permit_required",
+        "avg_wifi_mbps": 65
+      },
+      "meta": {
+        "data_confidence": 0.82,
+        "last_verified": "2026-07-13",
+        "volatility": {
+          "visa_ease_index_0_100": "high",
+          "avg_daily_cost_per_pax_inr": "medium",
+          "direct_flights_from_india_weekly": "medium",
+          "pm25_annual_ug_m3": "seasonal"
+        },
+        "review_status": "editorial_draft",
+        "reviewer": null
+      },
+      "provenance": [
+        {
+          "attributes": [
+            "visa_ease_index_0_100"
+          ],
+          "source_type": "policy",
+          "source": "Thai Cabinet decision 19 May 2026 (60-day exemption revoked, India moved to VoA/e-Visa) vs Royal Thai Embassy New Delhi (exemption 'effective until further announcement'). See data/thailand/visa.json.",
+          "method": "derived_from_visa_entity",
+          "confidence": 0.55,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": [
+            "intl_hospital_quality_index_0_100",
+            "pharmacy_density_index_0_100",
+            "medevac_ease_index_0_100",
+            "pediatric_care_index_0_100",
+            "obstetric_care_index_0_100"
+          ],
+          "source_type": "editorial_index",
+          "source": "JCI-accredited hospital footprint (Bumrungrad, Bangkok Hospital, Samitivej, Bangkok Hospital Phuket/Samui) + medical-tourism volume",
+          "method": "expert_estimate",
+          "confidence": 0.85,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": [
+            "road_fatality_per_100k"
+          ],
+          "source_type": "statistical",
+          "source": "WHO Global Status Report on Road Safety (Thailand is among the world's worst per-capita road fatality rates)",
+          "method": "published_statistic",
+          "confidence": 0.9,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": [
+            "zika_risk_level",
+            "dengue_malaria_risk_index_0_100"
+          ],
+          "source_type": "health_authority",
+          "source": "CDC/WHO country risk classification — Thailand carries a persistent Zika signal; dengue is endemic with monsoon peaks",
+          "method": "published_classification",
+          "confidence": 0.88,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": [
+            "safety_index_0_100",
+            "female_solo_safety_index_0_100",
+            "night_safety_index_0_100",
+            "scam_incidence_index_0_100",
+            "street_harassment_index_0_100",
+            "tourist_infra_index_0_100",
+            "english_index_0_100",
+            "value_index_0_100",
+            "veg_food_index_0_100",
+            "indian_food_index_0_100",
+            "water_safety_index_0_100",
+            "food_hygiene_index_0_100"
+          ],
+          "source_type": "editorial_index",
+          "source": "Composite of aggregated traveller-review sentiment (TripAdvisor/Google review corpora), Numbeo safety indices and Travelomore desk research",
+          "method": "expert_estimate",
+          "confidence": 0.72,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": [
+            "direct_flights_from_india_weekly",
+            "avg_flight_hours_from_india",
+            "avg_daily_cost_per_pax_inr",
+            "beer_500ml_price_inr"
+          ],
+          "source_type": "market",
+          "source": "Airline schedule scrape (DEL/BOM/BLR/MAA/CCU/HYD → BKK/DMK/HKT) + Travelomore booked-basket averages",
+          "method": "market_sample",
+          "confidence": 0.75,
+          "last_verified": "2026-07-13"
+        }
+      ],
+      "validation": {
+        "required_attributes_present": true,
+        "unmapped_attributes": [],
+        "signal_coverage": null,
+        "computed_at": null
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7871,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.9,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "190 direct weekly flights from India",
+              "Low daily spend (~₹4800/person/day)"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8764,
+          "score_0_10": 8.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.8,
+            "reasons": [
+              "Low daily spend (~₹4800/person/day)",
+              "190 direct weekly flights from India",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6981,
+          "score_0_10": 7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8408,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.4,
+            "reasons": [
+              "Alcohol is freely available",
+              "Cheap drinks (~₹190 a beer)",
+              "190 direct weekly flights from India",
+              "Low daily spend (~₹4800/person/day)"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8095,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8.1,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8189,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 8.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "190 direct weekly flights from India",
+              "Short hop from India (~4.3 h)",
+              "Indian restaurants widely available"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6779,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.8,
+            "reasons": [
+              "Low daily spend (~₹4800/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.61,
+          "score_0_10": 6.1,
+          "signal_coverage": 0.698,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.1,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.648,
+          "score_0_10": 6.5,
+          "signal_coverage": 0.833,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.5,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5477,
+          "score_0_10": 5.5,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.5,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4243,
+          "score_0_10": 4.2,
+          "signal_coverage": 0.865,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.2,
+            "reasons": [
+              "Accessible taxis/transfers can be booked",
+              "Wheelchair access is well provided for (42/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6416,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.4,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes",
+              "Low daily spend (~₹4800/person/day)"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

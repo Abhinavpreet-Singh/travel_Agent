@@ -1,0 +1,432 @@
+{
+  "brief": {
+    "destinationType": "Thailand family beach trip",
+    "dates": "10 Dec - 18 Dec 2026",
+    "duration": "8 nights",
+    "budget": "₹1.2L per person",
+    "groupComposition": "2 adults, 1 child (8 yrs)",
+    "extras": [
+      {
+        "label": "dietary",
+        "value": "vegetarian"
+      },
+      {
+        "label": "accessibility",
+        "value": "wheelchair-friendly transfers needed for a grandparent joining"
+      },
+      {
+        "label": "activity",
+        "value": "no extreme adventure sports"
+      }
+    ],
+    "awaitingField": null,
+    "conversationComplete": true
+  },
+  "derived_personas": [
+    "child_friendly",
+    "family_trip",
+    "wheelchair_friendly"
+  ],
+  "persona_extraction_notes": [],
+  "matched_extras": [
+    {
+      "label": "accessibility",
+      "value": "wheelchair-friendly transfers needed for a grandparent joining"
+    }
+  ],
+  "unmatched_extras": [
+    {
+      "label": "dietary",
+      "value": "vegetarian"
+    },
+    {
+      "label": "activity",
+      "value": "no extreme adventure sports"
+    }
+  ],
+  "composed_persona": {
+    "id": "child_friendly+family_trip+wheelchair_friendly",
+    "label": "Child Friendly (3-12) + Family Trip + Wheelchair Friendly",
+    "composed_from": [
+      "child_friendly",
+      "family_trip",
+      "wheelchair_friendly"
+    ],
+    "top_weights": [
+      {
+        "signal": "kid_activity_density",
+        "weight": 0.11
+      },
+      {
+        "signal": "safety_general",
+        "weight": 0.077
+      },
+      {
+        "signal": "wheelchair_access",
+        "weight": 0.067
+      },
+      {
+        "signal": "kids_dining_ease",
+        "weight": 0.057
+      },
+      {
+        "signal": "hospital_proximity",
+        "weight": 0.053
+      },
+      {
+        "signal": "step_free_access",
+        "weight": 0.053
+      },
+      {
+        "signal": "shallow_calm_beach",
+        "weight": 0.05
+      },
+      {
+        "signal": "walking_load_low",
+        "weight": 0.05
+      },
+      {
+        "signal": "food_hygiene",
+        "weight": 0.047
+      },
+      {
+        "signal": "crowd_pressure_low",
+        "weight": 0.043
+      }
+    ]
+  },
+  "top_cities": [
+    {
+      "entity_id": "city:TH:HHQ",
+      "name": "Hua Hin",
+      "score_0_10": 8.5,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.5,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 80/100)",
+          "International-standard hospital within 3 km",
+          "Calm, shallow water suitable for children"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "city:TH:USM",
+      "name": "Koh Samui",
+      "score_0_10": 7.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Calm, shallow water suitable for children",
+          "Strong general safety record (safety index 74/100)",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "city:TH:CNX",
+      "name": "Chiang Mai",
+      "score_0_10": 7.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.2,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "International-standard hospital within 3 km",
+          "Strong general safety record (safety index 78/100)",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": [
+          "Surf/currents make the water unsuitable for small children"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:KHL",
+      "name": "Khao Lak",
+      "score_0_10": 7,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7,
+        "reasons": [
+          "Strong general safety record (safety index 80/100)",
+          "Lots that children actively enjoy",
+          "Low walking requirement (~2 km/day)",
+          "Calm, shallow water suitable for children"
+        ],
+        "cautions": [
+          "Caution: No hospital within a reasonable radius",
+          "Nearest international-standard hospital is 22 km away"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:HKT",
+      "name": "Phuket",
+      "score_0_10": 6.6,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 6.6,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "International-standard hospital within 4 km",
+          "Mild, kid-friendly food easy to order",
+          "Strong general safety record (safety index 68/100)"
+        ],
+        "cautions": [
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    }
+  ],
+  "top_activities": [
+    {
+      "entity_id": "act:TH:BKK:siam-ocean-world",
+      "name": "Sea Life Bangkok Ocean World",
+      "score_0_10": 9.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.1,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Wheelchair access is well provided for (92/100)",
+          "Mostly step-free routes",
+          "International-standard hospital within 2 km"
+        ],
+        "cautions": [
+          "Surf/currents make the water unsuitable for small children",
+          "Parking is a real problem"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:HHQ:cicada-market",
+      "name": "Cicada Market (art & live music)",
+      "score_0_10": 8.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.8,
+        "reasons": [
+          "Strong general safety record (safety index 80/100)",
+          "International-standard hospital within 3 km",
+          "Calm, shallow water suitable for children",
+          "Lots that children actively enjoy"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:HKT:fantasea",
+      "name": "Carnival Magic / FantaSea evening show",
+      "score_0_10": 8.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "International-standard hospital within 4 km",
+          "Wheelchair access is well provided for (78/100)",
+          "Mostly step-free routes"
+        ],
+        "cautions": [
+          "Heavily crowded (70/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:HHQ:hua-hin-beach-day",
+      "name": "Hua Hin beach day (shallow, lifeguarded)",
+      "score_0_10": 8.7,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.7,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 80/100)",
+          "International-standard hospital within 3 km",
+          "Low walking requirement (~1.5 km/day)"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:HKT:simon-cabaret",
+      "name": "Simon Cabaret show",
+      "score_0_10": 8.6,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.6,
+        "reasons": [
+          "Low walking requirement (~0.4 km/day)",
+          "International-standard hospital within 4 km",
+          "Mostly step-free routes",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:HHQ:night-market-food-tour",
+      "name": "Hua Hin night market street food tour",
+      "score_0_10": 8.3,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.3,
+        "reasons": [
+          "Strong general safety record (safety index 80/100)",
+          "International-standard hospital within 3 km",
+          "Calm, shallow water suitable for children",
+          "Low walking requirement (~2 km/day)"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:PYX:alcazar-cabaret",
+      "name": "Alcazar / Tiffany's cabaret show",
+      "score_0_10": 8.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.2,
+        "reasons": [
+          "Low walking requirement (~0.5 km/day)",
+          "International-standard hospital within 3 km",
+          "Mostly step-free routes",
+          "Manageable heat (peak heat index 26°C)"
+        ],
+        "cautions": [
+          "Heavily crowded (65/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:PYX:nong-nooch",
+      "name": "Nong Nooch Tropical Garden",
+      "score_0_10": 8.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.2,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "International-standard hospital within 3 km",
+          "Wheelchair access is well provided for (75/100)",
+          "Mostly step-free routes"
+        ],
+        "cautions": []
+      }
+    }
+  ],
+  "top_hotels": [
+    {
+      "entity_id": "hotel:TH:HHQ:senior-friendly-resort",
+      "name": "Hua Hin Senior-Friendly Beach Resort",
+      "score_0_10": 8.7,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.7,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 80/100)",
+          "Calm, shallow water suitable for children",
+          "International-standard hospital within 4 km"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "hotel:TH:BKK:riverside-five-star",
+      "name": "Riverside Five-Star (Mandarin Oriental / Peninsula class)",
+      "score_0_10": 8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "International-standard hospital within 2 km",
+          "Wheelchair access is well provided for (82/100)",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": [
+          "Surf/currents make the water unsuitable for small children",
+          "Heavily crowded (82/100 crowd pressure)",
+          "High heat stress (peak heat index 40°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:HKT:patong-family-resort",
+      "name": "Patong Family Beach Resort (Novotel Phuket Vacation Club class)",
+      "score_0_10": 7.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.9,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Mild, kid-friendly food easy to order",
+          "International-standard hospital within 5 km",
+          "Strong general safety record (safety index 68/100)"
+        ],
+        "cautions": [
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:USM:bophut-family-resort",
+      "name": "Bophut Family Beach Resort",
+      "score_0_10": 7.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Mild, kid-friendly food easy to order",
+          "Calm, shallow water suitable for children",
+          "Strong general safety record (safety index 74/100)"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "hotel:TH:CNX:nimman-family-resort",
+      "name": "Nimman Family Resort & Pool Villas",
+      "score_0_10": 7.7,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.7,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 78/100)",
+          "International-standard hospital within 4 km",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": [
+          "Surf/currents make the water unsuitable for small children"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$id": "https://schemas.travelomore.com/activity.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Travelomore Activity File",
+  "type": "object",
+  "required": ["schema", "entities"],
+  "properties": {
+    "schema": { "const": "travelomore/activity/1.0.0" },
+    "notes": { "type": "string" },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/activity" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "activity": {
+      "type": "object",
+      "required": ["id", "type", "name", "parent_id", "category", "duration_hours", "price_inr", "tags", "constraints", "attributes", "meta"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^act:[A-Z]{2}:[A-Z0-9]+:[a-z0-9-]+$" },
+        "type": { "const": "activity" },
+        "name": { "type": "string" },
+        "parent_id": { "type": "string", "pattern": "^city:[A-Z]{2}:[A-Z0-9]+$" },
+        "category": { "type": "string" },
+        "duration_hours": { "type": "number", "exclusiveMinimum": 0 },
+        "price_inr": { "type": "number", "minimum": 0 },
+        "tags": { "$ref": "common.schema.json#/$defs/tags" },
+        "constraints": {
+          "type": "object",
+          "description": "Read directly by persona hard_gates that declare a scope of 'activity' (see personas.json contract.hard_gates).",
+          "required": ["min_age", "infant_ok", "pregnancy_safe", "wheelchair_viable"],
+          "properties": {
+            "min_age": { "type": "integer", "minimum": 0 },
+            "infant_ok": { "type": "boolean" },
+            "pregnancy_safe": { "type": "string", "enum": ["safe", "caution", "unsafe"] },
+            "pregnancy_note": { "type": "string" },
+            "wheelchair_viable": { "type": "boolean" },
+            "dress_code": { "type": "string" },
+            "medical_clearance_required": { "type": "boolean" }
+          },
+          "additionalProperties": true
+        },
+        "attributes": { "$ref": "common.schema.json#/$defs/raw_attributes" },
+        "persona_scores": { "$ref": "common.schema.json#/$defs/persona_scores_map" },
+        "meta": { "$ref": "common.schema.json#/$defs/meta" },
+        "validation": { "$ref": "common.schema.json#/$defs/validation" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "$id": "https://schemas.travelomore.com/common.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Travelomore Common Definitions",
+  "description": "Shared $defs used by every entity schema: metadata, provenance, validation, and the engine-computed persona_scores block. Load this alongside any entity schema in the same Ajv instance so $ref resolves.",
+  "$defs": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "data_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "last_verified": { "type": "string", "format": "date" },
+        "review_status": {
+          "type": "string",
+          "enum": ["editorial_draft", "reviewed", "verified", "stale"]
+        },
+        "reviewer": { "type": ["string", "null"] },
+        "volatility": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "seasonal"]
+          }
+        }
+      },
+      "required": ["data_confidence", "last_verified"],
+      "additionalProperties": true
+    },
+    "provenance_entry": {
+      "type": "object",
+      "properties": {
+        "attributes": { "type": "array", "items": { "type": "string" } },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "policy",
+            "statistical",
+            "health_authority",
+            "editorial_index",
+            "market",
+            "derived_from_visa_entity",
+            "conflicting_primary_sources"
+          ]
+        },
+        "source": { "type": "string" },
+        "method": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "requires_live_verification": { "type": "boolean" },
+        "last_verified": { "type": "string", "format": "date" }
+      },
+      "required": ["attributes", "source_type", "source", "confidence"],
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "required_attributes_present": { "type": "boolean" },
+        "unmapped_attributes": { "type": "array", "items": { "type": "string" } },
+        "signal_coverage": { "type": ["number", "null"] },
+        "computed_at": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "gate_failure": {
+      "type": "object",
+      "properties": {
+        "signal": { "type": "string" },
+        "attribute": { "type": "string" },
+        "op": { "type": "string" },
+        "required_value": {},
+        "actual_value": {},
+        "kind": { "type": "string", "enum": ["hard", "soft"] },
+        "reason": { "type": "string" }
+      },
+      "required": ["kind", "reason"],
+      "additionalProperties": true
+    },
+    "explanation": {
+      "type": "object",
+      "description": "Human-readable, template-rendered explanation of a persona score. See docs/ARCHITECTURE.md#explainability-layer.",
+      "properties": {
+        "persona": { "type": "string" },
+        "score": { "type": "number", "minimum": 0, "maximum": 10 },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "cautions": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["persona", "score", "reasons"],
+      "additionalProperties": false
+    },
+    "persona_score": {
+      "type": "object",
+      "description": "Engine-computed output — never hand-authored. Attached by engine/generate.js under entity.persona_scores[persona_id].",
+      "properties": {
+        "persona_id": { "type": "string" },
+        "eligible": { "type": "boolean" },
+        "gate_failures": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/gate_failure" }
+        },
+        "score_0_1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "score_0_10": { "type": "number", "minimum": 0, "maximum": 10 },
+        "signal_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Fraction of the persona's weighted signals that resolved to real (non-missing) data for this entity."
+        },
+        "explanation": { "$ref": "#/$defs/explanation" }
+      },
+      "required": ["persona_id", "eligible", "score_0_1", "score_0_10"],
+      "additionalProperties": false
+    },
+    "persona_scores_map": {
+      "type": "object",
+      "description": "Keyed by persona id, e.g. 'family_trip', 'senior_citizen'.",
+      "additionalProperties": { "$ref": "#/$defs/persona_score" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "raw_attributes": {
+      "type": "object",
+      "description": "Raw signal-dictionary attributes. Keys MUST match a signal_dictionary.json[].attribute whose scope includes this entity type. Values are in the attribute's native unit — the engine normalizes, nothing here is pre-normalized.",
+      "additionalProperties": true
+    }
+  }
+}

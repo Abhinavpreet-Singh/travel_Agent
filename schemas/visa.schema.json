@@ -1,0 +1,63 @@
+{
+  "$id": "https://schemas.travelomore.com/visa.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Travelomore Visa File",
+  "type": "object",
+  "required": ["schema", "entities"],
+  "properties": {
+    "schema": { "const": "travelomore/visa/1.0.0" },
+    "notes": { "type": "string" },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/visa" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "visa": {
+      "type": "object",
+      "required": [
+        "id", "type", "name", "parent_id", "applicable_passport",
+        "policy_status", "visa_type", "attributes", "meta", "provenance"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^visa:[A-Z]{2}:for:[A-Z]{2}$" },
+        "type": { "const": "visa" },
+        "name": { "type": "string" },
+        "parent_id": { "type": "string", "pattern": "^country:[A-Z]{2}$" },
+        "applicable_passport": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "policy_status": {
+          "type": "string",
+          "enum": ["stable", "transitional", "under_review", "suspended"]
+        },
+        "visa_type": { "type": "string" },
+        "summary": { "type": "string" },
+        "stay_duration_days": { "type": "integer", "minimum": 0 },
+        "e_visa_stay_duration_days": { "type": "integer", "minimum": 0 },
+        "extension_possible": { "type": "boolean" },
+        "extension_max_days": { "type": "integer", "minimum": 0 },
+        "extension_fee_inr": { "type": "number", "minimum": 0 },
+        "processing_time_days": { "type": "number", "minimum": 0 },
+        "processing_time_voa_hours": { "type": "number", "minimum": 0 },
+        "fee_inr": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0 }
+        },
+        "application_channel": { "type": "array", "items": { "type": "string" } },
+        "eligible_entry_points_voa": { "type": "array", "items": { "type": "string" } },
+        "documents_required": { "type": "array", "items": { "type": "string" } },
+        "attributes": { "$ref": "common.schema.json#/$defs/raw_attributes" },
+        "persona_scores": { "$ref": "common.schema.json#/$defs/persona_scores_map" },
+        "meta": { "$ref": "common.schema.json#/$defs/meta" },
+        "provenance": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "common.schema.json#/$defs/provenance_entry" }
+        },
+        "validation": { "$ref": "common.schema.json#/$defs/validation" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$id": "https://schemas.travelomore.com/country.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Travelomore Destination Country File",
+  "type": "object",
+  "required": ["schema", "entities"],
+  "properties": {
+    "schema": { "const": "travelomore/destination_country/1.0.0" },
+    "notes": { "type": "string" },
+    "entities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/destination_country" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "destination_country": {
+      "type": "object",
+      "required": [
+        "id", "type", "iso2", "iso3", "name", "region", "currency",
+        "gateway_airports", "summary", "attributes", "meta"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^country:[A-Z]{2}$" },
+        "type": { "const": "destination_country" },
+        "iso2": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "iso3": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "name": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "region": { "type": "string" },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "primary_language": { "type": "array", "items": { "type": "string" } },
+        "timezone": { "type": "string" },
+        "utc_offset_from_ist": { "type": "string" },
+        "gateway_airports": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[A-Z]{3}$" }
+        },
+        "summary": { "type": "string", "minLength": 20 },
+        "best_months": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 }
+        },
+        "shoulder_months": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 }
+        },
+        "avoid_months": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1, "maximum": 12 }
+        },
+        "seasonality_note": { "type": "string" },
+        "tags": { "$ref": "common.schema.json#/$defs/tags" },
+        "attributes": { "$ref": "common.schema.json#/$defs/raw_attributes" },
+        "persona_scores": { "$ref": "common.schema.json#/$defs/persona_scores_map" },
+        "meta": { "$ref": "common.schema.json#/$defs/meta" },
+        "provenance": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/provenance_entry" }
+        },
+        "validation": { "$ref": "common.schema.json#/$defs/validation" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

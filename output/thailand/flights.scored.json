@@ -1,0 +1,2460 @@
+{
+  "schema": "travelomore/flight/1.0.0",
+  "notes": "Flight entities represent a route class (origin metro -> Thai gateway), not a bookable fare. avg_daily_cost_per_pax_inr is reused here as a cost-efficiency proxy (round_trip_price_inr / 10, a nominal short-trip amortisation) purely so the generic cost_efficiency signal can rank flights on the same [0,1] footing as other entity types — real fare data should replace this at booking time.",
+  "entities": [
+    {
+      "id": "flight:TH:DEL-BKK",
+      "type": "flight",
+      "name": "Delhi (DEL) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": [
+        "Air India",
+        "IndiGo",
+        "Thai Airways",
+        "Vistara"
+      ],
+      "avg_price_inr_return_economy": 22000,
+      "tags": [
+        "direct_flight",
+        "value"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 35,
+        "avg_flight_hours_from_india": 4.5,
+        "transport_comfort_index_0_100": 78,
+        "avg_daily_cost_per_pax_inr": 2200
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.793,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.9,
+            "reasons": [
+              "Low daily spend (~₹2200/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "35 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8618,
+          "score_0_10": 8.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.6,
+            "reasons": [
+              "Low daily spend (~₹2200/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "35 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7036,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8373,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.4,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹2200/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "35 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.73,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.3,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "35 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6654,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹2200/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6642,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6754,
+          "score_0_10": 6.8,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.8,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.451,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6691,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹2200/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:BOM-BKK",
+      "type": "flight",
+      "name": "Mumbai (BOM) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "BOM",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": [
+        "Air India",
+        "IndiGo",
+        "Thai Airways"
+      ],
+      "avg_price_inr_return_economy": 21000,
+      "tags": [
+        "direct_flight",
+        "value"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 28,
+        "avg_flight_hours_from_india": 4.7,
+        "transport_comfort_index_0_100": 78,
+        "avg_daily_cost_per_pax_inr": 2100
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7851,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.9,
+            "reasons": [
+              "Low daily spend (~₹2100/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "28 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8528,
+          "score_0_10": 8.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.5,
+            "reasons": [
+              "Low daily spend (~₹2100/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "28 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7036,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8311,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.3,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹2100/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "28 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7211,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "28 direct weekly flights from India",
+              "Indian restaurants widely available",
+              "Short hop from India (~4.7 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6668,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹2100/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6642,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6754,
+          "score_0_10": 6.8,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.8,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.451,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6698,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹2100/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:BLR-BKK",
+      "type": "flight",
+      "name": "Bengaluru (BLR) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "BLR",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": [
+        "IndiGo",
+        "Thai AirAsia",
+        "Air India"
+      ],
+      "avg_price_inr_return_economy": 19500,
+      "tags": [
+        "direct_flight",
+        "value"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 24,
+        "avg_flight_hours_from_india": 3.9,
+        "transport_comfort_index_0_100": 74,
+        "avg_daily_cost_per_pax_inr": 1950
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7873,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.9,
+            "reasons": [
+              "Low daily spend (~₹1950/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~3.9 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8467,
+          "score_0_10": 8.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.5,
+            "reasons": [
+              "Low daily spend (~₹1950/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "24 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7009,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8268,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.3,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹1950/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7219,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~3.9 h)",
+              "Indian restaurants widely available",
+              "24 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6683,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1950/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6573,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6697,
+          "score_0_10": 6.7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.448,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6679,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1950/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:MAA-BKK",
+      "type": "flight",
+      "name": "Chennai (MAA) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "MAA",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": [
+        "IndiGo",
+        "Thai AirAsia",
+        "Air India"
+      ],
+      "avg_price_inr_return_economy": 18500,
+      "tags": [
+        "direct_flight",
+        "value"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 21,
+        "avg_flight_hours_from_india": 3.5,
+        "transport_comfort_index_0_100": 72,
+        "avg_daily_cost_per_pax_inr": 1850
+      },
+      "meta": {
+        "data_confidence": 0.75,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7858,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.9,
+            "reasons": [
+              "Low daily spend (~₹1850/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~3.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8391,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.4,
+            "reasons": [
+              "Low daily spend (~₹1850/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6996,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8217,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.2,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹1850/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7201,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~3.5 h)",
+              "Indian restaurants widely available",
+              "Strong value for money"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6683,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1850/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6538,
+          "score_0_10": 6.5,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.5,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6669,
+          "score_0_10": 6.7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4465,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6666,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1850/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:CCU-BKK",
+      "type": "flight",
+      "name": "Kolkata (CCU) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "CCU",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": [
+        "IndiGo",
+        "Thai AirAsia",
+        "Air India"
+      ],
+      "avg_price_inr_return_economy": 16000,
+      "tags": [
+        "direct_flight",
+        "value",
+        "short_haul"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 30,
+        "avg_flight_hours_from_india": 2.3,
+        "transport_comfort_index_0_100": 76,
+        "avg_daily_cost_per_pax_inr": 1600
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8024,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 8,
+            "reasons": [
+              "Low daily spend (~₹1600/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~2.3 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8589,
+          "score_0_10": 8.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 8.6,
+            "reasons": [
+              "Low daily spend (~₹1600/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "30 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7022,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8348,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 8.3,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹1600/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "30 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7367,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 7.4,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~2.3 h)",
+              "30 direct weekly flights from India",
+              "Indian restaurants widely available"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6683,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1600/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6608,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6726,
+          "score_0_10": 6.7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4495,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6692,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹1600/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:DEL-HKT",
+      "type": "flight",
+      "name": "Delhi (DEL) to Phuket (HKT)",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "HKT",
+      "is_direct": true,
+      "airlines": [
+        "IndiGo",
+        "Vistara"
+      ],
+      "avg_price_inr_return_economy": 26000,
+      "tags": [
+        "direct_flight",
+        "seasonal"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 7,
+        "avg_flight_hours_from_india": 5.2,
+        "transport_comfort_index_0_100": 76,
+        "avg_daily_cost_per_pax_inr": 2600
+      },
+      "meta": {
+        "data_confidence": 0.68,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.731,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.3,
+            "reasons": [
+              "Strong value for money",
+              "Low daily spend (~₹2600/person/day)",
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7692,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.7,
+            "reasons": [
+              "Low daily spend (~₹2600/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7022,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7771,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.8,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹2600/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6714,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Strong value for money",
+              "Short hop from India (~5.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6596,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.6,
+            "reasons": [
+              "Low daily spend (~₹2600/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6608,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6726,
+          "score_0_10": 6.7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4495,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.665,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.6,
+            "reasons": [
+              "Low daily spend (~₹2600/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:BOM-HKT",
+      "type": "flight",
+      "name": "Mumbai (BOM) to Phuket (HKT)",
+      "parent_id": "country:TH",
+      "origin_iata": "BOM",
+      "destination_iata": "HKT",
+      "is_direct": true,
+      "airlines": [
+        "IndiGo"
+      ],
+      "avg_price_inr_return_economy": 25000,
+      "tags": [
+        "direct_flight",
+        "seasonal"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 5,
+        "avg_flight_hours_from_india": 5,
+        "transport_comfort_index_0_100": 74,
+        "avg_daily_cost_per_pax_inr": 2500
+      },
+      "meta": {
+        "data_confidence": 0.66,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7263,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.3,
+            "reasons": [
+              "Low daily spend (~₹2500/person/day)",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.76,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.6,
+            "reasons": [
+              "Low daily spend (~₹2500/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7009,
+          "score_0_10": 7,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7707,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.7,
+            "reasons": [
+              "Alcohol is freely available",
+              "Low daily spend (~₹2500/person/day)",
+              "Cheap drinks (~₹190 a beer)",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6656,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Short hop from India (~5 h)",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.661,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.6,
+            "reasons": [
+              "Low daily spend (~₹2500/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6573,
+          "score_0_10": 6.6,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.6,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Comfortable, air-conditioned transport",
+              "Pharmacies widely available",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6697,
+          "score_0_10": 6.7,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Comfortable, air-conditioned transport",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.448,
+          "score_0_10": 4.5,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.5,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6644,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.6,
+            "reasons": [
+              "Low daily spend (~₹2500/person/day)",
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "flight:TH:DEL-USM",
+      "type": "flight",
+      "name": "Delhi (DEL) to Koh Samui (USM) via Bangkok",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "USM",
+      "is_direct": false,
+      "connection_point": "BKK",
+      "airlines": [
+        "Bangkok Airways (connecting)",
+        "Thai Airways (connecting)"
+      ],
+      "avg_price_inr_return_economy": 34000,
+      "tags": [
+        "connecting_flight"
+      ],
+      "attributes": {
+        "direct_flights_from_india_weekly": 0,
+        "avg_flight_hours_from_india": 8.5,
+        "transport_comfort_index_0_100": 62,
+        "avg_daily_cost_per_pax_inr": 3400
+      },
+      "meta": {
+        "data_confidence": 0.65,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6671,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 6.7,
+            "reasons": [
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure",
+              "Low daily spend (~₹3400/person/day)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7038,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7,
+            "reasons": [
+              "Low daily spend (~₹3400/person/day)",
+              "Strong value for money",
+              "Cheap drinks (~₹190 a beer)",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6929,
+          "score_0_10": 6.9,
+          "signal_coverage": 0.867,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 6.9,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Strong general safety record (safety index 68/100)",
+              "Strong value for money",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7359,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.4,
+            "reasons": [
+              "Alcohol is freely available",
+              "Cheap drinks (~₹190 a beer)",
+              "Low daily spend (~₹3400/person/day)",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Strong value for money",
+              "Alcohol is freely available",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6162,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 6.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Indian restaurants widely available",
+              "Strong value for money",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6481,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.5,
+            "reasons": [
+              "Low daily spend (~₹3400/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6365,
+          "score_0_10": 6.4,
+          "signal_coverage": 0.75,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.4,
+            "reasons": [
+              "International-standard hospitals (quality index 88/100)",
+              "Pharmacies widely available",
+              "Comfortable, air-conditioned transport",
+              "Fast emergency response and tourist assistance"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6526,
+          "score_0_10": 6.5,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.5,
+            "reasons": [
+              "Strong general safety record (safety index 68/100)",
+              "Paediatric care readily available",
+              "Reliable food hygiene standards",
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5677,
+          "score_0_10": 5.7,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 5.7,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7003,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (72/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "Low reported street harassment",
+              "Comfortable to move around after dark"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Zika risk level is not acceptable during pregnancy",
+              "signal": "zika_risk_low",
+              "op": ">=",
+              "required_value": 0.5,
+              "actual_value": 0.35
+            },
+            {
+              "kind": "soft",
+              "reason": "Flight duration exceeds the comfortable pregnancy window",
+              "signal": "flight_time_ease",
+              "op": ">=",
+              "required_value": 0.4,
+              "actual_value": 0.38888888888888884
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Zika risk level is not acceptable during pregnancy"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.439,
+          "score_0_10": 4.4,
+          "signal_coverage": 0.875,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 4.4,
+            "reasons": [
+              "Comfortable, air-conditioned transport"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6501,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 6.5,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Fuel and rest stops at regular intervals",
+              "Low daily spend (~₹3400/person/day)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

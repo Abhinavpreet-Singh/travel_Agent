@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Command pandoc -ErrorAction SilentlyContinue)",
+      "PowerShell(python --version)",
+      "Bash(pandoc -t markdown \"Travelomore_Developer_Onboarding.docx\" -o \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--repo-travelomore-agent\\\\9b004365-5153-4aee-bfee-3321939f8fa4\\\\scratchpad\\\\onboarding.md\")",
+      "Bash(python -c ' *)",
+      "Read(//c/repo/**)",
+      "Bash(mkdir -p ontology personas data/thailand engine schemas output/thailand docs)",
+      "Bash(mv signal_dictionary.json ontology/)",
+      "Bash(mv personas.json personas/)",
+      "Bash(mv country.json data/thailand/)",
+      "Bash(mv cities.json data/thailand/)",
+      "Bash(node engine/generate.js)",
+      "Bash(node engine/cli.js --city=HKT --persona=senior_citizen,bachelor_trip)",
+      "Bash(node engine/cli.js \"family trip to Phuket with 2 kids aged 5 and 9, need wheelchair access for grandma\")",
+      "Bash(node engine/cli.js)",
+      "Bash(node --input-type=module -e ' *)",
+      "Bash(node -e ' *)",
+      "Bash(echo \"=== exit code: $? ===\")",
+      "Bash(rm -rf output/thailand/queries output/thailand/query_result*.json)",
+      "Bash(node engine/cli.js --city=HKT --persona=senior_citizen)",
+      "Bash(cd \"C:\\\\repo\\\\travelomore_agent\" && rm -rf output/thailand/queries output/thailand/query_result*.json && ls output/thailand/)"
+    ]
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema": "travelomore/destination_country/1.0.0",
+  "entities": [
+    {
+      "id": "country:TH",
+      "type": "destination_country",
+      "iso2": "TH",
+      "iso3": "THA",
+      "name": "Thailand",
+      "aliases": ["Siam", "Land of Smiles"],
+      "region": "South East Asia",
+      "currency": "THB",
+      "primary_language": ["th"],
+      "timezone": "Asia/Bangkok",
+      "utc_offset_from_ist": "+1:30",
+      "gateway_airports": ["BKK", "DMK", "HKT", "CNX", "USM", "KBV"],
+      "summary": "Thailand is India's highest-volume outbound leisure market: 4-5 hour flights, dense direct connectivity from six Indian metros, mature tourist infrastructure, low daily cost, and a spread that covers beaches, nightlife, temples, mountains, diving and family resorts inside one country.",
+      "best_months": [11, 12, 1, 2, 3],
+      "shoulder_months": [4, 10],
+      "avoid_months": [9],
+      "seasonality_note": "NE monsoon flips the coasts: Andaman (Phuket/Krabi/Phi Phi) is best Nov-Apr; the Gulf (Samui/Phangan/Tao) is best Feb-Apr and Jul-Sep, and is at its worst Oct-Dec.",
+      "tags": ["beginner_friendly", "package_ready", "nightlife", "island", "family_friendly", "value", "photogenic", "food"],
+      "attributes": {
+        "safety_index_0_100": 68,
+        "female_solo_safety_index_0_100": 72,
+        "night_safety_index_0_100": 66,
+        "scam_incidence_index_0_100": 55,
+        "street_harassment_index_0_100": 30,
+        "water_safety_index_0_100": 62,
+        "road_fatality_per_100k": 25.4,
+        "emergency_response_index_0_100": 65,
+
+        "intl_hospital_quality_index_0_100": 88,
+        "pharmacy_density_index_0_100": 88,
+        "medevac_ease_index_0_100": 82,
+        "dengue_malaria_risk_index_0_100": 45,
+        "zika_risk_level": "moderate",
+        "food_hygiene_index_0_100": 62,
+        "tap_water_potable": "unsafe",
+        "pm25_annual_ug_m3": 23,
+        "pediatric_care_index_0_100": 80,
+        "obstetric_care_index_0_100": 82,
+
+        "wheelchair_infrastructure_index_0_100": 42,
+        "accessible_transport_index_0_100": 40,
+
+        "weather_comfort_index_0_100": 62,
+
+        "direct_flights_from_india_weekly": 190,
+        "avg_flight_hours_from_india": 4.3,
+        "transport_comfort_index_0_100": 74,
+        "self_drive_index_0_100": 62,
+        "road_quality_index_0_100": 72,
+        "scenic_drive_index_0_100": 68,
+        "fuel_stop_index_0_100": 82,
+
+        "avg_daily_cost_per_pax_inr": 4800,
+        "value_index_0_100": 88,
+        "beer_500ml_price_inr": 190,
+
+        "alcohol_access_index_0_100": 85,
+
+        "english_index_0_100": 58,
+        "tourist_infra_index_0_100": 93,
+        "tourist_police_index_0_100": 80,
+        "card_upi_acceptance_index_0_100": 70,
+        "visa_ease_index_0_100": 62,
+        "veg_food_index_0_100": 60,
+        "indian_food_index_0_100": 85,
+
+        "drone_policy": "permit_required",
+        "avg_wifi_mbps": 65
+      },
+      "meta": {
+        "data_confidence": 0.82,
+        "last_verified": "2026-07-13",
+        "volatility": {
+          "visa_ease_index_0_100": "high",
+          "avg_daily_cost_per_pax_inr": "medium",
+          "direct_flights_from_india_weekly": "medium",
+          "pm25_annual_ug_m3": "seasonal"
+        },
+        "review_status": "editorial_draft",
+        "reviewer": null
+      },
+      "provenance": [
+        {
+          "attributes": ["visa_ease_index_0_100"],
+          "source_type": "policy",
+          "source": "Thai Cabinet decision 19 May 2026 (60-day exemption revoked, India moved to VoA/e-Visa) vs Royal Thai Embassy New Delhi (exemption 'effective until further announcement'). See data/thailand/visa.json.",
+          "method": "derived_from_visa_entity",
+          "confidence": 0.55,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": ["intl_hospital_quality_index_0_100", "pharmacy_density_index_0_100", "medevac_ease_index_0_100", "pediatric_care_index_0_100", "obstetric_care_index_0_100"],
+          "source_type": "editorial_index",
+          "source": "JCI-accredited hospital footprint (Bumrungrad, Bangkok Hospital, Samitivej, Bangkok Hospital Phuket/Samui) + medical-tourism volume",
+          "method": "expert_estimate",
+          "confidence": 0.85,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": ["road_fatality_per_100k"],
+          "source_type": "statistical",
+          "source": "WHO Global Status Report on Road Safety (Thailand is among the world's worst per-capita road fatality rates)",
+          "method": "published_statistic",
+          "confidence": 0.9,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": ["zika_risk_level", "dengue_malaria_risk_index_0_100"],
+          "source_type": "health_authority",
+          "source": "CDC/WHO country risk classification — Thailand carries a persistent Zika signal; dengue is endemic with monsoon peaks",
+          "method": "published_classification",
+          "confidence": 0.88,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": ["safety_index_0_100", "female_solo_safety_index_0_100", "night_safety_index_0_100", "scam_incidence_index_0_100", "street_harassment_index_0_100", "tourist_infra_index_0_100", "english_index_0_100", "value_index_0_100", "veg_food_index_0_100", "indian_food_index_0_100", "water_safety_index_0_100", "food_hygiene_index_0_100"],
+          "source_type": "editorial_index",
+          "source": "Composite of aggregated traveller-review sentiment (TripAdvisor/Google review corpora), Numbeo safety indices and Travelomore desk research",
+          "method": "expert_estimate",
+          "confidence": 0.72,
+          "last_verified": "2026-07-13"
+        },
+        {
+          "attributes": ["direct_flights_from_india_weekly", "avg_flight_hours_from_india", "avg_daily_cost_per_pax_inr", "beer_500ml_price_inr"],
+          "source_type": "market",
+          "source": "Airline schedule scrape (DEL/BOM/BLR/MAA/CCU/HYD → BKK/DMK/HKT) + Travelomore booked-basket averages",
+          "method": "market_sample",
+          "confidence": 0.75,
+          "last_verified": "2026-07-13"
+        }
+      ],
+      "validation": {
+        "required_attributes_present": true,
+        "unmapped_attributes": [],
+        "signal_coverage": null,
+        "computed_at": null
+      }
+    }
+  ]
+}

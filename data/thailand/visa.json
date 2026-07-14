@@ -1,0 +1,61 @@
+{
+  "schema": "travelomore/visa/1.0.0",
+  "notes": "Visa policy is the single most volatile signal in the entire ontology (see country.json provenance). requires_live_verification=true on this entity means: never let the ranking engine or an LLM state a visa fact to a user without a live re-check against the source URL. Treat cached values here as a directional prior for ranking only, not as travel advice.",
+  "entities": [
+    {
+      "id": "visa:TH:for:IN",
+      "type": "visa",
+      "name": "Thailand entry policy for Indian passport holders",
+      "parent_id": "country:TH",
+      "applicable_passport": "IN",
+      "policy_status": "transitional",
+      "visa_type": "e_visa_or_visa_on_arrival",
+      "summary": "As of the 19 May 2026 Thai Cabinet decision, the unilateral 60-day visa exemption for Indian passports was revoked; entry now routes through e-Visa (apply ahead) or Visa-on-Arrival (15 days, at designated airports). The Royal Thai Embassy New Delhi's public guidance had not been fully reconciled with the Cabinet decision as of last check — this is exactly the kind of conflict that must be live-verified per trip, not answered from cache.",
+      "stay_duration_days": 15,
+      "e_visa_stay_duration_days": 60,
+      "extension_possible": true,
+      "extension_max_days": 30,
+      "extension_fee_inr": 4300,
+      "processing_time_days": 3,
+      "processing_time_voa_hours": 2,
+      "fee_inr": {
+        "e_visa": 2100,
+        "visa_on_arrival": 2000
+      },
+      "application_channel": ["online_e_visa_portal", "airport_voa_counter"],
+      "eligible_entry_points_voa": ["BKK", "DMK", "HKT", "CNX", "USM", "KBV", "UTP"],
+      "documents_required": [
+        "passport_valid_6_months",
+        "return_or_onward_ticket",
+        "proof_of_accommodation",
+        "proof_of_funds_20000_thb_per_person",
+        "passport_photo_voa_only"
+      ],
+      "attributes": {
+        "visa_ease_index_0_100": 55
+      },
+      "meta": {
+        "data_confidence": 0.5,
+        "last_verified": "2026-07-13",
+        "review_status": "editorial_draft",
+        "volatility": "high"
+      },
+      "provenance": [
+        {
+          "attributes": ["policy_status", "visa_type", "stay_duration_days", "fee_inr", "visa_ease_index_0_100"],
+          "source_type": "policy",
+          "source": "Thai Cabinet decision 19 May 2026 (60-day exemption revoked, India moved to VoA/e-Visa) vs Royal Thai Embassy New Delhi public guidance (exemption described as 'effective until further announcement') — the two sources disagree and neither has been reconciled as of last check",
+          "method": "conflicting_primary_sources",
+          "confidence": 0.5,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-13"
+        }
+      ],
+      "validation": {
+        "required_attributes_present": true,
+        "unmapped_attributes": [],
+        "computed_at": null
+      }
+    }
+  ]
+}

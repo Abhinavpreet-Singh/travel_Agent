@@ -1,0 +1,940 @@
+{
+  "$id": "travelomore/personas",
+  "version": "1.0.0",
+  "updated_at": "2026-07-13",
+  "contract": {
+    "weights": "Keys MUST be signal ids from ontology/signal_dictionary.json. Values are relative weights; the engine renormalises over signals applicable to the entity type, so weights need not sum to exactly 100 after filtering.",
+    "hard_gates": "Evaluated BEFORE scoring. If a gate fails, entity is marked eligible=false and excluded from ranking (not scored down). Gates are the difference between 'bad fit' and 'do not show'.",
+    "soft_gates": "Fail => capped score. Used where the constraint is a warning not a blocker.",
+    "tag_modifiers": "Applied after weighted score, bounded to +/- 0.12 on the 0..1 scale. Tags come from entity.tags.",
+    "persona_stacking": "A trip can activate multiple personas (e.g. family_trip + infant_friendly). Engine composes them via weighted merge; see engine/score.js -> composePersonas()."
+  },
+  "personas": [
+    {
+      "id": "default",
+      "label": "Default Traveller",
+      "description": "No declared constraints. Balanced ranking optimising for experience quality, value, safety and ease of travel.",
+      "eligibility": {
+        "trigger": "no_other_persona_detected",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "safety_general",
+        "tourist_infrastructure",
+        "value_for_money"
+      ],
+      "nice_to_have_attributes": [
+        "photogenic_quality",
+        "weather_comfort",
+        "direct_flight_access"
+      ],
+      "hard_gates": [],
+      "soft_gates": [],
+      "weights": {
+        "safety_general": 10,
+        "tourist_infrastructure": 10,
+        "value_for_money": 12,
+        "cost_efficiency": 10,
+        "weather_comfort": 8,
+        "direct_flight_access": 8,
+        "flight_time_ease": 6,
+        "visa_ease": 6,
+        "photogenic_quality": 8,
+        "crowd_pressure_low": 4,
+        "food_hygiene": 4,
+        "english_prevalence": 4,
+        "intracity_transport_quality": 4,
+        "healthcare_quality": 3,
+        "iconic_landmark_density": 3
+      },
+      "tag_modifiers": { "boost": {}, "penalty": {} }
+    },
+
+    {
+      "id": "friends_trip",
+      "label": "Friends Trip",
+      "description": "Group of 3-8 adults, no children, mixed budget sensitivity, high appetite for shared activities, nightlife and photo-worthy moments. Per-head cost matters more than luxury.",
+      "eligibility": {
+        "trigger": "group_size>=3 AND children==0 AND relationship=='friends'",
+        "traveller_conditions": [
+          "group_size >= 3",
+          "min_age >= 18",
+          "no_infants"
+        ]
+      },
+      "required_attributes": [
+        "group_activity_density",
+        "group_cost_efficiency",
+        "nightlife_density"
+      ],
+      "nice_to_have_attributes": [
+        "beach_club_quality",
+        "late_night_food",
+        "photogenic_quality",
+        "alcohol_affordability"
+      ],
+      "hard_gates": [],
+      "soft_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.35,
+          "cap": 0.6,
+          "reason": "Baseline safety not met for an unsupervised group trip"
+        }
+      ],
+      "weights": {
+        "group_activity_density": 15,
+        "nightlife_density": 12,
+        "group_cost_efficiency": 12,
+        "cost_efficiency": 10,
+        "party_scene_quality": 8,
+        "alcohol_affordability": 6,
+        "late_night_food": 5,
+        "photogenic_quality": 6,
+        "beach_club_quality": 5,
+        "value_for_money": 6,
+        "safety_general": 5,
+        "direct_flight_access": 5,
+        "intracity_transport_quality": 5
+      },
+      "tag_modifiers": {
+        "boost": {
+          "nightlife": 0.03,
+          "island": 0.02,
+          "adventure": 0.02,
+          "group_friendly": 0.03
+        },
+        "penalty": { "honeymoon_only": 0.03, "senior_focused": 0.02 }
+      }
+    },
+
+    {
+      "id": "family_trip",
+      "label": "Family Trip",
+      "description": "Two or more adults travelling with children (3-17). Optimises for safety, kid engagement, short transfers, dining ease and medical fallback. Nightlife is actively de-prioritised.",
+      "eligibility": {
+        "trigger": "children_count>=1 AND min_child_age>=3",
+        "traveller_conditions": ["adults >= 1", "children >= 1"]
+      },
+      "required_attributes": [
+        "safety_general",
+        "kid_activity_density",
+        "kids_dining_ease",
+        "healthcare_quality"
+      ],
+      "nice_to_have_attributes": [
+        "shallow_calm_beach",
+        "family_room_availability",
+        "arrival_transfer_ease",
+        "vegetarian_food_access"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Below the safety floor for travelling with children"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "hospital_proximity",
+          "op": ">=",
+          "value": 0.25,
+          "cap": 0.7,
+          "reason": "No hospital within a reasonable radius"
+        }
+      ],
+      "weights": {
+        "kid_activity_density": 15,
+        "safety_general": 12,
+        "kids_dining_ease": 9,
+        "healthcare_quality": 8,
+        "hospital_proximity": 6,
+        "shallow_calm_beach": 7,
+        "family_room_availability": 6,
+        "arrival_transfer_ease": 6,
+        "food_hygiene": 6,
+        "vegetarian_food_access": 5,
+        "walking_load_low": 5,
+        "value_for_money": 5,
+        "heat_stress_low": 4,
+        "crowd_pressure_low": 3,
+        "transport_comfort": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "family_friendly": 0.04,
+          "theme_park": 0.03,
+          "wildlife": 0.02,
+          "calm_beach": 0.02
+        },
+        "penalty": {
+          "nightlife": 0.04,
+          "adult_only": 0.06,
+          "extreme_adventure": 0.03,
+          "party": 0.04
+        }
+      }
+    },
+
+    {
+      "id": "bachelor_trip",
+      "label": "Bachelor Trip",
+      "description": "All-male (or predominantly male) pre-wedding group. Nightlife, adult entertainment, day-drinking, adventure and per-head cost dominate. Cultural/heritage weight near zero.",
+      "eligibility": {
+        "trigger": "occasion=='bachelor' OR (group_size>=4 AND gender_mix=='male' AND occasion=='pre_wedding')",
+        "traveller_conditions": ["min_age >= 21", "no_children"]
+      },
+      "required_attributes": [
+        "nightlife_density",
+        "party_scene_quality",
+        "alcohol_availability",
+        "group_cost_efficiency"
+      ],
+      "nice_to_have_attributes": [
+        "adult_entertainment_access",
+        "beach_club_quality",
+        "late_night_food",
+        "group_activity_density"
+      ],
+      "hard_gates": [
+        {
+          "signal": "alcohol_availability",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Alcohol restrictions make this unsuitable for a bachelor trip"
+        }
+      ],
+      "soft_gates": [],
+      "weights": {
+        "party_scene_quality": 18,
+        "nightlife_density": 16,
+        "alcohol_availability": 10,
+        "group_cost_efficiency": 10,
+        "adult_entertainment_access": 8,
+        "alcohol_affordability": 7,
+        "beach_club_quality": 7,
+        "group_activity_density": 7,
+        "late_night_food": 5,
+        "cost_efficiency": 5,
+        "night_safety": 4,
+        "direct_flight_access": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "nightlife": 0.05,
+          "party": 0.05,
+          "adult_only": 0.03,
+          "adventure": 0.02
+        },
+        "penalty": {
+          "family_friendly": 0.03,
+          "spiritual": 0.03,
+          "heritage": 0.02,
+          "dry_zone": 0.08
+        }
+      }
+    },
+
+    {
+      "id": "bachelorette_trip",
+      "label": "Bachelorette Trip",
+      "description": "All-female (or predominantly female) pre-wedding group. Balances nightlife and photo-forward experiences with a materially higher safety floor, plus wellness/spa and beach-club weighting.",
+      "eligibility": {
+        "trigger": "occasion=='bachelorette' OR (group_size>=3 AND gender_mix=='female' AND occasion=='pre_wedding')",
+        "traveller_conditions": ["min_age >= 21", "no_children"]
+      },
+      "required_attributes": [
+        "safety_female_solo",
+        "night_safety",
+        "nightlife_density",
+        "wellness_spa_quality"
+      ],
+      "nice_to_have_attributes": [
+        "photogenic_quality",
+        "beach_club_quality",
+        "group_cost_efficiency",
+        "street_harassment_low"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_female_solo",
+          "op": ">=",
+          "value": 0.5,
+          "reason": "Below the safety floor for an all-female group"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "night_safety",
+          "op": ">=",
+          "value": 0.45,
+          "cap": 0.65,
+          "reason": "Night-time safety is marginal"
+        }
+      ],
+      "weights": {
+        "safety_female_solo": 14,
+        "nightlife_density": 12,
+        "photogenic_quality": 11,
+        "wellness_spa_quality": 10,
+        "night_safety": 9,
+        "beach_club_quality": 8,
+        "party_scene_quality": 7,
+        "group_cost_efficiency": 7,
+        "street_harassment_low": 6,
+        "alcohol_availability": 5,
+        "value_for_money": 5,
+        "scam_pressure_low": 3,
+        "late_night_food": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "nightlife": 0.04,
+          "wellness": 0.04,
+          "photogenic": 0.03,
+          "island": 0.02
+        },
+        "penalty": {
+          "adult_only": 0.05,
+          "unsafe_night": 0.06,
+          "dry_zone": 0.05
+        }
+      }
+    },
+
+    {
+      "id": "first_international_trip",
+      "label": "First International Trip",
+      "description": "Traveller has never left the country. Optimises for low-friction entry, English usability, mature tourist infrastructure, low scam pressure, direct flights and food familiarity. Novelty is secondary to confidence.",
+      "eligibility": {
+        "trigger": "prior_international_trips==0",
+        "traveller_conditions": ["passport_valid == true"]
+      },
+      "required_attributes": [
+        "visa_ease",
+        "english_prevalence",
+        "tourist_infrastructure",
+        "direct_flight_access"
+      ],
+      "nice_to_have_attributes": [
+        "indian_food_availability",
+        "payment_ease",
+        "tourist_police_presence",
+        "scam_pressure_low"
+      ],
+      "hard_gates": [
+        {
+          "signal": "visa_ease",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Entry process is too heavy for a first international trip"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "tourist_infrastructure",
+          "op": ">=",
+          "value": 0.5,
+          "cap": 0.7,
+          "reason": "Tourist infrastructure is too raw for a first-timer"
+        }
+      ],
+      "weights": {
+        "visa_ease": 14,
+        "tourist_infrastructure": 13,
+        "english_prevalence": 11,
+        "direct_flight_access": 10,
+        "flight_time_ease": 7,
+        "scam_pressure_low": 8,
+        "indian_food_availability": 7,
+        "payment_ease": 6,
+        "safety_general": 7,
+        "vegetarian_food_access": 5,
+        "tourist_police_presence": 4,
+        "value_for_money": 5,
+        "healthcare_quality": 3
+      },
+      "tag_modifiers": {
+        "boost": { "beginner_friendly": 0.04, "package_ready": 0.03 },
+        "penalty": { "offbeat": 0.04, "remote": 0.05, "language_barrier": 0.03 }
+      }
+    },
+
+    {
+      "id": "content_creator",
+      "label": "Content Creator",
+      "description": "Traveller monetising or building an audience. Optimises for visual payload, novelty (low saturation), drone legality, golden-hour logistics and upload bandwidth. Comfort is traded away for shot quality.",
+      "eligibility": {
+        "trigger": "self_declared_creator==true OR primary_goal=='content'",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "photogenic_quality",
+        "content_novelty",
+        "wifi_quality"
+      ],
+      "nice_to_have_attributes": [
+        "drone_permissiveness",
+        "golden_hour_access",
+        "iconic_landmark_density",
+        "coworking_density",
+        "crowd_pressure_low"
+      ],
+      "hard_gates": [],
+      "soft_gates": [
+        {
+          "signal": "wifi_quality",
+          "op": ">=",
+          "value": 0.25,
+          "cap": 0.75,
+          "reason": "Bandwidth too low for video upload workflows"
+        }
+      ],
+      "weights": {
+        "photogenic_quality": 18,
+        "content_novelty": 13,
+        "iconic_landmark_density": 10,
+        "golden_hour_access": 9,
+        "drone_permissiveness": 9,
+        "wifi_quality": 9,
+        "crowd_pressure_low": 8,
+        "coworking_density": 5,
+        "cost_efficiency": 6,
+        "safety_general": 4,
+        "intracity_transport_quality": 5,
+        "weather_comfort": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "photogenic": 0.05,
+          "offbeat": 0.04,
+          "sunrise_spot": 0.03,
+          "drone_friendly": 0.03
+        },
+        "penalty": { "overtouristed": 0.05, "no_photography": 0.08 }
+      }
+    },
+
+    {
+      "id": "senior_citizen",
+      "label": "Senior Citizen",
+      "description": "Traveller aged 60+. Optimises for medical fallback, low physical load, comfortable transport, rest stops, toilets, heat management and step-free access. Novelty and nightlife are near-zero weight.",
+      "eligibility": {
+        "trigger": "max_traveller_age >= 60",
+        "traveller_conditions": ["age >= 60"]
+      },
+      "required_attributes": [
+        "hospital_proximity",
+        "healthcare_quality",
+        "walking_load_low",
+        "transport_comfort",
+        "rest_stop_availability",
+        "public_toilet_availability"
+      ],
+      "nice_to_have_attributes": [
+        "elevator_availability",
+        "wheelchair_access",
+        "heat_stress_low",
+        "altitude_safety",
+        "seating_shade_availability"
+      ],
+      "hard_gates": [
+        {
+          "signal": "altitude_safety",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Altitude exposure is unsafe without medical clearance"
+        },
+        {
+          "signal": "hospital_proximity",
+          "op": ">=",
+          "value": 0.2,
+          "reason": "No reachable hospital in an emergency"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "physical_exertion_low",
+          "op": ">=",
+          "value": 0.4,
+          "cap": 0.55,
+          "reason": "Exertion level exceeds a comfortable senior threshold"
+        }
+      ],
+      "weights": {
+        "hospital_proximity": 13,
+        "healthcare_quality": 12,
+        "walking_load_low": 11,
+        "wheelchair_access": 8,
+        "elevator_availability": 6,
+        "transport_comfort": 9,
+        "rest_stop_availability": 8,
+        "public_toilet_availability": 7,
+        "physical_exertion_low": 7,
+        "heat_stress_low": 6,
+        "terrain_ease": 5,
+        "emergency_response": 4,
+        "seating_shade_availability": 4,
+        "crowd_pressure_low": 4,
+        "altitude_safety": 4,
+        "arrival_transfer_ease": 4,
+        "food_hygiene": 3,
+        "pharmacy_access": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "senior_focused": 0.04,
+          "step_free": 0.03,
+          "cultural": 0.02,
+          "slow_travel": 0.03
+        },
+        "penalty": {
+          "trekking": 0.06,
+          "extreme_adventure": 0.06,
+          "nightlife": 0.03,
+          "high_altitude": 0.08
+        }
+      }
+    },
+
+    {
+      "id": "child_friendly",
+      "label": "Child Friendly (3-12)",
+      "description": "Applied at entity level when children aged 3-12 are present. Stricter than family_trip: enforces age minimums on activities, weights engagement, safety and short attention-span logistics.",
+      "eligibility": {
+        "trigger": "any_child_age BETWEEN 3 AND 12",
+        "traveller_conditions": ["child_age >= 3", "child_age <= 12"]
+      },
+      "required_attributes": [
+        "kid_activity_density",
+        "safety_general",
+        "food_hygiene",
+        "public_toilet_availability"
+      ],
+      "nice_to_have_attributes": [
+        "shallow_calm_beach",
+        "walking_load_low",
+        "kids_dining_ease",
+        "pediatric_care_access"
+      ],
+      "hard_gates": [
+        {
+          "attribute": "min_age",
+          "op": "<=",
+          "value": 6,
+          "scope": ["activity"],
+          "reason": "Activity has a minimum age above the child's age"
+        },
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Below the safety floor for children"
+        }
+      ],
+      "soft_gates": [],
+      "weights": {
+        "kid_activity_density": 18,
+        "safety_general": 11,
+        "food_hygiene": 8,
+        "kids_dining_ease": 8,
+        "shallow_calm_beach": 8,
+        "walking_load_low": 8,
+        "public_toilet_availability": 7,
+        "pediatric_care_access": 6,
+        "hospital_proximity": 5,
+        "heat_stress_low": 6,
+        "crowd_pressure_low": 5,
+        "physical_exertion_low": 5,
+        "transport_comfort": 5
+      },
+      "tag_modifiers": {
+        "boost": {
+          "family_friendly": 0.05,
+          "theme_park": 0.04,
+          "wildlife": 0.03,
+          "interactive": 0.03
+        },
+        "penalty": {
+          "nightlife": 0.06,
+          "adult_only": 0.1,
+          "extreme_adventure": 0.05
+        }
+      }
+    },
+
+    {
+      "id": "infant_friendly",
+      "label": "Infant Friendly (0-2)",
+      "description": "Applied when an infant under 3 travels. Dominated by hygiene, medical proximity, stroller access, nap logistics, heat exposure, transfer duration and cot/changing availability. Most adventure activities are hard-gated out.",
+      "eligibility": {
+        "trigger": "any_child_age < 3",
+        "traveller_conditions": ["child_age < 3"]
+      },
+      "required_attributes": [
+        "infant_amenities",
+        "hospital_proximity",
+        "pediatric_care_access",
+        "stroller_friendliness",
+        "food_hygiene"
+      ],
+      "nice_to_have_attributes": [
+        "arrival_transfer_ease",
+        "noise_low",
+        "heat_stress_low",
+        "family_room_availability",
+        "tap_water_safety"
+      ],
+      "hard_gates": [
+        {
+          "attribute": "infant_ok",
+          "op": "==",
+          "value": true,
+          "scope": ["activity"],
+          "reason": "Activity is not viable with an infant"
+        },
+        {
+          "signal": "hospital_proximity",
+          "op": ">=",
+          "value": 0.3,
+          "reason": "Paediatric emergency access is inadequate"
+        },
+        {
+          "signal": "altitude_safety",
+          "op": ">=",
+          "value": 0.5,
+          "reason": "Altitude exposure is unsafe for an infant"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "arrival_transfer_ease",
+          "op": ">=",
+          "value": 0.35,
+          "cap": 0.65,
+          "reason": "Transfer leg is too long for an infant"
+        }
+      ],
+      "weights": {
+        "infant_amenities": 16,
+        "hospital_proximity": 12,
+        "pediatric_care_access": 10,
+        "stroller_friendliness": 10,
+        "food_hygiene": 8,
+        "tap_water_safety": 5,
+        "arrival_transfer_ease": 8,
+        "heat_stress_low": 7,
+        "noise_low": 5,
+        "family_room_availability": 6,
+        "walking_load_low": 5,
+        "vector_disease_risk_low": 5,
+        "crowd_pressure_low": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "family_friendly": 0.04,
+          "calm_beach": 0.03,
+          "resort_stay": 0.03
+        },
+        "penalty": {
+          "nightlife": 0.06,
+          "extreme_adventure": 0.1,
+          "long_transfer": 0.05,
+          "high_altitude": 0.1
+        }
+      }
+    },
+
+    {
+      "id": "female_solo",
+      "label": "Female Solo Traveller",
+      "description": "Woman travelling alone. Optimises for night safety, harassment levels, transport reliability, solo-dining and hostel/solo-social infrastructure, plus scam pressure. Hard safety floor.",
+      "eligibility": {
+        "trigger": "group_size==1 AND gender=='female'",
+        "traveller_conditions": ["group_size == 1"]
+      },
+      "required_attributes": [
+        "safety_female_solo",
+        "night_safety",
+        "street_harassment_low",
+        "intracity_transport_quality"
+      ],
+      "nice_to_have_attributes": [
+        "english_prevalence",
+        "scam_pressure_low",
+        "tourist_police_presence",
+        "emergency_response",
+        "wifi_quality"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_female_solo",
+          "op": ">=",
+          "value": 0.5,
+          "reason": "Below the solo-female safety floor"
+        },
+        {
+          "signal": "night_safety",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Night-time safety does not clear the floor for solo travel"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "emergency_response",
+          "op": ">=",
+          "value": 0.4,
+          "cap": 0.7,
+          "reason": "Emergency support is weak for a solo traveller"
+        }
+      ],
+      "weights": {
+        "safety_female_solo": 18,
+        "night_safety": 13,
+        "street_harassment_low": 11,
+        "intracity_transport_quality": 9,
+        "scam_pressure_low": 8,
+        "english_prevalence": 7,
+        "tourist_police_presence": 6,
+        "emergency_response": 6,
+        "tourist_infrastructure": 6,
+        "wifi_quality": 4,
+        "value_for_money": 5,
+        "healthcare_quality": 4,
+        "photogenic_quality": 3
+      },
+      "tag_modifiers": {
+        "boost": {
+          "solo_friendly": 0.05,
+          "hostel_scene": 0.03,
+          "walkable": 0.02
+        },
+        "penalty": { "unsafe_night": 0.1, "isolated": 0.05, "adult_only": 0.04 }
+      }
+    },
+
+    {
+      "id": "pregnancy_friendly",
+      "label": "Pregnancy Friendly",
+      "description": "Pregnant traveller (typically 2nd trimester travel window). Dominated by obstetric access, Zika/vector risk, heat stress, exertion limits, food/water hygiene, motion sickness and flight duration. Hard-gates high-risk activities outright.",
+      "eligibility": {
+        "trigger": "pregnant==true",
+        "traveller_conditions": [
+          "gestational_week >= 12",
+          "gestational_week <= 28",
+          "no_high_risk_flag"
+        ]
+      },
+      "required_attributes": [
+        "obstetric_care_access",
+        "zika_risk_low",
+        "food_hygiene",
+        "heat_stress_low",
+        "physical_exertion_low"
+      ],
+      "nice_to_have_attributes": [
+        "hospital_proximity",
+        "tap_water_safety",
+        "motion_sickness_low",
+        "walking_load_low",
+        "rest_stop_availability"
+      ],
+      "hard_gates": [
+        {
+          "attribute": "pregnancy_safe",
+          "op": "in",
+          "value": ["safe", "caution"],
+          "scope": ["activity"],
+          "reason": "Activity is contraindicated in pregnancy"
+        },
+        {
+          "signal": "zika_risk_low",
+          "op": ">=",
+          "value": 0.5,
+          "reason": "Zika risk level is not acceptable during pregnancy"
+        },
+        {
+          "signal": "obstetric_care_access",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "No reliable obstetric care within reach"
+        },
+        {
+          "signal": "altitude_safety",
+          "op": ">=",
+          "value": 0.6,
+          "reason": "Altitude exposure is contraindicated in pregnancy"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "flight_time_ease",
+          "op": ">=",
+          "value": 0.4,
+          "cap": 0.7,
+          "reason": "Flight duration exceeds the comfortable pregnancy window"
+        }
+      ],
+      "weights": {
+        "obstetric_care_access": 14,
+        "zika_risk_low": 12,
+        "hospital_proximity": 10,
+        "food_hygiene": 10,
+        "heat_stress_low": 9,
+        "physical_exertion_low": 9,
+        "vector_disease_risk_low": 7,
+        "tap_water_safety": 6,
+        "walking_load_low": 6,
+        "motion_sickness_low": 5,
+        "rest_stop_availability": 5,
+        "public_toilet_availability": 4,
+        "flight_time_ease": 5,
+        "healthcare_quality": 5,
+        "noise_low": 2
+      },
+      "tag_modifiers": {
+        "boost": { "wellness": 0.04, "resort_stay": 0.03, "slow_travel": 0.03 },
+        "penalty": {
+          "extreme_adventure": 0.12,
+          "diving": 0.12,
+          "high_altitude": 0.1,
+          "nightlife": 0.04
+        }
+      }
+    },
+
+    {
+      "id": "wheelchair_friendly",
+      "label": "Wheelchair Friendly",
+      "description": "Traveller is a wheelchair user or has a mobility device. Hard-gates anything without step-free viability. Weighted on step-free routing, accessible transport and toilets, lift availability, and surface quality.",
+      "eligibility": {
+        "trigger": "mobility_aid=='wheelchair' OR accessibility_need==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "wheelchair_access",
+        "step_free_access",
+        "accessible_transport",
+        "accessible_toilets",
+        "elevator_availability"
+      ],
+      "nice_to_have_attributes": [
+        "parking_availability",
+        "rest_stop_availability",
+        "hospital_proximity",
+        "terrain_ease",
+        "crowd_pressure_low"
+      ],
+      "hard_gates": [
+        {
+          "signal": "wheelchair_access",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Wheelchair access is not viable at this entity"
+        },
+        {
+          "signal": "step_free_access",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "No step-free route exists"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "accessible_toilets",
+          "op": ">=",
+          "value": 0.35,
+          "cap": 0.65,
+          "reason": "Accessible toilets are not reliably available"
+        }
+      ],
+      "weights": {
+        "wheelchair_access": 20,
+        "step_free_access": 16,
+        "accessible_transport": 12,
+        "accessible_toilets": 11,
+        "elevator_availability": 9,
+        "terrain_ease": 7,
+        "parking_availability": 5,
+        "crowd_pressure_low": 5,
+        "hospital_proximity": 5,
+        "rest_stop_availability": 5,
+        "transport_comfort": 3,
+        "walking_load_low": 2
+      },
+      "tag_modifiers": {
+        "boost": { "step_free": 0.06, "accessible_certified": 0.05 },
+        "penalty": {
+          "stairs_heavy": 0.1,
+          "boat_only_access": 0.08,
+          "sand_access": 0.05,
+          "trekking": 0.12
+        }
+      }
+    },
+
+    {
+      "id": "road_trip_friendly",
+      "label": "Road Trip Friendly",
+      "description": "Traveller wants to self-drive or use a private vehicle across a route. Weighted on drivability, road quality, scenic value, fuel/rest cadence, parking and road safety. Applies mostly to country/city/route entities.",
+      "eligibility": {
+        "trigger": "travel_mode=='self_drive' OR trip_type=='road_trip'",
+        "traveller_conditions": ["driver_licence == true"]
+      },
+      "required_attributes": [
+        "self_drive_feasibility",
+        "road_quality",
+        "road_safety",
+        "fuel_stop_density"
+      ],
+      "nice_to_have_attributes": [
+        "scenic_drive_quality",
+        "parking_availability",
+        "rest_stop_availability",
+        "cost_efficiency"
+      ],
+      "hard_gates": [
+        {
+          "signal": "self_drive_feasibility",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Self-drive is not practical or legal for this traveller here"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "road_safety",
+          "op": ">=",
+          "value": 0.3,
+          "cap": 0.7,
+          "reason": "Road fatality rate is high — recommend a driver rather than self-drive"
+        }
+      ],
+      "weights": {
+        "self_drive_feasibility": 16,
+        "road_quality": 14,
+        "scenic_drive_quality": 13,
+        "road_safety": 12,
+        "fuel_stop_density": 9,
+        "parking_availability": 8,
+        "rest_stop_availability": 7,
+        "cost_efficiency": 7,
+        "public_toilet_availability": 5,
+        "transport_comfort": 5,
+        "crowd_pressure_low": 4
+      },
+      "tag_modifiers": {
+        "boost": { "scenic_route": 0.05, "road_trip": 0.04 },
+        "penalty": {
+          "island_hopping": 0.06,
+          "boat_only_access": 0.08,
+          "traffic_hell": 0.05
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "travelomore/activity/1.0.0",
+  "notes": "Supplemental activity set — added to bring the thinnest cities (2-3 activities each) up to a workable minimum for itinerary building. Does NOT modify activities_south.json or activities_north_gulf.json; this file is loaded and merged alongside them by engine/loadData.js. Same schema, same inheritance rules as the original two files.",
+  "entities": [
+    {"id":"act:TH:AYU:wat-mahathat","type":"activity","name":"Wat Mahathat — Buddha head in the Bodhi tree roots","parent_id":"city:TH:AYU","category":"heritage","duration_hours":1.5,"price_inr":600,"tags":["heritage","iconic","photogenic","cultural","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","dress_code":"shoulders_knees_covered","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":50,"step_free_ratio_0_1":0.55,"rest_stop_index_0_100":45,"shade_seating_index_0_100":30,"peak_heat_index_c":40,"crowd_index_0_100":80,"avg_daily_cost_per_pax_inr":600,"value_index_0_100":82,"kid_activity_index_0_100":50,"photogenic_index_0_100":92,"iconic_landmark_index_0_100":90,"content_saturation_index_0_100":85,"drone_policy":"banned","golden_hour_index_0_100":65,"scam_incidence_index_0_100":40},
+     "meta":{"data_confidence":0.82,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:AYU:night-market-food","type":"activity","name":"Ayutthaya riverside night market street food","parent_id":"city:TH:AYU","category":"food","duration_hours":2.5,"price_inr":500,"tags":["food","walkable","family_friendly","budget","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"public_toilet_index_0_100":45,"shade_seating_index_0_100":40,"peak_heat_index_c":34,"crowd_index_0_100":60,"noise_index_0_100":55,"food_hygiene_index_0_100":58,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":90,"kid_activity_index_0_100":60,"group_activity_index_0_100":70,"photogenic_index_0_100":68,"content_saturation_index_0_100":35,"golden_hour_index_0_100":40},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:AYU:elephant-kraal","type":"activity","name":"Ayutthaya Elephant Palace sanctuary (ethical, no riding)","parent_id":"city:TH:AYU","category":"wildlife","duration_hours":3,"price_inr":2200,"tags":["wildlife","ethical","family_friendly","photogenic","interactive"],
+     "constraints":{"min_age":3,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":2,"terrain_type":"gentle","wheelchair_infrastructure_index_0_100":20,"step_free_ratio_0_1":0.25,"shade_seating_index_0_100":55,"peak_heat_index_c":38,"crowd_index_0_100":40,"avg_daily_cost_per_pax_inr":2200,"value_index_0_100":78,"kid_activity_index_0_100":85,"group_activity_index_0_100":75,"photogenic_index_0_100":82,"content_saturation_index_0_100":45,"golden_hour_index_0_100":55},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KHL:beach-relax-day","type":"activity","name":"Khao Lak quiet beach relaxation day","parent_id":"city:TH:KHL","category":"beach","duration_hours":5,"price_inr":700,"tags":["beach","calm_beach","family_friendly","senior_focused","slow_travel","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"rest_stop_index_0_100":68,"shade_seating_index_0_100":72,"stroller_friendly_index_0_100":50,"peak_heat_index_c":36,"crowd_index_0_100":30,"water_safety_index_0_100":68,"calm_beach_index_0_100":85,"avg_daily_cost_per_pax_inr":700,"value_index_0_100":90,"kid_activity_index_0_100":68,"photogenic_index_0_100":80,"content_saturation_index_0_100":40,"golden_hour_index_0_100":82},
+     "meta":{"data_confidence":0.8,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KHL:tsunami-memorial","type":"activity","name":"Ban Nam Khem Tsunami Memorial Park","parent_id":"city:TH:KHL","category":"heritage","duration_hours":1.5,"price_inr":0,"tags":["heritage","memorial","cultural","step_free","offbeat"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":50,"step_free_ratio_0_1":0.6,"shade_seating_index_0_100":35,"peak_heat_index_c":37,"crowd_index_0_100":15,"avg_daily_cost_per_pax_inr":0,"value_index_0_100":95,"kid_activity_index_0_100":25,"photogenic_index_0_100":55,"content_saturation_index_0_100":20,"golden_hour_index_0_100":45},
+     "meta":{"data_confidence":0.7,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KHL:night-market","type":"activity","name":"Khao Lak night market","parent_id":"city:TH:KHL","category":"food","duration_hours":2,"price_inr":450,"tags":["food","local","budget","walkable","family_friendly"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.2,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":42,"step_free_ratio_0_1":0.48,"public_toilet_index_0_100":40,"peak_heat_index_c":33,"crowd_index_0_100":55,"noise_index_0_100":50,"food_hygiene_index_0_100":55,"avg_daily_cost_per_pax_inr":450,"value_index_0_100":88,"kid_activity_index_0_100":55,"group_activity_index_0_100":65,"photogenic_index_0_100":58,"content_saturation_index_0_100":30,"golden_hour_index_0_100":35},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:LNT:national-park-viewpoint","type":"activity","name":"Mu Ko Lanta National Park viewpoint & lighthouse","parent_id":"city:TH:LNT","category":"nature","duration_hours":3,"price_inr":800,"tags":["nature","viewpoint","photogenic","offbeat","hiking"],
+     "constraints":{"min_age":6,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2.5,"terrain_type":"hilly","wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":45,"peak_heat_index_c":37,"crowd_index_0_100":30,"avg_daily_cost_per_pax_inr":800,"value_index_0_100":85,"kid_activity_index_0_100":45,"photogenic_index_0_100":90,"iconic_landmark_index_0_100":65,"content_saturation_index_0_100":40,"golden_hour_index_0_100":88},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:LNT:four-islands-snorkel","type":"activity","name":"Four Islands snorkelling day trip from Lanta","parent_id":"city:TH:LNT","category":"water_sports","duration_hours":7,"price_inr":2400,"tags":["snorkelling","island_hopping","boat","family_friendly","photogenic"],
+     "constraints":{"min_age":5,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":40,"peak_heat_index_c":37,"crowd_index_0_100":50,"motion_sickness_risk_index_0_100":65,"water_safety_index_0_100":65,"calm_beach_index_0_100":70,"avg_daily_cost_per_pax_inr":2400,"value_index_0_100":82,"kid_activity_index_0_100":70,"group_activity_index_0_100":80,"photogenic_index_0_100":88,"content_saturation_index_0_100":55,"golden_hour_index_0_100":70},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:LNT:cooking-class","type":"activity","name":"Koh Lanta Thai cooking class","parent_id":"city:TH:LNT","category":"food","duration_hours":4,"price_inr":1800,"tags":["food","interactive","solo_friendly","group_friendly","beginner_friendly"],
+     "constraints":{"min_age":6,"infant_ok":false,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":0.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"shade_seating_index_0_100":70,"peak_heat_index_c":34,"crowd_index_0_100":20,"food_hygiene_index_0_100":72,"avg_daily_cost_per_pax_inr":1800,"value_index_0_100":80,"kid_activity_index_0_100":55,"group_activity_index_0_100":78,"veg_food_index_0_100":85,"photogenic_index_0_100":65,"content_saturation_index_0_100":38,"golden_hour_index_0_100":45},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:CHG:elephant-camp","type":"activity","name":"Koh Chang elephant camp (ethical, no riding)","parent_id":"city:TH:CHG","category":"wildlife","duration_hours":3,"price_inr":2000,"tags":["wildlife","ethical","family_friendly","photogenic","interactive"],
+     "constraints":{"min_age":3,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":1.5,"terrain_type":"gentle","wheelchair_infrastructure_index_0_100":15,"step_free_ratio_0_1":0.2,"shade_seating_index_0_100":60,"peak_heat_index_c":37,"crowd_index_0_100":35,"avg_daily_cost_per_pax_inr":2000,"value_index_0_100":78,"kid_activity_index_0_100":82,"group_activity_index_0_100":72,"photogenic_index_0_100":80,"content_saturation_index_0_100":42,"golden_hour_index_0_100":55},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:CHG:white-sand-sunset","type":"activity","name":"White Sand Beach sunset & seafood dinner","parent_id":"city:TH:CHG","category":"beach","duration_hours":4,"price_inr":1500,"tags":["beach","romantic","photogenic","calm_beach","food"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":40,"step_free_ratio_0_1":0.45,"rest_stop_index_0_100":60,"shade_seating_index_0_100":55,"stroller_friendly_index_0_100":40,"peak_heat_index_c":34,"crowd_index_0_100":45,"food_hygiene_index_0_100":65,"calm_beach_index_0_100":80,"avg_daily_cost_per_pax_inr":1500,"value_index_0_100":84,"kid_activity_index_0_100":55,"photogenic_index_0_100":90,"content_saturation_index_0_100":50,"golden_hour_index_0_100":94},
+     "meta":{"data_confidence":0.8,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:CHG:viewpoint-hike","type":"activity","name":"Koh Chang viewpoint hike (Khao Kluay Hin)","parent_id":"city:TH:CHG","category":"adventure","duration_hours":3,"price_inr":300,"tags":["adventure","viewpoint","photogenic","offbeat","hiking"],
+     "constraints":{"min_age":10,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Steep unmarked trail — contraindicated","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":4,"typical_walking_km_per_day":4,"terrain_type":"steep","max_altitude_m":700,"wheelchair_infrastructure_index_0_100":5,"step_free_ratio_0_1":0.05,"shade_seating_index_0_100":30,"peak_heat_index_c":36,"crowd_index_0_100":10,"avg_daily_cost_per_pax_inr":300,"value_index_0_100":90,"kid_activity_index_0_100":15,"photogenic_index_0_100":85,"content_saturation_index_0_100":25,"golden_hour_index_0_100":80},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:PHA:sunday-market","type":"activity","name":"Thong Sala Sunday market","parent_id":"city:TH:PHA","category":"food","duration_hours":2,"price_inr":500,"tags":["food","local","budget","walkable"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":35,"step_free_ratio_0_1":0.4,"peak_heat_index_c":33,"crowd_index_0_100":55,"food_hygiene_index_0_100":55,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":86,"kid_activity_index_0_100":50,"group_activity_index_0_100":60,"photogenic_index_0_100":55,"content_saturation_index_0_100":30,"golden_hour_index_0_100":40},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:PHA:phaeng-waterfall","type":"activity","name":"Phaeng Waterfall national park trek","parent_id":"city:TH:PHA","category":"nature","duration_hours":3,"price_inr":400,"tags":["nature","waterfall","adventure","offbeat","hiking"],
+     "constraints":{"min_age":6,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2.5,"terrain_type":"hilly","wheelchair_infrastructure_index_0_100":8,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":55,"peak_heat_index_c":35,"crowd_index_0_100":20,"water_safety_index_0_100":55,"avg_daily_cost_per_pax_inr":400,"value_index_0_100":88,"kid_activity_index_0_100":45,"photogenic_index_0_100":75,"content_saturation_index_0_100":30,"golden_hour_index_0_100":50},
+     "meta":{"data_confidence":0.74,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KTO:john-suwan-viewpoint","type":"activity","name":"John-Suwan viewpoint hike","parent_id":"city:TH:KTO","category":"nature","duration_hours":2,"price_inr":100,"tags":["viewpoint","photogenic","hiking","offbeat"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2,"terrain_type":"steep","wheelchair_infrastructure_index_0_100":5,"step_free_ratio_0_1":0.05,"shade_seating_index_0_100":40,"peak_heat_index_c":37,"crowd_index_0_100":40,"avg_daily_cost_per_pax_inr":100,"value_index_0_100":92,"kid_activity_index_0_100":30,"photogenic_index_0_100":90,"iconic_landmark_index_0_100":70,"content_saturation_index_0_100":55,"golden_hour_index_0_100":88},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KTO:freediving-taster","type":"activity","name":"Freediving taster course","parent_id":"city:TH:KTO","category":"diving","duration_hours":5,"price_inr":4500,"tags":["diving","adventure","solo_friendly","beginner_friendly","hostel_scene"],
+     "constraints":{"min_age":16,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Breath-hold diving is contraindicated in pregnancy","wheelchair_viable":false,"medical_clearance_required":true},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":0.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"water_safety_index_0_100":75,"peak_heat_index_c":36,"crowd_index_0_100":20,"avg_daily_cost_per_pax_inr":4500,"value_index_0_100":80,"kid_activity_index_0_100":5,"group_activity_index_0_100":55,"photogenic_index_0_100":70,"content_saturation_index_0_100":35,"golden_hour_index_0_100":45},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:CEI:black-house-museum","type":"activity","name":"Baan Dam (Black House) museum","parent_id":"city:TH:CEI","category":"culture","duration_hours":2,"price_inr":300,"tags":["cultural","offbeat","photogenic","step_free"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":50,"step_free_ratio_0_1":0.55,"shade_seating_index_0_100":45,"peak_heat_index_c":35,"crowd_index_0_100":25,"avg_daily_cost_per_pax_inr":300,"value_index_0_100":88,"kid_activity_index_0_100":30,"photogenic_index_0_100":88,"content_saturation_index_0_100":40,"golden_hour_index_0_100":60},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:CEI:doi-tung-villa","type":"activity","name":"Doi Tung royal villa & garden","parent_id":"city:TH:CEI","category":"nature","duration_hours":3,"price_inr":500,"tags":["nature","cultural","family_friendly","photogenic","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":2,"terrain_type":"gentle","max_altitude_m":1200,"wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"rest_stop_index_0_100":60,"shade_seating_index_0_100":65,"peak_heat_index_c":28,"crowd_index_0_100":20,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":86,"kid_activity_index_0_100":55,"photogenic_index_0_100":82,"content_saturation_index_0_100":30,"golden_hour_index_0_100":70},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:PAI:land-split-farm","type":"activity","name":"Pai Land Split & fruit farm stop","parent_id":"city:TH:PAI","category":"culture","duration_hours":1.5,"price_inr":200,"tags":["offbeat","family_friendly","food","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":35,"step_free_ratio_0_1":0.4,"shade_seating_index_0_100":50,"peak_heat_index_c":32,"crowd_index_0_100":25,"avg_daily_cost_per_pax_inr":200,"value_index_0_100":90,"kid_activity_index_0_100":60,"photogenic_index_0_100":65,"content_saturation_index_0_100":35,"golden_hour_index_0_100":55},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:PAI:walking-street-market","type":"activity","name":"Pai walking street night market","parent_id":"city:TH:PAI","category":"food","duration_hours":2.5,"price_inr":500,"tags":["food","local","budget","walkable","slow_travel"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":40,"step_free_ratio_0_1":0.45,"peak_heat_index_c":28,"crowd_index_0_100":50,"food_hygiene_index_0_100":62,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":88,"kid_activity_index_0_100":55,"group_activity_index_0_100":65,"photogenic_index_0_100":68,"content_saturation_index_0_100":45,"golden_hour_index_0_100":40},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:HHQ:samroiyot-cave-temple","type":"activity","name":"Sam Roi Yot National Park cave temple (Phraya Nakhon)","parent_id":"city:TH:HHQ","category":"nature","duration_hours":4,"price_inr":900,"tags":["nature","viewpoint","photogenic","offbeat","hiking"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2.5,"terrain_type":"hilly","wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":30,"peak_heat_index_c":37,"crowd_index_0_100":30,"avg_daily_cost_per_pax_inr":900,"value_index_0_100":84,"kid_activity_index_0_100":40,"photogenic_index_0_100":92,"iconic_landmark_index_0_100":75,"content_saturation_index_0_100":50,"golden_hour_index_0_100":80},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:HHQ:night-market-food-tour","type":"activity","name":"Hua Hin night market street food tour","parent_id":"city:TH:HHQ","category":"food","duration_hours":3,"price_inr":800,"tags":["food","walkable","family_friendly","senior_focused","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":2,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":55,"step_free_ratio_0_1":0.6,"public_toilet_index_0_100":55,"rest_stop_index_0_100":60,"peak_heat_index_c":33,"crowd_index_0_100":60,"noise_index_0_100":55,"food_hygiene_index_0_100":68,"avg_daily_cost_per_pax_inr":800,"value_index_0_100":86,"kid_activity_index_0_100":60,"group_activity_index_0_100":72,"photogenic_index_0_100":65,"content_saturation_index_0_100":40,"golden_hour_index_0_100":45},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KAN:river-kwai-bridge","type":"activity","name":"Bridge over the River Kwai walk & museum","parent_id":"city:TH:KAN","category":"heritage","duration_hours":2.5,"price_inr":400,"tags":["heritage","iconic","photogenic","cultural","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"rest_stop_index_0_100":50,"shade_seating_index_0_100":35,"peak_heat_index_c":38,"crowd_index_0_100":65,"avg_daily_cost_per_pax_inr":400,"value_index_0_100":86,"kid_activity_index_0_100":55,"photogenic_index_0_100":85,"iconic_landmark_index_0_100":88,"content_saturation_index_0_100":60,"golden_hour_index_0_100":62},
+     "meta":{"data_confidence":0.8,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KAN:wildlife-rescue-sanctuary","type":"activity","name":"Kanchanaburi wildlife rescue sanctuary visit","parent_id":"city:TH:KAN","category":"wildlife","duration_hours":3,"price_inr":1800,"tags":["wildlife","ethical","family_friendly","interactive"],
+     "constraints":{"min_age":5,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":2,"terrain_type":"gentle","wheelchair_infrastructure_index_0_100":20,"step_free_ratio_0_1":0.25,"shade_seating_index_0_100":50,"peak_heat_index_c":37,"crowd_index_0_100":25,"avg_daily_cost_per_pax_inr":1800,"value_index_0_100":80,"kid_activity_index_0_100":75,"group_activity_index_0_100":65,"photogenic_index_0_100":72,"content_saturation_index_0_100":35,"golden_hour_index_0_100":50},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:PHI:bamboo-island-snorkel","type":"activity","name":"Bamboo Island snorkelling trip","parent_id":"city:TH:PHI","category":"water_sports","duration_hours":5,"price_inr":1800,"tags":["snorkelling","family_friendly","photogenic","boat_only_access"],
+     "constraints":{"min_age":5,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":35,"peak_heat_index_c":38,"crowd_index_0_100":60,"motion_sickness_risk_index_0_100":60,"water_safety_index_0_100":60,"calm_beach_index_0_100":75,"avg_daily_cost_per_pax_inr":1800,"value_index_0_100":80,"kid_activity_index_0_100":65,"group_activity_index_0_100":75,"photogenic_index_0_100":88,"content_saturation_index_0_100":70,"golden_hour_index_0_100":65},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:KBV:krabi-town-night-market","type":"activity","name":"Krabi Town night market & riverside walk","parent_id":"city:TH:KBV","category":"food","duration_hours":2.5,"price_inr":500,"tags":["food","walkable","budget","family_friendly","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"public_toilet_index_0_100":50,"peak_heat_index_c":34,"crowd_index_0_100":45,"food_hygiene_index_0_100":60,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":88,"kid_activity_index_0_100":55,"group_activity_index_0_100":60,"photogenic_index_0_100":60,"content_saturation_index_0_100":35,"golden_hour_index_0_100":50},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:USM:atv-jungle-adventure","type":"activity","name":"Samui ATV jungle adventure","parent_id":"city:TH:USM","category":"adventure","duration_hours":2.5,"price_inr":2800,"tags":["adventure","extreme_adventure","group_friendly","photogenic"],
+     "constraints":{"min_age":12,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Off-road vibration and jolting is contraindicated","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":4,"typical_walking_km_per_day":1,"terrain_type":"steep","wheelchair_infrastructure_index_0_100":5,"step_free_ratio_0_1":0.05,"peak_heat_index_c":37,"crowd_index_0_100":30,"avg_daily_cost_per_pax_inr":2800,"value_index_0_100":76,"kid_activity_index_0_100":10,"group_activity_index_0_100":85,"photogenic_index_0_100":72,"content_saturation_index_0_100":48,"golden_hour_index_0_100":55},
+     "meta":{"data_confidence":0.74,"last_verified":"2026-07-14"}}
+  ]
+}

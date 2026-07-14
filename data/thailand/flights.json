@@ -1,0 +1,143 @@
+{
+  "schema": "travelomore/flight/1.0.0",
+  "notes": "Flight entities represent a route class (origin metro -> Thai gateway), not a bookable fare. avg_daily_cost_per_pax_inr is reused here as a cost-efficiency proxy (round_trip_price_inr / 10, a nominal short-trip amortisation) purely so the generic cost_efficiency signal can rank flights on the same [0,1] footing as other entity types — real fare data should replace this at booking time.",
+  "entities": [
+    {
+      "id": "flight:TH:DEL-BKK",
+      "type": "flight",
+      "name": "Delhi (DEL) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": ["Air India", "IndiGo", "Thai Airways", "Vistara"],
+      "avg_price_inr_return_economy": 22000,
+      "tags": ["direct_flight", "value"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 35, "avg_flight_hours_from_india": 4.5,
+        "transport_comfort_index_0_100": 78, "avg_daily_cost_per_pax_inr": 2200
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:BOM-BKK",
+      "type": "flight",
+      "name": "Mumbai (BOM) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "BOM",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": ["Air India", "IndiGo", "Thai Airways"],
+      "avg_price_inr_return_economy": 21000,
+      "tags": ["direct_flight", "value"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 28, "avg_flight_hours_from_india": 4.7,
+        "transport_comfort_index_0_100": 78, "avg_daily_cost_per_pax_inr": 2100
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:BLR-BKK",
+      "type": "flight",
+      "name": "Bengaluru (BLR) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "BLR",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": ["IndiGo", "Thai AirAsia", "Air India"],
+      "avg_price_inr_return_economy": 19500,
+      "tags": ["direct_flight", "value"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 24, "avg_flight_hours_from_india": 3.9,
+        "transport_comfort_index_0_100": 74, "avg_daily_cost_per_pax_inr": 1950
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:MAA-BKK",
+      "type": "flight",
+      "name": "Chennai (MAA) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "MAA",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": ["IndiGo", "Thai AirAsia", "Air India"],
+      "avg_price_inr_return_economy": 18500,
+      "tags": ["direct_flight", "value"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 21, "avg_flight_hours_from_india": 3.5,
+        "transport_comfort_index_0_100": 72, "avg_daily_cost_per_pax_inr": 1850
+      },
+      "meta": { "data_confidence": 0.75, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:CCU-BKK",
+      "type": "flight",
+      "name": "Kolkata (CCU) to Bangkok (BKK)",
+      "parent_id": "country:TH",
+      "origin_iata": "CCU",
+      "destination_iata": "BKK",
+      "is_direct": true,
+      "airlines": ["IndiGo", "Thai AirAsia", "Air India"],
+      "avg_price_inr_return_economy": 16000,
+      "tags": ["direct_flight", "value", "short_haul"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 30, "avg_flight_hours_from_india": 2.3,
+        "transport_comfort_index_0_100": 76, "avg_daily_cost_per_pax_inr": 1600
+      },
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:DEL-HKT",
+      "type": "flight",
+      "name": "Delhi (DEL) to Phuket (HKT)",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "HKT",
+      "is_direct": true,
+      "airlines": ["IndiGo", "Vistara"],
+      "avg_price_inr_return_economy": 26000,
+      "tags": ["direct_flight", "seasonal"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 7, "avg_flight_hours_from_india": 5.2,
+        "transport_comfort_index_0_100": 76, "avg_daily_cost_per_pax_inr": 2600
+      },
+      "meta": { "data_confidence": 0.68, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:BOM-HKT",
+      "type": "flight",
+      "name": "Mumbai (BOM) to Phuket (HKT)",
+      "parent_id": "country:TH",
+      "origin_iata": "BOM",
+      "destination_iata": "HKT",
+      "is_direct": true,
+      "airlines": ["IndiGo"],
+      "avg_price_inr_return_economy": 25000,
+      "tags": ["direct_flight", "seasonal"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 5, "avg_flight_hours_from_india": 5.0,
+        "transport_comfort_index_0_100": 74, "avg_daily_cost_per_pax_inr": 2500
+      },
+      "meta": { "data_confidence": 0.66, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    },
+    {
+      "id": "flight:TH:DEL-USM",
+      "type": "flight",
+      "name": "Delhi (DEL) to Koh Samui (USM) via Bangkok",
+      "parent_id": "country:TH",
+      "origin_iata": "DEL",
+      "destination_iata": "USM",
+      "is_direct": false,
+      "connection_point": "BKK",
+      "airlines": ["Bangkok Airways (connecting)", "Thai Airways (connecting)"],
+      "avg_price_inr_return_economy": 34000,
+      "tags": ["connecting_flight"],
+      "attributes": {
+        "direct_flights_from_india_weekly": 0, "avg_flight_hours_from_india": 8.5,
+        "transport_comfort_index_0_100": 62, "avg_daily_cost_per_pax_inr": 3400
+      },
+      "meta": { "data_confidence": 0.65, "last_verified": "2026-07-13", "review_status": "editorial_draft" }
+    }
+  ]
+}
