@@ -1,0 +1,64 @@
+{
+  "input_text": "travelling to thailand college tirp",
+  "brief": {
+    "destinationType": "Thailand trip",
+    "dates": null,
+    "duration": null,
+    "budget": null,
+    "groupComposition": "travelling to thailand college tirp",
+    "extras": [],
+    "awaitingField": null,
+    "conversationComplete": true
+  },
+  "roster": {
+    "adults": null,
+    "gender": "unspecified",
+    "children_ages": [],
+    "infant_count": 0,
+    "child_count": 0,
+    "teen_count": 0,
+    "has_senior_adult": false,
+    "group_size": null
+  },
+  "resolved_city": null,
+  "personas": [
+    "default"
+  ],
+  "persona_source": "derived",
+  "mode": "single",
+  "matched_signals": [],
+  "not_yet_scored": [],
+  "notes": [
+    "No persona signal detected — scoring against the default (balanced) persona."
+  ],
+  "composed_persona": {
+    "id": "default",
+    "label": "Default Traveller",
+    "composed_from": [
+      "default"
+    ],
+    "weights": {
+      "value_for_money": 0.12,
+      "safety_general": 0.1,
+      "tourist_infrastructure": 0.1,
+      "cost_efficiency": 0.1,
+      "weather_comfort": 0.08,
+      "direct_flight_access": 0.08,
+      "photogenic_quality": 0.08,
+      "flight_time_ease": 0.06,
+      "visa_ease": 0.06,
+      "crowd_pressure_low": 0.04,
+      "food_hygiene": 0.04,
+      "english_prevalence": 0.04,
+      "intracity_transport_quality": 0.04,
+      "healthcare_quality": 0.03,
+      "iconic_landmark_density": 0.03
+    },
+    "hard_gates": [],
+    "soft_gates": [],
+    "tag_modifiers": {
+      "boost": {},
+      "penalty": {}
+    }
+  }
+}

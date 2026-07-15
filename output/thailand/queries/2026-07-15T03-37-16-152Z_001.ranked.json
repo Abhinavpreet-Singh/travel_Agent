@@ -1,0 +1,362 @@
+{
+  "mode": "single",
+  "query": {
+    "text": "travelling to thailand college tirp",
+    "resolved_city": null,
+    "personas": [
+      "default"
+    ]
+  },
+  "persona": {
+    "id": "default",
+    "label": "Default Traveller",
+    "composed_from": [
+      "default"
+    ]
+  },
+  "top_cities": [
+    {
+      "entity_id": "city:TH:BKK",
+      "name": "Bangkok",
+      "score_0_10": 7.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.8,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Strong value for money",
+          "140 direct weekly flights from India",
+          "Extremely photogenic"
+        ],
+        "cautions": [
+          "Heavily crowded (82/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:CNX",
+      "name": "Chiang Mai",
+      "score_0_10": 7.4,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.4,
+        "reasons": [
+          "Strong value for money",
+          "Mature, well-oiled tourist infrastructure",
+          "Low daily spend (~₹3800/person/day)",
+          "Extremely photogenic"
+        ],
+        "cautions": [
+          "No direct flights from India — connection required"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:HKT",
+      "name": "Phuket",
+      "score_0_10": 7.3,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.3,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Strong value for money",
+          "Extremely photogenic",
+          "42 direct weekly flights from India"
+        ],
+        "cautions": [
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:CEI",
+      "name": "Chiang Rai",
+      "score_0_10": 7,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7,
+        "reasons": [
+          "Strong value for money",
+          "Low daily spend (~₹3200/person/day)",
+          "Extremely photogenic",
+          "Strong general safety record (safety index 80/100)"
+        ],
+        "cautions": [
+          "No direct flights from India — connection required"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:TH:AYU",
+      "name": "Ayutthaya",
+      "score_0_10": 6.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 6.8,
+        "reasons": [
+          "Strong value for money",
+          "Low daily spend (~₹2800/person/day)",
+          "Extremely photogenic",
+          "Strong general safety record (safety index 78/100)"
+        ],
+        "cautions": [
+          "No direct flights from India — connection required"
+        ]
+      }
+    }
+  ],
+  "top_activities": [
+    {
+      "entity_id": "act:TH:BKK:wat-arun",
+      "name": "Wat Arun at golden hour",
+      "score_0_10": 8.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 8.2,
+        "reasons": [
+          "Strong value for money",
+          "Low daily spend (~₹250/person/day)",
+          "Mature, well-oiled tourist infrastructure",
+          "140 direct weekly flights from India"
+        ],
+        "cautions": [
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:BKK:wat-pho-massage",
+      "name": "Wat Pho Reclining Buddha + traditional Thai massage",
+      "score_0_10": 8.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 8.1,
+        "reasons": [
+          "Low daily spend (~₹900/person/day)",
+          "Strong value for money",
+          "Mature, well-oiled tourist infrastructure",
+          "140 direct weekly flights from India"
+        ],
+        "cautions": [
+          "Heavily crowded (70/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:BKK:grand-palace",
+      "name": "Grand Palace & Wat Phra Kaew",
+      "score_0_10": 8,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 8,
+        "reasons": [
+          "Low daily spend (~₹500/person/day)",
+          "Mature, well-oiled tourist infrastructure",
+          "140 direct weekly flights from India",
+          "Strong value for money"
+        ],
+        "cautions": [
+          "Heavily crowded (95/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:BKK:chao-phraya-cruise",
+      "name": "Chao Phraya dinner cruise",
+      "score_0_10": 7.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.9,
+        "reasons": [
+          "Low daily spend (~₹2200/person/day)",
+          "Mature, well-oiled tourist infrastructure",
+          "140 direct weekly flights from India",
+          "Extremely photogenic"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:HKT:old-town",
+      "name": "Phuket Old Town Sino-Portuguese walk",
+      "score_0_10": 7.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.9,
+        "reasons": [
+          "Strong value for money",
+          "Low daily spend (~₹900/person/day)",
+          "Mature, well-oiled tourist infrastructure",
+          "Extremely photogenic"
+        ],
+        "cautions": []
+      }
+    },
+    {
+      "entity_id": "act:TH:HKT:big-buddha",
+      "name": "Phuket Big Buddha",
+      "score_0_10": 7.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.9,
+        "reasons": [
+          "Strong value for money",
+          "Low daily spend (~₹600/person/day)",
+          "Mature, well-oiled tourist infrastructure",
+          "Extremely photogenic"
+        ],
+        "cautions": [
+          "Heavily crowded (70/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:BKK:chatuchak",
+      "name": "Chatuchak Weekend Market",
+      "score_0_10": 7.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.9,
+        "reasons": [
+          "Low daily spend (~₹1500/person/day)",
+          "Strong value for money",
+          "Mature, well-oiled tourist infrastructure",
+          "140 direct weekly flights from India"
+        ],
+        "cautions": [
+          "Heavily crowded (95/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:TH:BKK:street-food-tour",
+      "name": "Chinatown street-food tuk-tuk night tour",
+      "score_0_10": 7.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.8,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Low daily spend (~₹3000/person/day)",
+          "140 direct weekly flights from India",
+          "Strong value for money"
+        ],
+        "cautions": [
+          "Heavily crowded (85/100 crowd pressure)"
+        ]
+      }
+    }
+  ],
+  "top_hotels": [
+    {
+      "entity_id": "hotel:TH:BKK:sukhumvit-value",
+      "name": "Sukhumvit Business-Value Hotel (Amari / Novotel class)",
+      "score_0_10": 7.6,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.6,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Strong value for money",
+          "140 direct weekly flights from India",
+          "Low daily spend (~₹5200/person/day)"
+        ],
+        "cautions": [
+          "Heavily crowded (82/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:CNX:old-city-heritage-boutique",
+      "name": "Old City Heritage Boutique Hotel",
+      "score_0_10": 7.3,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.3,
+        "reasons": [
+          "Strong value for money",
+          "Mature, well-oiled tourist infrastructure",
+          "Extremely photogenic",
+          "Low daily spend (~₹4800/person/day)"
+        ],
+        "cautions": [
+          "No direct flights from India — connection required"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:HKT:patong-family-resort",
+      "name": "Patong Family Beach Resort (Novotel Phuket Vacation Club class)",
+      "score_0_10": 7.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.1,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Strong value for money",
+          "42 direct weekly flights from India",
+          "Extremely photogenic"
+        ],
+        "cautions": [
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:CNX:nimman-family-resort",
+      "name": "Nimman Family Resort & Pool Villas",
+      "score_0_10": 7.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 7.1,
+        "reasons": [
+          "Strong value for money",
+          "Mature, well-oiled tourist infrastructure",
+          "Strong general safety record (safety index 78/100)",
+          "Extremely photogenic"
+        ],
+        "cautions": [
+          "No direct flights from India — connection required"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:TH:HKT:kata-adults-only-boutique",
+      "name": "Kata Adults-Only Boutique Resort",
+      "score_0_10": 6.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "default",
+        "score": 6.9,
+        "reasons": [
+          "Mature, well-oiled tourist infrastructure",
+          "Extremely photogenic",
+          "42 direct weekly flights from India",
+          "Strong value for money"
+        ],
+        "cautions": [
+          "Expensive (~₹11000/person/day)",
+          "Heavily crowded (80/100 crowd pressure)"
+        ]
+      }
+    }
+  ]
+}
