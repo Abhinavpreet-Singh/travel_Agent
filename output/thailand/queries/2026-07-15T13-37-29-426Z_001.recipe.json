@@ -1,0 +1,121 @@
+{
+  "input_text": "We are travelling to Thailand for 7 days with my grandmother who is 72 years old.",
+  "resolved_city": null,
+  "personas": [
+    "senior_citizen"
+  ],
+  "persona_source": "derived",
+  "confidence": {
+    "level": "high",
+    "reason": "persona(s) derived cleanly, no assumptions needed"
+  },
+  "mode": "single",
+  "constraints": {
+    "known": [
+      "traveller age(s): 72",
+      "senior traveller present",
+      "duration: 7 days"
+    ],
+    "inferred": [],
+    "missing": [
+      "destination city not specified — scored across all cities",
+      "group size not specified",
+      "travel dates not specified",
+      "budget not specified"
+    ]
+  },
+  "brief": {
+    "destinationType": "Thailand trip",
+    "dates": null,
+    "duration": "7 days",
+    "budget": null,
+    "groupComposition": "We are travelling to Thailand for 7 days with my grandmother who is 72 years old.",
+    "extras": [],
+    "awaitingField": null,
+    "conversationComplete": true
+  },
+  "roster": {
+    "adults": null,
+    "gender": "unspecified",
+    "ages": [
+      72
+    ],
+    "young_adults": false,
+    "romantic": false,
+    "children_ages": [],
+    "age_assumed": false,
+    "adult_offspring": 0,
+    "infant_count": 0,
+    "child_count": 0,
+    "teen_count": 0,
+    "has_senior_adult": true,
+    "traveling_with_parents": false,
+    "is_family": false,
+    "family_total": null,
+    "group_size": null
+  },
+  "composed_persona": {
+    "id": "senior_citizen",
+    "label": "Senior Citizen",
+    "composed_from": [
+      "senior_citizen"
+    ],
+    "weights": {
+      "hospital_proximity": 0.1102,
+      "healthcare_quality": 0.1017,
+      "walking_load_low": 0.0932,
+      "transport_comfort": 0.0763,
+      "wheelchair_access": 0.0678,
+      "rest_stop_availability": 0.0678,
+      "public_toilet_availability": 0.0593,
+      "physical_exertion_low": 0.0593,
+      "elevator_availability": 0.0508,
+      "heat_stress_low": 0.0508,
+      "terrain_ease": 0.0424,
+      "emergency_response": 0.0339,
+      "seating_shade_availability": 0.0339,
+      "crowd_pressure_low": 0.0339,
+      "altitude_safety": 0.0339,
+      "arrival_transfer_ease": 0.0339,
+      "food_hygiene": 0.0254,
+      "pharmacy_access": 0.0254
+    },
+    "hard_gates": [
+      {
+        "signal": "altitude_safety",
+        "op": ">=",
+        "value": 0.35,
+        "reason": "Altitude exposure is unsafe without medical clearance"
+      },
+      {
+        "signal": "hospital_proximity",
+        "op": ">=",
+        "value": 0.2,
+        "reason": "No reachable hospital in an emergency"
+      }
+    ],
+    "soft_gates": [
+      {
+        "signal": "physical_exertion_low",
+        "op": ">=",
+        "value": 0.4,
+        "cap": 0.55,
+        "reason": "Exertion level exceeds a comfortable senior threshold"
+      }
+    ],
+    "tag_modifiers": {
+      "boost": {
+        "senior_focused": 0.04,
+        "step_free": 0.03,
+        "cultural": 0.02,
+        "slow_travel": 0.03
+      },
+      "penalty": {
+        "trekking": 0.06,
+        "extreme_adventure": 0.06,
+        "nightlife": 0.03,
+        "high_altitude": 0.08
+      }
+    }
+  }
+}

@@ -440,34 +440,170 @@ function applyDurationAdjustment(weights, durationDays) {
   };
 }
 
+// A trip is not a catalogue. The engine scores the WHOLE pool internally, but
+// what leaves the engine (ranked.json) is a trip-sized shortlist —
+// and its LENGTH is adaptive, not a fixed top-N. How many we hand over should
+// track actual NEED, driven by three things at once:
+//   1. Quality — only entities near the top score and above a floor. A persona
+//      with only a few strong matches returns only those, however big the pool.
+//   2. Feasibility — how many a trip of this length can realistically use
+//      (~3 activity candidates per day; cities scale with duration).
+//   3. A hard ceiling, so a huge pool can never bloat the payload.
+// So a 3-day trip or a weak-match persona might get ~8 activities; a rich
+// week-long one ~20 — never a flat 40. Hotels are omitted here entirely: a
+// hotel is chosen AFTER city and dates are fixed, so it's a later fetch step.
+const ACT_SHORTLIST = { floor: 6.5, band: 1.5, perDay: 3, defaultCount: 15, ceiling: 40 };
+const CITY_SHORTLIST = { floor: 6.0, band: 2.0, ceiling: 5 };
+const MAX_EXCLUDED = 20; // keep the "avoid" list tight and useful, not exhaustive
+
+/**
+ * Adaptive quality-and-need cut over an already best-first list. Keeps only
+ * entries within `band` of the top score and at/above `floor`, then takes at
+ * most `feasible` of those (capped by `ceiling`). Returns as FEW as the data
+ * and the need justify — down to a handful — rather than padding to a target.
+ */
+function qualityShortlist(list, { floor, band, feasible, ceiling }) {
+  if (!list.length) return [];
+  const top = list[0].score_0_10;
+  const cutoff = Math.max(floor, top - band);
+  const strong = list.filter((r) => r.score_0_10 >= cutoff);
+  return strong.slice(0, Math.min(strong.length, feasible, ceiling));
+}
+
+/** Cities a trip of this length can actually anchor in, plus a buffer of extra CANDIDATES (the itinerary agent picks the final 2-3 from these, so a little generosity here just widens choice, it doesn't lengthen the trip). Unknown duration -> a sensible middle. */
+function citiesNeeded(durationDays) {
+  const base = durationDays == null ? 2 : durationDays < 4 ? 1 : durationDays < 8 ? 2 : 3;
+  return base + 3;
+}
+
+// How much a city's OWN activity lineup lifts its rank. A city is more than its
+// ambient qualities: a couple's week in Bangkok is carried by its activities
+// even though Bangkok scores mid as a "couple city" (crowded, noisy). Without
+// this, such a city ranks low and its activities are never even offered. Set to
+// 0 to go back to pure ambient-attribute city ranking.
+const CITY_ACTIVITY_BLEND = 0.4;
+// Activity strength = peak (how good the best few are) + breadth (how many
+// genuinely strong options exist — a hub you can fill a week in beats a pretty
+// town with three things to do). Breadth saturates so a huge catalogue can't
+// run away with it.
+const ACTIVITY_STRENGTH = { topK: 5, peakWeight: 0.65, breadthWeight: 0.35, breadthScale: 6, strongFloor: 7 };
+
+/** Peak+breadth strength (0-1) of a city's own activities for this persona, or null if it has none eligible. */
+function cityActivityStrength(cityEntity, persona) {
+  const acts = data.activities.filter((a) => a.parent_id === cityEntity.id);
+  if (!acts.length) return null;
+  const ranked = rankEntities(
+    acts.map((a) => ({ entity: a, ancestors: [cityEntity, data.country] })),
+    persona,
+    data.dictionary
+  ).filter((r) => r.eligible);
+  if (!ranked.length) return null;
+  const topK = ranked.slice(0, ACTIVITY_STRENGTH.topK);
+  const peak = topK.reduce((s, r) => s + r.score_0_1, 0) / topK.length;
+  const strongCount = ranked.filter((r) => r.score_0_10 >= ACTIVITY_STRENGTH.strongFloor).length;
+  const breadth = 1 - Math.exp(-strongCount / ACTIVITY_STRENGTH.breadthScale);
+  return { strength01: ACTIVITY_STRENGTH.peakWeight * peak + ACTIVITY_STRENGTH.breadthWeight * breadth, strongCount };
+}
+
+/**
+ * Fold each eligible city's activity strength back into its score, then re-sort.
+ * This is what lets an activity-rich but ambient-mediocre city (Bangkok for a
+ * couple) climb into the shortlist instead of being ranked purely on how calm/
+ * photogenic the place itself is. `persona` here is the plain (non
+ * duration-adjusted) persona — activity fit isn't a function of trip length.
+ */
+function blendCityActivityStrength(rankedCities, persona) {
+  if (CITY_ACTIVITY_BLEND <= 0) return rankedCities;
+  return rankedCities
+    .map((c) => {
+      if (!c.eligible && c.eligible !== undefined) return c; // recommended list is all-eligible, but stay safe
+      const entity = data.citiesById[c.entity_id];
+      const s = entity ? cityActivityStrength(entity, persona) : null;
+      if (!s) return c;
+      const base01 = c.score_0_10 / 10;
+      const blended01 = (1 - CITY_ACTIVITY_BLEND) * base01 + CITY_ACTIVITY_BLEND * s.strength01;
+      const score_0_10 = Number((blended01 * 10).toFixed(1));
+      const why = [...(c.why ?? [])];
+      // Only cite the activity lineup when it's what actually carried the city.
+      if (s.strength01 * 10 >= c.score_0_10 + 0.3 && s.strongCount >= 5) {
+        why.unshift(`Rich lineup of ${s.strongCount} strongly-rated activities for this trip`);
+      }
+      return { ...c, score_0_10, city_score_0_10: c.score_0_10, activity_strength_0_10: Number((s.strength01 * 10).toFixed(1)), why };
+    })
+    .sort((a, b) => b.score_0_10 - a.score_0_10);
+}
+
 function runSingle(city, persona, durationDays = null) {
-  const activityPool = city ? data.activities.filter((a) => a.parent_id === city.id) : data.activities;
-  const hotelPool = city ? data.hotels.filter((h) => h.parent_id === city.id) : data.hotels;
   const cityPool = city ? [city] : data.cityFile.entities;
 
   const durationAdj = applyDurationAdjustment(persona.weights, durationDays);
   const cityPersona = durationAdj.applied ? { ...persona, weights: durationAdj.weights } : persona;
 
-  // explainTop sized generously enough to cover a whole city-scoped pool
-  // (activities/hotels rarely exceed ~15) or a meaningful slice of the
-  // country-wide pool (20 of 100+) — everything past that still has its score.
+  // Rank cities FIRST — the recommended cities define where the trip goes, and
+  // therefore which activities are even relevant. Then fold each city's own
+  // activity lineup back into its score, so an activity-rich city (Bangkok for a
+  // couple) can climb even if the place itself scores mid on ambient qualities.
   const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, cityPersona, cityPool.length), 'city');
+  const blendedCities = city ? [] : blendCityActivityStrength(cities.recommended, persona);
+  const recommendedCities = qualityShortlist(blendedCities, {
+    floor: CITY_SHORTLIST.floor,
+    band: CITY_SHORTLIST.band,
+    feasible: citiesNeeded(durationDays),
+    ceiling: CITY_SHORTLIST.ceiling,
+  });
+
+  // Activities are scoped to the cities we actually recommend (or the one
+  // requested city). Cities and activities used to be ranked in two independent
+  // country-wide passes, which let a top activity surface in a city that didn't
+  // make the shortlist (e.g. a romantic Bangkok dinner cruise for a couple whose
+  // recommended cities are Chiang Mai + Koh Samui — Bangkok scores low as a
+  // couple CITY but has couple-friendly activities). An itinerary is built
+  // INSIDE the chosen cities, so an activity in a city we're not sending you to
+  // is noise. Scoping here keeps the two lists coherent.
+  const scopeCityIds = city ? new Set([city.id]) : new Set(recommendedCities.map((c) => c.entity_id));
+  const activityPool = data.activities.filter((a) => scopeCityIds.has(a.parent_id));
   const activities = splitRecommendedExcluded(
-    rankAll(activityPool, data.ancestorsOf.activity, persona, city ? activityPool.length : 20),
+    rankAll(activityPool, data.ancestorsOf.activity, persona, city ? activityPool.length : ACT_SHORTLIST.ceiling),
     'activity'
   );
-  const hotels = splitRecommendedExcluded(rankAll(hotelPool, data.ancestorsOf.hotel, persona, hotelPool.length), 'hotel');
+
+  const activityFeasible = durationDays ? Math.ceil(durationDays * ACT_SHORTLIST.perDay) : ACT_SHORTLIST.defaultCount;
+  const recommendedActivities = qualityShortlist(activities.recommended, {
+    floor: ACT_SHORTLIST.floor,
+    band: ACT_SHORTLIST.band,
+    feasible: activityFeasible,
+    ceiling: ACT_SHORTLIST.ceiling,
+  });
+
+  // Totals before the cut + why the shortlist is the size it is, so the output
+  // is honest about being a needs-based subset ("8 of 47", not "the best 8").
+  // Activity total is now the eligible count WITHIN the recommended cities.
+  const eligibleTotals = {
+    cities: city ? null : cities?.recommended.length ?? 0,
+    activities: activities.recommended.length,
+  };
+  const shortlist_rationale =
+    `Activities are drawn only from the recommended cities (${city ? city.name : recommendedCities.map((c) => c.name).join(', ') || 'none'}), so the two lists stay coherent for itinerary planning. ` +
+    (city || CITY_ACTIVITY_BLEND <= 0
+      ? ''
+      : `City ranking blends ambient fit (${Math.round((1 - CITY_ACTIVITY_BLEND) * 100)}%) with the strength of each city's own activity lineup for this persona (${Math.round(
+          CITY_ACTIVITY_BLEND * 100
+        )}%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. `) +
+    `Shortlist sized to trip need, not catalogue size: activities kept within ${ACT_SHORTLIST.band} pts of the top score ` +
+    `(min ${ACT_SHORTLIST.floor}/10) and capped at ${activityFeasible} for ${durationDays ? `${durationDays} day(s)` : 'an unspecified duration'} ` +
+    `(~${ACT_SHORTLIST.perDay}/day); cities capped at ${citiesNeeded(durationDays)}. Fewer are returned when fewer genuinely fit the persona.`;
 
   return {
     persona: { id: persona.id, label: persona.label, composed_from: persona.composed_from ?? [persona.id] },
     duration_adjustment: durationAdj.applied
       ? { applied: true, duration_days: durationAdj.duration_days, note: durationAdj.note }
       : { applied: false },
-    recommended_cities: cities?.recommended,
-    recommended_city_combinations: city ? undefined : buildCityCombinations(cities?.recommended, durationDays),
-    recommended_activities: activities.recommended,
-    recommended_hotels: hotels.recommended,
-    excluded_options: [...(cities?.excluded ?? []), ...activities.excluded, ...hotels.excluded],
+    recommended_cities: city ? undefined : recommendedCities,
+    recommended_city_combinations: city ? undefined : buildCityCombinations(recommendedCities, durationDays),
+    recommended_activities: recommendedActivities,
+    excluded_options: [...(cities?.excluded ?? []), ...activities.excluded].slice(0, MAX_EXCLUDED),
+    eligible_totals: eligibleTotals,
+    shortlist_rationale,
   };
 }
 
@@ -512,8 +648,9 @@ function printSingle(result) {
     console.log(`Duration adjustment: ${result.duration_adjustment.note}`);
   }
   if (result.recommended_cities) {
-    console.log(`Recommended cities (of ${result.recommended_cities.length} eligible):`);
-    for (const c of result.recommended_cities.slice(0, 17)) {
+    const cityTotal = result.eligible_totals?.cities ?? result.recommended_cities.length;
+    console.log(`Recommended cities (${result.recommended_cities.length} of ${cityTotal} eligible — sized to trip need):`);
+    for (const c of result.recommended_cities) {
       console.log(`  ${c.score_0_10.toFixed(1).padStart(4)}  ${c.name.padEnd(28)} ${c.why?.[0] ?? ''}`);
     }
   }
@@ -523,14 +660,15 @@ function printSingle(result) {
       console.log(`  ${combo.combined_score.toFixed(1).padStart(4)}  ${combo.cities.join(' + ').padEnd(28)} ~${combo.avg_distance_km}km apart`);
     }
   }
-  console.log(`Recommended activities (of ${result.recommended_activities.length} eligible):`);
+  const actTotal = result.eligible_totals?.activities ?? result.recommended_activities.length;
+  console.log(`Recommended activities (${result.recommended_activities.length} of ${actTotal} eligible — sized to trip need):`);
   for (const a of result.recommended_activities.slice(0, 15)) {
     console.log(`  ${a.score_0_10.toFixed(1).padStart(4)}  ${a.name.padEnd(38)} ${a.city ?? ''}`);
   }
-  console.log(`Recommended hotels (of ${result.recommended_hotels.length} eligible):`);
-  for (const h of result.recommended_hotels.slice(0, 8)) {
-    console.log(`  ${h.score_0_10.toFixed(1).padStart(4)}  ${h.name.padEnd(38)} ${h.city ?? ''}`);
+  if (result.recommended_activities.length > 15) {
+    console.log(`  ... and ${result.recommended_activities.length - 15} more in the shortlist`);
   }
+  console.log(`Hotels: deferred — fetched later once city & dates are fixed.`);
   if (result.excluded_options.length) {
     console.log(`Excluded (${result.excluded_options.length}):`);
     for (const e of result.excluded_options.slice(0, 10)) {
@@ -647,6 +785,8 @@ function buildConstraintSummary(ext) {
   if (roster) {
     if (roster.adults !== null) known.push(`${roster.adults} adult(s)`);
     else missing.push('group size not specified');
+    if (roster.ages?.length) known.push(`traveller age(s): ${roster.ages.join(', ')}${roster.young_adults ? ' (young-adult band)' : ''}`);
+    if (roster.romantic) known.push('romantic-partner trip');
     if (roster.gender !== 'unspecified') known.push(`traveller gender: ${roster.gender}`);
     if (roster.children_ages.length > 0) known.push(`${roster.children_ages.length} child(ren), ages: ${roster.children_ages.join(', ')}`);
     if (roster.age_assumed) missing.push('exact child age(s) not given — assumed ~6 for scoring; state real ages for accurate gating (an infant hard-gates very differently than a 6-year-old)');
@@ -718,55 +858,13 @@ let queryCounter = 0;
 
 /**
  * Writes TWO separate files per query — always, no flag needed:
- *   - <n>.recipe.json  — persona(s), brief, composed weights/gates/tag_modifiers. Nothing ranked.
- *   - <n>.ranked.json  — real cities/activities/hotels scored and sorted against that recipe.
- * Handing both to an LLM gives it the "why" (recipe) and the "what" (ranked)
- * as separate documents rather than one large mixed blob.
+ *   - <n>.recipe.json  — persona(s), brief, roster, constraints, composed weights/gates/tag_modifiers. Nothing ranked. The "why".
+ *   - <n>.ranked.json  — real cities/activities scored, sorted and shortlisted against that recipe, plus excluded_options and shortlist_rationale. The "what".
+ * A downstream consumer (itinerary LLM, UI, etc.) reads both: recipe for the
+ * "why", ranked for the "what". There is deliberately no third "llm.json" —
+ * it used to exist but was just these two merged (a redundant replica), so it
+ * was removed. Anything that needs the full picture reads recipe + ranked.
  */
-/**
- * The actual hand-off document for an itinerary LLM — recipe.json's
- * trip-identifying fields (minus weights/gates/tag_modifiers, which are
- * engine internals an LLM can't act on: it cannot build a better itinerary
- * knowing a coefficient is 0.15 instead of 0.14) merged with ranked.json's
- * recommended/excluded fields. NOT a new ranking stage — everything here is
- * already computed by recipeToJSON/runSingle; this just combines two
- * documents into the one that actually gets sent downstream. Only produced
- * in single/blend mode — compare mode's side-by-side tables are a
- * persona-comparison artifact, not itinerary material.
- */
-function buildLLMJSON(ext, rankedResult) {
-  const recipe = recipeToJSON(ext);
-  return {
-    trip_summary: {
-      input_text: ext.text || null,
-      destination_country: 'Thailand',
-      destination_city: ext.city?.name ?? null,
-      duration: ext.brief?.duration ?? null,
-      dates: ext.brief?.dates ?? null,
-      budget: ext.brief?.budget ?? null,
-      group_size: ext.derived?.roster?.group_size ?? null,
-      personas: ext.personaIds,
-    },
-    traveler_profile: {
-      roster: recipe.roster,
-      constraints: recipe.constraints,
-      confidence: recipe.confidence,
-    },
-    duration_adjustment: rankedResult.duration_adjustment,
-    recommended_cities: rankedResult.recommended_cities,
-    recommended_city_combinations: rankedResult.recommended_city_combinations,
-    recommended_activities: rankedResult.recommended_activities,
-    recommended_hotels: rankedResult.recommended_hotels,
-    excluded_options: rankedResult.excluded_options,
-    planning_metadata: {
-      city_count: rankedResult.recommended_cities?.length ?? 1,
-      activity_count: rankedResult.recommended_activities.length,
-      hotel_count: rankedResult.recommended_hotels.length,
-      excluded_count: rankedResult.excluded_options.length,
-    },
-  };
-}
-
 function writeAndSummarize(ext) {
   const { city, personaIds, compareMode } = ext;
   const recipe = recipeToJSON(ext);
@@ -789,13 +887,6 @@ function writeAndSummarize(ext) {
   writeJSON('output/thailand/query_result.recipe.json', recipe); // always-latest convenience copies
   writeJSON('output/thailand/query_result.ranked.json', ranked);
 
-  let llmPath = null;
-  if (!compareMode) {
-    const llmJSON = buildLLMJSON(ext, rankedResult);
-    llmPath = writeJSON(`output/thailand/queries/${stamp}_${n}.llm.json`, llmJSON);
-    writeJSON('output/thailand/query_result.llm.json', llmJSON);
-  }
-
   if (compareMode) {
     const summary = ext.composed
       .map((c) => `${c.label} (${Object.keys(c.weights).length}w/${c.hard_gates.length + c.soft_gates.length}g)`)
@@ -811,11 +902,8 @@ function writeAndSummarize(ext) {
   else printSingle(rankedResult);
 
   console.log(`\nRecipe JSON (weights/gates/brief):        ${path.relative(ROOT, recipePath)}`);
-  console.log(`Ranked JSON (cities/activities/hotels):    ${path.relative(ROOT, rankedPath)}`);
-  if (llmPath) console.log(`LLM JSON (the one to actually send):       ${path.relative(ROOT, llmPath)}`);
-  console.log(
-    `Latest copies: output/thailand/query_result.recipe.json, output/thailand/query_result.ranked.json${llmPath ? ', output/thailand/query_result.llm.json' : ''}`
-  );
+  console.log(`Ranked JSON (cities/activities):            ${path.relative(ROOT, rankedPath)}`);
+  console.log(`Latest copies: output/thailand/query_result.recipe.json, output/thailand/query_result.ranked.json`);
   console.log('-'.repeat(64) + '\n');
 }
 

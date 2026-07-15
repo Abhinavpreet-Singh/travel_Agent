@@ -1002,6 +1002,72 @@
     },
 
     {
+      "id": "young_couple",
+      "label": "Young Couple (Romantic Getaway)",
+      "description": "Two young adults (roughly 18-30) travelling as a romantic pair, no children. A specialisation of 'couple': same privacy and photogenic priorities, but the archetype most real users picture for a young Thailand couples' trip is beaches, islands, sunsets, resort/beach-club energy and some nightlife — NOT the slow, calm, heritage-town vibe the generic 'couple' persona optimises for. This persona encodes that product expectation: it weights beach/island quality and value-for-money heavily, relaxes the strong 'must be uncrowded' pull that pushed older/quieter couples toward the northern hill towns, and keeps a light (not party-level) nightlife lean. See notes on this persona in derivePersonas — it is chosen over 'couple' only when explicit young-adult ages are present.",
+      "eligibility": {
+        "trigger": "group_size==2 AND relationship=='couple' AND occasion!='honeymoon' AND max_age<=30",
+        "traveller_conditions": [
+          "group_size == 2",
+          "no_children",
+          "all_adults_18_30"
+        ]
+      },
+      "required_attributes": [
+        "safety_general",
+        "beach_club_quality",
+        "photogenic_quality"
+      ],
+      "nice_to_have_attributes": [
+        "value_for_money",
+        "weather_comfort",
+        "nightlife_density",
+        "water_activity_safety"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Below the safety floor for this trip"
+        }
+      ],
+      "soft_gates": [],
+      "weights": {
+        "beach_club_quality": 13,
+        "photogenic_quality": 12,
+        "value_for_money": 11,
+        "weather_comfort": 9,
+        "nightlife_density": 7,
+        "safety_general": 7,
+        "scenic_drive_quality": 5,
+        "water_activity_safety": 5,
+        "arrival_transfer_ease": 5,
+        "food_hygiene": 5,
+        "crowd_pressure_low": 5,
+        "iconic_landmark_density": 4,
+        "direct_flight_access": 4,
+        "party_scene_quality": 3,
+        "intracity_transport_quality": 3,
+        "english_prevalence": 2
+      },
+      "tag_modifiers": {
+        "boost": {
+          "beach": 0.05,
+          "island": 0.04,
+          "photogenic": 0.03,
+          "romantic": 0.03,
+          "resort_stay": 0.02,
+          "nightlife": 0.02
+        },
+        "penalty": {
+          "senior_focused": 0.03,
+          "slow_travel": 0.02
+        }
+      }
+    },
+
+    {
       "id": "honeymoon",
       "label": "Honeymoon",
       "description": "Newly married couple celebrating a milestone occasion. Distinct from the generic 'couple' persona by materially higher weight on privacy/exclusivity, wellness and 'once in a lifetime' iconic experiences, and near-zero weight on cost efficiency — this is the one trip type where value-for-money is deliberately not the point.",

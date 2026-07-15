@@ -105,6 +105,44 @@ export function parseGroupComposition(groupComposition = '') {
   // "my" is optional — casual phrasing ("trip with wife", "traveling with husband")
   // drops the possessive at least as often as it keeps it.
   const isCouplePhrase = /\b(couple|honeymoon|(my\s+)?(wife|husband|partner|spouse|girlfriend|boyfriend|fianc[ée]e?))\b/i.test(text);
+  // A romantic-partner mention carries intent beyond a bare headcount of two.
+  // "with my girlfriend/boyfriend/wife/husband/partner" (or honeymoon) frames
+  // the trip as romantic — a signal the couple/young_couple/honeymoon personas
+  // lean into (they boost the `romantic` tag). The bare word "couple" with no
+  // partner noun does NOT set this (it can be a friends "couple of us").
+  const isRomanticPhrase =
+    /\b(?:my\s+)?(wife|husband|partner|spouse|girlfriend|boyfriend|fianc[ée]e?|hubby)\b/i.test(text) || /\bhoneymoon\b/i.test(text);
+  // Explicit traveller ages that are NOT child ages — "we both are 20", "we're
+  // both 25", "we are 24", "I'm 26 and she's 24". A 20-year-old couple and a
+  // 70-year-old couple want materially different trips (islands/nightlife vs
+  // calm/wellness); capturing age lets the persona layer tell them apart
+  // instead of collapsing every duo into one generic 'couple'. Restricted to
+  // 2-digit ages and guarded against unit words ("we are 20 days", "20 k")
+  // so a duration or budget can't masquerade as an age.
+  const AGE_UNIT_GUARD = '(?!\\s*(?:days?|nights?|weeks?|months?|km|kms?|k\\b|baht|usd|dollars?|people|pax|hours?|hrs?|mins?|minutes?|%))';
+  const adultAges = [];
+  const bothAgeMatch = text.match(new RegExp(`\\bboth\\s+(?:are\\s+|of\\s+us\\s+are\\s+)?(\\d{2})\\b${AGE_UNIT_GUARD}`, 'i'));
+  if (bothAgeMatch) adultAges.push(Number(bothAgeMatch[1]), Number(bothAgeMatch[1]));
+  if (!bothAgeMatch) {
+    for (const m of text.matchAll(
+      new RegExp(
+        `\\b(?:i(?:'m| am)|we(?:'re| are)|(?:my\\s+)?(?:wife|husband|partner|girlfriend|boyfriend|fianc[ée]e?|she|he)\\s+is)\\s+(\\d{2})\\b${AGE_UNIT_GUARD}`,
+        'gi'
+      )
+    )) {
+      adultAges.push(Number(m[1]));
+    }
+  }
+  // Traveller self-ages. Seeded from the "we/both/I am N" phrasings here and
+  // topped up further below with "N year old <adult-noun>" ages that the age
+  // classifier resolves to the travellers themselves (see selfStatedAdultAges).
+  let ages = adultAges.filter((a) => a >= 15 && a <= 99);
+  // "young adult" band for destination archetype purposes (~18-30). Requires at
+  // least one stated age and EVERY stated adult age to fall in-band, so a mixed
+  // "I'm 34 and she's 28" pair stays a neutral couple rather than being nudged
+  // toward the young-couple beach/nightlife archetype on a partial match.
+  // Finalised after the age classifier below (which may add self-ages).
+  let young_adults = false;
   // "trip with my mom and dad" mentions two family members and (per the
   // "trip WITH X" framing, same convention as isCouplePhrase) implies the
   // narrator travels too — 3 total. Found via a real query that had NO
@@ -126,7 +164,14 @@ export function parseGroupComposition(groupComposition = '') {
   // we record the total without fabricating specific child ages — inventing
   // ages would let age-specific hard gates fire on made-up data).
   const FAMILY_WORD_NUM = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
-  const familyOfMatch = text.match(/famil(?:y|ies)\s+of\s+(\d+|two|three|four|five|six|seven|eight|nine|ten)\b/i);
+  // Accept "family of 5" and also "family trip/vacation/holiday/getaway of 5"
+  // — a connective word between "family" and "of N" is common in real prompts
+  // ("family trip of 5 with …") and previously blocked the total from ever
+  // being captured, so the group size silently fell back to the pieces we
+  // could individually count.
+  const familyOfMatch = text.match(
+    /famil(?:y|ies)\s+(?:trip\s+|vacation\s+|holiday\s+|getaway\s+)?of\s+(\d+|two|three|four|five|six|seven|eight|nine|ten)\b/i
+  );
   const family_total = familyOfMatch
     ? /\d/.test(familyOfMatch[1])
       ? Number(familyOfMatch[1])
@@ -140,26 +185,59 @@ export function parseGroupComposition(groupComposition = '') {
   else if (isCouplePhrase) adults = 2;
   else if (isSoloPhrase) adults = 1;
 
-  // Matches Maya's canonical "(8 yrs)" as well as free-text phrasings like
-  // "8-year-old" or "8 years old" (the hyphen/space gap before the unit word
-  // is deliberately loose since a human typing a prompt won't match Maya's
-  // stored-brief formatting exactly).
-  const childAgeMatches = [...text.matchAll(/\(?(\d+)[\s-]*(yrs?|years?|y\.?o\.?|months?|mo)\)?/gi)];
-  // "aged 5 and 9" / "aged 5, 9 and 12" — capture the whole number list after
-  // "aged", not just the first digit run. Requires "and" before the final
-  // number in a multi-age list (rather than a bare comma with no anchor), so
-  // an unrelated later clause like "aged 5 and 9, 10 nights" doesn't get its
-  // "10" swallowed into the age list.
-  const agedMatches = [...text.matchAll(/\baged\s+(\d+(?:\s*,\s*\d+)*\s*and\s+\d+|\d+)/gi)];
-  const agedAges = agedMatches.flatMap((m) => [...m[1].matchAll(/\d+/g)].map((n) => Number(n[0])));
-  let children_ages = [
-    ...childAgeMatches.map((m) => {
-      const n = Number(m[1]);
-      const unit = m[2].toLowerCase();
-      return unit.startsWith('mo') ? n / 12 : n;
-    }),
-    ...agedAges,
-  ];
+  // Overloaded-word guard: "child"/"kids"/"son"/"daughter" can mean a minor OR
+  // a grown-up offspring, and a stated age can belong to an offspring OR to a
+  // traveller describing themselves ("55 year old couple" is the couple, not a
+  // third person). A KID_WORD *near the age* is what tells these apart.
+  // KID_WORD_SRC is the source string (reused in the unit-less patterns);
+  // nearKid() tests a small window around a match position.
+  const KID_WORD_SRC = '(?:kids?|child(?:ren)?|kiddos?|sons?|daughters?|offspring)';
+  const KID_WORD_RE = new RegExp(`\\b${KID_WORD_SRC}\\b`, 'i');
+  const nearKid = (idx) => KID_WORD_RE.test(text.slice(Math.max(0, idx - 24), idx + 24));
+
+  // Every explicitly captured age, tagged with whether it sits next to a
+  // kid/offspring word. Matches Maya's canonical "(8 yrs)" plus free text
+  // ("8-year-old", "8 years old"); "aged 5 and 9" lists; and unit-less
+  // offspring forms ("children of age 20+", "kids over 18") which are
+  // kid-anchored by construction. The "aged"/unit-less patterns are kept
+  // disjoint so no age is captured twice and the count can't inflate.
+  const taggedAges = [];
+  for (const m of text.matchAll(/\(?(\d+)[\s-]*(yrs?|years?|y\.?o\.?|months?|mo)\)?/gi)) {
+    const unit = m[2].toLowerCase();
+    const age = unit.startsWith('mo') ? Number(m[1]) / 12 : Number(m[1]);
+    taggedAges.push({ age, kid: nearKid(m.index) });
+  }
+  for (const m of text.matchAll(/\baged\s+(\d+(?:\s*,\s*\d+)*\s*and\s+\d+|\d+)/gi)) {
+    for (const n of m[1].matchAll(/\d+/g)) taggedAges.push({ age: Number(n[0]), kid: nearKid(m.index) });
+  }
+  for (const re of [
+    new RegExp(`${KID_WORD_SRC}[^.,;]{0,25}?\\b(?:of\\s+)?ages?\\s+(\\d+)`, 'gi'),
+    new RegExp(`${KID_WORD_SRC}[^.,;]{0,25}?\\b(?:are|is)\\s+(\\d+)`, 'gi'),
+    new RegExp(`${KID_WORD_SRC}[^.,;]{0,25}?\\b(?:above|over)\\s+(\\d+)`, 'gi'),
+  ]) {
+    for (const m of text.matchAll(re)) taggedAges.push({ age: Number(m[1]), kid: true });
+  }
+
+  // Route each captured age:
+  //  - under 18            -> a minor child.
+  //  - 18+ next to a kid   -> a grown-up offspring: an extra adult in the party
+  //                           (so "children of age 20+" adds an adult, never a
+  //                           child_friendly persona or age-6 gate).
+  //  - 18+ NOT near a kid  -> a traveller stating their OWN age ("55 year old
+  //                           couple"): recorded for persona nuance but NOT
+  //                           added to the headcount — they are already counted.
+  const ADULT_AGE = 18;
+  let children_ages = taggedAges.filter((t) => t.age < ADULT_AGE).map((t) => t.age);
+  const adult_offspring = taggedAges.filter((t) => t.age >= ADULT_AGE && t.kid).length;
+  const selfStatedAdultAges = taggedAges.filter((t) => t.age >= ADULT_AGE && !t.kid).map((t) => t.age);
+  // Gates the assume-6 fallback below: true when an age was stated FOR the kids
+  // (a minor, or a kid-adjacent adult). A traveller's own age must NOT count
+  // here, or "55 year old couple" would suppress an unrelated kids fallback.
+  const statedKidAges = taggedAges.filter((t) => t.kid || t.age < ADULT_AGE);
+
+  // Fold traveller self-ages into `ages`, then finalise the young-adult band.
+  for (const a of selfStatedAdultAges) if (a >= 15 && a <= 99) ages.push(a);
+  young_adults = ages.length > 0 && ages.every((a) => a >= 18 && a <= 30);
 
   const explicitInfant = /infant|baby|newborn/i.test(text);
 
@@ -170,8 +248,12 @@ export function parseGroupComposition(groupComposition = '') {
   // family_trip/child_friendly still fire, and flag the assumption via
   // `age_assumed` so a caller can ask for real ages instead of trusting the
   // guess for anything precise (e.g. an infant-specific gate).
+  // Only assume a representative age when NOTHING numeric was stated for the
+  // kids. If any explicit age was given (even one that resolved to an adult
+  // offspring above), the ages are known — never fabricate a 6-year-old on top
+  // of "children of age 20+".
   let age_assumed = false;
-  if (children_ages.length === 0 && !explicitInfant) {
+  if (children_ages.length === 0 && !explicitInfant && statedKidAges.length === 0) {
     const numKidsMatch = text.match(/\b(\d+)\s*(?:kids?|children|kiddos?)\b/i);
     const bareKidsWord = /\b(kids?|children|kiddos?)\b/i.test(text);
     if (numKidsMatch || bareKidsWord) {
@@ -204,6 +286,12 @@ export function parseGroupComposition(groupComposition = '') {
     adults = family_total - children_ages.length;
   }
 
+  // Grown-up offspring (see adult_offspring above) count as adults. Added after
+  // the base adult signals so "…dad and mom…children of age 20+" resolves to
+  // 3 (mom+dad+narrator, from isParentsPhrase) + 1 (the adult child) = 4
+  // adults, 0 children.
+  if (adult_offspring > 0) adults = (adults ?? 0) + adult_offspring;
+
   const infant_count = children_ages.filter((a) => a < 3).length + (explicitInfant ? 1 : 0);
   const child_count = children_ages.filter((a) => a >= 3 && a <= 12).length;
   const teen_count = children_ages.filter((a) => a > 12 && a < 18).length;
@@ -215,17 +303,27 @@ export function parseGroupComposition(groupComposition = '') {
   const genderIsMale = /\b(male|man|men|guy|guys|boy|boys)\b/i.test(text);
   const gender = genderIsFemale && !genderIsMale ? 'female' : genderIsMale && !genderIsFemale ? 'male' : 'unspecified';
 
-  // group_size: prefer a computed adults+children sum; fall back to a
-  // stated family total ("family of four") when the split is unknown.
+  // group_size: an explicitly stated total ("family trip of 5") is
+  // authoritative. A named-but-uncounted member — e.g. the grandmother, who
+  // registers as has_senior_adult but is never added to `adults` — can push
+  // the real total above the pieces we could individually count, so take the
+  // larger of the stated total and the computed sum rather than silently
+  // undercounting. With neither, fall back to whichever single source exists.
+  const computedSum = adults !== null ? adults + children_ages.length : null;
   let group_size = null;
-  if (adults !== null) group_size = adults + children_ages.length;
+  if (family_total !== null && computedSum !== null) group_size = Math.max(family_total, computedSum);
   else if (family_total !== null) group_size = family_total;
+  else if (computedSum !== null) group_size = computedSum;
 
   return {
     adults,
     gender,
+    ages,
+    young_adults,
+    romantic: isRomanticPhrase,
     children_ages,
     age_assumed,
+    adult_offspring,
     infant_count,
     child_count,
     teen_count,
@@ -344,7 +442,7 @@ export function parseFreeTextToBrief(text = '') {
   // parse to find — the relationship gets silently lost by its own
   // resolution. Attaching the already-computed roster lets derivePersonas
   // skip the lossy re-parse. Non-enumerable so it's invisible to
-  // JSON.stringify (never pollutes recipe.json/llm.json output) while still
+  // JSON.stringify (never pollutes recipe.json/ranked.json output) while still
   // a normal property for derivePersonas to read directly.
   Object.defineProperty(brief, '_roster', { value: roster, enumerable: false });
   return brief;
@@ -394,9 +492,23 @@ export function derivePersonas(brief) {
     notes.push(
       `Child(ren) mentioned with no age given — assumed age ~6 (mid child-band) so family_trip/child_friendly still apply. State exact ages for accurate gating (e.g. an infant under 3 would hard-gate out very different activities than a 6-year-old).`
     );
-  } else if (roster.is_family && roster.child_count === 0 && roster.infant_count === 0 && roster.teen_count === 0) {
+  } else if (
+    roster.is_family &&
+    roster.child_count === 0 &&
+    roster.infant_count === 0 &&
+    roster.teen_count === 0 &&
+    !roster.adult_offspring
+  ) {
     notes.push(
       `Family trip detected but no traveller ages given — scoring with family_trip weighting (safety, kid activities, dining ease, medical fallback). State each person's age to sharpen it: a child under 3 adds infant_friendly, a 3-12 year-old adds child_friendly, a 60+ adult adds senior_citizen — each applies stricter, more tailored gates than family_trip alone.`
+    );
+  }
+  // "children"/"kids" that an explicit age revealed to be grown-ups (18+). Say
+  // so loudly: this is exactly the overloaded-word case that used to invent a
+  // minor and mis-fire child_friendly.
+  if (roster.adult_offspring > 0) {
+    notes.push(
+      `"child(ren)"/"kids" in the request refers to grown-up offspring (18+) — counted as ${roster.adult_offspring} adult(s), so no child_friendly persona or child age-gate is applied. State exact ages if any traveller is in fact under 18.`
     );
   }
 
@@ -466,8 +578,21 @@ export function derivePersonas(brief) {
   const styleOnlyPersonas = new Set(TRAVEL_STYLE_KEYWORDS.map((g) => g.persona));
   const hasBasePersona = [...personas].some((p) => !styleOnlyPersonas.has(p));
   if (!hasBasePersona && roster.group_size === 2 && roster.child_count === 0 && roster.infant_count === 0) {
-    personas.add('couple');
-    notes.push('Couple/duo trip detected with no other persona signal — scoring against the couple persona.');
+    // A young-adult duo gets the young_couple specialisation instead of the
+    // neutral couple persona — same privacy priorities, but weighted toward the
+    // beaches/islands/nightlife archetype most users actually picture for a
+    // young Thailand couples' trip (see the young_couple persona description).
+    // This is a deliberate PRODUCT prior, not a math/safety judgement, so it is
+    // stated as such and is one keyword away from being overridden.
+    if (roster.young_adults) {
+      personas.add('young_couple');
+      notes.push(
+        `Young-adult couple detected (age${roster.ages.length > 1 ? 's' : ''} ${roster.ages.join(' & ')}) — scoring against young_couple: beaches, islands and value weigh more, and the strong "must be uncrowded" pull that favours the calm northern hill towns (Chiang Mai/Rai) for older couples is relaxed. This is a product prior about what a young couple usually wants, not a safety or quality judgement — say "persona:couple" to force the neutral couple ranking instead.`
+      );
+    } else {
+      personas.add('couple');
+      notes.push('Couple/duo trip detected with no other persona signal — scoring against the couple persona.');
+    }
   }
 
   if (personas.size === 0) {

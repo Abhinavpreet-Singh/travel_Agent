@@ -117,7 +117,7 @@ carefully:
    under-detection). Root-caused and fixed architecturally: `brief` now
    carries the original, non-reconstructed roster as a non-enumerable
    `_roster` property (invisible to `JSON.stringify`, so it never leaks into
-   `recipe.json`/`llm.json`), which `derivePersonas` prefers over re-parsing
+   `recipe.json`/`ranked.json`), which `derivePersonas` prefers over re-parsing
    whenever present. A real Maya brief (no `_roster`) still re-parses
    `groupComposition` as before — that's the correct behavior there, since
    Maya's `groupComposition` *is* the authoritative source, not a lossy
@@ -168,7 +168,7 @@ same way). The signal split is fixed and uniform — it doesn't know or care
 which cities that favors, so it can't be quietly turned into a destination
 preference table. The adjustment is fully transparent in the output
 (`duration_adjustment: {applied, duration_days, note}`) printed to console
-and included in `recipe`/`llm.json`, not a silent transformation.
+and included in `recipe`/`ranked.json`, not a silent transformation.
 
 Verified against the exact reported query ("date with girlfriend, 2 days"):
 Bangkok/Phuket/Koh Samui/Chiang Mai now cluster tightly at the top (7.0-7.3)
@@ -194,6 +194,56 @@ tell me which cities or which specific claims matter most (e.g. "verify
 Phuket's safety/hospital data" or "check Pai's actual transfer time") and
 I'll do a properly-scoped pass with cited sources, rather than a shallow
 pass across everything that looks thorough but isn't reliable.
+
+### Round 11 (2026-07-15) — young-couple archetype, needs-based shortlist, city↔activity coherence, and dropping llm.json
+A run of product-alignment work, all driven by real queries:
+
+1. **`children of age 20+` no longer hallucinates a 6-year-old.** The bare
+   word "children" fired an assume-age-6 fallback even when an explicit adult
+   age was attached. Reworked `parseGroupComposition` age handling into a
+   proper classify-by-adjacency step: an age <18 is a minor; an age ≥18 next
+   to a kid word is a grown-up *offspring* (an extra adult, no `child_friendly`
+   / age-gate); an age ≥18 *not* near a kid word is a traveller's own age
+   ("55 year old couple" — recorded, not double-counted). Also captures a
+   stated group total ("family trip of 5").
+
+2. **`young_couple` persona added.** "with my girlfriend, we both are 20" was
+   scoring against generic `couple`, which weights calm/photogenic/wellness and
+   so ranked Chiang Mai/Chiang Rai top — mathematically fine, but not what a
+   young couple pictures for Thailand. Captured traveller ages + a `young_adults`
+   flag + a `romantic` flag; a young-adult duo now composes `young_couple`
+   (beach/island/value-weighted, nightlife-tolerant). Flips the ranking to
+   Phuket/Samui/Krabi/Phi Phi. Framed in the output as a **product prior**,
+   overridable with `persona:couple`.
+
+3. **Shortlist length is now adaptive, not a fixed top-N.** `runSingle` returns
+   as few as genuinely fit: a quality band (within 1.5 pts of top, ≥6.5/10)
+   ∩ feasibility (~3 activities/day × trip length; cities scale with duration)
+   ∩ a hard ceiling. A 3-day trip gets ~9 activities, a fortnight ~31, a
+   weak-match persona fewer. `shortlist_rationale` explains the size.
+
+4. **Cities and activities are now coherent.** They used to be ranked in two
+   independent country-wide passes, so a top activity could surface in a city
+   that didn't make the shortlist (a Bangkok dinner cruise for a couple headed
+   to Chiang Mai + Samui). Activities are now scoped to the recommended cities.
+
+5. **A city's own activity lineup lifts its rank** (`CITY_ACTIVITY_BLEND = 0.4`):
+   `city_final = 0.6·ambient + 0.4·activity_strength`, where strength = peak
+   (top-5 avg) + breadth (how many ≥7, saturating). This is what the user
+   explicitly asked for — an activity-rich hub (Bangkok for a couple) can earn
+   a place even when the place itself scores mid on ambient qualities. Bangkok
+   went #9 → #5 for the couple query; Chiang Mai keeps #1 (it has peak *and*
+   breadth). Each city carries `city_score_0_10` + `activity_strength_0_10`.
+   Note: this rewards big hubs generally (breadth ∝ city size) — make the blend
+   per-persona if a small focused destination should ever win.
+
+6. **Removed `llm.json` (reverses Round 8).** It was `recipe.json` +
+   `ranked.json` merged — a redundant replica. `ranked.json` already carries
+   `shortlist_rationale` and `eligible_totals`; `recipe.json` carries roster/
+   constraints/confidence. Deleted `buildLLMJSON()` and both `query_result.llm.json`
+   and per-query `<n>.llm.json` outputs. A consumer reads recipe (the "why")
+   + ranked (the "what"). Hotels also dropped from the per-query output — a
+   hotel is chosen after city and dates are fixed, so it's a later fetch step.
 
 ### Round 10 (2026-07-15) — city combinations, and holding the line on two asks
 User asked directly: "why isn't Bangkok recommended — aren't we being too
