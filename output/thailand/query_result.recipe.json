@@ -1,8 +1,9 @@
 {
-  "input_text": "college trip with friends all in 20s 5 people to thailand for a week",
+  "input_text": "family of 4 for a trip to thailand the children are more than 18+",
   "resolved_city": null,
   "personas": [
-    "friends_trip"
+    "child_friendly",
+    "family_trip"
   ],
   "persona_source": "derived",
   "confidence": {
@@ -12,80 +13,112 @@
   "mode": "single",
   "constraints": {
     "known": [
-      "5 adult(s)",
-      "duration: 7 days"
+      "3 adult(s)",
+      "1 child(ren), ages: 6"
     ],
     "inferred": [
-      "friends_trip inferred from group_size >= 3 with no children — refine if this is a family or corporate group."
+      "Child(ren) mentioned with no age given — assumed age ~6 (mid child-band) so family_trip/child_friendly still apply. State exact ages for accurate gating (e.g. an infant under 3 would hard-gate out very different activities than a 6-year-old)."
     ],
     "missing": [
       "destination city not specified — scored across all cities",
+      "exact child age(s) not given — assumed ~6 for scoring; state real ages for accurate gating (an infant hard-gates very differently than a 6-year-old)",
+      "travel duration not specified",
       "travel dates not specified",
       "budget not specified"
     ]
   },
   "brief": {
-    "destinationType": "Thailand trip",
+    "destinationType": "Thailand family trip",
     "dates": null,
-    "duration": "7 days",
+    "duration": null,
     "budget": null,
-    "groupComposition": "5 adults",
+    "groupComposition": "3 adults, 1 child (6 yrs)",
     "extras": [],
     "awaitingField": null,
     "conversationComplete": true
   },
   "roster": {
-    "adults": 5,
+    "adults": 3,
     "gender": "unspecified",
-    "children_ages": [],
-    "age_assumed": false,
+    "children_ages": [
+      6
+    ],
+    "age_assumed": true,
     "infant_count": 0,
-    "child_count": 0,
+    "child_count": 1,
     "teen_count": 0,
     "has_senior_adult": false,
-    "group_size": 5
+    "traveling_with_parents": false,
+    "is_family": true,
+    "family_total": 4,
+    "group_size": 4
   },
   "composed_persona": {
-    "id": "friends_trip",
-    "label": "Friends Trip",
+    "id": "child_friendly+family_trip",
+    "label": "Child Friendly (3-12) + Family Trip",
     "composed_from": [
-      "friends_trip"
+      "child_friendly",
+      "family_trip"
     ],
     "weights": {
-      "group_activity_density": 0.15,
-      "nightlife_density": 0.12,
-      "group_cost_efficiency": 0.12,
-      "cost_efficiency": 0.1,
-      "party_scene_quality": 0.08,
-      "alcohol_affordability": 0.06,
-      "photogenic_quality": 0.06,
-      "value_for_money": 0.06,
-      "late_night_food": 0.05,
-      "beach_club_quality": 0.05,
-      "safety_general": 0.05,
-      "direct_flight_access": 0.05,
-      "intracity_transport_quality": 0.05
+      "kid_activity_density": 0.165,
+      "safety_general": 0.115,
+      "kids_dining_ease": 0.085,
+      "shallow_calm_beach": 0.075,
+      "food_hygiene": 0.07,
+      "walking_load_low": 0.065,
+      "hospital_proximity": 0.055,
+      "heat_stress_low": 0.05,
+      "crowd_pressure_low": 0.04,
+      "transport_comfort": 0.04,
+      "healthcare_quality": 0.04,
+      "public_toilet_availability": 0.035,
+      "pediatric_care_access": 0.03,
+      "family_room_availability": 0.03,
+      "arrival_transfer_ease": 0.03,
+      "physical_exertion_low": 0.025,
+      "vegetarian_food_access": 0.025,
+      "value_for_money": 0.025
     },
-    "hard_gates": [],
-    "soft_gates": [
+    "hard_gates": [
+      {
+        "attribute": "min_age",
+        "op": "<=",
+        "value": 6,
+        "scope": [
+          "activity"
+        ],
+        "reason": "Activity has a minimum age above the child's age"
+      },
       {
         "signal": "safety_general",
         "op": ">=",
-        "value": 0.35,
-        "cap": 0.6,
-        "reason": "Baseline safety not met for an unsupervised group trip"
+        "value": 0.4,
+        "reason": "Below the safety floor for children"
+      }
+    ],
+    "soft_gates": [
+      {
+        "signal": "hospital_proximity",
+        "op": ">=",
+        "value": 0.25,
+        "cap": 0.7,
+        "reason": "No hospital within a reasonable radius"
       }
     ],
     "tag_modifiers": {
       "boost": {
-        "nightlife": 0.03,
-        "island": 0.02,
-        "adventure": 0.02,
-        "group_friendly": 0.03
+        "family_friendly": 0.09,
+        "theme_park": 0.07,
+        "wildlife": 0.05,
+        "interactive": 0.03,
+        "calm_beach": 0.02
       },
       "penalty": {
-        "honeymoon_only": 0.03,
-        "senior_focused": 0.02
+        "nightlife": 0.1,
+        "adult_only": 0.16,
+        "extreme_adventure": 0.08,
+        "party": 0.04
       }
     }
   }

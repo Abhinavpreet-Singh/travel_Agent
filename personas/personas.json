@@ -975,18 +975,20 @@
         }
       ],
       "weights": {
-        "photogenic_quality": 14,
+        "photogenic_quality": 12,
         "crowd_pressure_low": 12,
         "wellness_spa_quality": 12,
         "weather_comfort": 10,
         "value_for_money": 9,
         "safety_general": 8,
-        "noise_low": 8,
+        "noise_low": 7,
+        "arrival_transfer_ease": 6,
         "food_hygiene": 6,
-        "direct_flight_access": 6,
-        "iconic_landmark_density": 6,
-        "english_prevalence": 5,
-        "intracity_transport_quality": 4
+        "direct_flight_access": 5,
+        "flight_time_ease": 4,
+        "iconic_landmark_density": 4,
+        "english_prevalence": 3,
+        "intracity_transport_quality": 3
       },
       "tag_modifiers": {
         "boost": {
@@ -1036,18 +1038,20 @@
         }
       ],
       "weights": {
-        "wellness_spa_quality": 16,
-        "photogenic_quality": 14,
+        "wellness_spa_quality": 14,
+        "photogenic_quality": 12,
         "crowd_pressure_low": 13,
-        "noise_low": 10,
+        "noise_low": 9,
         "safety_general": 8,
         "weather_comfort": 8,
-        "iconic_landmark_density": 7,
-        "direct_flight_access": 6,
+        "arrival_transfer_ease": 6,
+        "iconic_landmark_density": 5,
+        "direct_flight_access": 5,
+        "flight_time_ease": 4,
         "food_hygiene": 5,
         "value_for_money": 5,
-        "english_prevalence": 4,
-        "intracity_transport_quality": 4
+        "english_prevalence": 3,
+        "intracity_transport_quality": 3
       },
       "tag_modifiers": {
         "boost": {

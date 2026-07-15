@@ -53,6 +53,8 @@ function parseArgv(argv) {
 }
 
 /** `city:HKT persona:bachelor_trip,senior_citizen` typed inline -> the same flags parseArgv would produce. */
+const RECOGNIZED_FLAG_KEYS = new Set(['city', 'persona', 'compare', 'stack', 'rank']);
+
 function parseShorthandLine(line) {
   const tokens = line.trim().split(/\s+/).filter(Boolean);
   if (tokens.length === 0 || !tokens.every((t) => /^[a-zA-Z_]+:.+$/.test(t))) return null;
@@ -61,7 +63,15 @@ function parseShorthandLine(line) {
     const idx = t.indexOf(':');
     flags[t.slice(0, idx).toLowerCase()] = t.slice(idx + 1);
   }
-  return flags;
+  // Only treat this as recognized shorthand if at least one key is something
+  // actually read downstream. Otherwise a hopeful "budget:50000" (typed after
+  // being told budget is missing) would silently vanish: parsed as a flag,
+  // but nothing reads flags.budget, and the free-text merge path is skipped
+  // whenever `override` is truthy — so it wouldn't even reach
+  // parseFreeTextToBrief's own budget regex. Falling back to null here makes
+  // the caller treat the whole line as free text instead, which does work.
+  const hasRecognizedKey = Object.keys(flags).some((k) => RECOGNIZED_FLAG_KEYS.has(k));
+  return hasRecognizedKey ? flags : null;
 }
 
 function findCity(query) {
@@ -173,6 +183,28 @@ function bestTime(entity) {
   return 'flexible';
 }
 
+const WEATHER_DEPENDENT_CATEGORIES = new Set([
+  'beach',
+  'beach_club',
+  'water_sports',
+  'island_hopping',
+  'diving',
+  'nature',
+  'adventure',
+  'scenic',
+  'road_trip',
+]);
+const WEATHER_DEPENDENT_TAGS = new Set(['boat', 'boat_only_access', 'hiking', 'kayak', 'sunset_spot', 'sunrise_spot', 'viewpoint']);
+
+/** Rain/heat washes out an outdoor day; an indoor museum day doesn't care. Cheap category+tag heuristic, same spirit as best_time. */
+function weatherDependency(entity) {
+  const cat = (entity.category ?? '').toLowerCase();
+  const tags = entity.tags ?? [];
+  if (tags.includes('indoor')) return 'low';
+  if (WEATHER_DEPENDENT_CATEGORIES.has(cat) || tags.some((t) => WEATHER_DEPENDENT_TAGS.has(t))) return 'high';
+  return 'low';
+}
+
 /**
  * Type-aware, day-planning-relevant fields derived from the entity's own
  * data — cheap to compute, so attached to EVERY entity regardless of
@@ -191,6 +223,7 @@ function entityMetadata(entity) {
       cost_band: activityCostBand(entity.price_inr),
       pace: PACE_LABELS[entity.attributes?.exertion_level_1_5] ?? null,
       best_time: bestTime(entity),
+      weather_dependency: weatherDependency(entity),
       data_confidence: dataConfidence,
     };
   }
@@ -293,15 +326,132 @@ function splitRecommendedExcluded(rankedList, type) {
   return { recommended, excluded };
 }
 
-function runSingle(city, persona) {
+function haversineKm(a, b) {
+  const R = 6371;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const lat1 = (a.lat * Math.PI) / 180;
+  const lat2 = (b.lat * Math.PI) / 180;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+function parseDurationDays(durationStr) {
+  if (!durationStr) return null;
+  const m = durationStr.match(/(\d+)/);
+  return m ? Number(m[1]) : null;
+}
+
+/** How many cities is it realistic to combine for a trip this long? Nobody spends a 7-day trip in one city, and nobody meaningfully combines 3 cities in 4 days. */
+function comboSizeForDuration(days) {
+  if (days === null || days < 4) return null;
+  if (days < 8) return 2;
+  return 3;
+}
+
+function kCombinations(arr, k) {
+  if (k === 1) return arr.map((x) => [x]);
+  const result = [];
+  for (let i = 0; i <= arr.length - k; i++) {
+    for (const rest of kCombinations(arr.slice(i + 1), k - 1)) result.push([arr[i], ...rest]);
+  }
+  return result;
+}
+
+/**
+ * The gap this actually fills: every other output here answers "best
+ * single city," but nobody spends a week-long trip in one place. Scores
+ * combinations of the top eligible cities by their average individual
+ * score, minus a distance penalty computed from real coordinates
+ * (haversine) — not a travel-time API, just a proxy for "how much does
+ * combining these cost you." Editorial heuristic (every ~300km of average
+ * inter-city distance costs about a point, capped at -2), documented as
+ * such, not a hardcoded per-destination opinion table.
+ */
+function buildCityCombinations(recommendedCities, durationDays) {
+  const size = comboSizeForDuration(durationDays);
+  if (!size || !recommendedCities || recommendedCities.length < size) return null;
+
+  const pool = recommendedCities.slice(0, 8); // keep combinatorics small and quality high
+  const coordsById = new Map(data.cityFile.entities.map((c) => [c.id, c.coordinates]));
+
+  const combos = kCombinations(pool, size).map((group) => {
+    const avgScore = group.reduce((s, c) => s + c.score_0_10, 0) / group.length;
+    let totalDistance = 0;
+    let legs = 0;
+    for (let i = 0; i < group.length; i++) {
+      for (let j = i + 1; j < group.length; j++) {
+        totalDistance += haversineKm(coordsById.get(group[i].entity_id), coordsById.get(group[j].entity_id));
+        legs++;
+      }
+    }
+    const avgDistanceKm = Math.round(totalDistance / legs);
+    const distancePenalty = Math.min(avgDistanceKm / 300, 2);
+    return {
+      cities: group.map((c) => c.name),
+      combined_score: Number((avgScore - distancePenalty).toFixed(1)),
+      individual_scores: Object.fromEntries(group.map((c) => [c.name, c.score_0_10])),
+      avg_distance_km: avgDistanceKm,
+    };
+  });
+
+  return combos.sort((a, b) => b.combined_score - a.combined_score).slice(0, 5);
+}
+
+// Logistics vs. exploration signals — a documented, fixed split, not tuned
+// per-persona or per-destination. Whichever cities happen to score well on
+// either side is an output of the math, never an input to it.
+const LOGISTICS_SIGNALS = ['direct_flight_access', 'flight_time_ease', 'arrival_transfer_ease', 'intracity_transport_quality'];
+const EXPLORATION_SIGNALS = ['photogenic_quality', 'iconic_landmark_density', 'content_novelty', 'golden_hour_access'];
+
+/**
+ * Short trips can't absorb travel friction the way long ones can — losing
+ * half of a 2-day trip to a bad transfer is a much bigger fraction of the
+ * trip than losing half a day out of two weeks. Scales LOGISTICS_SIGNALS up
+ * and EXPLORATION_SIGNALS down for CITY scoring only (once you've picked a
+ * city, whether an activity is a temple or a market doesn't depend on trip
+ * length the same way) — applied uniformly regardless of which specific
+ * cities that favors, so it can't be reverse-engineered into a
+ * destination preference. Only fires for a persona that actually weights at
+ * least one logistics signal already (renormalizing zero still gives zero —
+ * this amplifies an existing signal, it doesn't invent one from nothing).
+ */
+function applyDurationAdjustment(weights, durationDays) {
+  if (durationDays === null || durationDays > 3) return { weights, applied: false };
+  const logisticsMultiplier = durationDays <= 1 ? 2.5 : durationDays === 2 ? 2.0 : 1.5;
+  const explorationMultiplier = durationDays <= 1 ? 0.5 : durationDays === 2 ? 0.6 : 0.75;
+
+  const adjusted = {};
+  for (const [signal, w] of Object.entries(weights)) {
+    if (LOGISTICS_SIGNALS.includes(signal)) adjusted[signal] = w * logisticsMultiplier;
+    else if (EXPLORATION_SIGNALS.includes(signal)) adjusted[signal] = w * explorationMultiplier;
+    else adjusted[signal] = w;
+  }
+  const total = Object.values(adjusted).reduce((a, b) => a + b, 0) || 1;
+  for (const k of Object.keys(adjusted)) adjusted[k] /= total;
+
+  return {
+    weights: adjusted,
+    applied: true,
+    duration_days: durationDays,
+    logistics_multiplier: logisticsMultiplier,
+    exploration_multiplier: explorationMultiplier,
+    note: `Trip is ${durationDays} day(s) — scaled ${LOGISTICS_SIGNALS.join('/')} up ${logisticsMultiplier}x and ${EXPLORATION_SIGNALS.join('/')} down ${explorationMultiplier}x for city selection, then renormalized. Applies to city ranking only, not activities/hotels within a chosen city.`,
+  };
+}
+
+function runSingle(city, persona, durationDays = null) {
   const activityPool = city ? data.activities.filter((a) => a.parent_id === city.id) : data.activities;
   const hotelPool = city ? data.hotels.filter((h) => h.parent_id === city.id) : data.hotels;
   const cityPool = city ? [city] : data.cityFile.entities;
 
+  const durationAdj = applyDurationAdjustment(persona.weights, durationDays);
+  const cityPersona = durationAdj.applied ? { ...persona, weights: durationAdj.weights } : persona;
+
   // explainTop sized generously enough to cover a whole city-scoped pool
   // (activities/hotels rarely exceed ~15) or a meaningful slice of the
   // country-wide pool (20 of 100+) — everything past that still has its score.
-  const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city');
+  const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, cityPersona, cityPool.length), 'city');
   const activities = splitRecommendedExcluded(
     rankAll(activityPool, data.ancestorsOf.activity, persona, city ? activityPool.length : 20),
     'activity'
@@ -310,7 +460,11 @@ function runSingle(city, persona) {
 
   return {
     persona: { id: persona.id, label: persona.label, composed_from: persona.composed_from ?? [persona.id] },
+    duration_adjustment: durationAdj.applied
+      ? { applied: true, duration_days: durationAdj.duration_days, note: durationAdj.note }
+      : { applied: false },
     recommended_cities: cities?.recommended,
+    recommended_city_combinations: city ? undefined : buildCityCombinations(cities?.recommended, durationDays),
     recommended_activities: activities.recommended,
     recommended_hotels: hotels.recommended,
     excluded_options: [...(cities?.excluded ?? []), ...activities.excluded, ...hotels.excluded],
@@ -354,10 +508,19 @@ function runCompare(city, personaIds) {
 // ---- console output ---------------------------------------------------------
 
 function printSingle(result) {
+  if (result.duration_adjustment?.applied) {
+    console.log(`Duration adjustment: ${result.duration_adjustment.note}`);
+  }
   if (result.recommended_cities) {
     console.log(`Recommended cities (of ${result.recommended_cities.length} eligible):`);
     for (const c of result.recommended_cities.slice(0, 17)) {
       console.log(`  ${c.score_0_10.toFixed(1).padStart(4)}  ${c.name.padEnd(28)} ${c.why?.[0] ?? ''}`);
+    }
+  }
+  if (result.recommended_city_combinations?.length) {
+    console.log(`Recommended city combinations (for a multi-city trip):`);
+    for (const combo of result.recommended_city_combinations) {
+      console.log(`  ${combo.combined_score.toFixed(1).padStart(4)}  ${combo.cities.join(' + ').padEnd(28)} ~${combo.avg_distance_km}km apart`);
     }
   }
   console.log(`Recommended activities (of ${result.recommended_activities.length} eligible):`);
@@ -560,13 +723,58 @@ let queryCounter = 0;
  * Handing both to an LLM gives it the "why" (recipe) and the "what" (ranked)
  * as separate documents rather than one large mixed blob.
  */
+/**
+ * The actual hand-off document for an itinerary LLM — recipe.json's
+ * trip-identifying fields (minus weights/gates/tag_modifiers, which are
+ * engine internals an LLM can't act on: it cannot build a better itinerary
+ * knowing a coefficient is 0.15 instead of 0.14) merged with ranked.json's
+ * recommended/excluded fields. NOT a new ranking stage — everything here is
+ * already computed by recipeToJSON/runSingle; this just combines two
+ * documents into the one that actually gets sent downstream. Only produced
+ * in single/blend mode — compare mode's side-by-side tables are a
+ * persona-comparison artifact, not itinerary material.
+ */
+function buildLLMJSON(ext, rankedResult) {
+  const recipe = recipeToJSON(ext);
+  return {
+    trip_summary: {
+      input_text: ext.text || null,
+      destination_country: 'Thailand',
+      destination_city: ext.city?.name ?? null,
+      duration: ext.brief?.duration ?? null,
+      dates: ext.brief?.dates ?? null,
+      budget: ext.brief?.budget ?? null,
+      group_size: ext.derived?.roster?.group_size ?? null,
+      personas: ext.personaIds,
+    },
+    traveler_profile: {
+      roster: recipe.roster,
+      constraints: recipe.constraints,
+      confidence: recipe.confidence,
+    },
+    duration_adjustment: rankedResult.duration_adjustment,
+    recommended_cities: rankedResult.recommended_cities,
+    recommended_city_combinations: rankedResult.recommended_city_combinations,
+    recommended_activities: rankedResult.recommended_activities,
+    recommended_hotels: rankedResult.recommended_hotels,
+    excluded_options: rankedResult.excluded_options,
+    planning_metadata: {
+      city_count: rankedResult.recommended_cities?.length ?? 1,
+      activity_count: rankedResult.recommended_activities.length,
+      hotel_count: rankedResult.recommended_hotels.length,
+      excluded_count: rankedResult.excluded_options.length,
+    },
+  };
+}
+
 function writeAndSummarize(ext) {
   const { city, personaIds, compareMode } = ext;
   const recipe = recipeToJSON(ext);
 
   // ext.composed is an array (one composed persona per id) in compare mode,
   // and a single composed persona otherwise — see buildExtraction.
-  const rankedResult = compareMode ? runCompare(city, personaIds) : runSingle(city, ext.composed);
+  const durationDays = parseDurationDays(ext.brief?.duration);
+  const rankedResult = compareMode ? runCompare(city, personaIds) : runSingle(city, ext.composed, durationDays);
   const ranked = {
     mode: compareMode ? 'compare' : 'single',
     query: { text: ext.text || null, resolved_city: city?.id ?? null, personas: personaIds },
@@ -580,6 +788,13 @@ function writeAndSummarize(ext) {
   const rankedPath = writeJSON(`output/thailand/queries/${stamp}_${n}.ranked.json`, ranked);
   writeJSON('output/thailand/query_result.recipe.json', recipe); // always-latest convenience copies
   writeJSON('output/thailand/query_result.ranked.json', ranked);
+
+  let llmPath = null;
+  if (!compareMode) {
+    const llmJSON = buildLLMJSON(ext, rankedResult);
+    llmPath = writeJSON(`output/thailand/queries/${stamp}_${n}.llm.json`, llmJSON);
+    writeJSON('output/thailand/query_result.llm.json', llmJSON);
+  }
 
   if (compareMode) {
     const summary = ext.composed
@@ -597,7 +812,10 @@ function writeAndSummarize(ext) {
 
   console.log(`\nRecipe JSON (weights/gates/brief):        ${path.relative(ROOT, recipePath)}`);
   console.log(`Ranked JSON (cities/activities/hotels):    ${path.relative(ROOT, rankedPath)}`);
-  console.log(`Latest copies: output/thailand/query_result.recipe.json, output/thailand/query_result.ranked.json`);
+  if (llmPath) console.log(`LLM JSON (the one to actually send):       ${path.relative(ROOT, llmPath)}`);
+  console.log(
+    `Latest copies: output/thailand/query_result.recipe.json, output/thailand/query_result.ranked.json${llmPath ? ', output/thailand/query_result.llm.json' : ''}`
+  );
   console.log('-'.repeat(64) + '\n');
 }
 
@@ -688,6 +906,33 @@ function lineToInput(line) {
 
 const QUIT = Symbol('quit');
 
+/** "destination city not specified — scored across all cities" -> "which city" — short enough to list several on one line. */
+function shortMissingLabel(entry) {
+  if (/destination city/i.test(entry)) return 'which city';
+  if (/group size/i.test(entry)) return 'group size';
+  if (/travel dates/i.test(entry)) return 'travel dates';
+  if (/^budget/i.test(entry)) return 'budget';
+  if (/child age/i.test(entry)) return 'exact child ages';
+  return entry.split(/[—:]/)[0].trim();
+}
+
+/**
+ * A single free-text line is rarely a complete trip description — this is
+ * the actual answer to "how do I check this through more thoroughly": after
+ * every recipe preview, proactively name what's still missing (from
+ * constraints.missing, already computed) instead of a generic "looks
+ * right?". Plain-language hint, not a shorthand flag — see
+ * parseShorthandLine's comment on why "budget:50000" doesn't reliably work,
+ * but "budget 50000" typed as free text does (it reaches
+ * parseFreeTextToBrief's own regex on the next pass).
+ */
+function missingHint(ext) {
+  const missing = buildConstraintSummary(ext).missing;
+  if (missing.length === 0) return '';
+  const labels = [...new Set(missing.map(shortMissingLabel))].slice(0, 4);
+  return `\nCould sharpen this — you could still tell me: ${labels.join(', ')}. Just type it as text and I'll fold it in.`;
+}
+
 /** Extract, show the recipe JSON, then let the user correct it (merging overrides) before it's written — the "ask if anything to add" step. */
 async function confirmExtraction(reader, initialInput) {
   let ext;
@@ -701,7 +946,7 @@ async function confirmExtraction(reader, initialInput) {
   while (true) {
     printRecipeJSON(ext);
     const raw = await reader.next(
-      '\nLooks right? [Enter = continue] or correct it (e.g. "persona:friends_trip", "city:Bangkok", or free text to add) — "cancel" to drop, "quit" to exit:\n> '
+      `${missingHint(ext)}\nLooks right? [Enter = continue] or correct it (e.g. "persona:friends_trip", "city:Bangkok", or free text to add) — "cancel" to drop, "quit" to exit:\n> `
     );
     if (raw === null) return null; // stream closed
     const answer = raw.trim();

@@ -94,15 +94,49 @@ export function parseGroupComposition(groupComposition = '') {
   const text = groupComposition;
 
   const numAdultsMatch = text.match(/(\d+)\s*(?:adults?|people|pax|of us|travell?ers?)\b/i);
-  const numFriendsMatch = text.match(/(\d+)\s*friends?\b/i);
+  // "5 friends", "5 my friends", "5 of my friends", "my 5 friends" — the
+  // possessive can sit on either side of the number or be dropped entirely;
+  // a rigid "digit immediately before friends" pattern missed "5 my
+  // friends" (found via a real query), which is at least as natural a
+  // phrasing as "5 friends".
+  const numFriendsMatch =
+    text.match(/(\d+)\s*(?:of\s*)?(?:my|our)?\s*friends?\b/i) || text.match(/\b(?:my|our)\s*(\d+)\s*friends?\b/i);
   const isSoloPhrase = /\b(solo|alone|by myself|just me)\b/i.test(text);
   // "my" is optional — casual phrasing ("trip with wife", "traveling with husband")
   // drops the possessive at least as often as it keeps it.
   const isCouplePhrase = /\b(couple|honeymoon|(my\s+)?(wife|husband|partner|spouse|girlfriend|boyfriend|fianc[ée]e?))\b/i.test(text);
+  // "trip with my mom and dad" mentions two family members and (per the
+  // "trip WITH X" framing, same convention as isCouplePhrase) implies the
+  // narrator travels too — 3 total. Found via a real query that had NO
+  // numeric signal at all ("mom and dad" isn't a count), so it silently
+  // fell through to `default` with zero roster information.
+  const isParentsPhrase = /\b(mom and dad|dad and mom|mother and father|father and mother|my parents|both parents)\b/i.test(
+    text
+  );
+  // The word "family" is itself a direct persona signal — "family trip",
+  // "family of four", "travelling with my family", "family vacation" all
+  // mean a household group (overwhelmingly with children) and should
+  // activate family_trip. Previously "family" only reached destinationType
+  // (the label) and never the persona; "family of four" with no explicit
+  // ages fell all the way to `default`, then surfaced bar-crawls and
+  // adults-only hotels — a real mischaracterization, found via that query.
+  const isFamilyPhrase = /\bfamil(y|ies)\b/i.test(text);
+  // "family of four" / "family of 4" -> a known TOTAL headcount (the split
+  // between adults and children is genuinely unknown from this phrasing, so
+  // we record the total without fabricating specific child ages — inventing
+  // ages would let age-specific hard gates fire on made-up data).
+  const FAMILY_WORD_NUM = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+  const familyOfMatch = text.match(/famil(?:y|ies)\s+of\s+(\d+|two|three|four|five|six|seven|eight|nine|ten)\b/i);
+  const family_total = familyOfMatch
+    ? /\d/.test(familyOfMatch[1])
+      ? Number(familyOfMatch[1])
+      : FAMILY_WORD_NUM[familyOfMatch[1].toLowerCase()]
+    : null;
 
   let adults = null;
   if (numAdultsMatch) adults = Number(numAdultsMatch[1]);
   else if (numFriendsMatch) adults = Number(numFriendsMatch[1]);
+  else if (isParentsPhrase) adults = 3;
   else if (isCouplePhrase) adults = 2;
   else if (isSoloPhrase) adults = 1;
 
@@ -163,6 +197,13 @@ export function parseGroupComposition(groupComposition = '') {
     /\belderly\s+(mother|father|mom|dad|parents?)\b/i.test(text) ||
     /\bretired\s+(mother|father|mom|dad|parents?)\b/i.test(text);
 
+  // "family of four, kids are 5 and 8" — we know the total (4) and the kids
+  // (2), so the remainder are adults (2). Only infer when it's consistent
+  // (kids don't exceed the stated total).
+  if (adults === null && family_total !== null && children_ages.length > 0 && children_ages.length <= family_total) {
+    adults = family_total - children_ages.length;
+  }
+
   const infant_count = children_ages.filter((a) => a < 3).length + (explicitInfant ? 1 : 0);
   const child_count = children_ages.filter((a) => a >= 3 && a <= 12).length;
   const teen_count = children_ages.filter((a) => a > 12 && a < 18).length;
@@ -174,6 +215,12 @@ export function parseGroupComposition(groupComposition = '') {
   const genderIsMale = /\b(male|man|men|guy|guys|boy|boys)\b/i.test(text);
   const gender = genderIsFemale && !genderIsMale ? 'female' : genderIsMale && !genderIsFemale ? 'male' : 'unspecified';
 
+  // group_size: prefer a computed adults+children sum; fall back to a
+  // stated family total ("family of four") when the split is unknown.
+  let group_size = null;
+  if (adults !== null) group_size = adults + children_ages.length;
+  else if (family_total !== null) group_size = family_total;
+
   return {
     adults,
     gender,
@@ -183,7 +230,10 @@ export function parseGroupComposition(groupComposition = '') {
     child_count,
     teen_count,
     has_senior_adult: seniorAdult,
-    group_size: adults === null ? null : adults + children_ages.length,
+    traveling_with_parents: isParentsPhrase,
+    is_family: isFamilyPhrase,
+    family_total,
+    group_size,
   };
 }
 
@@ -275,7 +325,7 @@ export function parseFreeTextToBrief(text = '') {
     if (m) extras.push({ label, value: m[0].toLowerCase() });
   }
 
-  return {
+  const brief = {
     destinationType,
     dates: dateMatch ? dateMatch[0] : null,
     duration,
@@ -285,6 +335,19 @@ export function parseFreeTextToBrief(text = '') {
     awaitingField: null,
     conversationComplete: true,
   };
+  // derivePersonas() re-parses `groupComposition` from scratch by default —
+  // correct for a real Maya brief (groupComposition IS the authoritative
+  // source there), but WRONG here whenever this function's own
+  // reconstruction has already discarded information the raw text had.
+  // E.g. "mom and dad" -> roster.adults=3 -> groupComposition rebuilt as the
+  // string "3 adults", which no longer contains "mom and dad" for a second
+  // parse to find — the relationship gets silently lost by its own
+  // resolution. Attaching the already-computed roster lets derivePersonas
+  // skip the lossy re-parse. Non-enumerable so it's invisible to
+  // JSON.stringify (never pollutes recipe.json/llm.json output) while still
+  // a normal property for derivePersonas to read directly.
+  Object.defineProperty(brief, '_roster', { value: roster, enumerable: false });
+  return brief;
 }
 
 /**
@@ -293,7 +356,11 @@ export function parseFreeTextToBrief(text = '') {
  */
 export function derivePersonas(brief) {
   const extras = brief?.extras ?? [];
-  const roster = parseGroupComposition(brief?.groupComposition ?? '');
+  // Prefer a pre-computed roster (set by parseFreeTextToBrief on the
+  // original raw text) over re-parsing groupComposition — the reconstructed
+  // string can be lossy (see parseFreeTextToBrief's comment on `_roster`).
+  // Absent for a real Maya brief, which re-parses groupComposition as before.
+  const roster = brief?._roster ?? parseGroupComposition(brief?.groupComposition ?? '');
   const personas = new Set();
   const notes = [];
 
@@ -313,11 +380,23 @@ export function derivePersonas(brief) {
 
   if (roster.infant_count > 0) personas.add('infant_friendly');
   if (roster.child_count > 0) personas.add('child_friendly');
-  if (roster.infant_count > 0 || roster.child_count > 0 || roster.teen_count > 0) personas.add('family_trip');
+  // family_trip fires from an explicit child/teen count OR from the bare
+  // word "family" — "family of four" is a family even before any age is
+  // stated. Its weighting (safety, kid activities, dining ease) and gate
+  // (safety_general >= 0.4) are the right default for any family group;
+  // infant/child_friendly (with their stricter age gates) layer on only
+  // once real ages are given.
+  if (roster.infant_count > 0 || roster.child_count > 0 || roster.teen_count > 0 || roster.is_family) {
+    personas.add('family_trip');
+  }
   if (roster.has_senior_adult) personas.add('senior_citizen');
   if (roster.age_assumed) {
     notes.push(
       `Child(ren) mentioned with no age given — assumed age ~6 (mid child-band) so family_trip/child_friendly still apply. State exact ages for accurate gating (e.g. an infant under 3 would hard-gate out very different activities than a 6-year-old).`
+    );
+  } else if (roster.is_family && roster.child_count === 0 && roster.infant_count === 0 && roster.teen_count === 0) {
+    notes.push(
+      `Family trip detected but no traveller ages given — scoring with family_trip weighting (safety, kid activities, dining ease, medical fallback). State each person's age to sharpen it: a child under 3 adds infant_friendly, a 3-12 year-old adds child_friendly, a 60+ adult adds senior_citizen — each applies stricter, more tailored gates than family_trip alone.`
     );
   }
 
@@ -358,11 +437,18 @@ export function derivePersonas(brief) {
     personas.add('friends_trip');
   }
 
+  // group_size >= 3 alone is a weak signal for friends_trip — it's equally
+  // consistent with "trip with my parents" or "family of four," which are
+  // family, not friends. Only fire this fallback when there's no more
+  // specific relationship already identified (parents, family, or an
+  // already-detected base persona).
   if (
     roster.group_size !== null &&
     roster.group_size >= 3 &&
     roster.child_count === 0 &&
     roster.infant_count === 0 &&
+    !roster.traveling_with_parents &&
+    !roster.is_family &&
     !personas.has('bachelor_trip') &&
     !personas.has('bachelorette_trip')
   ) {
@@ -386,7 +472,13 @@ export function derivePersonas(brief) {
 
   if (personas.size === 0) {
     personas.add('default');
-    notes.push('No persona signal detected — scoring against the default (balanced) persona.');
+    if (roster.traveling_with_parents) {
+      notes.push(
+        'Traveling with parents detected — there is no dedicated multi-generational/parents persona in the current catalog yet, so this scores against default. If either parent is 60+, mention their age (or "elderly"/"senior") to get senior_citizen instead — that persona is far more tailored (hospital access, low exertion, comfortable transport) than default is.'
+      );
+    } else {
+      notes.push('No persona signal detected — scoring against the default (balanced) persona.');
+    }
   }
 
   // Transparency reporting: which of the brief's own extras[] independently

@@ -1,20 +1,54 @@
 {
-  "mode": "single",
-  "query": {
-    "text": "family of 4 for a trip to thailand the children are more than 18+",
-    "resolved_city": null,
+  "trip_summary": {
+    "input_text": "family of 4 for a trip to thailand the children are more than 18+",
+    "destination_country": "Thailand",
+    "destination_city": null,
+    "duration": null,
+    "dates": null,
+    "budget": null,
+    "group_size": 4,
     "personas": [
       "child_friendly",
       "family_trip"
     ]
   },
-  "persona": {
-    "id": "child_friendly+family_trip",
-    "label": "Child Friendly (3-12) + Family Trip",
-    "composed_from": [
-      "child_friendly",
-      "family_trip"
-    ]
+  "traveler_profile": {
+    "roster": {
+      "adults": 3,
+      "gender": "unspecified",
+      "children_ages": [
+        6
+      ],
+      "age_assumed": true,
+      "infant_count": 0,
+      "child_count": 1,
+      "teen_count": 0,
+      "has_senior_adult": false,
+      "traveling_with_parents": false,
+      "is_family": true,
+      "family_total": 4,
+      "group_size": 4
+    },
+    "constraints": {
+      "known": [
+        "3 adult(s)",
+        "1 child(ren), ages: 6"
+      ],
+      "inferred": [
+        "Child(ren) mentioned with no age given — assumed age ~6 (mid child-band) so family_trip/child_friendly still apply. State exact ages for accurate gating (e.g. an infant under 3 would hard-gate out very different activities than a 6-year-old)."
+      ],
+      "missing": [
+        "destination city not specified — scored across all cities",
+        "exact child age(s) not given — assumed ~6 for scoring; state real ages for accurate gating (an infant hard-gates very differently than a 6-year-old)",
+        "travel duration not specified",
+        "travel dates not specified",
+        "budget not specified"
+      ]
+    },
+    "confidence": {
+      "level": "medium",
+      "reason": "persona derivation involved 1 assumption(s) — see constraints.inferred"
+    }
   },
   "duration_adjustment": {
     "applied": false
@@ -2246,5 +2280,11 @@
       "city": "Chiang Mai",
       "reason": "Activity has a minimum age above the child's age"
     }
-  ]
+  ],
+  "planning_metadata": {
+    "city_count": 17,
+    "activity_count": 86,
+    "hotel_count": 14,
+    "excluded_count": 36
+  }
 }

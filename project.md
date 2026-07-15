@@ -95,6 +95,193 @@ files under `data/<country>/` (see ontology.md §3).
    a single shared line-queue (`createLineReader`) so no input is ever lost
    regardless of timing.
 
+### Round 12 (2026-07-15) — an architectural bug (roster info destroying itself), plus guided follow-up
+**"a trip with my mom and dad for 7 days in thailand"** → `["default"]`.
+Two compounding bugs, one of them a real design flaw worth documenting
+carefully:
+
+1. No signal at all recognized "mom and dad" as a relationship — no count,
+   no relation flag. Added detection (`isParentsPhrase` in
+   `parseGroupComposition`) treating "mom and dad"/"my parents"/etc. as
+   implying 3 people (narrator + 2 parents), consistent with how "my wife"
+   already implies 2.
+2. **That fix alone made it worse.** `parseFreeTextToBrief` reconstructs
+   `brief.groupComposition` as a canonical string ("3 adults") from whatever
+   roster it parsed — and `derivePersonas` then **re-parses that string from
+   scratch**, discarding the original text entirely. Once `isParentsPhrase`
+   started successfully setting `adults=3`, the reconstructed string no
+   longer contained "mom and dad" for the second parse to find — the
+   relationship signal destroyed itself by being detected. The
+   `group_size>=3` fallback then fired and mislabeled it `friends_trip`
+   (family, not friends — a real mischaracterization, not just an
+   under-detection). Root-caused and fixed architecturally: `brief` now
+   carries the original, non-reconstructed roster as a non-enumerable
+   `_roster` property (invisible to `JSON.stringify`, so it never leaks into
+   `recipe.json`/`llm.json`), which `derivePersonas` prefers over re-parsing
+   whenever present. A real Maya brief (no `_roster`) still re-parses
+   `groupComposition` as before — that's the correct behavior there, since
+   Maya's `groupComposition` *is* the authoritative source, not a lossy
+   reconstruction of something richer. Verified: "mom and dad" (no age) now
+   correctly stays `default` with an honest note ("no dedicated
+   multi-generational persona yet, mention age for senior_citizen"); "elderly
+   mom and dad" correctly resolves to `senior_citizen`.
+
+**Second ask**: "how do I actually check this properly, one line isn't
+enough — can it keep asking follow-up questions?" Built exactly that: the
+interactive confirm loop now surfaces `constraints.missing` as a plain-
+language hint after every recipe preview ("Could sharpen this — you could
+still tell me: which city, travel dates, budget"), instead of a generic
+"looks right?". Verified end-to-end: typed the mom-and-dad query, saw the
+hint, replied `budget 60000 per person` as plain text, and it correctly
+folded in on the next pass (confidence went `medium` → `high`, `budget`
+persona picked up from the keyword). While building this, found and fixed
+one more real gap: a user following a hint like "add budget" might
+reasonably type `"budget:50000"` (colon syntax) — which used to parse as an
+unrecognized flag and get **silently dropped** (nothing reads `flags.budget`,
+and the free-text merge path is skipped whenever any shorthand parses at
+all). `parseShorthandLine` now only treats input as shorthand if at least
+one key is actually acted on (`city`/`persona`/`compare`/`stack`/`rank`);
+otherwise it falls back to free text, which does reach
+`parseFreeTextToBrief`'s own budget/date regexes.
+
+### Round 11 (2026-07-15) — found the real bug behind "why isn't Bangkok on top," fixed it without hardcoding
+User's own words: "lets refine... rate bangkok high idk how it has rated it,"
+"whats the deal with hardcoded values of yours" — worth being direct about
+this. I did **not** hardcode anything. What actually happened: checked the
+contribution breakdown for a `couple`, 2-day query and found two personas
+(`couple`, `honeymoon`) were missing `arrival_transfer_ease` and
+`flight_time_ease` entirely from their weight tables — real signals,
+already in the dictionary, already used by other personas, just never
+added to these two. That's why Pai's 3.5-hour gateway transfer cost it
+*nothing* in scoring. Fixed both personas' weight tables (small, justified
+additions — not a rebalance for effect).
+
+Then built the actual missing capability: **duration-aware city scoring**.
+For trips ≤3 days, `applyDurationAdjustment()` (`engine/cli.js`) scales a
+fixed, documented set of logistics signals (`direct_flight_access`,
+`flight_time_ease`, `arrival_transfer_ease`, `intracity_transport_quality`)
+up and exploration signals (`photogenic_quality`, `iconic_landmark_density`,
+`content_novelty`, `golden_hour_access`) down, renormalizes, and uses that
+adjusted weight vector for CITY ranking only (not activities/hotels within
+an already-chosen city, where trip length doesn't change the tradeoff the
+same way). The signal split is fixed and uniform — it doesn't know or care
+which cities that favors, so it can't be quietly turned into a destination
+preference table. The adjustment is fully transparent in the output
+(`duration_adjustment: {applied, duration_days, note}`) printed to console
+and included in `recipe`/`llm.json`, not a silent transformation.
+
+Verified against the exact reported query ("date with girlfriend, 2 days"):
+Bangkok/Phuket/Koh Samui/Chiang Mai now cluster tightly at the top (7.0-7.3)
+instead of Chiang Rai/Pai dominating; Pai dropped to 6.1 and Koh Phi Phi
+(3.2-hour transfer) dropped to 4.7 — both correctly penalized for genuinely
+bad logistics on a trip too short to absorb them. Every one of those numbers
+still traces back to a cited attribute (`~0.4h transfer`), which is the
+whole point — "Bangkok should rank high because it's obviously popular"
+and "Bangkok ranks high because its logistics signals score well and this
+trip is short enough for that to matter a lot" produce the same answer here,
+but only one of them is auditable, extends correctly to a country this
+system has never seen, and doesn't quietly break the moment "obvious common
+sense" is wrong for a specific persona (a wellness solo retreat, for
+instance, correctly should *not* over-weight transfer speed the way a
+2-day couple trip does — and doesn't, since the adjustment only touches
+short trips).
+
+**On "refine city information from the web/reviews"**: a genuine, worthwhile
+ask, but scoped honestly — verifying 17 cities × ~70 signals each against
+real sources is real research work (many hours), not something to
+half-do silently in the background. Holding off starting it speculatively;
+tell me which cities or which specific claims matter most (e.g. "verify
+Phuket's safety/hospital data" or "check Pai's actual transfer time") and
+I'll do a properly-scoped pass with cited sources, rather than a shallow
+pass across everything that looks thorough but isn't reliable.
+
+### Round 10 (2026-07-15) — city combinations, and holding the line on two asks
+User asked directly: "why isn't Bangkok recommended — aren't we being too
+strict?" for a honeymoon+pregnancy query. Checked the actual numbers rather
+than assuming either "the engine is right" or "the user is right":
+
+- **Koh Samui's raw (pre-cap) honeymoon+pregnancy score is 7.44** —
+  genuinely strong — capped to 6.2 by the same Zika soft-gate recalibrated
+  in Round 4. For a **non-pregnant** honeymoon query, Samui already wins
+  outright (7.6 vs Chiang Mai's 7.2) — so "Chiang Mai beating the beach
+  islands" is specific to the pregnancy-stacked case, not a flaw in
+  `honeymoon`'s own weights. This is the persona doing exactly what it's
+  supposed to: pregnancy risk doesn't get diluted just because a honeymoon
+  is also stacked on top. Left it as-is, explained the reasoning rather than
+  changing anything.
+- **Declined a proposed `"honeymoon_affinity": {"Koh Samui": 0.95, ...}`
+  hardcoded per-destination lookup table.** This would have been a magic
+  number with no traceable signal behind it, undermining the one property
+  that makes this whole engine worth having: every score explains back to a
+  real attribute. If a destination scores lower than expected, the fix is
+  finding the missing *signal*, not hand-typing an opinion that overrides
+  the math.
+
+**What was a genuine, buildable gap**: the engine only ever answered "best
+single city," even for a 7-day trip — nobody stays in one city for a week.
+Added `recommended_city_combinations` (`engine/cli.js`): scores pairs (or
+triples for 8+ day trips) of the top eligible cities by average individual
+score, minus a distance penalty computed via haversine distance from each
+city's real coordinates (already in `cities.json`) — not a travel-time API,
+an explicit editorial heuristic (documented as such: ~1 point cost per
+300km of average inter-city distance, capped at -2). Verified the output is
+geographically sane without any hardcoding: Pattaya+Bangkok (101km),
+Phuket+Phi Phi (45km), Koh Phangan+Koh Tao (44km) all surfaced near the top
+for a plain friends_trip query — all genuinely common real-world Thailand
+combos, arrived at purely from coordinates + scores. Skipped entirely when
+a city is pinned (`--city=`) or duration wasn't parseable — not enough
+information to reason about combining anything.
+
+### Round 9 (2026-07-15) — "5 my friends" fell to `default`, same brittle-regex pattern
+`"college trip with 5 my friends for a week to thailand"` → `["default"]`
+instead of `["friends_trip"]`. Root cause: `parseGroupComposition`'s
+friend-counting regex, `/(\d+)\s*friends?\b/i`, required the number sitting
+*immediately* next to "friends" — the possessive "my" between them broke it,
+`adults` stayed `null`, and the `group_size >= 3` friends_trip fallback
+never had a number to check. Same class of bug as the earlier "5, 9 and 10"
+and "no extreme adventure sports" issues: a regex written for the tidy case
+("5 friends") silently failing on an equally-natural real phrasing.
+
+Fixed: `numFriendsMatch` now handles the possessive on either side of the
+number or dropped entirely — "5 friends", "5 my friends", "5 of my
+friends", "my 5 friends", "our 4 friends" all resolve correctly. Verified
+against 8 cases including a guard against over-firing on a *singular*
+"friend" mention with no count (`"trip to thailand with my friend"` stays
+`default`, not `friends_trip`) — broadening a count regex is exactly the
+kind of change that can introduce a new false positive if untested.
+
+### Round 8 (2026-07-15) — the third file: recipe + ranked merged for LLM hand-off
+Final ask in this series: a dedicated "LLM Planning JSON." Judgment call: this
+is **not a new pipeline stage** — its proposed shape (`trip_summary` +
+`traveler_profile` + `recommended_*` + `excluded_options` + counts) is
+recipe.json's identifying fields (minus weights/gates — engine internals an
+LLM can't act on) merged with ranked.json's recommendation fields, nothing
+computed that wasn't already computed. So: kept `recipe.json`/`ranked.json`
+as the source-of-truth pair (audit, debugging, full data), and added a third
+file, `<n>.llm.json` (+ `query_result.llm.json` latest copy) — the actual
+clean hand-off document, built by `buildLLMJSON()` in `cli.js`. Only
+produced in single/blend mode; compare mode's side-by-side tables aren't
+itinerary material.
+
+Also added `weather_dependency` (high/low) per activity, same heuristic
+spirit as `best_time` — derived from category/tags, no new data authored.
+
+**Explicitly declined, with reasoning:**
+- **Cross-persona `suitable_for`/`not_suitable_for` per activity** — this
+  already exists, just not per-query. `engine/generate.js`'s bulk output
+  (`output/thailand/activities.scored.json`) computes every activity against
+  all 22 personas. Duplicating a 22-persona suitability matrix into every
+  single-persona query response would be ~22x redundant data for a question
+  nobody scoped to ask; the bulk file is the right place for that view.
+- **`area`/neighborhood clustering** ("Wat Pho + Grand Palace + Wat Arun are
+  all Old Bangkok, schedule same day") — genuinely valuable, but not
+  derivable from anything currently on an activity (no per-activity
+  coordinates or neighborhood tag exists, only city-level data). Real
+  authoring work across 122 entities, not a code change. Flagged as a
+  legitimate next investment, not done speculatively.
+- **`recovery_needed`** — too vague to derive defensibly from existing
+  signals; would have been a guess dressed as data.
+
 ### Round 7 (2026-07-15) — recommended/excluded shape, confidence, best_time
 Follow-up review liked the grandmother/friends results but proposed a
 "Recommendation JSON V2" shape. As with Round 5, much of it was **already

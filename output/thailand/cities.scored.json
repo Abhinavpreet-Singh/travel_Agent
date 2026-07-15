@@ -447,17 +447,17 @@
               "actual_value": 0.18000000000000005
             }
           ],
-          "score_0_1": 0.649,
-          "score_0_10": 6.5,
+          "score_0_1": 0.6662,
+          "score_0_10": 6.7,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.5,
+            "score": 6.7,
             "reasons": [
-              "Extremely photogenic",
               "Excellent spa and wellness options",
+              "Extremely photogenic",
               "Strong value for money",
-              "140 direct weekly flights from India"
+              "Quick transfer from the gateway airport (~0.8 h)"
             ],
             "cautions": [
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
@@ -479,17 +479,17 @@
               "actual_value": 0.18000000000000005
             }
           ],
-          "score_0_1": 0.6088,
-          "score_0_10": 6.1,
+          "score_0_1": 0.6217,
+          "score_0_10": 6.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.1,
+            "score": 6.2,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "140 direct weekly flights from India",
-              "Instantly recognisable landmarks"
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
             ],
             "cautions": [
               "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
@@ -1096,17 +1096,17 @@
               "actual_value": 0.21999999999999997
             }
           ],
-          "score_0_1": 0.4711,
-          "score_0_10": 4.7,
+          "score_0_1": 0.5038,
+          "score_0_10": 5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 4.7,
+            "score": 5,
             "reasons": [
               "Strong value for money",
               "Excellent spa and wellness options",
-              "Long comfortable-weather window",
-              "English widely understood in tourist areas"
+              "Quick transfer from the gateway airport (~2 h)",
+              "Short hop from India (~4.2 h)"
             ],
             "cautions": [
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
@@ -1129,22 +1129,22 @@
               "actual_value": 0.21999999999999997
             }
           ],
-          "score_0_1": 0.4099,
-          "score_0_10": 4.1,
+          "score_0_1": 0.4409,
+          "score_0_10": 4.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 4.1,
+            "score": 4.4,
             "reasons": [
               "Excellent spa and wellness options",
+              "Quick transfer from the gateway airport (~2 h)",
               "Strong value for money",
-              "Strong general safety record (safety index 60/100)",
-              "Long comfortable-weather window"
+              "Short hop from India (~4.2 h)"
             ],
             "cautions": [
               "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
-              "Noisy environment, especially at night",
               "Heavily crowded (78/100 crowd pressure)",
+              "Noisy environment, especially at night",
               "No direct flights from India — connection required"
             ]
           }
@@ -1754,17 +1754,17 @@
               "actual_value": 0.19999999999999996
             }
           ],
-          "score_0_1": 0.6725,
-          "score_0_10": 6.7,
+          "score_0_1": 0.6917,
+          "score_0_10": 6.9,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.7,
+            "score": 6.9,
             "reasons": [
-              "Extremely photogenic",
               "Excellent spa and wellness options",
+              "Extremely photogenic",
               "Strong value for money",
-              "42 direct weekly flights from India"
+              "Quick transfer from the gateway airport (~1 h)"
             ],
             "cautions": [
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
@@ -1786,17 +1786,17 @@
               "actual_value": 0.19999999999999996
             }
           ],
-          "score_0_1": 0.6522,
-          "score_0_10": 6.5,
+          "score_0_1": 0.6574,
+          "score_0_10": 6.6,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.5,
+            "score": 6.6,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "42 direct weekly flights from India",
-              "Instantly recognisable landmarks"
+              "Quick transfer from the gateway airport (~1 h)",
+              "42 direct weekly flights from India"
             ],
             "cautions": [
               "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
@@ -2421,17 +2421,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6716,
-          "score_0_10": 6.7,
+          "score_0_1": 0.691,
+          "score_0_10": 6.9,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.7,
+            "score": 6.9,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
               "Excellent spa and wellness options",
-              "Instantly recognisable landmarks"
+              "Quick transfer from the gateway airport (~1.2 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -2452,7 +2452,7 @@
               "actual_value": 0.31999999999999995
             }
           ],
-          "score_0_1": 0.6688,
+          "score_0_1": 0.6748,
           "score_0_10": 6.7,
           "signal_coverage": 1,
           "explanation": {
@@ -2461,7 +2461,7 @@
             "reasons": [
               "Extremely photogenic",
               "Excellent spa and wellness options",
-              "Instantly recognisable landmarks",
+              "Quick transfer from the gateway airport (~1.2 h)",
               "Strong value for money"
             ],
             "cautions": [
@@ -3107,7 +3107,7 @@
               "actual_value": 0.07999999999999996
             }
           ],
-          "score_0_1": 0.5081,
+          "score_0_1": 0.5145,
           "score_0_10": 5.1,
           "signal_coverage": 1,
           "explanation": {
@@ -3140,7 +3140,7 @@
               "actual_value": 0.07999999999999996
             }
           ],
-          "score_0_1": 0.4074,
+          "score_0_1": 0.4149,
           "score_0_10": 4.1,
           "signal_coverage": 1,
           "explanation": {
@@ -3747,17 +3747,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.706,
-          "score_0_10": 7.1,
+          "score_0_1": 0.7328,
+          "score_0_10": 7.3,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7.1,
+            "score": 7.3,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "Strong value for money",
-              "Strong general safety record (safety index 74/100)"
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Strong value for money"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -3768,17 +3768,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7562,
-          "score_0_10": 7.6,
+          "score_0_1": 0.7783,
+          "score_0_10": 7.8,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 7.6,
+            "score": 7.8,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "Strong general safety record (safety index 74/100)",
-              "Strong value for money"
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Strong general safety record (safety index 74/100)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -4403,17 +4403,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5191,
-          "score_0_10": 5.2,
+          "score_0_1": 0.538,
+          "score_0_10": 5.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 5.2,
+            "score": 5.4,
             "reasons": [
-              "Extremely photogenic",
               "Excellent spa and wellness options",
+              "Extremely photogenic",
               "Strong value for money",
-              "Long comfortable-weather window"
+              "Quick transfer from the gateway airport (~2.5 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -4435,22 +4435,22 @@
               "actual_value": 0.30000000000000004
             }
           ],
-          "score_0_1": 0.4383,
-          "score_0_10": 4.4,
+          "score_0_1": 0.4526,
+          "score_0_10": 4.5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 4.4,
+            "score": 4.5,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
               "Strong value for money",
-              "Long comfortable-weather window"
+              "Quick transfer from the gateway airport (~2.5 h)"
             ],
             "cautions": [
               "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
-              "No direct flights from India — connection required",
               "Heavily crowded (70/100 crowd pressure)",
+              "No direct flights from India — connection required",
               "Noisy environment, especially at night"
             ]
           }
@@ -5092,12 +5092,12 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5634,
-          "score_0_10": 5.6,
+          "score_0_1": 0.5708,
+          "score_0_10": 5.7,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 5.6,
+            "score": 5.7,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
@@ -5114,7 +5114,7 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5054,
+          "score_0_1": 0.5135,
           "score_0_10": 5.1,
           "signal_coverage": 1,
           "explanation": {
@@ -5691,17 +5691,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7207,
-          "score_0_10": 7.2,
+          "score_0_1": 0.7454,
+          "score_0_10": 7.5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7.2,
+            "score": 7.5,
             "reasons": [
-              "Extremely photogenic",
               "Excellent spa and wellness options",
+              "Extremely photogenic",
               "Strong value for money",
-              "Long comfortable-weather window"
+              "Quick transfer from the gateway airport (~0.4 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -5712,17 +5712,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7233,
-          "score_0_10": 7.2,
+          "score_0_1": 0.7441,
+          "score_0_10": 7.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 7.2,
+            "score": 7.4,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "Strong general safety record (safety index 78/100)",
-              "Instantly recognisable landmarks"
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Strong general safety record (safety index 78/100)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -6297,17 +6297,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7191,
-          "score_0_10": 7.2,
+          "score_0_1": 0.7435,
+          "score_0_10": 7.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7.2,
+            "score": 7.4,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
-              "Long comfortable-weather window",
-              "Strong general safety record (safety index 80/100)"
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -6318,16 +6318,16 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7006,
-          "score_0_10": 7,
+          "score_0_1": 0.7236,
+          "score_0_10": 7.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 7,
+            "score": 7.2,
             "reasons": [
               "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.5 h)",
               "Excellent spa and wellness options",
-              "Instantly recognisable landmarks",
               "Strong general safety record (safety index 80/100)"
             ],
             "cautions": [
@@ -6955,12 +6955,12 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6439,
-          "score_0_10": 6.4,
+          "score_0_1": 0.6547,
+          "score_0_10": 6.5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.4,
+            "score": 6.5,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
@@ -6977,12 +6977,12 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5925,
-          "score_0_10": 5.9,
+          "score_0_1": 0.6015,
+          "score_0_10": 6,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 5.9,
+            "score": 6,
             "reasons": [
               "Extremely photogenic",
               "Excellent spa and wellness options",
@@ -7548,12 +7548,12 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6582,
-          "score_0_10": 6.6,
+          "score_0_1": 0.6807,
+          "score_0_10": 6.8,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.6,
+            "score": 6.8,
             "reasons": [
               "Excellent spa and wellness options",
               "Strong value for money",
@@ -7569,17 +7569,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6347,
-          "score_0_10": 6.3,
+          "score_0_1": 0.6536,
+          "score_0_10": 6.5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.3,
+            "score": 6.5,
             "reasons": [
               "Excellent spa and wellness options",
               "Strong general safety record (safety index 80/100)",
               "Quiet environment",
-              "Extremely photogenic"
+              "Long comfortable-weather window"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -8152,17 +8152,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6389,
-          "score_0_10": 6.4,
+          "score_0_1": 0.6621,
+          "score_0_10": 6.6,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.4,
+            "score": 6.6,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
-              "Instantly recognisable landmarks",
-              "Strong general safety record (safety index 78/100)"
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -8173,16 +8173,16 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6149,
-          "score_0_10": 6.1,
+          "score_0_1": 0.641,
+          "score_0_10": 6.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.1,
+            "score": 6.4,
             "reasons": [
               "Extremely photogenic",
-              "Instantly recognisable landmarks",
               "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)",
               "Strong value for money"
             ],
             "cautions": [
@@ -8775,17 +8775,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6104,
-          "score_0_10": 6.1,
+          "score_0_1": 0.6267,
+          "score_0_10": 6.3,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.1,
+            "score": 6.3,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
               "Strong general safety record (safety index 78/100)",
-              "Instantly recognisable landmarks"
+              "Short hop from India (~4.2 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -8797,12 +8797,12 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5991,
-          "score_0_10": 6,
+          "score_0_1": 0.6169,
+          "score_0_10": 6.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6,
+            "score": 6.2,
             "reasons": [
               "Extremely photogenic",
               "Strong general safety record (safety index 78/100)",
@@ -9426,17 +9426,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6796,
-          "score_0_10": 6.8,
+          "score_0_1": 0.712,
+          "score_0_10": 7.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.8,
+            "score": 7.1,
             "reasons": [
-              "Extremely photogenic",
               "Excellent spa and wellness options",
+              "Extremely photogenic",
               "Strong value for money",
-              "Strong general safety record (safety index 80/100)"
+              "Quick transfer from the gateway airport (~1.2 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -9448,16 +9448,16 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6904,
-          "score_0_10": 6.9,
+          "score_0_1": 0.7195,
+          "score_0_10": 7.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.9,
+            "score": 7.2,
             "reasons": [
               "Excellent spa and wellness options",
               "Extremely photogenic",
-              "Quiet environment",
+              "Quick transfer from the gateway airport (~1.2 h)",
               "Strong general safety record (safety index 80/100)"
             ],
             "cautions": [
@@ -10089,12 +10089,12 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6713,
-          "score_0_10": 6.7,
+          "score_0_1": 0.6894,
+          "score_0_10": 6.9,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.7,
+            "score": 6.9,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
@@ -10111,17 +10111,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6442,
-          "score_0_10": 6.4,
+          "score_0_1": 0.6611,
+          "score_0_10": 6.6,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.4,
+            "score": 6.6,
             "reasons": [
               "Extremely photogenic",
               "Excellent spa and wellness options",
-              "Quiet environment",
-              "Strong general safety record (safety index 80/100)"
+              "Strong general safety record (safety index 80/100)",
+              "Quiet environment"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -10766,20 +10766,21 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6139,
-          "score_0_10": 6.1,
+          "score_0_1": 0.6164,
+          "score_0_10": 6.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.1,
+            "score": 6.2,
             "reasons": [
               "Extremely photogenic",
               "Strong value for money",
               "Strong general safety record (safety index 76/100)",
-              "Quiet environment"
+              "Short hop from India (~4.2 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -10788,20 +10789,21 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6043,
-          "score_0_10": 6,
+          "score_0_1": 0.6065,
+          "score_0_10": 6.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6,
+            "score": 6.1,
             "reasons": [
               "Extremely photogenic",
               "Strong general safety record (safety index 76/100)",
-              "Quiet environment",
-              "Strong value for money"
+              "Strong value for money",
+              "Quiet environment"
             ],
             "cautions": [
               "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
               "Local transport is weak — private vehicle needed"
             ]
           }

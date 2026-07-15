@@ -315,17 +315,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7077,
-          "score_0_10": 7.1,
+          "score_0_1": 0.7219,
+          "score_0_10": 7.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7.1,
+            "score": 7.2,
             "reasons": [
               "Strong value for money",
               "35 direct weekly flights from India",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "Short hop from India (~4.5 h)"
             ],
             "cautions": []
           }
@@ -334,17 +334,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6994,
-          "score_0_10": 7,
+          "score_0_1": 0.7133,
+          "score_0_10": 7.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 7,
+            "score": 7.1,
             "reasons": [
-              "35 direct weekly flights from India",
               "Strong value for money",
+              "35 direct weekly flights from India",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "Short hop from India (~4.5 h)"
             ],
             "cautions": []
           }
@@ -781,17 +781,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6977,
-          "score_0_10": 7,
+          "score_0_1": 0.7118,
+          "score_0_10": 7.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7,
+            "score": 7.1,
             "reasons": [
               "Strong value for money",
-              "28 direct weekly flights from India",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "28 direct weekly flights from India",
+              "Short hop from India (~4.7 h)"
             ],
             "cautions": []
           }
@@ -800,17 +800,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6872,
-          "score_0_10": 6.9,
+          "score_0_1": 0.7014,
+          "score_0_10": 7,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.9,
+            "score": 7,
             "reasons": [
               "Strong value for money",
-              "28 direct weekly flights from India",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "28 direct weekly flights from India",
+              "Short hop from India (~4.7 h)"
             ],
             "cautions": []
           }
@@ -1247,17 +1247,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6903,
-          "score_0_10": 6.9,
+          "score_0_1": 0.7136,
+          "score_0_10": 7.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.9,
+            "score": 7.1,
             "reasons": [
               "Strong value for money",
+              "Short hop from India (~3.9 h)",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window",
-              "24 direct weekly flights from India"
+              "Long comfortable-weather window"
             ],
             "cautions": []
           }
@@ -1266,17 +1266,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6781,
-          "score_0_10": 6.8,
+          "score_0_1": 0.7035,
+          "score_0_10": 7,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.8,
+            "score": 7,
             "reasons": [
               "Strong value for money",
+              "Short hop from India (~3.9 h)",
               "Strong general safety record (safety index 68/100)",
-              "24 direct weekly flights from India",
-              "Long comfortable-weather window"
+              "24 direct weekly flights from India"
             ],
             "cautions": []
           }
@@ -1713,17 +1713,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6836,
-          "score_0_10": 6.8,
+          "score_0_1": 0.7122,
+          "score_0_10": 7.1,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.8,
+            "score": 7.1,
             "reasons": [
               "Strong value for money",
+              "Short hop from India (~3.5 h)",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window",
-              "21 direct weekly flights from India"
+              "Long comfortable-weather window"
             ],
             "cautions": []
           }
@@ -1732,17 +1732,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.67,
-          "score_0_10": 6.7,
+          "score_0_1": 0.7018,
+          "score_0_10": 7,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.7,
+            "score": 7,
             "reasons": [
               "Strong value for money",
+              "Short hop from India (~3.5 h)",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window",
-              "21 direct weekly flights from India"
+              "Long comfortable-weather window"
             ],
             "cautions": []
           }
@@ -2180,17 +2180,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.7009,
-          "score_0_10": 7,
+          "score_0_1": 0.7312,
+          "score_0_10": 7.3,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 7,
+            "score": 7.3,
             "reasons": [
               "Strong value for money",
-              "30 direct weekly flights from India",
+              "Short hop from India (~2.3 h)",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "30 direct weekly flights from India"
             ],
             "cautions": []
           }
@@ -2199,17 +2199,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6911,
-          "score_0_10": 6.9,
+          "score_0_1": 0.7243,
+          "score_0_10": 7.2,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.9,
+            "score": 7.2,
             "reasons": [
+              "Short hop from India (~2.3 h)",
               "Strong value for money",
-              "30 direct weekly flights from India",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window"
+              "30 direct weekly flights from India"
             ],
             "cautions": []
           }
@@ -2653,17 +2653,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6353,
-          "score_0_10": 6.4,
+          "score_0_1": 0.656,
+          "score_0_10": 6.6,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.4,
+            "score": 6.6,
             "reasons": [
               "Strong value for money",
               "Strong general safety record (safety index 68/100)",
               "Long comfortable-weather window",
-              "Reliable food hygiene standards"
+              "Short hop from India (~5.2 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -2674,17 +2674,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6109,
-          "score_0_10": 6.1,
+          "score_0_1": 0.6352,
+          "score_0_10": 6.4,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6.1,
+            "score": 6.4,
             "reasons": [
               "Strong value for money",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window",
-              "Reliable food hygiene standards"
+              "Short hop from India (~5.2 h)",
+              "Long comfortable-weather window"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -3134,17 +3134,17 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.6252,
-          "score_0_10": 6.3,
+          "score_0_1": 0.6497,
+          "score_0_10": 6.5,
           "signal_coverage": 1,
           "explanation": {
             "persona": "couple",
-            "score": 6.3,
+            "score": 6.5,
             "reasons": [
               "Strong value for money",
               "Strong general safety record (safety index 68/100)",
               "Long comfortable-weather window",
-              "Reliable food hygiene standards"
+              "Short hop from India (~5 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -3155,17 +3155,17 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5985,
-          "score_0_10": 6,
+          "score_0_1": 0.6278,
+          "score_0_10": 6.3,
           "signal_coverage": 1,
           "explanation": {
             "persona": "honeymoon",
-            "score": 6,
+            "score": 6.3,
             "reasons": [
               "Strong value for money",
               "Strong general safety record (safety index 68/100)",
-              "Long comfortable-weather window",
-              "Reliable food hygiene standards"
+              "Short hop from India (~5 h)",
+              "Long comfortable-weather window"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -3624,7 +3624,7 @@
           "persona_id": "couple",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.595,
+          "score_0_1": 0.5906,
           "score_0_10": 5.9,
           "signal_coverage": 1,
           "explanation": {
@@ -3645,7 +3645,7 @@
           "persona_id": "honeymoon",
           "eligible": true,
           "gate_failures": [],
-          "score_0_1": 0.5617,
+          "score_0_1": 0.5578,
           "score_0_10": 5.6,
           "signal_coverage": 1,
           "explanation": {
