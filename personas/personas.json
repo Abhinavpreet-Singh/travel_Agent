@@ -1,7 +1,7 @@
 {
   "$id": "travelomore/personas",
-  "version": "1.0.0",
-  "updated_at": "2026-07-13",
+  "version": "1.1.0",
+  "updated_at": "2026-07-15",
   "contract": {
     "weights": "Keys MUST be signal ids from ontology/signal_dictionary.json. Values are relative weights; the engine renormalises over signals applicable to the entity type, so weights need not sum to exactly 100 after filtering.",
     "hard_gates": "Evaluated BEFORE scoring. If a gate fails, entity is marked eligible=false and excluded from ranking (not scored down). Gates are the difference between 'bad fit' and 'do not show'.",
@@ -752,12 +752,6 @@
           "reason": "Activity is contraindicated in pregnancy"
         },
         {
-          "signal": "zika_risk_low",
-          "op": ">=",
-          "value": 0.5,
-          "reason": "Zika risk level is not acceptable during pregnancy"
-        },
-        {
           "signal": "obstetric_care_access",
           "op": ">=",
           "value": 0.4,
@@ -771,6 +765,13 @@
         }
       ],
       "soft_gates": [
+        {
+          "signal": "zika_risk_low",
+          "op": ">=",
+          "value": 0.5,
+          "cap": 0.55,
+          "reason": "Zika risk here is classified moderate-or-above — still shown with informed precautions (repellent, covering up, avoiding standing water) recommended, but capped rather than top-ranked given the risk in pregnancy. Was a hard exclusion until 2026-07-14; softened because it was silently removing every major city with excellent obstetric care (e.g. Bangkok) from results entirely. Cap raised from 0.45 to 0.55 on 2026-07-15 after checking Bangkok's actual raw (pre-cap) score: 5.99/10, driven by genuinely elite obstetric_care_access (0.93) and hospital_proximity (0.96) — a 0.45 cap was punishing it BELOW its own honest quality and below smaller towns with objectively worse medical infrastructure (Ayutthaya, Kanchanaburi), which is medically backwards. 0.55 lets Bangkok's real strength surface and beat lesser-resourced small towns, while staying below cities with BOTH lower Zika classification and better comfort profiles (Hua Hin, Chiang Mai) — Zika prevention still matters (a nearby hospital cannot reverse Zika-related birth defects, unlike e.g. a fall injury), so this is a real cap, not a bypass."
+        },
         {
           "signal": "flight_time_ease",
           "op": ">=",
@@ -934,6 +935,454 @@
           "boat_only_access": 0.08,
           "traffic_hell": 0.05
         }
+      }
+    },
+
+    {
+      "id": "couple",
+      "label": "Couple Trip",
+      "description": "Two adults in a relationship, no children, no specific milestone occasion (that's honeymoon, a separate persona). Optimises for shared quality time, privacy, food and photogenic moments over group activities or nightlife. The default for an unadorned 'me and my wife/husband/partner' trip once no other persona (family, senior, occasion-specific) is detected.",
+      "eligibility": {
+        "trigger": "group_size==2 AND relationship=='couple' AND occasion!='honeymoon'",
+        "traveller_conditions": ["group_size == 2", "no_children"]
+      },
+      "required_attributes": [
+        "safety_general",
+        "photogenic_quality",
+        "crowd_pressure_low"
+      ],
+      "nice_to_have_attributes": [
+        "wellness_spa_quality",
+        "weather_comfort",
+        "noise_low",
+        "iconic_landmark_density"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Below the safety floor for this trip"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "crowd_pressure_low",
+          "op": ">=",
+          "value": 0.3,
+          "cap": 0.7,
+          "reason": "Heavily overtouristed — hard to get quiet time as a couple"
+        }
+      ],
+      "weights": {
+        "photogenic_quality": 14,
+        "crowd_pressure_low": 12,
+        "wellness_spa_quality": 12,
+        "weather_comfort": 10,
+        "value_for_money": 9,
+        "safety_general": 8,
+        "noise_low": 8,
+        "food_hygiene": 6,
+        "direct_flight_access": 6,
+        "iconic_landmark_density": 6,
+        "english_prevalence": 5,
+        "intracity_transport_quality": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "romantic": 0.04,
+          "photogenic": 0.03,
+          "wellness": 0.02,
+          "calm_beach": 0.02
+        },
+        "penalty": { "party": 0.03, "backpacker": 0.02, "nightlife": 0.02 }
+      }
+    },
+
+    {
+      "id": "honeymoon",
+      "label": "Honeymoon",
+      "description": "Newly married couple celebrating a milestone occasion. Distinct from the generic 'couple' persona by materially higher weight on privacy/exclusivity, wellness and 'once in a lifetime' iconic experiences, and near-zero weight on cost efficiency — this is the one trip type where value-for-money is deliberately not the point.",
+      "eligibility": {
+        "trigger": "occasion=='honeymoon'",
+        "traveller_conditions": ["group_size == 2", "no_children"]
+      },
+      "required_attributes": [
+        "wellness_spa_quality",
+        "crowd_pressure_low",
+        "photogenic_quality"
+      ],
+      "nice_to_have_attributes": [
+        "noise_low",
+        "iconic_landmark_density",
+        "safety_general",
+        "weather_comfort"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Below the safety floor for a honeymoon"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "crowd_pressure_low",
+          "op": ">=",
+          "value": 0.35,
+          "cap": 0.65,
+          "reason": "Privacy is the whole point of a honeymoon — this is too crowded"
+        }
+      ],
+      "weights": {
+        "wellness_spa_quality": 16,
+        "photogenic_quality": 14,
+        "crowd_pressure_low": 13,
+        "noise_low": 10,
+        "safety_general": 8,
+        "weather_comfort": 8,
+        "iconic_landmark_density": 7,
+        "direct_flight_access": 6,
+        "food_hygiene": 5,
+        "value_for_money": 5,
+        "english_prevalence": 4,
+        "intracity_transport_quality": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "honeymoon": 0.05,
+          "romantic": 0.05,
+          "resort_stay": 0.03,
+          "wellness": 0.03,
+          "adult_only": 0.02,
+          "photogenic": 0.02
+        },
+        "penalty": { "backpacker": 0.06, "party": 0.06, "nightlife": 0.05 }
+      }
+    },
+
+    {
+      "id": "luxury",
+      "label": "Luxury Traveller",
+      "description": "Optimises purely for quality — premium hospitality, low crowds, high safety and healthcare standards, mature tourist infrastructure — with deliberately no weight on cost efficiency at all (not opposed to spending, just indifferent to price as a factor). A modifier persona meant to stack with others (e.g. couple + luxury, family_trip + luxury) as much as stand alone.",
+      "eligibility": {
+        "trigger": "budget_tier=='luxury' OR explicit_luxury_request==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "wellness_spa_quality",
+        "crowd_pressure_low",
+        "tourist_infrastructure"
+      ],
+      "nice_to_have_attributes": [
+        "healthcare_quality",
+        "photogenic_quality",
+        "safety_general",
+        "iconic_landmark_density"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.4,
+          "reason": "Below the safety floor expected at this tier"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "tourist_infrastructure",
+          "op": ">=",
+          "value": 0.5,
+          "cap": 0.7,
+          "reason": "Infrastructure is too raw to deliver a genuine luxury experience"
+        }
+      ],
+      "weights": {
+        "wellness_spa_quality": 16,
+        "photogenic_quality": 14,
+        "crowd_pressure_low": 13,
+        "healthcare_quality": 10,
+        "tourist_infrastructure": 10,
+        "safety_general": 9,
+        "noise_low": 8,
+        "food_hygiene": 6,
+        "iconic_landmark_density": 6,
+        "direct_flight_access": 4,
+        "intracity_transport_quality": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "resort_stay": 0.04,
+          "wellness": 0.03,
+          "romantic": 0.02,
+          "honeymoon": 0.02
+        },
+        "penalty": { "backpacker": 0.08, "budget": 0.05, "hostel_scene": 0.06 }
+      }
+    },
+
+    {
+      "id": "budget",
+      "label": "Budget Traveller",
+      "description": "Cost-conscious traveller optimising for low daily spend and genuine value, not luxury. The mirror image of the luxury persona — weights cost efficiency and value heavily, gives no special weight to spa/wellness/exclusivity signals, and is comfortable with hostel/backpacker-tier infrastructure as long as it's safe.",
+      "eligibility": {
+        "trigger": "budget_tier=='budget' OR explicit_budget_request==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "cost_efficiency",
+        "value_for_money",
+        "safety_general"
+      ],
+      "nice_to_have_attributes": [
+        "tourist_infrastructure",
+        "english_prevalence",
+        "direct_flight_access"
+      ],
+      "hard_gates": [
+        {
+          "signal": "safety_general",
+          "op": ">=",
+          "value": 0.35,
+          "reason": "Below the safety floor — cheap is not worth unsafe"
+        }
+      ],
+      "soft_gates": [],
+      "weights": {
+        "cost_efficiency": 20,
+        "value_for_money": 16,
+        "group_cost_efficiency": 8,
+        "safety_general": 10,
+        "tourist_infrastructure": 8,
+        "food_hygiene": 7,
+        "english_prevalence": 6,
+        "direct_flight_access": 6,
+        "intracity_transport_quality": 6,
+        "crowd_pressure_low": 5,
+        "photogenic_quality": 4,
+        "visa_ease": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "budget": 0.05,
+          "value": 0.04,
+          "backpacker": 0.04,
+          "hostel_scene": 0.03
+        },
+        "penalty": {}
+      }
+    },
+
+    {
+      "id": "adventure",
+      "label": "Adventure Traveller",
+      "description": "Seeks physically engaging, outdoor, adrenaline-forward experiences — trekking, diving, ziplining, self-drive scenic routes. Deliberately does NOT weight low physical exertion (high exertion is often the draw, not a deterrent) — instead weights the safety STANDARDS around adventure activities (regulated water sports, road safety) and content novelty/offbeat appeal.",
+      "eligibility": {
+        "trigger": "primary_goal=='adventure' OR self_declared_adventure==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "water_activity_safety",
+        "content_novelty",
+        "road_safety"
+      ],
+      "nice_to_have_attributes": [
+        "scenic_drive_quality",
+        "self_drive_feasibility",
+        "photogenic_quality",
+        "group_activity_density"
+      ],
+      "hard_gates": [],
+      "soft_gates": [
+        {
+          "signal": "road_safety",
+          "op": ">=",
+          "value": 0.3,
+          "cap": 0.7,
+          "reason": "Road fatality rate is high — self-drive/road-based adventure carries real risk here"
+        }
+      ],
+      "weights": {
+        "water_activity_safety": 12,
+        "scenic_drive_quality": 10,
+        "content_novelty": 10,
+        "photogenic_quality": 10,
+        "self_drive_feasibility": 8,
+        "road_safety": 8,
+        "group_activity_density": 8,
+        "safety_general": 8,
+        "crowd_pressure_low": 8,
+        "value_for_money": 6,
+        "direct_flight_access": 6,
+        "weather_comfort": 6
+      },
+      "tag_modifiers": {
+        "boost": {
+          "adventure": 0.06,
+          "extreme_adventure": 0.04,
+          "offbeat": 0.03,
+          "hiking": 0.03,
+          "diving": 0.03
+        },
+        "penalty": { "resort_stay": 0.02, "senior_focused": 0.02 }
+      }
+    },
+
+    {
+      "id": "wellness",
+      "label": "Wellness Traveller",
+      "description": "Optimises for relaxation, spa, yoga and mindfulness — low crowds, quiet, comfortable weather, clean food, minimal physical exertion. Distinct from 'luxury' by weighting comfort/calm over exclusivity/status, and distinct from 'couple' by not weighting romance-adjacent signals at all — this persona applies equally to a solo wellness retreat.",
+      "eligibility": {
+        "trigger": "primary_goal=='wellness' OR self_declared_wellness==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "wellness_spa_quality",
+        "crowd_pressure_low",
+        "noise_low"
+      ],
+      "nice_to_have_attributes": [
+        "weather_comfort",
+        "physical_exertion_low",
+        "vegetarian_food_access",
+        "air_quality"
+      ],
+      "hard_gates": [],
+      "soft_gates": [
+        {
+          "signal": "crowd_pressure_low",
+          "op": ">=",
+          "value": 0.3,
+          "cap": 0.65,
+          "reason": "Too crowded to deliver a genuine wellness/retreat atmosphere"
+        }
+      ],
+      "weights": {
+        "wellness_spa_quality": 22,
+        "crowd_pressure_low": 14,
+        "noise_low": 12,
+        "weather_comfort": 10,
+        "physical_exertion_low": 8,
+        "food_hygiene": 8,
+        "vegetarian_food_access": 6,
+        "air_quality": 6,
+        "safety_general": 6,
+        "photogenic_quality": 4,
+        "tap_water_safety": 4
+      },
+      "tag_modifiers": {
+        "boost": {
+          "wellness": 0.07,
+          "slow_travel": 0.05,
+          "quiet": 0.04,
+          "spiritual": 0.03
+        },
+        "penalty": { "nightlife": 0.06, "party": 0.06, "overtouristed": 0.05 }
+      }
+    },
+
+    {
+      "id": "foodie",
+      "label": "Foodie Traveller",
+      "description": "Trip organised around culinary experiences — street food, cooking classes, food markets, fine dining. Weights food hygiene heavily (a foodie eating widely and often is more exposed than an average traveller) alongside variety and accessibility signals (vegetarian/Indian food access, English for ordering).",
+      "eligibility": {
+        "trigger": "primary_goal=='food' OR self_declared_foodie==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "food_hygiene",
+        "vegetarian_food_access",
+        "late_night_food"
+      ],
+      "nice_to_have_attributes": [
+        "indian_food_availability",
+        "value_for_money",
+        "group_activity_density",
+        "photogenic_quality"
+      ],
+      "hard_gates": [
+        {
+          "signal": "food_hygiene",
+          "op": ">=",
+          "value": 0.3,
+          "reason": "Food hygiene standards too inconsistent for a food-focused trip"
+        }
+      ],
+      "soft_gates": [],
+      "weights": {
+        "food_hygiene": 16,
+        "late_night_food": 8,
+        "vegetarian_food_access": 8,
+        "value_for_money": 8,
+        "photogenic_quality": 8,
+        "indian_food_availability": 6,
+        "group_activity_density": 6,
+        "crowd_pressure_low": 6,
+        "safety_general": 6,
+        "intracity_transport_quality": 6,
+        "english_prevalence": 4,
+        "tourist_infrastructure": 4
+      },
+      "tag_modifiers": {
+        "boost": { "food": 0.07, "cultural": 0.02, "walkable": 0.02 },
+        "penalty": {}
+      }
+    },
+
+    {
+      "id": "digital_nomad",
+      "label": "Digital Nomad",
+      "description": "Remote worker travelling with a laptop, needs reliable connectivity and a livable base for weeks at a time, not a sightseeing sprint. Hard-gates on workable wifi — everything else about the trip is secondary if the connection can't support a work day.",
+      "eligibility": {
+        "trigger": "primary_goal=='remote_work' OR self_declared_digital_nomad==true",
+        "traveller_conditions": []
+      },
+      "required_attributes": [
+        "wifi_quality",
+        "coworking_density",
+        "cost_efficiency"
+      ],
+      "nice_to_have_attributes": [
+        "safety_general",
+        "english_prevalence",
+        "healthcare_quality",
+        "weather_comfort"
+      ],
+      "hard_gates": [
+        {
+          "signal": "wifi_quality",
+          "op": ">=",
+          "value": 0.25,
+          "reason": "Connectivity too weak to support remote work"
+        }
+      ],
+      "soft_gates": [
+        {
+          "signal": "coworking_density",
+          "op": ">=",
+          "value": 0.3,
+          "cap": 0.7,
+          "reason": "No real coworking/creator ecosystem — workable but not built for long stays"
+        }
+      ],
+      "weights": {
+        "wifi_quality": 20,
+        "coworking_density": 16,
+        "cost_efficiency": 10,
+        "safety_general": 8,
+        "english_prevalence": 8,
+        "food_hygiene": 6,
+        "weather_comfort": 6,
+        "healthcare_quality": 6,
+        "intracity_transport_quality": 6,
+        "value_for_money": 6,
+        "crowd_pressure_low": 4,
+        "visa_ease": 4
+      },
+      "tag_modifiers": {
+        "boost": { "digital_nomad": 0.06, "slow_travel": 0.03, "solo_friendly": 0.02 },
+        "penalty": { "party": 0.02, "nightlife": 0.02 }
       }
     }
   ]

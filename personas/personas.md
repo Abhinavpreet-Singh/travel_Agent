@@ -1,7 +1,7 @@
 # Traveller Personas
 
 Human-readable rendering of `personas/personas.json` — the machine copy is the
-source of truth; this file is for humans reviewing or extending it. All 14
+source of truth; this file is for humans reviewing or extending it. All 22
 personas below share one contract:
 
 - **Eligibility** decides *whether a persona activates* for a given trip (fed
@@ -214,6 +214,131 @@ parking and road safety. Applies mostly to country/city/route entities.
 - **Soft gate:** `road_safety >= 0.3` (cap 0.7) — recommend a driver rather than self-drive
 - **Weights:** self_drive_feasibility 16 · road_quality 14 · scenic_drive_quality 13 · road_safety 12 · fuel_stop_density 9 · parking_availability 8 · rest_stop_availability 7 · cost_efficiency 7 · public_toilet_availability 5 · transport_comfort 5 · crowd_pressure_low 4
 - **Tag boosts:** scenic_route (+0.05), road_trip (+0.04) — **penalties:** boat_only_access (-0.08), island_hopping (-0.06), traffic_hell (-0.05)
+
+## 15. Couple Trip (`couple`)
+
+Two adults in a relationship, no children, no specific milestone occasion
+(that's honeymoon, below). Optimises for shared quality time, privacy, food
+and photogenic moments over group activities or nightlife. The default for
+an unadorned "me and my wife/husband/partner" trip once no other persona is
+detected — added specifically to close that gap (previously fell to
+`default` with just a note).
+
+- **Eligibility:** `group_size==2 AND relationship=='couple' AND occasion!='honeymoon'`
+- **Required attributes:** safety_general, photogenic_quality, crowd_pressure_low
+- **Nice to have:** wellness_spa_quality, weather_comfort, noise_low, iconic_landmark_density
+- **Hard gate:** `safety_general >= 0.35`
+- **Soft gate:** `crowd_pressure_low >= 0.3` (cap 0.7) — too overtouristed for quiet time as a couple
+- **Weights:** photogenic_quality 14 · crowd_pressure_low 12 · wellness_spa_quality 12 · weather_comfort 10 · value_for_money 9 · safety_general 8 · noise_low 8 · food_hygiene 6 · direct_flight_access 6 · iconic_landmark_density 6 · english_prevalence 5 · intracity_transport_quality 4
+- **Tag boosts:** romantic (+0.04), photogenic (+0.03), wellness (+0.02), calm_beach (+0.02) — **penalties:** party (-0.03), backpacker (-0.02), nightlife (-0.02)
+
+## 16. Honeymoon (`honeymoon`)
+
+Newly married couple celebrating a milestone occasion. Distinct from
+`couple` by materially higher weight on privacy/exclusivity and wellness,
+and near-zero weight on cost efficiency — this is the one trip type where
+value-for-money is deliberately not the point.
+
+- **Eligibility:** `occasion=='honeymoon'`
+- **Required attributes:** wellness_spa_quality, crowd_pressure_low, photogenic_quality
+- **Nice to have:** noise_low, iconic_landmark_density, safety_general, weather_comfort
+- **Hard gate:** `safety_general >= 0.4`
+- **Soft gate:** `crowd_pressure_low >= 0.35` (cap 0.65) — privacy is the whole point of a honeymoon
+- **Weights:** wellness_spa_quality 16 · photogenic_quality 14 · crowd_pressure_low 13 · noise_low 10 · safety_general 8 · weather_comfort 8 · iconic_landmark_density 7 · direct_flight_access 6 · food_hygiene 5 · value_for_money 5 · english_prevalence 4 · intracity_transport_quality 4
+- **Tag boosts:** honeymoon (+0.05), romantic (+0.05), resort_stay (+0.03), wellness (+0.03), adult_only (+0.02), photogenic (+0.02) — **penalties:** backpacker (-0.06), party (-0.06), nightlife (-0.05)
+
+## 17. Luxury Traveller (`luxury`)
+
+Optimises purely for quality — premium hospitality, low crowds, high safety
+and healthcare standards, mature tourist infrastructure — with deliberately
+**no weight on cost efficiency at all** (not opposed to spending, just
+indifferent to price). A modifier persona meant to stack with others
+(`couple` + `luxury`, `family_trip` + `luxury`) as much as stand alone.
+
+- **Eligibility:** `budget_tier=='luxury' OR explicit_luxury_request==true`
+- **Required attributes:** wellness_spa_quality, crowd_pressure_low, tourist_infrastructure
+- **Nice to have:** healthcare_quality, photogenic_quality, safety_general, iconic_landmark_density
+- **Hard gate:** `safety_general >= 0.4`
+- **Soft gate:** `tourist_infrastructure >= 0.5` (cap 0.7) — too raw to deliver a genuine luxury experience
+- **Weights:** wellness_spa_quality 16 · photogenic_quality 14 · crowd_pressure_low 13 · healthcare_quality 10 · tourist_infrastructure 10 · safety_general 9 · noise_low 8 · food_hygiene 6 · iconic_landmark_density 6 · direct_flight_access 4 · intracity_transport_quality 4
+- **Tag boosts:** resort_stay (+0.04), wellness (+0.03), romantic (+0.02), honeymoon (+0.02) — **penalties:** backpacker (-0.08), hostel_scene (-0.06), budget (-0.05)
+
+## 18. Budget Traveller (`budget`)
+
+Cost-conscious traveller optimising for low daily spend and genuine value,
+not luxury. The mirror image of `luxury` — weights cost efficiency and
+value heavily, gives no special weight to spa/wellness/exclusivity, and is
+comfortable with hostel/backpacker-tier infrastructure as long as it's safe.
+
+- **Eligibility:** `budget_tier=='budget' OR explicit_budget_request==true`
+- **Required attributes:** cost_efficiency, value_for_money, safety_general
+- **Nice to have:** tourist_infrastructure, english_prevalence, direct_flight_access
+- **Hard gate:** `safety_general >= 0.35` — cheap is not worth unsafe
+- **Soft gates:** none
+- **Weights:** cost_efficiency 20 · value_for_money 16 · safety_general 10 · group_cost_efficiency 8 · tourist_infrastructure 8 · food_hygiene 7 · english_prevalence 6 · direct_flight_access 6 · intracity_transport_quality 6 · crowd_pressure_low 5 · photogenic_quality 4 · visa_ease 4
+- **Tag boosts:** budget (+0.05), value (+0.04), backpacker (+0.04), hostel_scene (+0.03) — no penalties
+
+## 19. Adventure Traveller (`adventure`)
+
+Seeks physically engaging, outdoor, adrenaline-forward experiences —
+trekking, diving, ziplining, self-drive scenic routes. Deliberately does
+**not** weight low physical exertion (high exertion is often the draw, not
+a deterrent) — instead weights the safety *standards* around adventure
+activities (regulated water sports, road safety) and content novelty.
+
+- **Eligibility:** `primary_goal=='adventure' OR self_declared_adventure==true`
+- **Required attributes:** water_activity_safety, content_novelty, road_safety
+- **Nice to have:** scenic_drive_quality, self_drive_feasibility, photogenic_quality, group_activity_density
+- **Hard gates:** none
+- **Soft gate:** `road_safety >= 0.3` (cap 0.7) — high road fatality rate makes self-drive/road-based adventure genuinely risky here
+- **Weights:** water_activity_safety 12 · scenic_drive_quality 10 · content_novelty 10 · photogenic_quality 10 · self_drive_feasibility 8 · road_safety 8 · group_activity_density 8 · safety_general 8 · crowd_pressure_low 8 · value_for_money 6 · direct_flight_access 6 · weather_comfort 6
+- **Tag boosts:** adventure (+0.06), extreme_adventure (+0.04), offbeat (+0.03), hiking (+0.03), diving (+0.03) — **penalties:** resort_stay (-0.02), senior_focused (-0.02)
+
+## 20. Wellness Traveller (`wellness`)
+
+Optimises for relaxation, spa, yoga and mindfulness — low crowds, quiet,
+comfortable weather, clean food, minimal physical exertion. Distinct from
+`luxury` by weighting comfort/calm over exclusivity/status, and distinct
+from `couple`/`honeymoon` by not weighting romance-adjacent signals at all —
+this persona applies equally to a solo wellness retreat.
+
+- **Eligibility:** `primary_goal=='wellness' OR self_declared_wellness==true`
+- **Required attributes:** wellness_spa_quality, crowd_pressure_low, noise_low
+- **Nice to have:** weather_comfort, physical_exertion_low, vegetarian_food_access, air_quality
+- **Hard gates:** none
+- **Soft gate:** `crowd_pressure_low >= 0.3` (cap 0.65) — too crowded for a genuine retreat atmosphere
+- **Weights:** wellness_spa_quality 22 · crowd_pressure_low 14 · noise_low 12 · weather_comfort 10 · physical_exertion_low 8 · food_hygiene 8 · vegetarian_food_access 6 · air_quality 6 · safety_general 6 · photogenic_quality 4 · tap_water_safety 4
+- **Tag boosts:** wellness (+0.07), slow_travel (+0.05), quiet (+0.04), spiritual (+0.03) — **penalties:** nightlife (-0.06), party (-0.06), overtouristed (-0.05)
+
+## 21. Foodie Traveller (`foodie`)
+
+Trip organised around culinary experiences — street food, cooking classes,
+food markets, fine dining. Weights food hygiene heavily (eating widely and
+often is more exposure than an average trip) alongside variety/accessibility
+signals (vegetarian/Indian food access, English for ordering).
+
+- **Eligibility:** `primary_goal=='food' OR self_declared_foodie==true`
+- **Required attributes:** food_hygiene, vegetarian_food_access, late_night_food
+- **Nice to have:** indian_food_availability, value_for_money, group_activity_density, photogenic_quality
+- **Hard gate:** `food_hygiene >= 0.3`
+- **Soft gates:** none
+- **Weights:** food_hygiene 16 · late_night_food 8 · vegetarian_food_access 8 · value_for_money 8 · photogenic_quality 8 · indian_food_availability 6 · group_activity_density 6 · crowd_pressure_low 6 · safety_general 6 · intracity_transport_quality 6 · english_prevalence 4 · tourist_infrastructure 4
+- **Tag boosts:** food (+0.07), cultural (+0.02), walkable (+0.02) — no penalties
+
+## 22. Digital Nomad (`digital_nomad`)
+
+Remote worker travelling with a laptop, needs reliable connectivity and a
+livable base for weeks at a time, not a sightseeing sprint. Hard-gates on
+workable wifi — everything else is secondary if the connection can't
+support a work day.
+
+- **Eligibility:** `primary_goal=='remote_work' OR self_declared_digital_nomad==true`
+- **Required attributes:** wifi_quality, coworking_density, cost_efficiency
+- **Nice to have:** safety_general, english_prevalence, healthcare_quality, weather_comfort
+- **Hard gate:** `wifi_quality >= 0.25` — connectivity too weak to support remote work
+- **Soft gate:** `coworking_density >= 0.3` (cap 0.7) — workable but not built for long stays
+- **Weights:** wifi_quality 20 · coworking_density 16 · cost_efficiency 10 · safety_general 8 · english_prevalence 8 · food_hygiene 6 · weather_comfort 6 · healthcare_quality 6 · intracity_transport_quality 6 · value_for_money 6 · crowd_pressure_low 4 · visa_ease 4
+- **Tag boosts:** digital_nomad (+0.06), slow_travel (+0.03), solo_friendly (+0.02) — **penalties:** party (-0.02), nightlife (-0.02)
 
 ---
 

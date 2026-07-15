@@ -197,7 +197,22 @@ export function scoreEntity(entity, ancestors, persona, dictionary) {
   modifier = Math.max(-0.12, Math.min(0.12, modifier));
 
   let score01 = clamp01(rawScore + modifier);
-  score01 = Math.min(score01, cap);
+  // A soft-gate cap is a ceiling, not a floor — but a flat min(score, cap)
+  // means every entity that would have scored ABOVE the cap collapses to
+  // the exact same number, destroying differentiation among them (verified:
+  // this flattened 8 genuinely different-quality hotels — a five-star
+  // resort and a budget business hotel included — to the identical 4.5 for
+  // pregnancy_friendly in a Zika-flagged city). Instead, let a controlled
+  // fraction of the excess above the cap still show through: entities stay
+  // clearly capped (well below anything that passed the gate outright) but
+  // remain ordered relative to each other. SOFT_CAP_SPREAD is deliberately
+  // small (0.35) so the cap still means something — the best possible
+  // capped entity (raw score 1.0) still only reaches cap + 0.65*0.35, never
+  // close to an uncapped score.
+  const SOFT_CAP_SPREAD = 0.35;
+  if (score01 > cap) {
+    score01 = cap + (score01 - cap) * SOFT_CAP_SPREAD;
+  }
   if (!eligible) score01 = 0;
 
   contributions.sort((a, b) => b.impact - a.impact);

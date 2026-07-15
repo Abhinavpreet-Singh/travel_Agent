@@ -134,24 +134,119 @@ function resolvePersonas(flags, text) {
 
 // ---- ranking helpers --------------------------------------------------------
 
-function topNWithExplanation(entities, ancestorsFn, persona, n) {
-  return rankEntities(
+const PACE_LABELS = { 1: 'Very Easy', 2: 'Easy', 3: 'Moderate', 4: 'Active', 5: 'Strenuous' };
+
+function activityCostBand(priceInr) {
+  if (priceInr === undefined || priceInr === null) return null;
+  if (priceInr === 0) return 'Free';
+  if (priceInr < 800) return '$';
+  if (priceInr < 2500) return '$$';
+  if (priceInr < 6000) return '$$$';
+  return '$$$$';
+}
+
+function hotelCostBand(priceInrPerNight) {
+  if (priceInrPerNight === undefined || priceInrPerNight === null) return null;
+  if (priceInrPerNight < 3000) return '$';
+  if (priceInrPerNight < 6000) return '$$';
+  if (priceInrPerNight < 10000) return '$$$';
+  return '$$$$';
+}
+
+/**
+ * Best-effort time-of-day for scheduling an activity into a day plan —
+ * derived from category/tags/golden-hour-index rather than hand-authored
+ * per entity (122 activities × a new field is real authoring work; this is
+ * "good enough to sequence a day," not a verified fact). No new data added
+ * to any entity file.
+ */
+function bestTime(entity) {
+  const cat = (entity.category ?? '').toLowerCase();
+  const tags = entity.tags ?? [];
+  const golden = entity.attributes?.golden_hour_index_0_100 ?? 0;
+  const heat = entity.attributes?.peak_heat_index_c ?? 0;
+  if (cat === 'nightlife' || tags.includes('nightlife') || tags.includes('party')) return 'evening';
+  if (tags.includes('sunset_spot') || golden >= 75) return 'evening';
+  if (tags.includes('sunrise_spot')) return 'early_morning';
+  if ((cat === 'heritage' || cat === 'culture') && heat >= 38) return 'morning';
+  if (cat === 'food' && /night/i.test(entity.name ?? '')) return 'evening';
+  return 'flexible';
+}
+
+/**
+ * Type-aware, day-planning-relevant fields derived from the entity's own
+ * data — cheap to compute, so attached to EVERY entity regardless of
+ * explainTop. An itinerary agent needs to know which city an activity is in
+ * and roughly how long/expensive/strenuous it is to sequence a day; making
+ * it re-derive that from raw signal attributes (or worse, guess) is exactly
+ * the kind of friction this layer exists to remove.
+ */
+function entityMetadata(entity) {
+  const dataConfidence = entity.meta?.data_confidence ?? null;
+  if (entity.type === 'activity') {
+    return {
+      city: data.citiesById[entity.parent_id]?.name ?? null,
+      category: entity.category,
+      duration_hours: entity.duration_hours,
+      cost_band: activityCostBand(entity.price_inr),
+      pace: PACE_LABELS[entity.attributes?.exertion_level_1_5] ?? null,
+      best_time: bestTime(entity),
+      data_confidence: dataConfidence,
+    };
+  }
+  if (entity.type === 'hotel') {
+    return {
+      city: data.citiesById[entity.parent_id]?.name ?? null,
+      category: entity.category,
+      star_rating: entity.star_rating,
+      cost_band: hotelCostBand(entity.price_inr_per_night),
+      data_confidence: dataConfidence,
+    };
+  }
+  if (entity.type === 'destination_city') {
+    return { province: entity.province ?? null, best_months: entity.best_months ?? null, data_confidence: dataConfidence };
+  }
+  return { data_confidence: dataConfidence };
+}
+
+/**
+ * Score + sort EVERY entity in `entities` — never truncated. This is the
+ * material an itinerary agent builds from, so hiding most of a 107-activity
+ * country-wide pool behind a top-8 cutoff (the old behavior) starves it of
+ * options. Every entry always carries entity_id/name/score_0_10/eligible
+ * plus day-planning metadata (city/duration/cost/pace); the first
+ * `explainTop` entries additionally get gate_failures and template-rendered
+ * why/caution reasons — kept to a sane count so payload size doesn't scale
+ * with the whole pool, since the score+metadata alone is enough for an LLM
+ * to place an entity in an itinerary even without a citation-quality reason.
+ */
+function rankAll(entities, ancestorsFn, persona, explainTop) {
+  const byId = new Map(entities.map((e) => [e.id, e]));
+  const ranked = rankEntities(
     entities.map((entity) => ({ entity, ancestors: ancestorsFn(entity) })),
     persona,
     data.dictionary
-  )
-    .slice(0, n)
-    .map((r) => {
-      const entity = entities.find((e) => e.id === r.entity_id);
-      const result = scoreEntity(entity, ancestorsFn(entity), persona, data.dictionary);
-      return {
-        entity_id: r.entity_id,
-        name: r.name,
-        score_0_10: r.score_0_10,
-        eligible: r.eligible,
-        explanation: buildExplanation({ entity, persona, result, dictionary: data.dictionary }),
-      };
-    });
+  );
+  return ranked.map((r, i) => {
+    const entity = byId.get(r.entity_id);
+    const base = {
+      entity_id: r.entity_id,
+      name: r.name,
+      score_0_10: r.score_0_10,
+      eligible: r.eligible,
+      ...entityMetadata(entity),
+    };
+    // Why an entity was excluded is cheap (r.gate_failures is already
+    // computed by rankEntities above, no extra scoring needed) and always
+    // worth keeping — regardless of explainTop position. Ineligible entries
+    // sort to the tail of the list, so without this they'd fall outside a
+    // country-wide explainTop cutoff and lose their reason entirely.
+    if (!r.eligible) base.gate_failures = r.gate_failures;
+    if (i >= explainTop) return base;
+    const result = scoreEntity(entity, ancestorsFn(entity), persona, data.dictionary);
+    const explanation = buildExplanation({ entity, persona, result, dictionary: data.dictionary });
+    return { ...base, gate_failures: r.gate_failures, why: explanation.reasons, caution: explanation.cautions };
+  });
 }
 
 function buildComparisonTable(entities, ancestorsFn, personas) {
@@ -166,7 +261,36 @@ function buildComparisonTable(entities, ancestorsFn, personas) {
     const vals = Object.values(scores);
     return { entity_id: entity.id, name: entity.name, scores, eligible, spread: Math.max(...vals) - Math.min(...vals) };
   });
-  return rows.sort((a, b) => b.spread - a.spread);
+  return rows.sort((a, b) => b.spread - a.spread); // full list, never truncated — sorted so the most persona-differentiating entities read first
+}
+
+/**
+ * Split a rankAll() list into entities actually worth recommending
+ * (eligible, sorted best-first) and a compact excluded record (name, city,
+ * the one-line reason) — combined later into one excluded_options list
+ * across cities/activities/hotels, matching the shape an itinerary agent
+ * actually wants: a clean candidate pool plus "and here's what NOT to
+ * suggest and why," not one list where the caller has to filter on
+ * `eligible` themselves.
+ */
+function splitRecommendedExcluded(rankedList, type) {
+  const recommended = [];
+  const excluded = [];
+  for (const item of rankedList) {
+    if (item.eligible) {
+      const { eligible, gate_failures, ...rest } = item;
+      recommended.push(rest);
+    } else {
+      excluded.push({
+        type,
+        entity_id: item.entity_id,
+        name: item.name,
+        city: item.city ?? null,
+        reason: item.gate_failures?.[0]?.reason ?? 'excluded by a hard gate',
+      });
+    }
+  }
+  return { recommended, excluded };
 }
 
 function runSingle(city, persona) {
@@ -174,11 +298,22 @@ function runSingle(city, persona) {
   const hotelPool = city ? data.hotels.filter((h) => h.parent_id === city.id) : data.hotels;
   const cityPool = city ? [city] : data.cityFile.entities;
 
+  // explainTop sized generously enough to cover a whole city-scoped pool
+  // (activities/hotels rarely exceed ~15) or a meaningful slice of the
+  // country-wide pool (20 of 100+) — everything past that still has its score.
+  const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city');
+  const activities = splitRecommendedExcluded(
+    rankAll(activityPool, data.ancestorsOf.activity, persona, city ? activityPool.length : 20),
+    'activity'
+  );
+  const hotels = splitRecommendedExcluded(rankAll(hotelPool, data.ancestorsOf.hotel, persona, hotelPool.length), 'hotel');
+
   return {
     persona: { id: persona.id, label: persona.label, composed_from: persona.composed_from ?? [persona.id] },
-    top_cities: city ? undefined : topNWithExplanation(cityPool, data.ancestorsOf.destination_city, persona, 5),
-    top_activities: topNWithExplanation(activityPool, data.ancestorsOf.activity, persona, city ? 10 : 8),
-    top_hotels: topNWithExplanation(hotelPool, data.ancestorsOf.hotel, persona, city ? 8 : 5),
+    recommended_cities: cities?.recommended,
+    recommended_activities: activities.recommended,
+    recommended_hotels: hotels.recommended,
+    excluded_options: [...(cities?.excluded ?? []), ...activities.excluded, ...hotels.excluded],
   };
 }
 
@@ -192,14 +327,14 @@ function runCompare(city, personaIds) {
       scope: 'city',
       city: { id: city.id, name: city.name },
       personas: personaIds,
-      activities_comparison: buildComparisonTable(activityPool, data.ancestorsOf.activity, personas).slice(0, 15),
-      hotels_comparison: buildComparisonTable(hotelPool, data.ancestorsOf.hotel, personas).slice(0, 10),
+      activities_comparison: buildComparisonTable(activityPool, data.ancestorsOf.activity, personas),
+      hotels_comparison: buildComparisonTable(hotelPool, data.ancestorsOf.hotel, personas),
       per_persona_top: Object.fromEntries(
         personas.map((persona) => [
           persona.id,
           {
-            top_activities: topNWithExplanation(activityPool, data.ancestorsOf.activity, persona, 5),
-            top_hotels: topNWithExplanation(hotelPool, data.ancestorsOf.hotel, persona, 3),
+            top_activities: rankAll(activityPool, data.ancestorsOf.activity, persona, Math.min(8, activityPool.length)),
+            top_hotels: rankAll(hotelPool, data.ancestorsOf.hotel, persona, hotelPool.length),
           },
         ])
       ),
@@ -211,7 +346,7 @@ function runCompare(city, personaIds) {
     personas: personaIds,
     cities_comparison: buildComparisonTable(data.cityFile.entities, data.ancestorsOf.destination_city, personas),
     per_persona_top_cities: Object.fromEntries(
-      personas.map((persona) => [persona.id, topNWithExplanation(data.cityFile.entities, data.ancestorsOf.destination_city, persona, 5)])
+      personas.map((persona) => [persona.id, rankAll(data.cityFile.entities, data.ancestorsOf.destination_city, persona, 8)])
     ),
   };
 }
@@ -219,38 +354,42 @@ function runCompare(city, personaIds) {
 // ---- console output ---------------------------------------------------------
 
 function printSingle(result) {
-  if (result.top_cities) {
-    console.log('Top cities:');
-    for (const c of result.top_cities) {
-      const line = c.eligible ? c.explanation.reasons[0] ?? '' : `EXCLUDED — ${c.explanation.cautions[0] ?? ''}`;
-      console.log(`  ${c.score_0_10.toFixed(1).padStart(4)}  ${c.name.padEnd(28)} ${line}`);
+  if (result.recommended_cities) {
+    console.log(`Recommended cities (of ${result.recommended_cities.length} eligible):`);
+    for (const c of result.recommended_cities.slice(0, 17)) {
+      console.log(`  ${c.score_0_10.toFixed(1).padStart(4)}  ${c.name.padEnd(28)} ${c.why?.[0] ?? ''}`);
     }
   }
-  console.log('Top activities:');
-  for (const a of result.top_activities.slice(0, 6)) {
-    const line = a.eligible ? '' : `EXCLUDED — ${a.explanation.cautions[0] ?? ''}`;
-    console.log(`  ${a.score_0_10.toFixed(1).padStart(4)}  ${a.name.padEnd(38)} ${line}`);
+  console.log(`Recommended activities (of ${result.recommended_activities.length} eligible):`);
+  for (const a of result.recommended_activities.slice(0, 15)) {
+    console.log(`  ${a.score_0_10.toFixed(1).padStart(4)}  ${a.name.padEnd(38)} ${a.city ?? ''}`);
   }
-  console.log('Top hotels:');
-  for (const h of result.top_hotels.slice(0, 5)) {
-    const line = h.eligible ? '' : `EXCLUDED — ${h.explanation.cautions[0] ?? ''}`;
-    console.log(`  ${h.score_0_10.toFixed(1).padStart(4)}  ${h.name.padEnd(38)} ${line}`);
+  console.log(`Recommended hotels (of ${result.recommended_hotels.length} eligible):`);
+  for (const h of result.recommended_hotels.slice(0, 8)) {
+    console.log(`  ${h.score_0_10.toFixed(1).padStart(4)}  ${h.name.padEnd(38)} ${h.city ?? ''}`);
+  }
+  if (result.excluded_options.length) {
+    console.log(`Excluded (${result.excluded_options.length}):`);
+    for (const e of result.excluded_options.slice(0, 10)) {
+      console.log(`  [${e.type}] ${e.name.padEnd(36)} ${e.reason}`);
+    }
+    if (result.excluded_options.length > 10) console.log(`  ... and ${result.excluded_options.length - 10} more`);
   }
 }
 
 function printCompare(result) {
   const table = result.cities_comparison || result.activities_comparison;
   const label = result.cities_comparison ? 'cities' : 'activities';
-  console.log(`\nMost persona-differentiating ${label} (top 8 by score spread):`);
-  for (const row of table.slice(0, 8)) {
+  console.log(`\nMost persona-differentiating ${label} (top 15 of ${table.length} by score spread):`);
+  for (const row of table.slice(0, 15)) {
     const cells = result.personas
       .map((pid) => `${pid}=${row.scores[pid].toFixed(1)}${row.eligible[pid] ? '' : 'x'}`)
       .join('   ');
     console.log(`  ${row.name.padEnd(36)} ${cells}`);
   }
   if (result.hotels_comparison?.length) {
-    console.log(`\nMost persona-differentiating hotels (top 5 by score spread):`);
-    for (const row of result.hotels_comparison.slice(0, 5)) {
+    console.log(`\nMost persona-differentiating hotels (top 8 of ${result.hotels_comparison.length} by score spread):`);
+    for (const row of result.hotels_comparison.slice(0, 8)) {
       const cells = result.personas
         .map((pid) => `${pid}=${row.scores[pid].toFixed(1)}${row.eligible[pid] ? '' : 'x'}`)
         .join('   ');
@@ -327,18 +466,74 @@ function formatComposed(composed) {
   };
 }
 
+/**
+ * What we actually know vs. guessed vs. don't have — three buckets instead
+ * of one flat notes/roster dump, so a caller (human or LLM) can see at a
+ * glance what's solid, what's an assumption worth double-checking, and what
+ * would sharpen the recipe if asked for.
+ */
+function buildConstraintSummary(ext) {
+  const known = [];
+  const missing = [];
+  const roster = ext.derived?.roster;
+  const brief = ext.brief;
+
+  if (ext.city) known.push(`destination city: ${ext.city.name}`);
+  else if (ext.text) missing.push('destination city not specified — scored across all cities');
+
+  if (roster) {
+    if (roster.adults !== null) known.push(`${roster.adults} adult(s)`);
+    else missing.push('group size not specified');
+    if (roster.gender !== 'unspecified') known.push(`traveller gender: ${roster.gender}`);
+    if (roster.children_ages.length > 0) known.push(`${roster.children_ages.length} child(ren), ages: ${roster.children_ages.join(', ')}`);
+    if (roster.age_assumed) missing.push('exact child age(s) not given — assumed ~6 for scoring; state real ages for accurate gating (an infant hard-gates very differently than a 6-year-old)');
+    if (roster.has_senior_adult) known.push('senior traveller present');
+  }
+
+  if (brief?.duration) known.push(`duration: ${brief.duration}`);
+  else if (ext.text) missing.push('travel duration not specified');
+  if (brief?.dates) known.push(`dates: ${brief.dates}`);
+  else if (ext.text) missing.push('travel dates not specified');
+  if (brief?.budget) known.push(`budget: ${brief.budget}`);
+  else if (ext.text) missing.push('budget not specified');
+
+  for (const extra of ext.derived?.unmatched_extras ?? []) {
+    missing.push(`captured but not yet folded into scoring weights: ${extra.label} = ${extra.value}`);
+  }
+
+  return {
+    known, // stated directly, or unambiguous (a resolved city, an explicit count)
+    inferred: ext.derived?.notes ?? [], // heuristic reasoning this layer applied — assumptions, persona-selection rationale
+    missing, // would sharpen the recipe if provided; scored on reasonable defaults in the meantime
+  };
+}
+
+/**
+ * How much of the persona detection is solid vs. guessed. 'explicit' input
+ * (--persona=...) is always high confidence — the caller said exactly what
+ * they wanted. Free text with zero notes means every signal was
+ * unambiguous. Any note (an assumption, a "no dedicated persona" fallback)
+ * drops it to medium; the fallback persona with no text at all is low.
+ */
+function classifyConfidence(ext) {
+  if (ext.personaSource === 'explicit') return { level: 'high', reason: 'persona(s) specified explicitly' };
+  if (ext.personaSource === 'fallback') return { level: 'low', reason: 'no input text or persona given' };
+  const noteCount = ext.derived?.notes?.length ?? 0;
+  if (noteCount === 0) return { level: 'high', reason: 'persona(s) derived cleanly, no assumptions needed' };
+  return { level: 'medium', reason: `persona derivation involved ${noteCount} assumption(s) — see constraints.inferred` };
+}
+
 function recipeToJSON(ext) {
   const base = {
     input_text: ext.text || null,
-    brief: ext.brief, // Maya-shaped: destinationType, dates, duration, budget, groupComposition, extras[]
-    roster: ext.derived?.roster ?? null, // same info as brief.groupComposition, pre-parsed for programmatic use
     resolved_city: ext.city ? { id: ext.city.id, name: ext.city.name } : null,
     personas: ext.personaIds,
     persona_source: ext.personaSource, // 'explicit' | 'derived' | 'fallback'
+    confidence: classifyConfidence(ext),
     mode: ext.compareMode ? 'compare' : 'single',
-    matched_signals: ext.derived?.matched_extras ?? [],
-    not_yet_scored: ext.derived?.unmatched_extras ?? [], // captured, but not folded into weights yet — see project.md
-    notes: ext.derived?.notes ?? [],
+    constraints: buildConstraintSummary(ext),
+    brief: ext.brief, // Maya-shaped: destinationType, dates, duration, budget, groupComposition, extras[] — raw, for programmatic use
+    roster: ext.derived?.roster ?? null, // same info as brief.groupComposition, pre-parsed
   };
   // The actual scoring recipe: apply this to ANY entity (via engine/score.js::scoreEntity)
   // to get a score — this is the "optimized JSON" for this trip.

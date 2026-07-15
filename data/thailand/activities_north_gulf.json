@@ -1382,8 +1382,8 @@
         "wheelchair_viable": true
       },
       "attributes": {
-        "exertion_level_1_5": 2,
-        "typical_walking_km_per_day": 2,
+        "exertion_level_1_5": 3,
+        "typical_walking_km_per_day": 7,
         "terrain_type": "gentle",
         "wheelchair_infrastructure_index_0_100": 62,
         "step_free_ratio_0_1": 0.7,
@@ -1400,7 +1400,7 @@
         "content_saturation_index_0_100": 30,
         "golden_hour_index_0_100": 70
       },
-      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-13" }
+      "meta": { "data_confidence": 0.78, "last_verified": "2026-07-15", "correction_note": "typical_walking_km_per_day was 2 (unrealistic for a full 18-hole round, which is ~6-8km on foot even with a cart); exertion_level_1_5 raised from 2 to 3 to match. Was silently inflating this activity's low-exertion score for senior_citizen/pregnancy_friendly." }
     },
 
     {
@@ -1422,8 +1422,8 @@
       "constraints": {
         "min_age": 10,
         "infant_ok": false,
-        "pregnancy_safe": "caution",
-        "pregnancy_note": "Cycling in 42°C heat with no shade — heat stress is the risk, not the ruins",
+        "pregnancy_safe": "unsafe",
+        "pregnancy_note": "Two compounding risks: cycling itself carries real fall/balance risk in pregnancy (independent of terrain), plus 5 hours in 43°C heat with minimal shade. Reclassified from 'caution' to 'unsafe' on 2026-07-15 for consistency with the cycling fall-risk standard applied elsewhere (see Wiang Kum Kam bike tour) — heat alone was the only risk originally flagged here, which understated it.",
         "wheelchair_viable": false
       },
       "attributes": {

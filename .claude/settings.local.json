@@ -20,7 +20,14 @@
       "Bash(echo \"=== exit code: $? ===\")",
       "Bash(rm -rf output/thailand/queries output/thailand/query_result*.json)",
       "Bash(node engine/cli.js --city=HKT --persona=senior_citizen)",
-      "Bash(cd \"C:\\\\repo\\\\travelomore_agent\" && rm -rf output/thailand/queries output/thailand/query_result*.json && ls output/thailand/)"
+      "Bash(cd \"C:\\\\repo\\\\travelomore_agent\" && rm -rf output/thailand/queries output/thailand/query_result*.json && ls output/thailand/)",
+      "Bash(node engine/cli.js --persona=bachelor_trip)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('data/thailand/activities_supplemental.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")",
+      "Bash(node engine/cli.js \"grandmother going with me trip I am 20 to thailand\")",
+      "Bash(node engine/cli.js --city=BKK --persona=pregnancy_friendly)",
+      "Bash(node engine/cli.js \"college trip with friends, 5 of us for a week to thailand\")",
+      "Bash(node engine/cli.js \"trip with wife shes pregnant for a week in thailand\")",
+      "Bash(cd \"C:\\\\repo\\\\travelomore_agent\" && rm -rf output/thailand/queries output/thailand/query_result*.json)"
     ]
   }
 }

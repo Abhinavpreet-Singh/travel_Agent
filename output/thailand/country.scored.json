@@ -407,26 +407,33 @@
         },
         "pregnancy_friendly": {
           "persona_id": "pregnancy_friendly",
-          "eligible": false,
+          "eligible": true,
           "gate_failures": [
             {
-              "kind": "hard",
-              "reason": "Zika risk level is not acceptable during pregnancy",
+              "kind": "soft",
+              "reason": "Zika risk here is classified moderate-or-above — still shown with informed precautions (repellent, covering up, avoiding standing water) recommended, but capped rather than top-ranked given the risk in pregnancy. Was a hard exclusion until 2026-07-14; softened because it was silently removing every major city with excellent obstetric care (e.g. Bangkok) from results entirely. Cap raised from 0.45 to 0.55 on 2026-07-15 after checking Bangkok's actual raw (pre-cap) score: 5.99/10, driven by genuinely elite obstetric_care_access (0.93) and hospital_proximity (0.96) — a 0.45 cap was punishing it BELOW its own honest quality and below smaller towns with objectively worse medical infrastructure (Ayutthaya, Kanchanaburi), which is medically backwards. 0.55 lets Bangkok's real strength surface and beat lesser-resourced small towns, while staying below cities with BOTH lower Zika classification and better comfort profiles (Hua Hin, Chiang Mai) — Zika prevention still matters (a nearby hospital cannot reverse Zika-related birth defects, unlike e.g. a fall injury), so this is a real cap, not a bypass.",
               "signal": "zika_risk_low",
               "op": ">=",
               "required_value": 0.5,
               "actual_value": 0.35
             }
           ],
-          "score_0_1": 0,
-          "score_0_10": 0,
+          "score_0_1": 0.5485,
+          "score_0_10": 5.5,
           "signal_coverage": 0.855,
           "explanation": {
             "persona": "pregnancy_friendly",
-            "score": 0,
-            "reasons": [],
+            "score": 5.5,
+            "reasons": [
+              "Obstetric/maternity care available locally",
+              "International-standard hospitals (quality index 88/100)",
+              "Short hop from India (~4.3 h)",
+              "Reliable food hygiene standards"
+            ],
             "cautions": [
-              "Excluded: Zika risk level is not acceptable during pregnancy"
+              "Caution: Zika risk here is classified moderate-or-above — still shown with informed precautions (repellent, covering up, avoiding standing water) recommended, but capped rather than top-ranked given the risk in pregnancy. Was a hard exclusion until 2026-07-14; softened because it was silently removing every major city with excellent obstetric care (e.g. Bangkok) from results entirely. Cap raised from 0.45 to 0.55 on 2026-07-15 after checking Bangkok's actual raw (pre-cap) score: 5.99/10, driven by genuinely elite obstetric_care_access (0.93) and hospital_proximity (0.96) — a 0.45 cap was punishing it BELOW its own honest quality and below smaller towns with objectively worse medical infrastructure (Ayutthaya, Kanchanaburi), which is medically backwards. 0.55 lets Bangkok's real strength surface and beat lesser-resourced small towns, while staying below cities with BOTH lower Zika classification and better comfort profiles (Hua Hin, Chiang Mai) — Zika prevention still matters (a nearby hospital cannot reverse Zika-related birth defects, unlike e.g. a fall injury), so this is a real cap, not a bypass.",
+              "Zika risk classified as moderate — material for pregnancy",
+              "Tap water not potable — bottled water only"
             ]
           }
         },
@@ -466,6 +473,162 @@
             "cautions": [
               "High road fatality rate (25.4 per 100k) — self-drive risk"
             ]
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7414,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7.4,
+            "reasons": [
+              "Strong value for money",
+              "190 direct weekly flights from India",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6983,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 7,
+            "reasons": [
+              "190 direct weekly flights from India",
+              "Strong value for money",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.819,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 8.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "International-standard hospitals (quality index 88/100)",
+              "190 direct weekly flights from India",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8233,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 8.2,
+            "reasons": [
+              "Strong value for money",
+              "Low daily spend (~₹4800/person/day)",
+              "Mature, well-oiled tourist infrastructure",
+              "190 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6594,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 6.6,
+            "reasons": [
+              "190 direct weekly flights from India",
+              "Strong value for money",
+              "Genuinely scenic driving routes",
+              "Strong general safety record (safety index 68/100)"
+            ],
+            "cautions": [
+              "High road fatality rate (25.4 per 100k) — self-drive risk"
+            ]
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5319,
+          "score_0_10": 5.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 5.3,
+            "reasons": [
+              "Long comfortable-weather window",
+              "Strong general safety record (safety index 68/100)",
+              "Clean air (PM2.5 23 µg/m³ annual)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Tap water not potable — bottled water only"
+            ]
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7812,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 7.8,
+            "reasons": [
+              "Strong value for money",
+              "Indian restaurants widely available",
+              "Reliable food hygiene standards",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6697,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 6.7,
+            "reasons": [
+              "Low daily spend (~₹4800/person/day)",
+              "Fast connectivity (~65 Mbps) — uploads are painless",
+              "International-standard hospitals (quality index 88/100)",
+              "Strong value for money"
+            ],
+            "cautions": []
           }
         }
       }

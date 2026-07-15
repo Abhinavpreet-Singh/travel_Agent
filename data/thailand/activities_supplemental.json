@@ -135,6 +135,81 @@
     {"id":"act:TH:USM:atv-jungle-adventure","type":"activity","name":"Samui ATV jungle adventure","parent_id":"city:TH:USM","category":"adventure","duration_hours":2.5,"price_inr":2800,"tags":["adventure","extreme_adventure","group_friendly","photogenic"],
      "constraints":{"min_age":12,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Off-road vibration and jolting is contraindicated","wheelchair_viable":false},
      "attributes":{"exertion_level_1_5":4,"typical_walking_km_per_day":1,"terrain_type":"steep","wheelchair_infrastructure_index_0_100":5,"step_free_ratio_0_1":0.05,"peak_heat_index_c":37,"crowd_index_0_100":30,"avg_daily_cost_per_pax_inr":2800,"value_index_0_100":76,"kid_activity_index_0_100":10,"group_activity_index_0_100":85,"photogenic_index_0_100":72,"content_saturation_index_0_100":48,"golden_hour_index_0_100":55},
-     "meta":{"data_confidence":0.74,"last_verified":"2026-07-14"}}
+     "meta":{"data_confidence":0.74,"last_verified":"2026-07-14"}},
+
+    {"id":"act:TH:BKK:jim-thompson-house","type":"activity","name":"Jim Thompson House & silk museum","parent_id":"city:TH:BKK","category":"heritage","duration_hours":1.5,"price_inr":600,"tags":["heritage","cultural","photogenic","indoor","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":58,"step_free_ratio_0_1":0.55,"accessible_toilet_index_0_100":50,"rest_stop_index_0_100":55,"shade_seating_index_0_100":75,"peak_heat_index_c":30,"crowd_index_0_100":50,"avg_daily_cost_per_pax_inr":600,"value_index_0_100":84,"kid_activity_index_0_100":35,"photogenic_index_0_100":85,"iconic_landmark_index_0_100":60,"content_saturation_index_0_100":55,"drone_policy":"banned","golden_hour_index_0_100":40},
+     "meta":{"data_confidence":0.8,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:BKK:asiatique-riverfront","type":"activity","name":"Asiatique The Riverfront night market","parent_id":"city:TH:BKK","category":"shopping","duration_hours":3,"price_inr":800,"tags":["shopping","food","family_friendly","photogenic","step_free","walkable"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":2.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":65,"step_free_ratio_0_1":0.68,"public_toilet_index_0_100":62,"rest_stop_index_0_100":58,"shade_seating_index_0_100":45,"peak_heat_index_c":33,"crowd_index_0_100":75,"noise_index_0_100":60,"food_hygiene_index_0_100":68,"avg_daily_cost_per_pax_inr":800,"value_index_0_100":85,"kid_activity_index_0_100":65,"group_activity_index_0_100":78,"photogenic_index_0_100":80,"content_saturation_index_0_100":72,"golden_hour_index_0_100":85},
+     "meta":{"data_confidence":0.82,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:BKK:iconsiam-river-show","type":"activity","name":"ICONSIAM & Chao Phraya river light show","parent_id":"city:TH:BKK","category":"shopping","duration_hours":3,"price_inr":500,"tags":["shopping","photogenic","iconic","family_friendly","step_free","indoor"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":2,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":85,"step_free_ratio_0_1":0.85,"elevator_availability_index_0_100":90,"accessible_toilet_index_0_100":80,"rest_stop_index_0_100":80,"shade_seating_index_0_100":95,"peak_heat_index_c":26,"crowd_index_0_100":70,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":82,"kid_activity_index_0_100":70,"group_activity_index_0_100":75,"photogenic_index_0_100":90,"iconic_landmark_index_0_100":78,"content_saturation_index_0_100":70,"drone_policy":"banned","golden_hour_index_0_100":75,"avg_wifi_mbps":95},
+     "meta":{"data_confidence":0.8,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:HKT:splash-jungle-waterpark","type":"activity","name":"Splash Jungle Water Park","parent_id":"city:TH:HKT","category":"adventure","duration_hours":5,"price_inr":1800,"tags":["adventure","family_friendly","kids","group_friendly"],
+     "constraints":{"min_age":3,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":35,"step_free_ratio_0_1":0.4,"shade_seating_index_0_100":55,"peak_heat_index_c":37,"crowd_index_0_100":55,"water_safety_index_0_100":75,"avg_daily_cost_per_pax_inr":1800,"value_index_0_100":80,"kid_activity_index_0_100":92,"group_activity_index_0_100":80,"photogenic_index_0_100":58,"content_saturation_index_0_100":40,"golden_hour_index_0_100":45},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:HKT:trickeye-3d-museum","type":"activity","name":"Trickeye 3D Museum","parent_id":"city:TH:HKT","category":"culture","duration_hours":2,"price_inr":700,"tags":["family_friendly","photogenic","indoor","interactive","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":70,"step_free_ratio_0_1":0.75,"elevator_availability_index_0_100":70,"accessible_toilet_index_0_100":65,"rest_stop_index_0_100":60,"shade_seating_index_0_100":90,"peak_heat_index_c":26,"crowd_index_0_100":45,"avg_daily_cost_per_pax_inr":700,"value_index_0_100":82,"kid_activity_index_0_100":85,"group_activity_index_0_100":70,"photogenic_index_0_100":88,"content_saturation_index_0_100":60,"drone_policy":"banned","golden_hour_index_0_100":30,"avg_wifi_mbps":60},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:HKT:freedom-beach-boat","type":"activity","name":"Freedom Beach boat trip","parent_id":"city:TH:HKT","category":"beach","duration_hours":4,"price_inr":1200,"tags":["beach","photogenic","boat_only_access","calm_beach","offbeat"],
+     "constraints":{"min_age":3,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":15,"step_free_ratio_0_1":0.15,"shade_seating_index_0_100":50,"peak_heat_index_c":37,"crowd_index_0_100":35,"motion_sickness_risk_index_0_100":55,"water_safety_index_0_100":65,"calm_beach_index_0_100":85,"avg_daily_cost_per_pax_inr":1200,"value_index_0_100":85,"kid_activity_index_0_100":50,"photogenic_index_0_100":92,"content_saturation_index_0_100":58,"golden_hour_index_0_100":90},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:PYX:floating-market","type":"activity","name":"Pattaya Floating Market (Four Regions)","parent_id":"city:TH:PYX","category":"culture","duration_hours":3,"price_inr":600,"tags":["food","shopping","cultural","family_friendly","photogenic"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"caution","pregnancy_note":"Street-food hygiene is variable; stick to busy, high-turnover stalls","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":2,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":40,"step_free_ratio_0_1":0.35,"rest_stop_index_0_100":50,"shade_seating_index_0_100":55,"peak_heat_index_c":36,"crowd_index_0_100":65,"food_hygiene_index_0_100":60,"avg_daily_cost_per_pax_inr":600,"value_index_0_100":82,"kid_activity_index_0_100":68,"group_activity_index_0_100":70,"photogenic_index_0_100":75,"content_saturation_index_0_100":55,"golden_hour_index_0_100":55},
+     "meta":{"data_confidence":0.75,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:PYX:underwater-world","type":"activity","name":"Underwater World Pattaya aquarium","parent_id":"city:TH:PYX","category":"culture","duration_hours":2,"price_inr":900,"tags":["family_friendly","indoor","interactive","step_free"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":72,"step_free_ratio_0_1":0.75,"elevator_availability_index_0_100":65,"accessible_toilet_index_0_100":68,"rest_stop_index_0_100":60,"shade_seating_index_0_100":100,"peak_heat_index_c":25,"crowd_index_0_100":55,"avg_daily_cost_per_pax_inr":900,"value_index_0_100":78,"kid_activity_index_0_100":88,"group_activity_index_0_100":65,"photogenic_index_0_100":65,"content_saturation_index_0_100":45,"golden_hour_index_0_100":20},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:PYX:art-in-paradise","type":"activity","name":"Art in Paradise 3D museum","parent_id":"city:TH:PYX","category":"culture","duration_hours":1.5,"price_inr":700,"tags":["family_friendly","photogenic","indoor","interactive"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":65,"step_free_ratio_0_1":0.68,"rest_stop_index_0_100":50,"shade_seating_index_0_100":85,"peak_heat_index_c":26,"crowd_index_0_100":50,"avg_daily_cost_per_pax_inr":700,"value_index_0_100":80,"kid_activity_index_0_100":80,"group_activity_index_0_100":68,"photogenic_index_0_100":90,"content_saturation_index_0_100":65,"drone_policy":"banned","golden_hour_index_0_100":25},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:CNX:grand-canyon-waterpark","type":"activity","name":"Grand Canyon Water Park Chiang Mai","parent_id":"city:TH:CNX","category":"adventure","duration_hours":4,"price_inr":900,"tags":["adventure","photogenic","group_friendly","offbeat"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Cliff jumping and open-water swimming are contraindicated","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":1,"terrain_type":"rolling","wheelchair_infrastructure_index_0_100":15,"step_free_ratio_0_1":0.15,"shade_seating_index_0_100":50,"peak_heat_index_c":35,"crowd_index_0_100":45,"water_safety_index_0_100":55,"avg_daily_cost_per_pax_inr":900,"value_index_0_100":84,"kid_activity_index_0_100":40,"group_activity_index_0_100":85,"photogenic_index_0_100":80,"content_saturation_index_0_100":50,"golden_hour_index_0_100":65},
+     "meta":{"data_confidence":0.74,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:CNX:wat-umong-forest-temple","type":"activity","name":"Wat Umong forest temple","parent_id":"city:TH:CNX","category":"heritage","duration_hours":1.5,"price_inr":0,"tags":["heritage","spiritual","offbeat","quiet","step_free","budget"],
+     "constraints":{"min_age":0,"infant_ok":true,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":1.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":45,"step_free_ratio_0_1":0.5,"rest_stop_index_0_100":60,"shade_seating_index_0_100":85,"peak_heat_index_c":33,"crowd_index_0_100":20,"noise_index_0_100":15,"avg_daily_cost_per_pax_inr":0,"value_index_0_100":96,"kid_activity_index_0_100":35,"photogenic_index_0_100":78,"content_saturation_index_0_100":30,"golden_hour_index_0_100":65},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:CNX:wiang-kum-kam-cycling","type":"activity","name":"Wiang Kum Kam ancient city bike tour","parent_id":"city:TH:CNX","category":"heritage","duration_hours":3,"price_inr":500,"tags":["heritage","cycling","offbeat","photogenic","cultural"],
+     "constraints":{"min_age":8,"infant_ok":false,"pregnancy_safe":"unsafe","pregnancy_note":"Cycling on uneven, unpaved ruins terrain carries real fall risk — standard pregnancy guidance advises against cycling with meaningful fall/balance risk, not just high-exertion activities. Reclassified from 'caution' to 'unsafe' on 2026-07-15.","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":2,"typical_walking_km_per_day":0.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":20,"step_free_ratio_0_1":0.25,"shade_seating_index_0_100":45,"peak_heat_index_c":36,"crowd_index_0_100":15,"avg_daily_cost_per_pax_inr":500,"value_index_0_100":88,"kid_activity_index_0_100":40,"group_activity_index_0_100":70,"photogenic_index_0_100":75,"content_saturation_index_0_100":28,"golden_hour_index_0_100":60},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:USM:secret-buddha-garden","type":"activity","name":"Secret Buddha Garden (Magic Garden)","parent_id":"city:TH:USM","category":"nature","duration_hours":3,"price_inr":600,"tags":["nature","offbeat","photogenic","spiritual","viewpoint"],
+     "constraints":{"min_age":5,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2,"terrain_type":"hilly","max_altitude_m":600,"wheelchair_infrastructure_index_0_100":10,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":55,"peak_heat_index_c":34,"crowd_index_0_100":25,"avg_daily_cost_per_pax_inr":600,"value_index_0_100":88,"kid_activity_index_0_100":30,"photogenic_index_0_100":92,"iconic_landmark_index_0_100":60,"content_saturation_index_0_100":48,"golden_hour_index_0_100":80},
+     "meta":{"data_confidence":0.76,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:USM:hin-lad-waterfall","type":"activity","name":"Hin Lad Waterfall trek","parent_id":"city:TH:USM","category":"nature","duration_hours":2.5,"price_inr":200,"tags":["nature","waterfall","offbeat","hiking","budget"],
+     "constraints":{"min_age":6,"infant_ok":false,"pregnancy_safe":"caution","wheelchair_viable":false},
+     "attributes":{"exertion_level_1_5":3,"typical_walking_km_per_day":2.5,"terrain_type":"hilly","wheelchair_infrastructure_index_0_100":8,"step_free_ratio_0_1":0.1,"shade_seating_index_0_100":50,"peak_heat_index_c":34,"crowd_index_0_100":15,"water_safety_index_0_100":55,"avg_daily_cost_per_pax_inr":200,"value_index_0_100":92,"kid_activity_index_0_100":35,"photogenic_index_0_100":72,"content_saturation_index_0_100":30,"golden_hour_index_0_100":50},
+     "meta":{"data_confidence":0.72,"last_verified":"2026-07-15"}},
+
+    {"id":"act:TH:USM:samui-cooking-class","type":"activity","name":"Koh Samui Thai cooking class","parent_id":"city:TH:USM","category":"food","duration_hours":4,"price_inr":2000,"tags":["food","interactive","solo_friendly","group_friendly","beginner_friendly"],
+     "constraints":{"min_age":6,"infant_ok":false,"pregnancy_safe":"safe","wheelchair_viable":true},
+     "attributes":{"exertion_level_1_5":1,"typical_walking_km_per_day":0.5,"terrain_type":"flat","wheelchair_infrastructure_index_0_100":50,"step_free_ratio_0_1":0.55,"shade_seating_index_0_100":75,"peak_heat_index_c":33,"crowd_index_0_100":20,"food_hygiene_index_0_100":75,"avg_daily_cost_per_pax_inr":2000,"value_index_0_100":80,"kid_activity_index_0_100":55,"group_activity_index_0_100":78,"veg_food_index_0_100":85,"photogenic_index_0_100":68,"content_saturation_index_0_100":40,"golden_hour_index_0_100":50},
+     "meta":{"data_confidence":0.78,"last_verified":"2026-07-15"}}
   ]
 }
