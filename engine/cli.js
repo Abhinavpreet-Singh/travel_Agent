@@ -27,6 +27,7 @@
 
 import path from 'node:path';
 import readline from 'node:readline';
+import { pathToFileURL } from 'node:url';
 
 import { loadThailand, writeJSON, ROOT } from './loadData.js';
 import { scoreEntity, rankEntities, composePersonas } from './score.js';
@@ -746,6 +747,27 @@ function buildExtraction({ flags, text }) {
   };
 }
 
+/**
+ * Programmatic entry point — the same pipeline `writeAndSummarize` runs, but
+ * with NO console output and NO files written. Returns the two source-of-truth
+ * documents so callers (the benchmark suite, tests, future services) can assert
+ * on real engine output instead of re-implementing scoring. Accepts a raw query
+ * string or a `{ flags, text }` object (flags mirror the CLI: city, persona, …).
+ */
+export function evaluateQuery(input) {
+  const parsed = typeof input === 'string' ? { flags: {}, text: input } : { flags: input.flags ?? {}, text: input.text ?? '' };
+  const ext = buildExtraction(parsed);
+  const durationDays = parseDurationDays(ext.brief?.duration);
+  const rankedResult = ext.compareMode ? runCompare(ext.city, ext.personaIds) : runSingle(ext.city, ext.composed, durationDays);
+  const recipe = recipeToJSON(ext);
+  const ranked = {
+    mode: ext.compareMode ? 'compare' : 'single',
+    query: { text: ext.text || null, resolved_city: ext.city?.id ?? null, personas: ext.personaIds },
+    ...rankedResult,
+  };
+  return { ext, recipe, ranked };
+}
+
 /** Weights sorted descending so the most-influential signals read first — order carries information here. */
 function sortWeightsDesc(weights) {
   return Object.fromEntries(
@@ -1081,11 +1103,18 @@ async function runInteractive() {
   rl.close();
 }
 
-const argv = process.argv.slice(2);
-if (argv.includes('--help') || argv.includes('-h')) {
-  printHelp();
-} else if (argv.length === 0) {
-  await runInteractive();
-} else {
-  handleQueryOnce(parseArgv(argv));
+async function main() {
+  const argv = process.argv.slice(2);
+  if (argv.includes('--help') || argv.includes('-h')) {
+    printHelp();
+  } else if (argv.length === 0) {
+    await runInteractive();
+  } else {
+    handleQueryOnce(parseArgv(argv));
+  }
 }
+
+// Only run the CLI when this file is executed directly (`node engine/cli.js`),
+// not when it's imported (e.g. by the benchmark runner, which uses evaluateQuery).
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) main();

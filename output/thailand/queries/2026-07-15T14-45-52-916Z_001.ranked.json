@@ -1,0 +1,571 @@
+{
+  "mode": "single",
+  "query": {
+    "text": "\"5 friends in our 20s. One uses a wheelchair.\",",
+    "resolved_city": null,
+    "personas": [
+      "wheelchair_friendly",
+      "friends_trip"
+    ]
+  },
+  "persona": {
+    "id": "wheelchair_friendly+friends_trip",
+    "label": "Wheelchair Friendly + Friends Trip",
+    "composed_from": [
+      "wheelchair_friendly",
+      "friends_trip"
+    ]
+  },
+  "duration_adjustment": {
+    "applied": false
+  },
+  "recommended_cities": [
+    {
+      "entity_id": "city:TH:BKK",
+      "name": "Bangkok",
+      "score_0_10": 7.5,
+      "province": "Bangkok",
+      "best_months": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "data_confidence": 0.85,
+      "why": [
+        "Rich lineup of 8 strongly-rated activities for this trip",
+        "Dense nightlife scene",
+        "Plenty to do as a group",
+        "flat terrain",
+        "Villas and group rates bring per-head cost down"
+      ],
+      "caution": [
+        "Heavily crowded (82/100 crowd pressure)",
+        "No real beach-club scene",
+        "Parking is a real problem"
+      ],
+      "city_score_0_10": 7.1,
+      "activity_strength_0_10": 8.1
+    },
+    {
+      "entity_id": "city:TH:PYX",
+      "name": "Pattaya",
+      "score_0_10": 7.1,
+      "province": "Chonburi",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "data_confidence": 0.82,
+      "why": [
+        "Dense nightlife scene",
+        "Plenty to do as a group",
+        "Villas and group rates bring per-head cost down",
+        "flat terrain"
+      ],
+      "caution": [
+        "Heavily crowded (78/100 crowd pressure)",
+        "No direct flights from India — connection required"
+      ],
+      "city_score_0_10": 7.2,
+      "activity_strength_0_10": 7
+    },
+    {
+      "entity_id": "city:TH:HKT",
+      "name": "Phuket",
+      "score_0_10": 7.1,
+      "province": "Phuket",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "data_confidence": 0.85,
+      "why": [
+        "Plenty to do as a group",
+        "Dense nightlife scene",
+        "Villas and group rates bring per-head cost down",
+        "World-class party scene"
+      ],
+      "caution": [
+        "Heavily crowded (80/100 crowd pressure)"
+      ],
+      "city_score_0_10": 7.2,
+      "activity_strength_0_10": 7
+    },
+    {
+      "entity_id": "city:TH:USM",
+      "name": "Koh Samui",
+      "score_0_10": 6.3,
+      "province": "Surat Thani",
+      "best_months": [
+        2,
+        3,
+        4,
+        7,
+        8
+      ],
+      "data_confidence": 0.83,
+      "why": [
+        "Villas and group rates bring per-head cost down",
+        "Plenty to do as a group",
+        "Dense nightlife scene",
+        "gentle terrain"
+      ],
+      "caution": [
+        "No direct flights from India — connection required"
+      ],
+      "city_score_0_10": 6.2,
+      "activity_strength_0_10": 6.5
+    }
+  ],
+  "recommended_city_combinations": null,
+  "recommended_activities": [
+    {
+      "entity_id": "act:TH:BKK:siam-ocean-world",
+      "name": "Sea Life Bangkok Ocean World",
+      "score_0_10": 9.3,
+      "city": "Bangkok",
+      "category": "indoor_attraction",
+      "duration_hours": 2.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Wheelchair access is well provided for (92/100)",
+        "Mostly step-free routes",
+        "Dense nightlife scene",
+        "Plenty to do as a group"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Parking is a real problem"
+      ]
+    },
+    {
+      "entity_id": "act:TH:BKK:rooftop-bar",
+      "name": "Sky-bar rooftop night (Lebua / Vertigo class)",
+      "score_0_10": 8.7,
+      "city": "Bangkok",
+      "category": "nightlife",
+      "duration_hours": 3,
+      "cost_band": "$$$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Mostly step-free routes",
+        "Wheelchair access is well provided for (80/100)",
+        "Dense nightlife scene",
+        "Lifts available where needed"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Parking is a real problem",
+        "Heavily crowded (65/100 crowd pressure)"
+      ]
+    },
+    {
+      "entity_id": "act:TH:PYX:nong-nooch",
+      "name": "Nong Nooch Tropical Garden",
+      "score_0_10": 8.6,
+      "city": "Pattaya",
+      "category": "nature",
+      "duration_hours": 4,
+      "cost_band": "$$",
+      "pace": "Easy",
+      "best_time": "evening",
+      "weather_dependency": "high",
+      "data_confidence": 0.82,
+      "why": [
+        "Dense nightlife scene",
+        "Wheelchair access is well provided for (75/100)",
+        "Low daily spend (~₹1400/person/day)",
+        "Mostly step-free routes"
+      ],
+      "caution": [
+        "No direct flights from India — connection required"
+      ]
+    },
+    {
+      "entity_id": "act:TH:BKK:iconsiam-river-show",
+      "name": "ICONSIAM & Chao Phraya river light show",
+      "score_0_10": 8.6,
+      "city": "Bangkok",
+      "category": "shopping",
+      "duration_hours": 3,
+      "cost_band": "$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.8,
+      "why": [
+        "Wheelchair access is well provided for (85/100)",
+        "Mostly step-free routes",
+        "Dense nightlife scene",
+        "Low daily spend (~₹500/person/day)"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Heavily crowded (70/100 crowd pressure)",
+        "Parking is a real problem"
+      ]
+    },
+    {
+      "entity_id": "act:TH:USM:samui-spa-day",
+      "name": "Full-day luxury spa & wellness ritual",
+      "score_0_10": 8.3,
+      "city": "Koh Samui",
+      "category": "wellness",
+      "duration_hours": 5,
+      "cost_band": "$$$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.8,
+      "why": [
+        "Mostly step-free routes",
+        "Wheelchair access is well provided for (80/100)",
+        "Accessible toilets available at key sites",
+        "flat terrain"
+      ],
+      "caution": [
+        "No direct flights from India — connection required"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HKT:fantasea",
+      "name": "Carnival Magic / FantaSea evening show",
+      "score_0_10": 8.2,
+      "city": "Phuket",
+      "category": "show",
+      "duration_hours": 4,
+      "cost_band": "$$$",
+      "pace": "Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.8,
+      "why": [
+        "Wheelchair access is well provided for (78/100)",
+        "Mostly step-free routes",
+        "Dense nightlife scene",
+        "Plenty to do as a group"
+      ],
+      "caution": [
+        "Heavily crowded (70/100 crowd pressure)"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HKT:trickeye-3d-museum",
+      "name": "Trickeye 3D Museum",
+      "score_0_10": 8.1,
+      "city": "Phuket",
+      "category": "culture",
+      "duration_hours": 2,
+      "cost_band": "$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.75,
+      "why": [
+        "Low daily spend (~₹700/person/day)",
+        "Dense nightlife scene",
+        "Mostly step-free routes",
+        "Wheelchair access is well provided for (70/100)"
+      ],
+      "caution": []
+    },
+    {
+      "entity_id": "act:TH:HKT:simon-cabaret",
+      "name": "Simon Cabaret show",
+      "score_0_10": 8.1,
+      "city": "Phuket",
+      "category": "show",
+      "duration_hours": 1.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Mostly step-free routes",
+        "Wheelchair access is well provided for (75/100)",
+        "Low daily spend (~₹1600/person/day)",
+        "Plenty to do as a group"
+      ],
+      "caution": []
+    },
+    {
+      "entity_id": "act:TH:BKK:wat-pho-massage",
+      "name": "Wat Pho Reclining Buddha + traditional Thai massage",
+      "score_0_10": 8,
+      "city": "Bangkok",
+      "category": "heritage_wellness",
+      "duration_hours": 2.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.88,
+      "why": [
+        "Dense nightlife scene",
+        "Plenty to do as a group",
+        "Low daily spend (~₹900/person/day)",
+        "flat terrain"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Heavily crowded (70/100 crowd pressure)",
+        "Parking is a real problem"
+      ]
+    },
+    {
+      "entity_id": "act:TH:PYX:underwater-world",
+      "name": "Underwater World Pattaya aquarium",
+      "score_0_10": 7.9,
+      "city": "Pattaya",
+      "category": "culture",
+      "duration_hours": 2,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.76,
+      "why": [
+        "Dense nightlife scene",
+        "Low daily spend (~₹900/person/day)",
+        "Villas and group rates bring per-head cost down",
+        "Wheelchair access is well provided for (72/100)"
+      ],
+      "caution": [
+        "No direct flights from India — connection required"
+      ]
+    },
+    {
+      "entity_id": "act:TH:PYX:alcazar-cabaret",
+      "name": "Alcazar / Tiffany's cabaret show",
+      "score_0_10": 7.9,
+      "city": "Pattaya",
+      "category": "show",
+      "duration_hours": 1.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Mostly step-free routes",
+        "Low daily spend (~₹1200/person/day)",
+        "Villas and group rates bring per-head cost down",
+        "Plenty to do as a group"
+      ],
+      "caution": [
+        "No direct flights from India — connection required",
+        "Heavily crowded (65/100 crowd pressure)"
+      ]
+    },
+    {
+      "entity_id": "act:TH:BKK:chao-phraya-cruise",
+      "name": "Chao Phraya dinner cruise",
+      "score_0_10": 7.9,
+      "city": "Bangkok",
+      "category": "dining",
+      "duration_hours": 2.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Dense nightlife scene",
+        "Low daily spend (~₹2200/person/day)",
+        "Plenty to do as a group",
+        "Villas and group rates bring per-head cost down"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Parking is a real problem"
+      ]
+    },
+    {
+      "entity_id": "act:TH:BKK:asiatique-riverfront",
+      "name": "Asiatique The Riverfront night market",
+      "score_0_10": 7.9,
+      "city": "Bangkok",
+      "category": "shopping",
+      "duration_hours": 3,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.82,
+      "why": [
+        "Dense nightlife scene",
+        "Low daily spend (~₹800/person/day)",
+        "Plenty to do as a group",
+        "flat terrain"
+      ],
+      "caution": [
+        "No real beach-club scene",
+        "Heavily crowded (75/100 crowd pressure)",
+        "Parking is a real problem"
+      ]
+    }
+  ],
+  "excluded_options": [
+    {
+      "type": "city",
+      "entity_id": "city:TH:KBV",
+      "name": "Krabi (Ao Nang / Railay)",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:PHI",
+      "name": "Koh Phi Phi",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:PHA",
+      "name": "Koh Phangan",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:KTO",
+      "name": "Koh Tao",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:CEI",
+      "name": "Chiang Rai",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:PAI",
+      "name": "Pai",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:AYU",
+      "name": "Ayutthaya",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:KAN",
+      "name": "Kanchanaburi",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:LNT",
+      "name": "Koh Lanta",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:CHG",
+      "name": "Koh Chang",
+      "city": null,
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:BKK:wat-arun",
+      "name": "Wat Arun at golden hour",
+      "city": "Bangkok",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:BKK:chatuchak",
+      "name": "Chatuchak Weekend Market",
+      "city": "Bangkok",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:BKK:damnoen-floating-market",
+      "name": "Damnoen Saduak floating market (day trip)",
+      "city": "Bangkok",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:BKK:khaosan-crawl",
+      "name": "Khao San Road bar crawl",
+      "city": "Bangkok",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:BKK:street-food-tour",
+      "name": "Chinatown street-food tuk-tuk night tour",
+      "city": "Bangkok",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:PYX:walking-street",
+      "name": "Walking Street Pattaya",
+      "city": "Pattaya",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:PYX:coral-island",
+      "name": "Coral Island (Koh Larn) speedboat day",
+      "city": "Pattaya",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:PYX:ramayana-waterpark",
+      "name": "Ramayana Water Park",
+      "city": "Pattaya",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:PYX:jomtien-beach-day",
+      "name": "Jomtien Beach day + water sports",
+      "city": "Pattaya",
+      "reason": "Wheelchair access is not viable at this entity"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:HKT:bangla-road",
+      "name": "Bangla Road, Patong",
+      "city": "Phuket",
+      "reason": "Wheelchair access is not viable at this entity"
+    }
+  ],
+  "eligible_totals": {
+    "cities": 7,
+    "activities": 26
+  },
+  "shortlist_rationale": "Activities are drawn only from the recommended cities (Bangkok, Pattaya, Phuket, Koh Samui), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (60%) with the strength of each city's own activity lineup for this persona (40%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
+}

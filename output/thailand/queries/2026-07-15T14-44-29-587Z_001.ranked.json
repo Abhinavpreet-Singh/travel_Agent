@@ -1,7 +1,7 @@
 {
   "mode": "single",
   "query": {
-    "text": "We are travelling to Thailand for 7 days with my grandmother who is 72 years old.",
+    "text": "\"Planning Thailand for me and my grandmother. We love beaches and nightlife.",
     "resolved_city": null,
     "personas": [
       "senior_citizen"
@@ -140,68 +140,7 @@
       "activity_strength_0_10": 7.2
     }
   ],
-  "recommended_city_combinations": [
-    {
-      "cities": [
-        "Hua Hin",
-        "Bangkok"
-      ],
-      "combined_score": 7.4,
-      "individual_scores": {
-        "Hua Hin": 8.1,
-        "Bangkok": 7.6
-      },
-      "avg_distance_km": 145
-    },
-    {
-      "cities": [
-        "Hua Hin",
-        "Koh Samui"
-      ],
-      "combined_score": 6.5,
-      "individual_scores": {
-        "Hua Hin": 8.1,
-        "Koh Samui": 7.1
-      },
-      "avg_distance_km": 340
-    },
-    {
-      "cities": [
-        "Phuket",
-        "Koh Samui"
-      ],
-      "combined_score": 6.4,
-      "individual_scores": {
-        "Phuket": 7.3,
-        "Koh Samui": 7.1
-      },
-      "avg_distance_km": 254
-    },
-    {
-      "cities": [
-        "Hua Hin",
-        "Chiang Mai"
-      ],
-      "combined_score": 5.9,
-      "individual_scores": {
-        "Hua Hin": 8.1,
-        "Chiang Mai": 7.7
-      },
-      "avg_distance_km": 699
-    },
-    {
-      "cities": [
-        "Hua Hin",
-        "Phuket"
-      ],
-      "combined_score": 5.9,
-      "individual_scores": {
-        "Hua Hin": 8.1,
-        "Phuket": 7.3
-      },
-      "avg_distance_km": 549
-    }
-  ],
+  "recommended_city_combinations": null,
   "recommended_activities": [
     {
       "entity_id": "act:TH:BKK:siam-ocean-world",
@@ -512,112 +451,6 @@
         "Low physical exertion (level 1/5)"
       ],
       "caution": []
-    },
-    {
-      "entity_id": "act:TH:CNX:wat-umong-forest-temple",
-      "name": "Wat Umong forest temple",
-      "score_0_10": 8.2,
-      "city": "Chiang Mai",
-      "category": "heritage",
-      "duration_hours": 1.5,
-      "cost_band": "Free",
-      "pace": "Very Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.78,
-      "why": [
-        "International-standard hospital within 3 km",
-        "Low walking requirement (~1.5 km/day)",
-        "International-standard hospitals (quality index 85/100)",
-        "Low physical exertion (level 1/5)"
-      ],
-      "caution": []
-    },
-    {
-      "entity_id": "act:TH:BKK:asiatique-riverfront",
-      "name": "Asiatique The Riverfront night market",
-      "score_0_10": 8.1,
-      "city": "Bangkok",
-      "category": "shopping",
-      "duration_hours": 3,
-      "cost_band": "$$",
-      "pace": "Very Easy",
-      "best_time": "evening",
-      "weather_dependency": "low",
-      "data_confidence": 0.82,
-      "why": [
-        "International-standard hospital within 2 km",
-        "International-standard hospitals (quality index 95/100)",
-        "Low physical exertion (level 1/5)",
-        "Low walking requirement (~2.5 km/day)"
-      ],
-      "caution": [
-        "Heavily crowded (75/100 crowd pressure)"
-      ]
-    },
-    {
-      "entity_id": "act:TH:CNX:cooking-class",
-      "name": "Thai cooking class + organic farm visit",
-      "score_0_10": 8.1,
-      "city": "Chiang Mai",
-      "category": "food",
-      "duration_hours": 6,
-      "cost_band": "$$",
-      "pace": "Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
-      "why": [
-        "International-standard hospital within 3 km",
-        "Low walking requirement (~1.5 km/day)",
-        "International-standard hospitals (quality index 85/100)",
-        "Frequent seating and rest stops"
-      ],
-      "caution": []
-    },
-    {
-      "entity_id": "act:TH:HHQ:golf-round",
-      "name": "Championship golf round",
-      "score_0_10": 7.9,
-      "city": "Hua Hin",
-      "category": "sport",
-      "duration_hours": 5,
-      "cost_band": "$$$",
-      "pace": "Moderate",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.78,
-      "why": [
-        "International-standard hospital within 3 km",
-        "International-standard hospitals (quality index 82/100)",
-        "Frequent seating and rest stops",
-        "Comfortable, air-conditioned transport"
-      ],
-      "caution": [
-        "Heavy walking load (~7 km/day)"
-      ]
-    },
-    {
-      "entity_id": "act:TH:USM:fishermans-village",
-      "name": "Fisherman's Village Friday night market",
-      "score_0_10": 7.9,
-      "city": "Koh Samui",
-      "category": "food",
-      "duration_hours": 3,
-      "cost_band": "$$",
-      "pace": "Very Easy",
-      "best_time": "evening",
-      "weather_dependency": "low",
-      "data_confidence": 0.8,
-      "why": [
-        "Low walking requirement (~2 km/day)",
-        "International-standard hospital within 6 km",
-        "International-standard hospitals (quality index 80/100)",
-        "Low physical exertion (level 1/5)"
-      ],
-      "caution": [
-        "Heavily crowded (65/100 crowd pressure)"
-      ]
     }
   ],
   "excluded_options": [
@@ -682,5 +515,5 @@
     "cities": 10,
     "activities": 54
   },
-  "shortlist_rationale": "Activities are drawn only from the recommended cities (Hua Hin, Chiang Mai, Bangkok, Phuket, Koh Samui), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (60%) with the strength of each city's own activity lineup for this persona (40%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 21 for 7 day(s) (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
+  "shortlist_rationale": "Activities are drawn only from the recommended cities (Hua Hin, Chiang Mai, Bangkok, Phuket, Koh Samui), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (60%) with the strength of each city's own activity lineup for this persona (40%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
 }

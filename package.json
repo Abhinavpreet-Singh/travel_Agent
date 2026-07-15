@@ -9,6 +9,7 @@
   },
   "scripts": {
     "generate": "node engine/generate.js",
-    "query": "node engine/cli.js"
+    "query": "node engine/cli.js",
+    "benchmark": "node tests/benchmark.js"
   }
 }

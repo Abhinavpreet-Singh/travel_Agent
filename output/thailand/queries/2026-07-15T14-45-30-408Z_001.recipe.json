@@ -1,25 +1,21 @@
 {
-  "input_text": "We are a group of 5 friends in Thailand and one couple is on their honeymoon and the wife is pregnant.",
+  "input_text": "\"My wife is pregnant but we still want beach clubs and island hopping in Thailand.",
   "resolved_city": null,
   "personas": [
-    "honeymoon",
-    "pregnancy_friendly",
-    "friends_trip"
+    "pregnancy_friendly"
   ],
   "persona_source": "derived",
   "confidence": {
-    "level": "medium",
-    "reason": "persona derivation involved 1 assumption(s) — see constraints.inferred"
+    "level": "high",
+    "reason": "persona(s) derived cleanly, no assumptions needed"
   },
   "mode": "single",
   "constraints": {
     "known": [
-      "5 adult(s)",
+      "2 adult(s)",
       "romantic-partner trip"
     ],
-    "inferred": [
-      "friends_trip inferred from group_size >= 3 with no children — refine if this is a family or corporate group."
-    ],
+    "inferred": [],
     "missing": [
       "destination city not specified — scored across all cities",
       "travel duration not specified",
@@ -28,22 +24,17 @@
     ]
   },
   "brief": {
-    "destinationType": "Thailand honeymoon + pregnancy trip",
+    "destinationType": "Thailand pregnancy trip",
     "dates": null,
     "duration": null,
     "budget": null,
-    "groupComposition": "5 adults",
-    "extras": [
-      {
-        "label": "occasion",
-        "value": "honeymoon"
-      }
-    ],
+    "groupComposition": "2 adults",
+    "extras": [],
     "awaitingField": null,
     "conversationComplete": true
   },
   "roster": {
-    "adults": 5,
+    "adults": 2,
     "gender": "unspecified",
     "ages": [],
     "young_adults": false,
@@ -58,59 +49,32 @@
     "traveling_with_parents": false,
     "is_family": false,
     "family_total": null,
-    "group_size": 5
+    "group_size": 2
   },
   "composed_persona": {
-    "id": "honeymoon+pregnancy_friendly+friends_trip",
-    "label": "Honeymoon + Pregnancy Friendly + Friends Trip",
+    "id": "pregnancy_friendly",
+    "label": "Pregnancy Friendly",
     "composed_from": [
-      "honeymoon",
-      "pregnancy_friendly",
-      "friends_trip"
+      "pregnancy_friendly"
     ],
     "weights": {
-      "photogenic_quality": 0.06,
-      "group_activity_density": 0.05,
-      "food_hygiene": 0.0472,
-      "wellness_spa_quality": 0.0467,
-      "crowd_pressure_low": 0.0433,
-      "safety_general": 0.0433,
-      "obstetric_care_access": 0.0428,
-      "nightlife_density": 0.04,
-      "group_cost_efficiency": 0.04,
-      "zika_risk_low": 0.0367,
-      "value_for_money": 0.0367,
-      "noise_low": 0.0361,
-      "direct_flight_access": 0.0333,
-      "cost_efficiency": 0.0333,
-      "hospital_proximity": 0.0306,
-      "flight_time_ease": 0.0286,
-      "heat_stress_low": 0.0275,
-      "physical_exertion_low": 0.0275,
-      "weather_comfort": 0.0267,
-      "intracity_transport_quality": 0.0267,
-      "party_scene_quality": 0.0267,
-      "vector_disease_risk_low": 0.0214,
-      "arrival_transfer_ease": 0.02,
-      "alcohol_affordability": 0.02,
-      "tap_water_safety": 0.0183,
-      "walking_load_low": 0.0183,
-      "iconic_landmark_density": 0.0167,
-      "late_night_food": 0.0167,
-      "beach_club_quality": 0.0167,
-      "motion_sickness_low": 0.0153,
-      "rest_stop_availability": 0.0153,
-      "healthcare_quality": 0.0153,
-      "public_toilet_availability": 0.0122,
-      "english_prevalence": 0.01
+      "obstetric_care_access": 0.1284,
+      "zika_risk_low": 0.1101,
+      "hospital_proximity": 0.0917,
+      "food_hygiene": 0.0917,
+      "heat_stress_low": 0.0826,
+      "physical_exertion_low": 0.0826,
+      "vector_disease_risk_low": 0.0642,
+      "tap_water_safety": 0.055,
+      "walking_load_low": 0.055,
+      "motion_sickness_low": 0.0459,
+      "rest_stop_availability": 0.0459,
+      "flight_time_ease": 0.0459,
+      "healthcare_quality": 0.0459,
+      "public_toilet_availability": 0.0367,
+      "noise_low": 0.0183
     },
     "hard_gates": [
-      {
-        "signal": "safety_general",
-        "op": ">=",
-        "value": 0.4,
-        "reason": "Below the safety floor for a honeymoon"
-      },
       {
         "attribute": "pregnancy_safe",
         "op": "in",
@@ -138,13 +102,6 @@
     ],
     "soft_gates": [
       {
-        "signal": "crowd_pressure_low",
-        "op": ">=",
-        "value": 0.35,
-        "cap": 0.65,
-        "reason": "Privacy is the whole point of a honeymoon — this is too crowded"
-      },
-      {
         "signal": "zika_risk_low",
         "op": ">=",
         "value": 0.5,
@@ -157,38 +114,19 @@
         "value": 0.4,
         "cap": 0.7,
         "reason": "Flight duration exceeds the comfortable pregnancy window"
-      },
-      {
-        "signal": "safety_general",
-        "op": ">=",
-        "value": 0.35,
-        "cap": 0.6,
-        "reason": "Baseline safety not met for an unsupervised group trip"
       }
     ],
     "tag_modifiers": {
       "boost": {
-        "honeymoon": 0.05,
-        "romantic": 0.05,
-        "resort_stay": 0.06,
-        "wellness": 0.07,
-        "adult_only": 0.02,
-        "photogenic": 0.02,
-        "slow_travel": 0.03,
-        "nightlife": 0.03,
-        "island": 0.02,
-        "adventure": 0.02,
-        "group_friendly": 0.03
+        "wellness": 0.04,
+        "resort_stay": 0.03,
+        "slow_travel": 0.03
       },
       "penalty": {
-        "backpacker": 0.06,
-        "party": 0.06,
-        "nightlife": 0.09,
         "extreme_adventure": 0.12,
         "diving": 0.12,
         "high_altitude": 0.1,
-        "honeymoon_only": 0.03,
-        "senior_focused": 0.02
+        "nightlife": 0.04
       }
     }
   }

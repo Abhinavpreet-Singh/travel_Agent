@@ -1,0 +1,404 @@
+{
+  "mode": "single",
+  "query": {
+    "text": "\"My wife is pregnant but we still want beach clubs and island hopping in Thailand.",
+    "resolved_city": null,
+    "personas": [
+      "pregnancy_friendly"
+    ]
+  },
+  "persona": {
+    "id": "pregnancy_friendly",
+    "label": "Pregnancy Friendly",
+    "composed_from": [
+      "pregnancy_friendly"
+    ]
+  },
+  "duration_adjustment": {
+    "applied": false
+  },
+  "recommended_cities": [
+    {
+      "entity_id": "city:TH:CNX",
+      "name": "Chiang Mai",
+      "score_0_10": 7.2,
+      "province": "Chiang Mai",
+      "best_months": [
+        11,
+        12,
+        1,
+        2
+      ],
+      "data_confidence": 0.85,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "No meaningful Zika signal",
+        "Low physical exertion (level 2/5)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ],
+      "city_score_0_10": 7.5,
+      "activity_strength_0_10": 6.8
+    },
+    {
+      "entity_id": "city:TH:HHQ",
+      "name": "Hua Hin",
+      "score_0_10": 7,
+      "province": "Prachuap Khiri Khan",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "data_confidence": 0.8,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "No meaningful Zika signal"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ],
+      "city_score_0_10": 7.6,
+      "activity_strength_0_10": 6.1
+    }
+  ],
+  "recommended_city_combinations": null,
+  "recommended_activities": [
+    {
+      "entity_id": "act:TH:HHQ:cicada-market",
+      "name": "Cicada Market (art & live music)",
+      "score_0_10": 7.9,
+      "city": "Hua Hin",
+      "category": "culture",
+      "duration_hours": 3,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.8,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "Manageable heat (peak heat index 30°C)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:nimman-cafe-cowork",
+      "name": "Nimman café-hopping & coworking day",
+      "score_0_10": 7.8,
+      "city": "Chiang Mai",
+      "category": "lifestyle",
+      "duration_hours": 6,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "Manageable heat (peak heat index 30°C)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HHQ:hua-hin-beach-day",
+      "name": "Hua Hin beach day (shallow, lifeguarded)",
+      "score_0_10": 7.7,
+      "city": "Hua Hin",
+      "category": "beach",
+      "duration_hours": 5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "high",
+      "data_confidence": 0.8,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "Low walking requirement (~1.5 km/day)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:cooking-class",
+      "name": "Thai cooking class + organic farm visit",
+      "score_0_10": 7.5,
+      "city": "Chiang Mai",
+      "category": "food",
+      "duration_hours": 6,
+      "cost_band": "$$",
+      "pace": "Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "Reliable food hygiene standards",
+        "Manageable heat (peak heat index 30°C)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:wat-umong-forest-temple",
+      "name": "Wat Umong forest temple",
+      "score_0_10": 7.4,
+      "city": "Chiang Mai",
+      "category": "heritage",
+      "duration_hours": 1.5,
+      "cost_band": "Free",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.78,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "Low walking requirement (~1.5 km/day)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HHQ:night-market-food-tour",
+      "name": "Hua Hin night market street food tour",
+      "score_0_10": 7.3,
+      "city": "Hua Hin",
+      "category": "food",
+      "duration_hours": 3,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.78,
+      "why": [
+        "Low physical exertion (level 1/5)",
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "No meaningful Zika signal"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:old-city-temples",
+      "name": "Old City temple walk (Chedi Luang, Phra Singh)",
+      "score_0_10": 7.2,
+      "city": "Chiang Mai",
+      "category": "heritage",
+      "duration_hours": 4,
+      "cost_band": "$",
+      "pace": "Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "No meaningful Zika signal",
+        "Low physical exertion (level 2/5)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:night-bazaar",
+      "name": "Chiang Mai Night Bazaar",
+      "score_0_10": 7.1,
+      "city": "Chiang Mai",
+      "category": "shopping",
+      "duration_hours": 3,
+      "cost_band": "$",
+      "pace": "Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.82,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "Manageable heat (peak heat index 30°C)",
+        "No meaningful Zika signal"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only",
+        "Noisy environment, especially at night"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:elephant-nature-park",
+      "name": "Elephant Nature Park (ethical, no riding)",
+      "score_0_10": 6.9,
+      "city": "Chiang Mai",
+      "category": "wildlife",
+      "duration_hours": 8,
+      "cost_band": "$$$$",
+      "pace": "Easy",
+      "best_time": "evening",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "No meaningful Zika signal",
+        "Low physical exertion (level 2/5)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HHQ:golf-round",
+      "name": "Championship golf round",
+      "score_0_10": 6.9,
+      "city": "Hua Hin",
+      "category": "sport",
+      "duration_hours": 5,
+      "cost_band": "$$$",
+      "pace": "Moderate",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.78,
+      "why": [
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "No meaningful Zika signal",
+        "Reliable food hygiene standards"
+      ],
+      "caution": [
+        "Heavy walking load (~7 km/day)",
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:HHQ:samroiyot-cave-temple",
+      "name": "Sam Roi Yot National Park cave temple (Phraya Nakhon)",
+      "score_0_10": 6.8,
+      "city": "Hua Hin",
+      "category": "nature",
+      "duration_hours": 4,
+      "cost_band": "$$",
+      "pace": "Moderate",
+      "best_time": "evening",
+      "weather_dependency": "high",
+      "data_confidence": 0.76,
+      "why": [
+        "International-standard hospital within 3 km",
+        "Obstetric/maternity care available locally",
+        "No meaningful Zika signal",
+        "Reliable food hygiene standards"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only"
+      ]
+    },
+    {
+      "entity_id": "act:TH:CNX:doi-suthep",
+      "name": "Wat Phra That Doi Suthep",
+      "score_0_10": 6.8,
+      "city": "Chiang Mai",
+      "category": "heritage",
+      "duration_hours": 3,
+      "cost_band": "$",
+      "pace": "Moderate",
+      "best_time": "evening",
+      "weather_dependency": "high",
+      "data_confidence": 0.85,
+      "why": [
+        "Obstetric/maternity care available locally",
+        "International-standard hospital within 3 km",
+        "Low walking requirement (~1.5 km/day)",
+        "Manageable heat (peak heat index 31°C)"
+      ],
+      "caution": [
+        "Tap water not potable — bottled water only",
+        "Boat/winding-road legs carry motion-sickness risk"
+      ]
+    }
+  ],
+  "excluded_options": [
+    {
+      "type": "city",
+      "entity_id": "city:TH:PHI",
+      "name": "Koh Phi Phi",
+      "city": null,
+      "reason": "No reliable obstetric care within reach"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:PHA",
+      "name": "Koh Phangan",
+      "city": null,
+      "reason": "No reliable obstetric care within reach"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:KTO",
+      "name": "Koh Tao",
+      "city": null,
+      "reason": "No reliable obstetric care within reach"
+    },
+    {
+      "type": "city",
+      "entity_id": "city:TH:PAI",
+      "name": "Pai",
+      "city": null,
+      "reason": "No reliable obstetric care within reach"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:CNX:zipline-gibbon",
+      "name": "Jungle zipline (Flight of the Gibbon class)",
+      "city": "Chiang Mai",
+      "reason": "Activity is contraindicated in pregnancy"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:CNX:doi-inthanon",
+      "name": "Doi Inthanon National Park day trip",
+      "city": "Chiang Mai",
+      "reason": "Altitude exposure is contraindicated in pregnancy"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:CNX:grand-canyon-waterpark",
+      "name": "Grand Canyon Water Park Chiang Mai",
+      "city": "Chiang Mai",
+      "reason": "Activity is contraindicated in pregnancy"
+    },
+    {
+      "type": "activity",
+      "entity_id": "act:TH:CNX:wiang-kum-kam-cycling",
+      "name": "Wiang Kum Kam ancient city bike tour",
+      "city": "Chiang Mai",
+      "reason": "Activity is contraindicated in pregnancy"
+    }
+  ],
+  "eligible_totals": {
+    "cities": 13,
+    "activities": 13
+  },
+  "shortlist_rationale": "Activities are drawn only from the recommended cities (Chiang Mai, Hua Hin), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (60%) with the strength of each city's own activity lineup for this persona (40%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
+}

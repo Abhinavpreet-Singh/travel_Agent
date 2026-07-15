@@ -1,5 +1,5 @@
 {
-  "input_text": "We are travelling to Thailand for 7 days with my grandmother who is 72 years old.",
+  "input_text": "\"Planning Thailand for me and my grandmother. We love beaches and nightlife.",
   "resolved_city": null,
   "personas": [
     "senior_citizen"
@@ -12,14 +12,13 @@
   "mode": "single",
   "constraints": {
     "known": [
-      "traveller age(s): 72",
-      "senior traveller present",
-      "duration: 7 days"
+      "senior traveller present"
     ],
     "inferred": [],
     "missing": [
       "destination city not specified — scored across all cities",
       "group size not specified",
+      "travel duration not specified",
       "travel dates not specified",
       "budget not specified"
     ]
@@ -27,9 +26,9 @@
   "brief": {
     "destinationType": "Thailand trip",
     "dates": null,
-    "duration": "7 days",
+    "duration": null,
     "budget": null,
-    "groupComposition": "We are travelling to Thailand for 7 days with my grandmother who is 72 years old.",
+    "groupComposition": "\"Planning Thailand for me and my grandmother. We love beaches and nightlife.",
     "extras": [],
     "awaitingField": null,
     "conversationComplete": true
@@ -37,9 +36,7 @@
   "roster": {
     "adults": null,
     "gender": "unspecified",
-    "ages": [
-      72
-    ],
+    "ages": [],
     "young_adults": false,
     "romantic": false,
     "children_ages": [],

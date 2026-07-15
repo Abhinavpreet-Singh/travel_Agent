@@ -195,6 +195,31 @@ Phuket's safety/hospital data" or "check Pai's actual transfer time") and
 I'll do a properly-scoped pass with cited sources, rather than a shallow
 pass across everything that looks thorough but isn't reliable.
 
+### Round 12 (2026-07-15) — a repeatable benchmark suite (stop eyeballing outputs)
+Manual spot-checking works for 10 queries, not 500. Added a real regression net
+under `tests/`:
+- `tests/cases.js` — a dataset of real free-text queries (senior_72, young_couple,
+  friends_20s, family_with_kids, backpacker, luxury_couple, pregnant_honeymoon,
+  couple+activity-blend), each with the properties its output must hold: derived
+  personas, top-city membership, cities that must appear / be hard-excluded, and
+  a universal activity-coherence invariant.
+- `tests/benchmark.js` + `npm run benchmark [name-filter]` — drives the **real**
+  pipeline (no reimplementation that could drift) and exits non-zero on any
+  failure, so it drops into a pre-commit hook or CI.
+
+To make this possible without the CLI running on import, `engine/cli.js` now
+exports `evaluateQuery(query) -> { ext, recipe, ranked }` (the same pipeline
+`writeAndSummarize` runs, minus console/files) and guards its CLI entry behind
+an `import.meta.url === process.argv[1]` check.
+
+Expectations encode current *correct* behavior as the baseline (so a future
+change that moves a ranking fails loudly), with `topCityOneOf` used where the
+engine defensibly diverges from the naive human guess (backpacker → Bangkok not
+Chiang Mai; pregnant-honeymoon → Chiang Mai not Hua Hin, per Round 10's Zika
+gate). When a case fails, the discipline is: decide whether it's a regression
+(fix code) or an intended improvement (update the expectation *and* its note) —
+never a silent drift. All 8 cases green at introduction.
+
 ### Round 11 (2026-07-15) — young-couple archetype, needs-based shortlist, city↔activity coherence, and dropping llm.json
 A run of product-alignment work, all driven by real queries:
 
