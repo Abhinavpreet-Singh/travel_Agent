@@ -1,0 +1,216 @@
+{
+  "query": "We are a family of four travelling to Thailand for one week with our children aged 6 and 9.",
+  "trip_profile": {
+    "destination": "Thailand",
+    "duration_days": 7,
+    "group": {
+      "adults": 2,
+      "children": [
+        6,
+        9
+      ]
+    },
+    "personas": [
+      "child_friendly",
+      "family_trip"
+    ],
+    "pace": "relaxed",
+    "safety_priority": "high",
+    "mobility_requirement": "normal",
+    "needs_confirmation": [
+      "which city",
+      "travel dates",
+      "budget"
+    ]
+  },
+  "city_ranking": [
+    {
+      "city": "Hua Hin",
+      "score": 78,
+      "activity_variety": 3,
+      "breakdown": {
+        "kid_activity_density": 72,
+        "safety_general": 80,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 90,
+        "food_hygiene": 72
+      }
+    },
+    {
+      "city": "Koh Samui",
+      "score": 78,
+      "activity_variety": 4,
+      "breakdown": {
+        "kid_activity_density": 75,
+        "safety_general": 74,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 88,
+        "food_hygiene": 70
+      }
+    },
+    {
+      "city": "Phuket",
+      "score": 76,
+      "activity_variety": 6,
+      "breakdown": {
+        "kid_activity_density": 85,
+        "safety_general": 68,
+        "kids_dining_ease": 82,
+        "shallow_calm_beach": 72,
+        "food_hygiene": 65
+      }
+    },
+    {
+      "city": "Bangkok",
+      "score": 68,
+      "activity_variety": 4,
+      "breakdown": {
+        "kid_activity_density": 78,
+        "safety_general": 70,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 0,
+        "food_hygiene": 65
+      }
+    },
+    {
+      "city": "Chiang Mai",
+      "score": 67,
+      "activity_variety": 2,
+      "breakdown": {
+        "kid_activity_density": 80,
+        "safety_general": 78,
+        "kids_dining_ease": 78,
+        "shallow_calm_beach": 0,
+        "food_hygiene": 70
+      }
+    }
+  ],
+  "activity_ranking": [
+    {
+      "activity": "Trickeye 3D Museum",
+      "city": "Phuket",
+      "score": 92,
+      "duration_hours": 2,
+      "signals": {
+        "kid_activity_density": 85,
+        "safety_general": 68,
+        "kids_dining_ease": 82,
+        "shallow_calm_beach": 72
+      }
+    },
+    {
+      "activity": "Hua Hin beach day (shallow, lifeguarded)",
+      "city": "Hua Hin",
+      "score": 90,
+      "duration_hours": 5,
+      "signals": {
+        "kid_activity_density": 75,
+        "safety_general": 80,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 92
+      }
+    },
+    {
+      "activity": "Sea Life Bangkok Ocean World",
+      "city": "Bangkok",
+      "score": 89,
+      "duration_hours": 2.5,
+      "signals": {
+        "kid_activity_density": 92,
+        "safety_general": 70,
+        "kids_dining_ease": 85,
+        "shallow_calm_beach": 0
+      }
+    },
+    {
+      "activity": "Ethical elephant sanctuary (no-riding)",
+      "city": "Phuket",
+      "score": 89,
+      "duration_hours": 4,
+      "signals": {
+        "kid_activity_density": 92,
+        "safety_general": 68,
+        "kids_dining_ease": 82,
+        "shallow_calm_beach": 72
+      }
+    },
+    {
+      "activity": "Cicada Market (art & live music)",
+      "city": "Hua Hin",
+      "score": 87,
+      "duration_hours": 3,
+      "signals": {
+        "kid_activity_density": 68,
+        "safety_general": 80,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 90
+      }
+    },
+    {
+      "activity": "Carnival Magic / FantaSea evening show",
+      "city": "Phuket",
+      "score": 87,
+      "duration_hours": 4,
+      "signals": {
+        "kid_activity_density": 90,
+        "safety_general": 68,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 72
+      }
+    },
+    {
+      "activity": "Elephant Nature Park (ethical, no riding)",
+      "city": "Chiang Mai",
+      "score": 85,
+      "duration_hours": 8,
+      "signals": {
+        "kid_activity_density": 95,
+        "safety_general": 78,
+        "kids_dining_ease": 78,
+        "shallow_calm_beach": 0
+      }
+    },
+    {
+      "activity": "Splash Jungle Water Park",
+      "city": "Phuket",
+      "score": 85,
+      "duration_hours": 5,
+      "signals": {
+        "kid_activity_density": 92,
+        "safety_general": 68,
+        "kids_dining_ease": 82,
+        "shallow_calm_beach": 72
+      }
+    },
+    {
+      "activity": "Simon Cabaret show",
+      "city": "Phuket",
+      "score": 84,
+      "duration_hours": 1.5,
+      "signals": {
+        "kid_activity_density": 60,
+        "safety_general": 68,
+        "kids_dining_ease": 82,
+        "shallow_calm_beach": 72
+      }
+    },
+    {
+      "activity": "Fisherman's Village Friday night market",
+      "city": "Koh Samui",
+      "score": 84,
+      "duration_hours": 3,
+      "signals": {
+        "kid_activity_density": 65,
+        "safety_general": 74,
+        "kids_dining_ease": 80,
+        "shallow_calm_beach": 88
+      }
+    }
+  ],
+  "avoid": [
+    {
+      "what": "Sky-bar rooftop night (Lebua / Vertigo class), Khao San Road bar crawl, Muay Thai at Rajadamnern Stadium, Bangla Road, Patong, Kata/Karon beach club day (Catch / Café del Mar class), Patong parasailing + jet-ski, Full-day luxury spa & wellness ritual, Chaweng beach club day (Nikki Beach class), Thai cooking class + organic farm visit, Jungle zipline (Flight of the Gibbon class), Championship golf round, Sam Roi Yot National Park cave temple (Phraya Nakhon), Samui ATV jungle adventure, Grand Canyon Water Park Chiang Mai, Wiang Kum Kam ancient city bike tour",
+      "why": "Activity has a minimum age above the child's age"
+    }
+  ]
+}

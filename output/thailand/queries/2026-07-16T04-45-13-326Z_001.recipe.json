@@ -1,7 +1,8 @@
 {
-  "input_text": "\"My wife is pregnant but we still want beach clubs and island hopping in Thailand.",
+  "input_text": "My wife is pregnant and we are planning our honeymoon in Thailand for a week.",
   "resolved_city": null,
   "personas": [
+    "honeymoon",
     "pregnancy_friendly"
   ],
   "persona_source": "derived",
@@ -13,23 +14,28 @@
   "constraints": {
     "known": [
       "2 adult(s)",
-      "romantic-partner trip"
+      "romantic-partner trip",
+      "duration: 7 days"
     ],
     "inferred": [],
     "missing": [
       "destination city not specified — scored across all cities",
-      "travel duration not specified",
       "travel dates not specified",
       "budget not specified"
     ]
   },
   "brief": {
-    "destinationType": "Thailand pregnancy trip",
+    "destinationType": "Thailand honeymoon + pregnancy trip",
     "dates": null,
-    "duration": null,
+    "duration": "7 days",
     "budget": null,
     "groupComposition": "2 adults",
-    "extras": [],
+    "extras": [
+      {
+        "label": "occasion",
+        "value": "honeymoon"
+      }
+    ],
     "awaitingField": null,
     "conversationComplete": true
   },
@@ -52,29 +58,47 @@
     "group_size": 2
   },
   "composed_persona": {
-    "id": "pregnancy_friendly",
-    "label": "Pregnancy Friendly",
+    "id": "honeymoon+pregnancy_friendly",
+    "label": "Honeymoon + Pregnancy Friendly",
     "composed_from": [
+      "honeymoon",
       "pregnancy_friendly"
     ],
     "weights": {
-      "obstetric_care_access": 0.1284,
-      "zika_risk_low": 0.1101,
-      "hospital_proximity": 0.0917,
-      "food_hygiene": 0.0917,
-      "heat_stress_low": 0.0826,
-      "physical_exertion_low": 0.0826,
-      "vector_disease_risk_low": 0.0642,
-      "tap_water_safety": 0.055,
-      "walking_load_low": 0.055,
-      "motion_sickness_low": 0.0459,
-      "rest_stop_availability": 0.0459,
-      "flight_time_ease": 0.0459,
-      "healthcare_quality": 0.0459,
-      "public_toilet_availability": 0.0367,
-      "noise_low": 0.0183
+      "food_hygiene": 0.0709,
+      "wellness_spa_quality": 0.07,
+      "crowd_pressure_low": 0.065,
+      "obstetric_care_access": 0.0642,
+      "photogenic_quality": 0.06,
+      "zika_risk_low": 0.055,
+      "noise_low": 0.0542,
+      "hospital_proximity": 0.0459,
+      "flight_time_ease": 0.0429,
+      "heat_stress_low": 0.0413,
+      "physical_exertion_low": 0.0413,
+      "safety_general": 0.04,
+      "weather_comfort": 0.04,
+      "vector_disease_risk_low": 0.0321,
+      "arrival_transfer_ease": 0.03,
+      "tap_water_safety": 0.0275,
+      "walking_load_low": 0.0275,
+      "iconic_landmark_density": 0.025,
+      "direct_flight_access": 0.025,
+      "value_for_money": 0.025,
+      "motion_sickness_low": 0.0229,
+      "rest_stop_availability": 0.0229,
+      "healthcare_quality": 0.0229,
+      "public_toilet_availability": 0.0183,
+      "english_prevalence": 0.015,
+      "intracity_transport_quality": 0.015
     },
     "hard_gates": [
+      {
+        "signal": "safety_general",
+        "op": ">=",
+        "value": 0.4,
+        "reason": "Below the safety floor for a honeymoon"
+      },
       {
         "attribute": "pregnancy_safe",
         "op": "in",
@@ -102,6 +126,13 @@
     ],
     "soft_gates": [
       {
+        "signal": "crowd_pressure_low",
+        "op": ">=",
+        "value": 0.35,
+        "cap": 0.65,
+        "reason": "Privacy is the whole point of a honeymoon — this is too crowded"
+      },
+      {
         "signal": "zika_risk_low",
         "op": ">=",
         "value": 0.5,
@@ -118,15 +149,21 @@
     ],
     "tag_modifiers": {
       "boost": {
-        "wellness": 0.04,
-        "resort_stay": 0.03,
+        "honeymoon": 0.05,
+        "romantic": 0.05,
+        "resort_stay": 0.06,
+        "wellness": 0.07,
+        "adult_only": 0.02,
+        "photogenic": 0.02,
         "slow_travel": 0.03
       },
       "penalty": {
+        "backpacker": 0.06,
+        "party": 0.06,
+        "nightlife": 0.09,
         "extreme_adventure": 0.12,
         "diving": 0.12,
-        "high_altitude": 0.1,
-        "nightlife": 0.04
+        "high_altitude": 0.1
       }
     }
   }

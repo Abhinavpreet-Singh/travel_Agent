@@ -1,0 +1,280 @@
+{
+  "query": "Taking my 72-year-old grandmother to Thailand.",
+  "trip_profile": {
+    "destination": "Thailand",
+    "group": {
+      "seniors": true
+    },
+    "personas": [
+      "senior_citizen"
+    ],
+    "pace": "relaxed",
+    "safety_priority": "high",
+    "mobility_requirement": "low_walking",
+    "needs_confirmation": [
+      "which city",
+      "group size",
+      "travel duration not specified",
+      "travel dates",
+      "budget"
+    ]
+  },
+  "city_ranking": [
+    {
+      "city": "Hua Hin",
+      "score": 79,
+      "activity_variety": 4,
+      "breakdown": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 82,
+        "walking_load_low": 86,
+        "transport_comfort": 78,
+        "rest_stop_availability": 82
+      }
+    },
+    {
+      "city": "Bangkok",
+      "score": 78,
+      "activity_variety": 9,
+      "breakdown": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 36,
+        "transport_comfort": 82,
+        "rest_stop_availability": 70
+      }
+    },
+    {
+      "city": "Chiang Mai",
+      "score": 77,
+      "activity_variety": 6,
+      "breakdown": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 85,
+        "walking_load_low": 50,
+        "transport_comfort": 72,
+        "rest_stop_availability": 75
+      }
+    },
+    {
+      "city": "Phuket",
+      "score": 75,
+      "activity_variety": 7,
+      "breakdown": {
+        "hospital_proximity": 88,
+        "healthcare_quality": 88,
+        "walking_load_low": 71,
+        "transport_comfort": 72,
+        "rest_stop_availability": 72
+      }
+    },
+    {
+      "city": "Pattaya",
+      "score": 71,
+      "activity_variety": 5,
+      "breakdown": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 85,
+        "walking_load_low": 57,
+        "transport_comfort": 65,
+        "rest_stop_availability": 70
+      }
+    }
+  ],
+  "activity_ranking": [
+    {
+      "activity": "Sea Life Bangkok Ocean World",
+      "city": "Bangkok",
+      "score": 96,
+      "physical_fit": 94,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+step_free",
+        "+family_friendly"
+      ],
+      "duration_hours": 2.5,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 93,
+        "transport_comfort": 82
+      }
+    },
+    {
+      "activity": "Cicada Market (art & live music)",
+      "city": "Hua Hin",
+      "score": 95,
+      "physical_fit": 92,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+senior_focused",
+        "+slow_travel",
+        "+step_free"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 82,
+        "walking_load_low": 86,
+        "transport_comfort": 78
+      }
+    },
+    {
+      "activity": "Hua Hin beach day (shallow, lifeguarded)",
+      "city": "Hua Hin",
+      "score": 94,
+      "physical_fit": 90,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+senior_focused",
+        "+slow_travel",
+        "+calm_beach"
+      ],
+      "duration_hours": 5,
+      "signals": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 82,
+        "walking_load_low": 93,
+        "transport_comfort": 78
+      }
+    },
+    {
+      "activity": "ICONSIAM & Chao Phraya river light show",
+      "city": "Bangkok",
+      "score": 94,
+      "physical_fit": 90,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+step_free",
+        "+family_friendly"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 86,
+        "transport_comfort": 82
+      }
+    },
+    {
+      "activity": "Chao Phraya dinner cruise",
+      "city": "Bangkok",
+      "score": 93,
+      "physical_fit": 89,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+step_free",
+        "+family_friendly"
+      ],
+      "duration_hours": 2.5,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 100,
+        "transport_comfort": 82
+      }
+    },
+    {
+      "activity": "Muay Thai at Rajadamnern Stadium",
+      "city": "Bangkok",
+      "score": 93,
+      "physical_fit": 88,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+cultural",
+        "+step_free"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 100,
+        "transport_comfort": 82
+      }
+    },
+    {
+      "activity": "Simon Cabaret show",
+      "city": "Phuket",
+      "score": 93,
+      "physical_fit": 88,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+step_free",
+        "+family_friendly"
+      ],
+      "duration_hours": 1.5,
+      "signals": {
+        "hospital_proximity": 88,
+        "healthcare_quality": 88,
+        "walking_load_low": 100,
+        "transport_comfort": 72
+      }
+    },
+    {
+      "activity": "Jim Thompson House & silk museum",
+      "city": "Bangkok",
+      "score": 92,
+      "physical_fit": 87,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+cultural",
+        "+heritage",
+        "+step_free"
+      ],
+      "duration_hours": 1.5,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 100,
+        "transport_comfort": 82
+      }
+    },
+    {
+      "activity": "Alcazar / Tiffany's cabaret show",
+      "city": "Pattaya",
+      "score": 92,
+      "physical_fit": 86,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+step_free",
+        "+family_friendly"
+      ],
+      "duration_hours": 1.5,
+      "signals": {
+        "hospital_proximity": 92,
+        "healthcare_quality": 85,
+        "walking_load_low": 100,
+        "transport_comfort": 65
+      }
+    },
+    {
+      "activity": "Wat Pho Reclining Buddha + traditional Thai massage",
+      "city": "Bangkok",
+      "score": 92,
+      "physical_fit": 86,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+slow_travel",
+        "+heritage",
+        "+wellness"
+      ],
+      "duration_hours": 2.5,
+      "signals": {
+        "hospital_proximity": 96,
+        "healthcare_quality": 95,
+        "walking_load_low": 93,
+        "transport_comfort": 82
+      }
+    }
+  ],
+  "avoid": [
+    {
+      "what": "Koh Phi Phi, Koh Phangan, Koh Tao, Pai, Khao Lak, Koh Lanta, Koh Chang",
+      "why": "No reachable hospital in an emergency"
+    },
+    {
+      "what": "Doi Inthanon National Park day trip",
+      "why": "Altitude exposure is unsafe without medical clearance"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "mode": "single",
   "query": {
-    "text": "We are a group of 5 friends in Thailand and one couple is on their honeymoon and the wife is pregnant.",
+    "text": "We are a group of 5 friends in Thailand and one couple is on their honeymoon and the wife is pregnant",
     "resolved_city": null,
     "personas": [
       "honeymoon",
@@ -25,7 +25,7 @@
     {
       "entity_id": "city:TH:CNX",
       "name": "Chiang Mai",
-      "score_0_10": 7.5,
+      "score_0_10": 7.4,
       "province": "Chiang Mai",
       "best_months": [
         11,
@@ -46,39 +46,16 @@
         "Tap water not potable — bottled water only"
       ],
       "city_score_0_10": 7.9,
-      "activity_strength_0_10": 6.9
+      "activity_strength_0_10": 6.8,
+      "activity_variety": 4
     }
   ],
   "recommended_city_combinations": null,
   "recommended_activities": [
     {
-      "entity_id": "act:TH:CNX:nimman-cafe-cowork",
-      "name": "Nimman café-hopping & coworking day",
-      "score_0_10": 7.8,
-      "city": "Chiang Mai",
-      "category": "lifestyle",
-      "duration_hours": 6,
-      "cost_band": "$$",
-      "pace": "Very Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
-      "why": [
-        "Extremely photogenic",
-        "Excellent spa and wellness options",
-        "Low daily spend (~₹1200/person/day)",
-        "Strong value for money"
-      ],
-      "caution": [
-        "No direct flights from India — connection required",
-        "No real beach-club scene",
-        "Tap water not potable — bottled water only"
-      ]
-    },
-    {
       "entity_id": "act:TH:CNX:cooking-class",
       "name": "Thai cooking class + organic farm visit",
-      "score_0_10": 7.7,
+      "score_0_10": 7.4,
       "city": "Chiang Mai",
       "category": "food",
       "duration_hours": 6,
@@ -97,12 +74,56 @@
         "No direct flights from India — connection required",
         "No real beach-club scene",
         "Tap water not potable — bottled water only"
+      ],
+      "physical_fit_0_10": 7.7,
+      "experience_fit": 0.7,
+      "experience_fit_axes": [
+        "honeymoon",
+        "pregnancy",
+        "friends"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": []
+    },
+    {
+      "entity_id": "act:TH:CNX:nimman-cafe-cowork",
+      "name": "Nimman café-hopping & coworking day",
+      "score_0_10": 6.9,
+      "city": "Chiang Mai",
+      "category": "lifestyle",
+      "duration_hours": 6,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Low daily spend (~₹1200/person/day)",
+        "Strong value for money"
+      ],
+      "caution": [
+        "No direct flights from India — connection required",
+        "No real beach-club scene",
+        "Tap water not potable — bottled water only"
+      ],
+      "physical_fit_0_10": 7.8,
+      "experience_fit": 0.55,
+      "experience_fit_axes": [
+        "honeymoon",
+        "pregnancy",
+        "friends"
+      ],
+      "experience_fit_binding": "friends",
+      "fit_reason": [
+        "-slow_travel"
       ]
     },
     {
       "entity_id": "act:TH:CNX:old-city-temples",
       "name": "Old City temple walk (Chedi Luang, Phra Singh)",
-      "score_0_10": 7.6,
+      "score_0_10": 6.8,
       "city": "Chiang Mai",
       "category": "heritage",
       "duration_hours": 4,
@@ -121,85 +142,23 @@
         "No direct flights from India — connection required",
         "No real beach-club scene",
         "Tap water not potable — bottled water only"
-      ]
-    },
-    {
-      "entity_id": "act:TH:CNX:wat-umong-forest-temple",
-      "name": "Wat Umong forest temple",
-      "score_0_10": 7.4,
-      "city": "Chiang Mai",
-      "category": "heritage",
-      "duration_hours": 1.5,
-      "cost_band": "Free",
-      "pace": "Very Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.78,
-      "why": [
-        "Excellent spa and wellness options",
-        "Strong value for money",
-        "Extremely photogenic",
-        "Low daily spend (~₹0/person/day)"
       ],
-      "caution": [
-        "No direct flights from India — connection required",
-        "No real beach-club scene",
-        "Tap water not potable — bottled water only"
-      ]
-    },
-    {
-      "entity_id": "act:TH:CNX:elephant-nature-park",
-      "name": "Elephant Nature Park (ethical, no riding)",
-      "score_0_10": 7.2,
-      "city": "Chiang Mai",
-      "category": "wildlife",
-      "duration_hours": 8,
-      "cost_band": "$$$$",
-      "pace": "Easy",
-      "best_time": "evening",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
-      "why": [
-        "Extremely photogenic",
-        "Excellent spa and wellness options",
-        "Plenty to do as a group",
-        "Obstetric/maternity care available locally"
+      "physical_fit_0_10": 7.6,
+      "experience_fit": 0.55,
+      "experience_fit_axes": [
+        "honeymoon",
+        "pregnancy",
+        "friends"
       ],
-      "caution": [
-        "No direct flights from India — connection required",
-        "No real beach-club scene",
-        "Tap water not potable — bottled water only"
-      ]
-    },
-    {
-      "entity_id": "act:TH:CNX:doi-suthep",
-      "name": "Wat Phra That Doi Suthep",
-      "score_0_10": 6.7,
-      "city": "Chiang Mai",
-      "category": "heritage",
-      "duration_hours": 3,
-      "cost_band": "$",
-      "pace": "Moderate",
-      "best_time": "evening",
-      "weather_dependency": "high",
-      "data_confidence": 0.85,
-      "why": [
-        "Extremely photogenic",
-        "Excellent spa and wellness options",
-        "Low daily spend (~₹900/person/day)",
-        "Strong value for money"
-      ],
-      "caution": [
-        "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
-        "No direct flights from India — connection required",
-        "Heavily crowded (72/100 crowd pressure)",
-        "No real beach-club scene"
+      "experience_fit_binding": "friends",
+      "fit_reason": [
+        "-slow_travel"
       ]
     },
     {
       "entity_id": "act:TH:CNX:night-bazaar",
       "name": "Chiang Mai Night Bazaar",
-      "score_0_10": 6.6,
+      "score_0_10": 6.8,
       "city": "Chiang Mai",
       "category": "shopping",
       "duration_hours": 3,
@@ -219,32 +178,16 @@
         "No direct flights from India — connection required",
         "Heavily crowded (70/100 crowd pressure)",
         "No real beach-club scene"
-      ]
-    },
-    {
-      "entity_id": "act:TH:CNX:sunday-walking-street",
-      "name": "Sunday Walking Street market",
-      "score_0_10": 6.6,
-      "city": "Chiang Mai",
-      "category": "shopping",
-      "duration_hours": 4,
-      "cost_band": "$$",
-      "pace": "Moderate",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.82,
-      "why": [
-        "Extremely photogenic",
-        "Excellent spa and wellness options",
-        "Low daily spend (~₹800/person/day)",
-        "Strong value for money"
       ],
-      "caution": [
-        "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
-        "Heavily crowded (92/100 crowd pressure)",
-        "Noisy environment, especially at night",
-        "No direct flights from India — connection required"
-      ]
+      "physical_fit_0_10": 6.6,
+      "experience_fit": 0.7,
+      "experience_fit_axes": [
+        "honeymoon",
+        "pregnancy",
+        "friends"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": []
     }
   ],
   "excluded_options": [
@@ -309,5 +252,5 @@
     "cities": 13,
     "activities": 8
   },
-  "shortlist_rationale": "Activities are drawn only from the recommended cities (Chiang Mai), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (60%) with the strength of each city's own activity lineup for this persona (40%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
+  "shortlist_rationale": "Activities are drawn only from the recommended cities (Chiang Mai), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (50%) with the strength of each city's own activity lineup for this persona (50%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona."
 }

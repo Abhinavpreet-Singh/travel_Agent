@@ -48,6 +48,13 @@ function runCase(tc) {
   if (e.minActivities != null) check((ranked.recommended_activities ?? []).length >= e.minActivities, `>= ${e.minActivities} activities`, `got ${(ranked.recommended_activities ?? []).length}`);
   if (e.maxActivities != null) check((ranked.recommended_activities ?? []).length <= e.maxActivities, `<= ${e.maxActivities} activities`, `got ${(ranked.recommended_activities ?? []).length}`);
 
+  // Experience-fit guard: no recommended activity may fall below this appropriateness
+  // floor for the traveller (a senior never gets a bar crawl, a family no adult venue).
+  if (e.minExperienceFit != null) {
+    const offenders = (ranked.recommended_activities ?? []).filter((a) => a.experience_fit != null && a.experience_fit < e.minExperienceFit);
+    check(offenders.length === 0, `every recommended activity has experience_fit >= ${e.minExperienceFit}`, offenders.length ? offenders.map((a) => `${a.name} (${a.experience_fit})`).join('; ') : '');
+  }
+
   // Universal invariant: every recommended activity lives in a recommended city.
   const citySet = new Set(cityNames);
   const orphans = [...new Set(activityCityNames.filter((c) => !citySet.has(c)))];

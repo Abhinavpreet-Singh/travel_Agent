@@ -1,0 +1,127 @@
+{
+  "input_text": "We are a family of four travelling to Thailand for one week with our children aged 6 and 9.",
+  "resolved_city": null,
+  "personas": [
+    "child_friendly",
+    "family_trip"
+  ],
+  "persona_source": "derived",
+  "confidence": {
+    "level": "high",
+    "reason": "persona(s) derived cleanly, no assumptions needed"
+  },
+  "mode": "single",
+  "constraints": {
+    "known": [
+      "2 adult(s)",
+      "2 child(ren), ages: 6, 9",
+      "duration: 7 days"
+    ],
+    "inferred": [],
+    "missing": [
+      "destination city not specified — scored across all cities",
+      "travel dates not specified",
+      "budget not specified"
+    ]
+  },
+  "brief": {
+    "destinationType": "Thailand family trip",
+    "dates": null,
+    "duration": "7 days",
+    "budget": null,
+    "groupComposition": "2 adults, 1 child (6 yrs), 1 child (9 yrs)",
+    "extras": [],
+    "awaitingField": null,
+    "conversationComplete": true
+  },
+  "roster": {
+    "adults": 2,
+    "gender": "unspecified",
+    "ages": [],
+    "young_adults": false,
+    "romantic": false,
+    "children_ages": [
+      6,
+      9
+    ],
+    "age_assumed": false,
+    "adult_offspring": 0,
+    "infant_count": 0,
+    "child_count": 2,
+    "teen_count": 0,
+    "has_senior_adult": false,
+    "traveling_with_parents": false,
+    "is_family": true,
+    "family_total": 4,
+    "group_size": 4
+  },
+  "composed_persona": {
+    "id": "child_friendly+family_trip",
+    "label": "Child Friendly (3-12) + Family Trip",
+    "composed_from": [
+      "child_friendly",
+      "family_trip"
+    ],
+    "weights": {
+      "kid_activity_density": 0.165,
+      "safety_general": 0.115,
+      "kids_dining_ease": 0.085,
+      "shallow_calm_beach": 0.075,
+      "food_hygiene": 0.07,
+      "walking_load_low": 0.065,
+      "hospital_proximity": 0.055,
+      "heat_stress_low": 0.05,
+      "crowd_pressure_low": 0.04,
+      "transport_comfort": 0.04,
+      "healthcare_quality": 0.04,
+      "public_toilet_availability": 0.035,
+      "pediatric_care_access": 0.03,
+      "family_room_availability": 0.03,
+      "arrival_transfer_ease": 0.03,
+      "physical_exertion_low": 0.025,
+      "vegetarian_food_access": 0.025,
+      "value_for_money": 0.025
+    },
+    "hard_gates": [
+      {
+        "attribute": "min_age",
+        "op": "<=",
+        "value": 6,
+        "scope": [
+          "activity"
+        ],
+        "reason": "Activity has a minimum age above the child's age"
+      },
+      {
+        "signal": "safety_general",
+        "op": ">=",
+        "value": 0.4,
+        "reason": "Below the safety floor for children"
+      }
+    ],
+    "soft_gates": [
+      {
+        "signal": "hospital_proximity",
+        "op": ">=",
+        "value": 0.25,
+        "cap": 0.7,
+        "reason": "No hospital within a reasonable radius"
+      }
+    ],
+    "tag_modifiers": {
+      "boost": {
+        "family_friendly": 0.09,
+        "theme_park": 0.07,
+        "wildlife": 0.05,
+        "interactive": 0.03,
+        "calm_beach": 0.02
+      },
+      "penalty": {
+        "nightlife": 0.1,
+        "adult_only": 0.16,
+        "extreme_adventure": 0.08,
+        "party": 0.04
+      }
+    }
+  }
+}

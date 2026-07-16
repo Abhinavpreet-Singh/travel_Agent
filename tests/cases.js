@@ -33,6 +33,7 @@ export const cases = [
       topCityOneOf: ['Hua Hin'],
       citiesInShortlist: ['Hua Hin', 'Bangkok'],
       citiesExcluded: ['Koh Phi Phi', 'Koh Tao', 'Koh Phangan', 'Koh Lanta'],
+      minExperienceFit: 0.4, // no bar crawl / party street for a 72-year-old
     },
   },
   {
@@ -58,11 +59,12 @@ export const cases = [
   {
     name: 'family_with_kids',
     query: 'family trip to thailand with 2 kids aged 6 and 9, 1 week',
-    note: 'Family with young kids → safety/kid-activity weighting; Hua Hin & Koh Samui lead.',
+    note: 'Family with young kids. After the activity-diversity fix (Round 13) Hua Hin/Koh Samui/Phuket are a tight cluster, so all three must be shortlisted — Phuket must NOT be buried despite lower ambient safety, because its 6-category activity variety makes a richer week. Hua Hin still leads on calm/safety.',
     expect: {
       personasInclude: ['family_trip', 'child_friendly'],
       topCityOneOf: ['Hua Hin', 'Koh Samui'],
-      citiesInShortlist: ['Hua Hin', 'Koh Samui'],
+      citiesInShortlist: ['Hua Hin', 'Koh Samui', 'Phuket'],
+      minExperienceFit: 0.4, // no adult_only / nightlife venue in a kids' itinerary
     },
   },
   {
@@ -88,11 +90,43 @@ export const cases = [
   {
     name: 'pregnant_honeymoon',
     query: 'pregnant honeymoon in thailand for 1 week',
-    note: 'honeymoon + pregnancy_friendly. Zika soft-gate caps the islands, so Chiang Mai wins (#1) over Hua Hin (#2) — documented in project.md Round 10. Islands with no hospital are hard-excluded.',
+    note: 'honeymoon + pregnancy. After the Destination Strategy layer (Round 17) the MAJORITY (honeymoon) drives destinations — romantic/photogenic Koh Samui & Phuket now rank over calm-but-plain Hua Hin — while the pregnancy CONSTRAINT only GATES (hospital-less islands hard-excluded). Intended majority-vs-constraint routing: a honeymoon gets romantic destinations that happen to be pregnancy-safe, not the single safest town.',
     expect: {
       personasInclude: ['honeymoon', 'pregnancy_friendly'],
-      topCityOneOf: ['Chiang Mai', 'Hua Hin'],
-      citiesInShortlist: ['Hua Hin'],
+      topCityOneOf: ['Chiang Mai', 'Koh Samui'],
+      citiesInShortlist: ['Koh Samui'],
+      citiesExcluded: ['Koh Phi Phi', 'Koh Tao', 'Koh Phangan'],
+      minExperienceFit: 0.4, // no strenuous / party activity in a pregnancy itinerary
+    },
+  },
+  {
+    name: 'destination_strategy_majority_over_constraint',
+    query: '5 friends and one pregnant honeymoon couple travelling thailand for a week',
+    note: 'Destination Strategy (Round 17): the MAJORITY (friends_trip) drives destination selection even with a pregnancy constraint present — must route to beach/social cities (Phuket top), NOT be pulled inland to Chiang Rai/Hua Hin by the constraint (those are rejected as "underserves majority"). Pregnancy still GATES: hospital-less islands excluded.',
+    expect: {
+      personasInclude: ['friends_trip', 'pregnancy_friendly', 'honeymoon'],
+      topCityOneOf: ['Phuket', 'Bangkok'],
+      citiesInShortlist: ['Phuket'],
+      citiesNotInShortlist: ['Chiang Rai'],
+      citiesExcluded: ['Koh Phi Phi', 'Koh Tao'],
+    },
+  },
+  {
+    name: 'solo_female',
+    query: 'solo female traveller to thailand for a week',
+    note: 'Solo female → female_solo. Safety-forward destinations (Chiang Mai/Bangkok). Experience-fit floor keeps bar crawls / unsafe-night venues out of the recommendations (per audit: female_solo had them eligible but un-penalised before this layer).',
+    expect: {
+      personas: ['female_solo'],
+      topCityOneOf: ['Chiang Mai', 'Bangkok'],
+      minExperienceFit: 0.4,
+    },
+  },
+  {
+    name: 'retiree_age_triggers_senior_safety',
+    query: 'luxury trip to thailand with my retired 70 year old husband for a week',
+    note: 'P0 SAFETY GUARD: a stated traveller age >= 65 must trigger senior_citizen regardless of relation word ("husband", not "parent"), so the hospital hard-gate fires. Before the fix this parsed as luxury+couple only and hospital-less islands stayed eligible for a 70-year-old. Must exclude the no-hospital islands.',
+    expect: {
+      personasInclude: ['senior_citizen', 'luxury'],
       citiesExcluded: ['Koh Phi Phi', 'Koh Tao', 'Koh Phangan'],
     },
   },

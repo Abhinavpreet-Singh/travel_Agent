@@ -195,6 +195,180 @@ Phuket's safety/hospital data" or "check Pai's actual transfer time") and
 I'll do a properly-scoped pass with cited sources, rather than a shallow
 pass across everything that looks thorough but isn't reliable.
 
+### Round 17 (2026-07-15) — Destination Strategy layer: majority drives, constraints only gate
+The weakest remaining layer (per audit): city selection blended ALL personas into
+one score, so a pregnancy CONSTRAINT out-weighted a friends MAJORITY and pulled a
+5-friends trip inland to Chiang Mai — "5 friends + pregnant honeymoon → beach:false".
+The engine had no concept of a city "underserving the majority persona."
+
+Fix (`buildDestinationPersona` in cli.js): destinations are now selected by the
+MAJORITY persona (+ style modifiers like luxury/budget) for the STYLE weights,
+with CONSTRAINT personas (pregnancy/wheelchair/infant) contributing ONLY their
+gates. Ordering is now "what's best for the majority, THEN can the constraint do
+it safely?" — so friends+pregnancy routes to Phuket/Bangkok/Pattaya/Samui (beach +
+social, all with hospitals) and rejects Chiang Rai/Hua Hin as "underserves
+majority (friends_trip)". Special personas (honeymoon) no longer drive the
+destination unless they ARE the majority; they get dedicated activity moments.
+
+New output `destination_strategy = { majority_persona, constraint_personas,
+special_personas, recommended_route[], rejected_routes[] }` (in ranked + context)
+— the `rejected_routes` "underserves majority" concept is the piece the engine
+lacked. Single-persona and style-only cases (senior, family, luxury_couple) are
+UNCHANGED (majority == the persona). `pregnant_honeymoon` intentionally shifted:
+honeymoon (majority) now favours romantic Koh Samui/Phuket over calm-plain Hua Hin,
+pregnancy still gates the hospital-less islands — benchmark updated with that note,
+plus a new `destination_strategy_majority_over_constraint` guard. 11/11 green.
+
+KNOWN NEXT STEP (not done this round): ACTIVITY ranking still uses the full
+constraint-blended persona, so the activity CANDIDATE pool for friends+pregnancy
+is still calm/cultural (beach activities not surfaced even though beach cities are
+now chosen) — the destination is fixed, the activity pool isn't yet. Applying the
+same majority-drives / constraint-gates split to activity physical scoring
+(experience_fit already applies the constraint appropriateness) is the clean
+completion, deferred to keep this change reviewable.
+
+### Round 16 (2026-07-15) — plan like a travel agent, not a score-sorter (planner inputs, not more weights)
+A reviewer's key point: the engine's SCORING is strong, but the itinerary
+generation behaved like a score-sorter (top city + top activities → build),
+producing café/spa/repetitive days that miss iconic Thailand and under-serve the
+majority group. The fix belongs in the PLANNER, not more scoring weights — so
+this round adds only DERIVED planner INPUTS to the context (no new score blend,
+no hand-authored tables) and rewrites the itinerary prompt.
+
+Context additions (all derived):
+- `trip_profile.persona_roles = {majority, constraints, special}` (Step 1) —
+  "5 friends + pregnant honeymoon" → majority friends_trip, constraint
+  pregnancy_friendly, special honeymoon. Majority drives style; constraints
+  exclude; special get moments.
+- `activity.bucket_list_value` 0-100 (Step 3) — derived from
+  `iconic_landmark_index` (Grand Palace 98, Maya Bay 95) with a category prior
+  fallback (cooking class 55, aquarium 15, café 20). NOT folded into score — a
+  separate axis the planner balances so a first-timer trip isn't mall/café/spa.
+- `activity.style` (the category) + `first_timer_essentials`
+  {culture, beach, thai_food, market, iconic} coverage flags (Step 7) — the
+  planner (and we) can see if the candidate pool would miss an essential.
+
+Finding surfaced immediately: "5 friends + pregnant honeymoon" returns
+`first_timer_essentials.beach=false, iconic=false` — the pregnancy constraint
+pulled the whole candidate set inland (Chiang Mai), so 5 friends would get a
+beachless, non-iconic trip. The instrumentation caught the exact "constraint
+dominates majority" failure. City ranking left UNTOUCHED per the reviewer
+(destination ranking audited as mostly-good; the planner + these flags handle
+majority-balance for now).
+
+Steps 2/4/5/6/8 (destination-fit reasoning, daily diversity, group fairness,
+majority audit, explainability) are encoded in the rewritten planner prompt —
+they are LLM-planner behaviours, not engine code (there is no in-repo LLM
+planner). Benchmark stays 10/10.
+
+### Round 15 (2026-07-15) — Experience-Fit layer (derived appropriateness, not a hand-authored score sheet)
+The engine judged PHYSICAL suitability (safe/easy) but not EXPERIENTIAL fit (right
+KIND of thing) — so a rooftop bar out-scored a temple for a 72-year-old. Added a
+derived experience-fit layer (`engine/experienceFit.js`): every activity gets an
+`experience_fit ∈ [0,1]` per traveller axis (family/honeymoon/friends/senior/
+solo_female/pregnancy/luxury/backpacker), computed from its tags/category/
+constraints/attributes via a rules table — NO per-activity authoring. A sparse
+OVERRIDES list corrects only the cases the rules can't (Vertigo/Sky-bar is
+`adult_only` but fine for a senior; the tag can't tell it from a bar crawl).
+
+Combined with physical fit as `final = 0.6·physical + 0.4·experience_fit`.
+ADDITIVE was chosen over MULTIPLICATIVE empirically: both cut contradictions
+equally (4→2 at fit<0.5 across the persona set) but additive preserved the most
+recommendation diversity (35 vs 34 vs 33 baseline) — the mission's exact
+criterion. Each recommended activity now carries the full trace: `physical_fit`,
+`experience_fit`, and the blended score.
+
+Each recommended activity also carries `fit_reason` — the signed drivers of the
+binding axis (e.g. Walking Street → `-party, -unsafe_night, -nightlife`; Wat Pho
+→ `+slow_travel, +heritage, +wellness`; Sky-bar → `override`), so a score is
+explainable without reading code.
+
+Additive-vs-multiplicative, verified on one consistent metric (`fit<0.4`, summed
+over 6 personas): both cut top-10 contradictions 2→0 and top-20 6→5 IDENTICALLY;
+the entire-pool count (29) is unchanged by either because the layer RE-RANKS, it
+does not delete (a bar crawl is still the #1 pick for friends). So additive was
+chosen purely on diversity preservation, not contradiction reduction.
+
+Result (senior trace): party/unsafe-night venues (Khao San bar crawl, Walking
+Street, Bangla Road) drop to experience_fit 0 → final ~4 → bottom of the list;
+Sky-bar rooftop stays mid (override, fit 0.75) — the exact rowdy-vs-refined
+distinction the reviewer asked for. Locked with `minExperienceFit >= 0.4` guards
+on the senior/family/pregnancy/solo-female benchmark cases (now 10 cases green).
+Applied to activities only; city ranking unchanged. Follows Round 14's decision
+to model `party`/`unsafe_night`, NOT the broad `adult_only`.
+
+### Round 14 (2026-07-15) — P0 safety: age >= 65 must trigger senior (parser gap disabled a real gate)
+An audit trace across six personas found a genuine safety bug: "luxury trip with
+my retired 70 year old husband" parsed as `[luxury, couple]` — NOT
+`senior_citizen`. The age (70) was captured in `roster.ages`, but the senior
+detector's numeric clause required an accompanying relation word from a short
+list (`adult|senior|parent|grandparent`) and "husband" wasn't in it. Net effect:
+the `senior_citizen` hospital hard-gate never activated, so hospital-less islands
+(Koh Phi Phi/Tao/Phangan…) stayed ELIGIBLE for a 70-year-old. The gate logic was
+fine; the parser just never armed it.
+
+Fix (`parseGroupComposition`): `ages.some(a => a >= 65)` now forces senior
+regardless of relation, plus the relation whitelist gained husband/wife/spouse/
+partner and `retired husband/wife/couple`. Verified: 70yo retiree, 68yo dad, and
+"66 and 70" all now → senior with islands excluded; young couples/families do NOT
+misfire. Locked with a benchmark case (`retiree_age_triggers_senior_safety`).
+
+Also audited the pregnancy "Zika gate" (a reviewer flagged over-restriction):
+it is NOT deleting the tropics — it's a mild SOFT cap (0.55), already softened
+from a hard exclude on 2026-07-14 for exactly that reason. What actually removes
+islands for pregnancy is `obstetric_care_access` (hard gate), which is medically
+sound. The `zika_risk_level` data itself is `review_status: editorial_draft`
+(hand-authored, not a CDC/WHO feed) — flagged for re-sourcing rather than
+building more logic on top of it.
+
+Deliberately did NOT hard-block `adult_only` for seniors/solo-female (an earlier
+over-reach): a rooftop cocktail lounge and a rowdy party street are both
+`adult_only` but opposite experiences. The right model is per-activity
+per-persona APPROPRIATENESS vectors (planned), targeting `party`/`unsafe_night`,
+not the broad `adult_only` tag. Families with young kids are already protected by
+the `min_age` gate (the trace showed zero family conflicts).
+
+### Round 13 (2026-07-15) — "best week ≠ best city": activity DIVERSITY, and the lean context v2
+A reviewer ran the family query end-to-end into an itinerary and found the
+engine's blind spot: it optimizes *best CITY* (safest calm beach) when a 7-day
+trip needs *best WEEK* (varied, memory-dense experiences). Faithfully following
+the ranking produced a "beach ×7" itinerary; a plan that IGNORED the ranking
+(Bangkok+Phuket: safari, aquarium, elephants, waterpark) was the better holiday.
+Root cause confirmed in data: for a family, Phuket has 7 strong activities across
+**6 categories** (culture, wildlife, show, adventure, island, beach) vs Hua Hin's
+3 across 3 — but the old `activity_strength` rewarded only COUNT (breadth), blind
+to variety, and the ambient family score (safety/calm-beach) buried Phuket at #3.
+
+Fix (engine objective, not the prompt — the mismatch was in the recipe):
+1. **Diversity term** added to `cityActivityStrength`: `0.5·peak + 0.2·breadth +
+   0.3·diversity`, where diversity = distinct activity *categories* among a
+   city's strong options (saturating). A place with a beach, an aquarium,
+   elephants and a show now beats one with six variations of the same beach day.
+2. **`CITY_ACTIVITY_BLEND` 0.4 → 0.5** — for a multi-day trip, what you can DO all
+   week weighs nearly as much as how nice the place is to sit in.
+3. **`activity_variety` exposed** on each city in `ranked.json` and the context,
+   so the itinerary LLM can optimize the week itself.
+
+Deliberately took the honest MIDDLE, not a forced flip: at blend 0.6 Phuket would
+top the family list outright, but that risks pushing safety-sensitive personas
+(senior/pregnancy) toward busier cities. At 0.5 the family result is a truthful
+tight cluster — Hua Hin 78 (variety 3), Koh Samui 78 (4), Phuket 76 (6) — where
+Phuket is clearly competitive and flagged as most diverse, and the LLM/user picks
+the vibe. Verified safety personas are undisturbed: senior still Hua Hin #1,
+pregnant-honeymoon still Chiang Mai #1, islands still hard-gated. Benchmark stays
+green; the family case now asserts Phuket must be shortlisted (regression guard).
+
+Also this round: the query→LLM hand-off was reshaped twice based on real
+findings. First to a token-lean `context.json` (no scores — order = rank) after
+discovering a raw-prompt itinerary (A) beat a fat-JSON one (B) because B
+straitjacketed the model to a small catalog. Then to a STRUCTURED context v2
+after a reviewer noted prose like "rich lineup of 7" is not machine-comparable:
+explicit 0-100 scores + a per-item **signal breakdown** (persona-adaptive: a
+family reads kid/safety, a couple reads beach/romance) + a structured
+`trip_profile` + grouped `avoid`. `recipe.json`/`ranked.json` demoted to audit;
+only `context.json` is sent to the LLM. The itinerary prompt was updated to
+"reason from the breakdown, not the number; prefer variety for multi-day trips."
+
 ### Round 12 (2026-07-15) — a repeatable benchmark suite (stop eyeballing outputs)
 Manual spot-checking works for 10 queries, not 500. Added a real regression net
 under `tests/`:

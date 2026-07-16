@@ -1,0 +1,247 @@
+{
+  "query": "We are a group of 5 friends in our twenties travelling to Thailand for one week.",
+  "trip_profile": {
+    "destination": "Thailand",
+    "duration_days": 7,
+    "group": {
+      "adults": 5
+    },
+    "personas": [
+      "friends_trip"
+    ],
+    "pace": "active",
+    "safety_priority": "normal",
+    "mobility_requirement": "normal",
+    "needs_confirmation": [
+      "which city",
+      "travel dates",
+      "budget"
+    ]
+  },
+  "city_ranking": [
+    {
+      "city": "Phuket",
+      "score": 87,
+      "activity_variety": 9,
+      "breakdown": {
+        "group_activity_density": 88,
+        "nightlife_density": 88,
+        "group_cost_efficiency": 82,
+        "cost_efficiency": 65,
+        "party_scene_quality": 85
+      }
+    },
+    {
+      "city": "Bangkok",
+      "score": 86,
+      "activity_variety": 8,
+      "breakdown": {
+        "group_activity_density": 85,
+        "nightlife_density": 96,
+        "group_cost_efficiency": 78,
+        "cost_efficiency": 75,
+        "party_scene_quality": 88
+      }
+    },
+    {
+      "city": "Pattaya",
+      "score": 85,
+      "activity_variety": 7,
+      "breakdown": {
+        "group_activity_density": 88,
+        "nightlife_density": 98,
+        "group_cost_efficiency": 88,
+        "cost_efficiency": 83,
+        "party_scene_quality": 92
+      }
+    },
+    {
+      "city": "Koh Phangan",
+      "score": 77,
+      "activity_variety": 5,
+      "breakdown": {
+        "group_activity_density": 80,
+        "nightlife_density": 88,
+        "group_cost_efficiency": 88,
+        "cost_efficiency": 85,
+        "party_scene_quality": 96
+      }
+    },
+    {
+      "city": "Koh Phi Phi",
+      "score": 74,
+      "activity_variety": 4,
+      "breakdown": {
+        "group_activity_density": 82,
+        "nightlife_density": 85,
+        "group_cost_efficiency": 82,
+        "cost_efficiency": 77,
+        "party_scene_quality": 88
+      }
+    }
+  ],
+  "activity_ranking": [
+    {
+      "activity": "Khao San Road bar crawl",
+      "city": "Bangkok",
+      "score": 96,
+      "physical_fit": 93,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:nightlife"
+      ],
+      "duration_hours": 5,
+      "signals": {
+        "group_activity_density": 92,
+        "nightlife_density": 95,
+        "group_cost_efficiency": 92,
+        "cost_efficiency": 100
+      }
+    },
+    {
+      "activity": "Bangla Road, Patong",
+      "city": "Phuket",
+      "score": 95,
+      "physical_fit": 91,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:nightlife"
+      ],
+      "duration_hours": 5,
+      "signals": {
+        "group_activity_density": 92,
+        "nightlife_density": 98,
+        "group_cost_efficiency": 88,
+        "cost_efficiency": 94
+      }
+    },
+    {
+      "activity": "Full Moon Party, Haad Rin",
+      "city": "Koh Phangan",
+      "score": 94,
+      "physical_fit": 90,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:nightlife"
+      ],
+      "duration_hours": 8,
+      "signals": {
+        "group_activity_density": 95,
+        "nightlife_density": 100,
+        "group_cost_efficiency": 95,
+        "cost_efficiency": 100
+      }
+    },
+    {
+      "activity": "Walking Street Pattaya",
+      "city": "Pattaya",
+      "score": 93,
+      "physical_fit": 89,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:nightlife"
+      ],
+      "duration_hours": 5,
+      "signals": {
+        "group_activity_density": 90,
+        "nightlife_density": 100,
+        "group_cost_efficiency": 92,
+        "cost_efficiency": 96
+      }
+    },
+    {
+      "activity": "Phi Phi beach fire-show party",
+      "city": "Koh Phi Phi",
+      "score": 92,
+      "physical_fit": 87,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:nightlife"
+      ],
+      "duration_hours": 5,
+      "signals": {
+        "group_activity_density": 92,
+        "nightlife_density": 92,
+        "group_cost_efficiency": 92,
+        "cost_efficiency": 100
+      }
+    },
+    {
+      "activity": "Kata/Karon beach club day (Catch / Café del Mar class)",
+      "city": "Phuket",
+      "score": 89,
+      "physical_fit": 81,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+party",
+        "+nightlife",
+        "+category:beach_club"
+      ],
+      "duration_hours": 6,
+      "signals": {
+        "group_activity_density": 85,
+        "nightlife_density": 78,
+        "group_cost_efficiency": 68,
+        "cost_efficiency": 85
+      }
+    },
+    {
+      "activity": "Ramayana Water Park",
+      "city": "Pattaya",
+      "score": 83,
+      "physical_fit": 85,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+category:theme_park"
+      ],
+      "duration_hours": 6,
+      "signals": {
+        "group_activity_density": 88,
+        "nightlife_density": 98,
+        "group_cost_efficiency": 85,
+        "cost_efficiency": 98
+      }
+    },
+    {
+      "activity": "Coral Island (Koh Larn) speedboat day",
+      "city": "Pattaya",
+      "score": 81,
+      "physical_fit": 88,
+      "experience_fit": 70,
+      "duration_hours": 7,
+      "signals": {
+        "group_activity_density": 90,
+        "nightlife_density": 98,
+        "group_cost_efficiency": 88,
+        "cost_efficiency": 100
+      }
+    },
+    {
+      "activity": "Sky-bar rooftop night (Lebua / Vertigo class)",
+      "city": "Bangkok",
+      "score": 81,
+      "physical_fit": 79,
+      "experience_fit": 85,
+      "fit_reason": [
+        "override:sky-bar rooftop"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "group_activity_density": 78,
+        "nightlife_density": 92,
+        "group_cost_efficiency": 55,
+        "cost_efficiency": 88
+      }
+    }
+  ]
+}

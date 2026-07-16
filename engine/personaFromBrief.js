@@ -272,12 +272,21 @@ export function parseGroupComposition(groupComposition = '') {
   // fails half the real userbase. Also covers indirect phrasing ("elderly
   // mother", "retired parents") that implies seniority without naming a
   // grandparent relation at all.
+  // P0 SAFETY FIX: any explicitly stated traveller age >= 65 makes this a senior
+  // trip, FULL STOP — regardless of the relation word. Previously the age clause
+  // required an accompanying "adult/senior/parent/grandparent", so "retired 70
+  // year old husband" (and "we are 66 and 70") parsed as a normal couple and the
+  // senior_citizen hospital hard-gate never activated — a 70-year-old could be
+  // sent to a hospital-less island. `ages` here is the traveller self-age list
+  // (children's ages are tracked separately), so this can't misfire on a kid.
+  const SENIOR_AGE = 65;
   const seniorAdult =
-    (/\b(6[0-9]|[7-9][0-9])\b/.test(text) && /adult|senior|parent|grandparent/i.test(text)) ||
+    ages.some((a) => a >= SENIOR_AGE) ||
+    (/\b(6[0-9]|[7-9][0-9])\b/.test(text) && /adult|senior|parent|grandparent|husband|wife|spouse|partner|mother|father|mom|dad/i.test(text)) ||
     /\belderly\b|\bsenior citizen(s)?\b/i.test(text) ||
     /\b(grandma|grandmother|grandpa|grandfather|granny|grandparents?|nani|dadi|nana|dada)\b/i.test(text) ||
     /\belderly\s+(mother|father|mom|dad|parents?)\b/i.test(text) ||
-    /\bretired\s+(mother|father|mom|dad|parents?)\b/i.test(text);
+    /\bretired\s+(mother|father|mom|dad|parents?|husband|wife|spouse|couple)\b/i.test(text);
 
   // "family of four, kids are 5 and 8" — we know the total (4) and the kids
   // (2), so the remainder are adults (2). Only infer when it's consistent

@@ -33,6 +33,7 @@ import { loadThailand, writeJSON, ROOT } from './loadData.js';
 import { scoreEntity, rankEntities, composePersonas } from './score.js';
 import { buildExplanation } from './explain.js';
 import { derivePersonas, parseFreeTextToBrief } from './personaFromBrief.js';
+import { experienceFitFor, BLENDS, deriveBucketListValue, classifyPersonaRoles } from './experienceFit.js';
 
 const data = loadThailand();
 
@@ -479,20 +480,46 @@ function citiesNeeded(durationDays) {
 
 // How much a city's OWN activity lineup lifts its rank. A city is more than its
 // ambient qualities: a couple's week in Bangkok is carried by its activities
-// even though Bangkok scores mid as a "couple city" (crowded, noisy). Without
-// this, such a city ranks low and its activities are never even offered. Set to
-// 0 to go back to pure ambient-attribute city ranking.
-const CITY_ACTIVITY_BLEND = 0.4;
-// Activity strength = peak (how good the best few are) + breadth (how many
-// genuinely strong options exist — a hub you can fill a week in beats a pretty
-// town with three things to do). Breadth saturates so a huge catalogue can't
-// run away with it.
-const ACTIVITY_STRENGTH = { topK: 5, peakWeight: 0.65, breadthWeight: 0.35, breadthScale: 6, strongFloor: 7 };
+// even though Bangkok scores mid as a "couple city" (crowded, noisy). Raised
+// from 0.4 → 0.5 because for a multi-DAY trip, what you can actually DO all week
+// weighs nearly as much as how nice the place is to sit in. Set to 0 to go back
+// to pure ambient-attribute city ranking.
+const CITY_ACTIVITY_BLEND = 0.5;
+// Activity strength has three parts:
+//   peak      — how good the best few are.
+//   breadth   — how MANY genuinely strong options exist (a hub you can fill a
+//               week in beats a town with three things to do).
+//   diversity — how many distinct CATEGORIES those strong options span. This is
+//               the "best week, not best city" fix: a place with a beach, an
+//               aquarium, elephants and a show makes a richer week than one with
+//               six variations of the same beach day, even if the counts match.
+//               Without it the engine happily recommended beach-x-7 (safe, dull).
+// Both breadth and diversity saturate so a big catalogue can't run away with it.
+const ACTIVITY_STRENGTH = {
+  topK: 5,
+  peakWeight: 0.5,
+  breadthWeight: 0.2,
+  diversityWeight: 0.3,
+  breadthScale: 6,
+  diversityScale: 4,
+  strongFloor: 7,
+};
 
-/** Peak+breadth strength (0-1) of a city's own activities for this persona, or null if it has none eligible. */
+// The raw `category` field has near-duplicate sub-types (a data-audit finding):
+// `beach_club` is a `beach`, `diving` is `water_sports`, etc. For the DIVERSITY
+// count these must collapse — otherwise a city with a beach AND a beach club
+// reads as "two kinds of experience" when it's one, inflating variety. Only the
+// unambiguous sub-type merges are listed; genuinely distinct kinds (heritage vs
+// culture, adventure vs nature) are left alone. Used for variety scoring only —
+// the raw category is untouched in the data and everywhere else.
+const CANONICAL_CATEGORY = { beach_club: 'beach', diving: 'water_sports', heritage_wellness: 'wellness', dining: 'food' };
+const canonicalCategory = (c) => CANONICAL_CATEGORY[c] ?? c;
+
+/** peak+breadth+diversity strength (0-1) of a city's own activities for this persona, or null if it has none eligible. */
 function cityActivityStrength(cityEntity, persona) {
   const acts = data.activities.filter((a) => a.parent_id === cityEntity.id);
   if (!acts.length) return null;
+  const categoryById = new Map(acts.map((a) => [a.id, a.category]));
   const ranked = rankEntities(
     acts.map((a) => ({ entity: a, ancestors: [cityEntity, data.country] })),
     persona,
@@ -501,9 +528,14 @@ function cityActivityStrength(cityEntity, persona) {
   if (!ranked.length) return null;
   const topK = ranked.slice(0, ACTIVITY_STRENGTH.topK);
   const peak = topK.reduce((s, r) => s + r.score_0_1, 0) / topK.length;
-  const strongCount = ranked.filter((r) => r.score_0_10 >= ACTIVITY_STRENGTH.strongFloor).length;
+  const strong = ranked.filter((r) => r.score_0_10 >= ACTIVITY_STRENGTH.strongFloor);
+  const strongCount = strong.length;
+  const varietyCount = new Set(strong.map((r) => canonicalCategory(categoryById.get(r.entity_id))).filter(Boolean)).size;
   const breadth = 1 - Math.exp(-strongCount / ACTIVITY_STRENGTH.breadthScale);
-  return { strength01: ACTIVITY_STRENGTH.peakWeight * peak + ACTIVITY_STRENGTH.breadthWeight * breadth, strongCount };
+  const diversity = 1 - Math.exp(-varietyCount / ACTIVITY_STRENGTH.diversityScale);
+  const strength01 =
+    ACTIVITY_STRENGTH.peakWeight * peak + ACTIVITY_STRENGTH.breadthWeight * breadth + ACTIVITY_STRENGTH.diversityWeight * diversity;
+  return { strength01, strongCount, varietyCount };
 }
 
 /**
@@ -527,31 +559,129 @@ function blendCityActivityStrength(rankedCities, persona) {
       const why = [...(c.why ?? [])];
       // Only cite the activity lineup when it's what actually carried the city.
       if (s.strength01 * 10 >= c.score_0_10 + 0.3 && s.strongCount >= 5) {
-        why.unshift(`Rich lineup of ${s.strongCount} strongly-rated activities for this trip`);
+        why.unshift(`Rich, varied lineup — ${s.strongCount} strong activities across ${s.varietyCount} categories`);
       }
-      return { ...c, score_0_10, city_score_0_10: c.score_0_10, activity_strength_0_10: Number((s.strength01 * 10).toFixed(1)), why };
+      return {
+        ...c,
+        score_0_10,
+        city_score_0_10: c.score_0_10,
+        activity_strength_0_10: Number((s.strength01 * 10).toFixed(1)),
+        activity_variety: s.varietyCount,
+        why,
+      };
     })
     .sort((a, b) => b.score_0_10 - a.score_0_10);
 }
 
+// The chosen blend (see experienceFit.js::BLENDS and the additive-vs-multiplicative
+// comparison). 0.6 physical + 0.4 experience_fit.
+const EXPERIENCE_BLEND = 'additive';
+
+/**
+ * Re-score a ranked activity list by blending physical fit with experience_fit,
+ * and attach the full trace (physical_fit / experience_fit / final) to each item.
+ * `personaIds` are the composed persona's constituent ids → the fit axes.
+ */
+function applyExperienceFit(recommended, personaIds) {
+  const actById = new Map(data.activities.map((a) => [a.id, a]));
+  return recommended
+    .map((a) => {
+      const entity = actById.get(a.entity_id);
+      if (!entity) return a;
+      const { fit, axes, binding_axis, fit_reason } = experienceFitFor(entity, personaIds);
+      const physical01 = a.score_0_10 / 10;
+      const final01 = BLENDS[EXPERIENCE_BLEND](physical01, fit);
+      return {
+        ...a,
+        physical_fit_0_10: a.score_0_10,
+        experience_fit: Number(fit.toFixed(2)),
+        experience_fit_axes: axes,
+        experience_fit_binding: binding_axis,
+        fit_reason,
+        score_0_10: Number((final01 * 10).toFixed(1)),
+      };
+    })
+    .sort((x, y) => y.score_0_10 - x.score_0_10);
+}
+
+// Travel-STYLE personas that co-drive the destination vibe (luxury beach vs
+// budget beach) but don't define the group archetype. Everything not a
+// constraint and not one of these is treated as the majority archetype driver.
+const STYLE_MODIFIER_PERSONAS = new Set(['luxury', 'budget', 'wellness', 'adventure', 'foodie', 'digital_nomad', 'road_trip_friendly', 'content_creator', 'first_international_trip']);
+
+/**
+ * DESTINATION STRATEGY: build the persona that SELECTS destinations. The
+ * majority persona (+ any style modifiers like luxury/budget) drives the STYLE
+ * weights; constraint personas (pregnancy/wheelchair/infant) contribute ONLY
+ * their gates. This is the "what's best for the majority, THEN can the
+ * constraint do it safely?" ordering — so 5 friends + a pregnant honeymooner get
+ * beach/social cities that happen to have hospitals, not a calm inland trip
+ * chosen FOR the pregnancy. Special personas (honeymoon) don't drive the
+ * destination unless they ARE the majority; they get dedicated activity moments.
+ */
+function buildDestinationPersona(roles, personaIds) {
+  const modifiers = personaIds.filter((p) => STYLE_MODIFIER_PERSONAS.has(p) && p !== roles.majority);
+  const stylePersonas = [...new Set([roles.majority, ...modifiers])];
+  const style = composePersonas(stylePersonas, data.personasById);
+  const constraintHard = roles.constraints.flatMap((id) => data.personasById[id]?.hard_gates ?? []);
+  const constraintSoft = roles.constraints.flatMap((id) => data.personasById[id]?.soft_gates ?? []);
+  return {
+    ...style,
+    hard_gates: [...(style.hard_gates ?? []), ...constraintHard],
+    soft_gates: [...(style.soft_gates ?? []), ...constraintSoft],
+    style_personas: stylePersonas,
+  };
+}
+
 function runSingle(city, persona, durationDays = null) {
   const cityPool = city ? [city] : data.cityFile.entities;
+  const personaIds = persona.composed_from ?? [persona.id];
+  const roles = classifyPersonaRoles(personaIds);
 
-  const durationAdj = applyDurationAdjustment(persona.weights, durationDays);
-  const cityPersona = durationAdj.applied ? { ...persona, weights: durationAdj.weights } : persona;
+  // Destinations are chosen by the MAJORITY (style), gated by CONSTRAINTS —
+  // NOT by the constraint-blended full persona (that pulled a friends trip
+  // inland because a pregnancy constraint out-weighted the friends).
+  const destPersona = buildDestinationPersona(roles, personaIds);
+  const styleStrengthPersona = composePersonas(destPersona.style_personas, data.personasById);
+  const durationAdj = applyDurationAdjustment(destPersona.weights, durationDays);
+  const cityPersona = durationAdj.applied ? { ...destPersona, weights: durationAdj.weights } : destPersona;
 
   // Rank cities FIRST — the recommended cities define where the trip goes, and
   // therefore which activities are even relevant. Then fold each city's own
   // activity lineup back into its score, so an activity-rich city (Bangkok for a
   // couple) can climb even if the place itself scores mid on ambient qualities.
   const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, cityPersona, cityPool.length), 'city');
-  const blendedCities = city ? [] : blendCityActivityStrength(cities.recommended, persona);
+  const blendedCities = city ? [] : blendCityActivityStrength(cities.recommended, styleStrengthPersona);
   const recommendedCities = qualityShortlist(blendedCities, {
     floor: CITY_SHORTLIST.floor,
     band: CITY_SHORTLIST.band,
     feasible: citiesNeeded(durationDays),
     ceiling: CITY_SHORTLIST.ceiling,
   });
+
+  // Destination strategy report (majority vs constraint routing, incl. cities
+  // rejected for UNDERSERVING the majority — a concept the engine lacked before).
+  let destination_strategy = null;
+  if (!city) {
+    const recSet = new Set(recommendedCities.map((c) => c.entity_id));
+    let rejected_routes = [];
+    if (roles.constraints.length) {
+      // What the OLD constraint-blended ranking would have chosen — its top
+      // picks that the majority-driven ranking dropped underserve the majority.
+      const blended = splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city').recommended;
+      rejected_routes = blended
+        .filter((c) => !recSet.has(c.entity_id))
+        .slice(0, 3)
+        .map((c) => ({ city: c.name, reason: `underserves majority persona (${roles.majority}) — scores on the constraint blend, not ${roles.majority} style` }));
+    }
+    destination_strategy = {
+      majority_persona: roles.majority,
+      constraint_personas: roles.constraints,
+      special_personas: roles.special,
+      recommended_route: recommendedCities.map((c) => ({ city: c.name, reason: c.why?.[0] ?? `${roles.majority} fit` })),
+      rejected_routes,
+    };
+  }
 
   // Activities are scoped to the cities we actually recommend (or the one
   // requested city). Cities and activities used to be ranked in two independent
@@ -568,8 +698,15 @@ function runSingle(city, persona, durationDays = null) {
     'activity'
   );
 
+  // EXPERIENCE-FIT LAYER: physical fit (score above) answers "is it safe/easy?";
+  // experience_fit answers "is it the right KIND of experience?" Blend the two so
+  // a rooftop bar stops out-ranking a temple for a 72-year-old. ADDITIVE was
+  // selected over multiplicative (see experienceFit.js / project.md Round 15): it
+  // cut contradictions equally but preserved the most recommendation diversity.
+  const fitted = applyExperienceFit(activities.recommended, persona.composed_from ?? [persona.id]);
+
   const activityFeasible = durationDays ? Math.ceil(durationDays * ACT_SHORTLIST.perDay) : ACT_SHORTLIST.defaultCount;
-  const recommendedActivities = qualityShortlist(activities.recommended, {
+  const recommendedActivities = qualityShortlist(fitted, {
     floor: ACT_SHORTLIST.floor,
     band: ACT_SHORTLIST.band,
     feasible: activityFeasible,
@@ -605,6 +742,7 @@ function runSingle(city, persona, durationDays = null) {
     excluded_options: [...(cities?.excluded ?? []), ...activities.excluded].slice(0, MAX_EXCLUDED),
     eligible_totals: eligibleTotals,
     shortlist_rationale,
+    destination_strategy,
   };
 }
 
@@ -765,7 +903,147 @@ export function evaluateQuery(input) {
     query: { text: ext.text || null, resolved_city: ext.city?.id ?? null, personas: ext.personaIds },
     ...rankedResult,
   };
-  return { ext, recipe, ranked };
+  const context = ext.compareMode ? null : buildLLMContext(ext, rankedResult);
+  return { ext, recipe, ranked, context };
+}
+
+// Enough ranked candidates for the LLM to build a week from; it fleshes out the
+// rest with its own knowledge. Kept modest so the payload stays token-cheap even
+// with per-item signal breakdowns.
+const CONTEXT_ACTIVITY_CAP = 10;
+
+// Cheap persona-derived trip hints the itinerary LLM values but shouldn't have
+// to infer. All three are pure lookups over the derived persona ids.
+const RELAXED_PERSONAS = new Set(['senior_citizen', 'family_trip', 'child_friendly', 'infant_friendly', 'pregnancy_friendly', 'wheelchair_friendly', 'honeymoon', 'couple', 'wellness']);
+const ACTIVE_PERSONAS = new Set(['friends_trip', 'young_couple', 'bachelor_trip', 'bachelorette_trip', 'adventure']);
+const HIGH_SAFETY_PERSONAS = new Set(['family_trip', 'child_friendly', 'infant_friendly', 'senior_citizen', 'pregnancy_friendly', 'female_solo']);
+const tripPace = (ids) => (ids.some((p) => RELAXED_PERSONAS.has(p)) ? 'relaxed' : ids.some((p) => ACTIVE_PERSONAS.has(p)) ? 'active' : 'moderate');
+const safetyPriority = (ids) => (ids.some((p) => HIGH_SAFETY_PERSONAS.has(p)) ? 'high' : 'normal');
+const mobilityRequirement = (ids) =>
+  ids.includes('wheelchair_friendly') ? 'step_free_required' : ids.includes('senior_citizen') || ids.includes('infant_friendly') ? 'low_walking' : 'normal';
+
+/**
+ * The signals that most drove THIS entity's fit for THIS persona, as {signal: 0-100}.
+ * Sorted by the persona's weight (most-relevant dimension first), so the itinerary
+ * LLM sees the same axes the engine judged on and can re-reason for the traveller
+ * (a family reads kid/safety; a couple reads romance/quiet). This is the "feed the
+ * reasoning, not just the verdict" part — a decomposed score, not one opaque number.
+ */
+function signalBreakdown(entity, ancestors, persona, n) {
+  const r = scoreEntity(entity, ancestors, persona, data.dictionary);
+  return Object.fromEntries(
+    [...r.contributions]
+      .sort((a, b) => b.weight - a.weight)
+      .slice(0, n)
+      .map((c) => [c.signal_id, Math.round(c.value * 100)])
+  );
+}
+
+/**
+ * The hand-off document sent to an itinerary LLM. Design (industry-standard
+ * agentic hand-off): STRUCTURED and MACHINE-COMPARABLE, not prose. Explicit
+ * 0-100 scores (comparable across items), a per-item signal breakdown (so the
+ * model reasons from real dimensions, not a verdict), a structured trip_profile,
+ * and a hard `avoid` list. No weights/gates, no empty fields — compact but
+ * information-dense. Order still encodes rank; the score makes the gaps legible.
+ */
+export function buildLLMContext(ext, rankedResult) {
+  const roster = ext.derived?.roster;
+  const persona = ext.composed; // single composed persona in this mode
+  const ids = ext.personaIds;
+  const missing = [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
+  const durationDays = parseDurationDays(ext.brief?.duration);
+
+  const group = {};
+  if (roster?.adults != null) group.adults = roster.adults;
+  if (roster?.children_ages?.length) group.children = roster.children_ages;
+  if (roster?.has_senior_adult) group.seniors = true;
+
+  const trip_profile = {
+    destination: ext.city?.name ? `Thailand — ${ext.city.name}` : 'Thailand',
+    ...(durationDays ? { duration_days: durationDays } : {}),
+    ...(Object.keys(group).length ? { group } : {}),
+    personas: ids,
+    // STEP 1: majority persona drives itinerary STYLE, constraints define
+    // EXCLUSIONS, special personas get dedicated MOMENTS. The planner must not
+    // let a minority constraint persona dominate the whole trip.
+    persona_roles: classifyPersonaRoles(ids),
+    pace: tripPace(ids),
+    safety_priority: safetyPriority(ids),
+    mobility_requirement: mobilityRequirement(ids),
+    ...(ext.brief?.dates ? { dates: ext.brief.dates } : {}),
+    ...(ext.brief?.budget ? { budget: ext.brief.budget } : {}),
+    ...(missing.length ? { needs_confirmation: missing } : {}),
+  };
+
+  const city_ranking = (rankedResult.recommended_cities ?? []).map((c) => {
+    const entity = data.citiesById[c.entity_id];
+    return {
+      city: c.name,
+      score: Math.round(c.score_0_10 * 10),
+      // How many distinct kinds of strong experience the city offers — the
+      // "best week" signal. A high score with low variety = one great thing
+      // repeated; high variety = a genuinely diverse week. The itinerary LLM
+      // should prefer variety for multi-day trips (esp. families/kids).
+      ...(c.activity_variety != null ? { activity_variety: c.activity_variety } : {}),
+      ...(entity ? { breakdown: signalBreakdown(entity, [data.country], persona, 5) } : {}),
+    };
+  });
+
+  const activityById = new Map(data.activities.map((a) => [a.id, a]));
+  const activity_ranking = (rankedResult.recommended_activities ?? []).slice(0, CONTEXT_ACTIVITY_CAP).map((a) => {
+    const entity = activityById.get(a.entity_id);
+    const parentCity = entity ? data.citiesById[entity.parent_id] : null;
+    return {
+      activity: a.name,
+      city: a.city,
+      score: Math.round(a.score_0_10 * 10), // final = physical ⊕ experience_fit
+      // bucket_list_value: how much this is a REASON to visit Thailand (Grand
+      // Palace 98, aquarium ~15). The planner uses this so a first-timer's trip
+      // isn't mall/café/spa — it's NOT folded into the score, it's a separate
+      // axis the planner balances (see the planner prompt).
+      ...(entity ? { bucket_list_value: deriveBucketListValue(entity) } : {}),
+      ...(entity?.category ? { style: entity.category } : {}),
+      ...(a.physical_fit_0_10 != null ? { physical_fit: Math.round(a.physical_fit_0_10 * 10) } : {}),
+      ...(a.experience_fit != null ? { experience_fit: Math.round(a.experience_fit * 100) } : {}),
+      ...(a.fit_reason?.length ? { fit_reason: a.fit_reason } : {}),
+      ...(a.duration_hours != null ? { duration_hours: a.duration_hours } : {}),
+      ...(entity ? { signals: signalBreakdown(entity, [parentCity, data.country], persona, 4) } : {}),
+    };
+  });
+
+  // STEP 7 support: which "first-time Thailand" essentials the candidate pool
+  // covers, so the planner (and we) can see at a glance if the trip would miss
+  // culture / beach / thai food / market / an iconic experience. Derived from
+  // category + bucket_list, not authored.
+  const firstTimer = { culture: false, beach: false, thai_food: false, market: false, iconic: false };
+  for (const a of activity_ranking) {
+    const cat = a.style ?? '';
+    if (['heritage', 'culture', 'heritage_wellness'].includes(cat)) firstTimer.culture = true;
+    if (['beach', 'island_hopping', 'beach_club'].includes(cat)) firstTimer.beach = true;
+    if (['food', 'dining'].includes(cat)) firstTimer.thai_food = true;
+    if (cat === 'shopping' || /market/i.test(a.activity)) firstTimer.market = true;
+    if ((a.bucket_list_value ?? 0) >= 80) firstTimer.iconic = true;
+  }
+
+  // Exclusions grouped by reason so `avoid` is a few lines, not 20 rows.
+  const avoidMap = new Map();
+  for (const e of rankedResult.excluded_options ?? []) {
+    if (e.type === 'hotel') continue;
+    if (!avoidMap.has(e.reason)) avoidMap.set(e.reason, []);
+    avoidMap.get(e.reason).push(e.name);
+  }
+  const avoid = [...avoidMap].map(([why, names]) => ({ what: names.join(', '), why }));
+
+  return {
+    query: ext.text || null,
+    trip_profile,
+    ...(rankedResult.destination_strategy ? { destination_strategy: rankedResult.destination_strategy } : {}),
+    city_ranking,
+    activity_ranking,
+    first_timer_essentials: firstTimer,
+    ...(avoid.length ? { avoid } : {}),
+  };
 }
 
 /** Weights sorted descending so the most-influential signals read first — order carries information here. */
@@ -879,13 +1157,18 @@ function printRecipeJSON(ext) {
 let queryCounter = 0;
 
 /**
- * Writes TWO separate files per query — always, no flag needed:
- *   - <n>.recipe.json  — persona(s), brief, roster, constraints, composed weights/gates/tag_modifiers. Nothing ranked. The "why".
- *   - <n>.ranked.json  — real cities/activities scored, sorted and shortlisted against that recipe, plus excluded_options and shortlist_rationale. The "what".
- * A downstream consumer (itinerary LLM, UI, etc.) reads both: recipe for the
- * "why", ranked for the "what". There is deliberately no third "llm.json" —
- * it used to exist but was just these two merged (a redundant replica), so it
- * was removed. Anything that needs the full picture reads recipe + ranked.
+ * Writes up to three files per query — always, no flag needed:
+ *   - <n>.context.json — the LEAN hand-off actually sent to an itinerary LLM:
+ *       persona + party + a short candidate shortlist + hard "avoid" list. No
+ *       scores (order = rank), no weights/gates, no empty fields. This is the
+ *       token-cheap document; everything else is audit.
+ *   - <n>.recipe.json  — audit: persona(s), brief, roster, constraints, composed
+ *       weights/gates/tag_modifiers. The "why", for debugging — not for the LLM.
+ *   - <n>.ranked.json  — audit: the full scored/sorted/shortlisted lists +
+ *       excluded_options + shortlist_rationale. The "what", in full detail.
+ * Only context.json is meant to leave the system; recipe/ranked exist so any
+ * ranking decision can be traced back to a real attribute. (context is
+ * single/blend mode only — compare mode is a persona-analysis view.)
  */
 function writeAndSummarize(ext) {
   const { city, personaIds, compareMode } = ext;
@@ -909,6 +1192,13 @@ function writeAndSummarize(ext) {
   writeJSON('output/thailand/query_result.recipe.json', recipe); // always-latest convenience copies
   writeJSON('output/thailand/query_result.ranked.json', ranked);
 
+  let contextPath = null;
+  if (!compareMode) {
+    const context = buildLLMContext(ext, rankedResult);
+    contextPath = writeJSON(`output/thailand/queries/${stamp}_${n}.context.json`, context);
+    writeJSON('output/thailand/query_result.context.json', context);
+  }
+
   if (compareMode) {
     const summary = ext.composed
       .map((c) => `${c.label} (${Object.keys(c.weights).length}w/${c.hard_gates.length + c.soft_gates.length}g)`)
@@ -923,9 +1213,12 @@ function writeAndSummarize(ext) {
   if (compareMode) printCompare(rankedResult);
   else printSingle(rankedResult);
 
-  console.log(`\nRecipe JSON (weights/gates/brief):        ${path.relative(ROOT, recipePath)}`);
-  console.log(`Ranked JSON (cities/activities):            ${path.relative(ROOT, rankedPath)}`);
-  console.log(`Latest copies: output/thailand/query_result.recipe.json, output/thailand/query_result.ranked.json`);
+  if (contextPath) console.log(`\n► LLM context (send THIS — lean, no scores):  ${path.relative(ROOT, contextPath)}`);
+  console.log(`  Recipe JSON (audit: weights/gates/brief):   ${path.relative(ROOT, recipePath)}`);
+  console.log(`  Ranked JSON (audit: full scored lists):     ${path.relative(ROOT, rankedPath)}`);
+  console.log(
+    `  Latest copies: query_result.context.json${contextPath ? '' : ''}, query_result.recipe.json, query_result.ranked.json`
+  );
   console.log('-'.repeat(64) + '\n');
 }
 
@@ -948,11 +1241,11 @@ function printHelp() {
   console.log(`
 Travelomore Core Engine — query CLI
 
-Every query writes TWO files: a .recipe.json (resolved persona(s), the
-Maya-shaped brief parsed from your prompt, and the composed scoring
-configuration — weights, hard/soft gates, tag modifiers) and a .ranked.json
-(real Thailand cities/activities/hotels scored and sorted against that
-recipe). Both print a summary to console too.
+Every query writes a lean .context.json (the token-cheap hand-off actually
+sent to an itinerary LLM: persona + party + candidate shortlist + hard "avoid"
+list, no scores) plus two audit files — .recipe.json (resolved persona(s),
+parsed brief, composed weights/gates/tag modifiers) and .ranked.json (full
+scored/sorted lists). A summary also prints to console.
 
 Usage:
   node engine/cli.js "<free text prompt>"

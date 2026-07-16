@@ -1,5 +1,5 @@
 {
-  "input_text": "\"Planning Thailand for me and my grandmother. We love beaches and nightlife.",
+  "input_text": "Taking my 72-year-old grandmother to Thailand.",
   "resolved_city": null,
   "personas": [
     "senior_citizen"
@@ -12,6 +12,7 @@
   "mode": "single",
   "constraints": {
     "known": [
+      "traveller age(s): 72",
       "senior traveller present"
     ],
     "inferred": [],
@@ -28,7 +29,7 @@
     "dates": null,
     "duration": null,
     "budget": null,
-    "groupComposition": "\"Planning Thailand for me and my grandmother. We love beaches and nightlife.",
+    "groupComposition": "Taking my 72-year-old grandmother to Thailand.",
     "extras": [],
     "awaitingField": null,
     "conversationComplete": true
@@ -36,7 +37,9 @@
   "roster": {
     "adults": null,
     "gender": "unspecified",
-    "ages": [],
+    "ages": [
+      72
+    ],
     "young_adults": false,
     "romantic": false,
     "children_ages": [],
