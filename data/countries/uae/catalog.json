@@ -1,0 +1,20 @@
+{
+  "schema": "travelomore/country_catalog/1.0.0",
+  "country": "uae",
+  "files": {
+    "country": "country.json",
+    "cities": "cities.json",
+    "activities": ["activities.json"],
+    "hotels": "hotels.json"
+  },
+  "planning_profile": {
+    "style_variety_examples": "mosque / souk / beach / desert / skyline",
+    "first_timer_essentials": [
+      { "key": "culture", "categories": ["heritage", "culture", "heritage_wellness"] },
+      { "key": "beach", "categories": ["beach", "beach_club", "water_sports"] },
+      { "key": "desert", "categories": ["desert"] },
+      { "key": "souk", "categories": ["shopping"], "name_matches": "souk|market|mall" },
+      { "key": "iconic", "min_bucket_list_value": 80 }
+    ]
+  }
+}

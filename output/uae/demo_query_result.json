@@ -1,0 +1,429 @@
+{
+  "brief": {
+    "destinationType": "United Arab Emirates family beach trip",
+    "dates": "10 Dec - 18 Dec 2026",
+    "duration": "8 nights",
+    "budget": "₹1.2L per person",
+    "groupComposition": "2 adults, 1 child (8 yrs)",
+    "extras": [
+      {
+        "label": "dietary",
+        "value": "vegetarian"
+      },
+      {
+        "label": "accessibility",
+        "value": "wheelchair-friendly transfers needed for a grandparent joining"
+      },
+      {
+        "label": "activity",
+        "value": "no extreme adventure sports"
+      }
+    ],
+    "awaitingField": null,
+    "conversationComplete": true
+  },
+  "derived_personas": [
+    "child_friendly",
+    "family_trip",
+    "wheelchair_friendly"
+  ],
+  "persona_extraction_notes": [],
+  "matched_extras": [
+    {
+      "label": "accessibility",
+      "value": "wheelchair-friendly transfers needed for a grandparent joining"
+    }
+  ],
+  "unmatched_extras": [
+    {
+      "label": "dietary",
+      "value": "vegetarian"
+    },
+    {
+      "label": "activity",
+      "value": "no extreme adventure sports"
+    }
+  ],
+  "composed_persona": {
+    "id": "child_friendly+family_trip+wheelchair_friendly",
+    "label": "Child Friendly (3-12) + Family Trip + Wheelchair Friendly",
+    "composed_from": [
+      "child_friendly",
+      "family_trip",
+      "wheelchair_friendly"
+    ],
+    "top_weights": [
+      {
+        "signal": "kid_activity_density",
+        "weight": 0.11
+      },
+      {
+        "signal": "safety_general",
+        "weight": 0.077
+      },
+      {
+        "signal": "wheelchair_access",
+        "weight": 0.067
+      },
+      {
+        "signal": "kids_dining_ease",
+        "weight": 0.057
+      },
+      {
+        "signal": "hospital_proximity",
+        "weight": 0.053
+      },
+      {
+        "signal": "step_free_access",
+        "weight": 0.053
+      },
+      {
+        "signal": "shallow_calm_beach",
+        "weight": 0.05
+      },
+      {
+        "signal": "walking_load_low",
+        "weight": 0.05
+      },
+      {
+        "signal": "food_hygiene",
+        "weight": 0.047
+      },
+      {
+        "signal": "crowd_pressure_low",
+        "weight": 0.043
+      }
+    ]
+  },
+  "top_cities": [
+    {
+      "entity_id": "city:AE:AUH",
+      "name": "Abu Dhabi",
+      "score_0_10": 9.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.1,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 93/100)",
+          "Wheelchair access is well provided for (88/100)",
+          "International-standard hospital within 3 km"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:AE:SHJ",
+      "name": "Sharjah",
+      "score_0_10": 8.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.2,
+        "reasons": [
+          "Strong general safety record (safety index 92/100)",
+          "Lots that children actively enjoy",
+          "Mild, kid-friendly food easy to order",
+          "International-standard hospital within 5 km"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:AE:DXB",
+      "name": "Dubai",
+      "score_0_10": 8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (88/100)",
+          "International-standard hospital within 2 km"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)",
+          "Heavily crowded (78/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "city:AE:RKT",
+      "name": "Ras Al Khaimah",
+      "score_0_10": 6.6,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 6.6,
+        "reasons": [
+          "Strong general safety record (safety index 92/100)",
+          "Calm, shallow water suitable for children",
+          "Reliable food hygiene standards",
+          "Lots that children actively enjoy"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 44°C)"
+        ]
+      }
+    }
+  ],
+  "top_activities": [
+    {
+      "entity_id": "act:AE:DXB:museum-of-the-future",
+      "name": "Museum of the Future",
+      "score_0_10": 9.9,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.9,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (95/100)",
+          "Mostly step-free routes"
+        ],
+        "cautions": [
+          "Heavily crowded (78/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:DXB:dubai-mall",
+      "name": "The Dubai Mall",
+      "score_0_10": 9.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (95/100)",
+          "Mostly step-free routes"
+        ],
+        "cautions": [
+          "Heavily crowded (88/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:DXB:burj-khalifa",
+      "name": "Burj Khalifa — At the Top",
+      "score_0_10": 9.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.8,
+        "reasons": [
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (95/100)",
+          "Lots that children actively enjoy",
+          "Mostly step-free routes"
+        ],
+        "cautions": [
+          "Heavily crowded (90/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:DXB:dubai-fountain",
+      "name": "The Dubai Fountain Show",
+      "score_0_10": 9.8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.8,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (90/100)",
+          "Low walking requirement (~1 km/day)"
+        ],
+        "cautions": [
+          "Heavily crowded (92/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:AUH:corniche-beach",
+      "name": "Corniche Beach",
+      "score_0_10": 9.6,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.6,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 93/100)",
+          "Wheelchair access is well provided for (85/100)",
+          "Calm, shallow water suitable for children"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 42°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:AUH:yas-island",
+      "name": "Yas Island (Yas Waterworld & Warner Bros.)",
+      "score_0_10": 9.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.2,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 93/100)",
+          "Wheelchair access is well provided for (88/100)",
+          "International-standard hospital within 3 km"
+        ],
+        "cautions": [
+          "Heavy walking load (~7 km/day)",
+          "Heavily crowded (78/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:AUH:ferrari-world",
+      "name": "Ferrari World Abu Dhabi",
+      "score_0_10": 9.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.2,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 93/100)",
+          "Wheelchair access is well provided for (90/100)",
+          "International-standard hospital within 3 km"
+        ],
+        "cautions": [
+          "Heavily crowded (72/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "act:AE:SHJ:al-noor-island",
+      "name": "Al Noor Island & Butterfly House",
+      "score_0_10": 9.2,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.2,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Mostly step-free routes",
+          "Wheelchair access is well provided for (82/100)"
+        ],
+        "cautions": []
+      }
+    }
+  ],
+  "top_hotels": [
+    {
+      "entity_id": "hotel:AE:AUH:yas-family-resort",
+      "name": "Yas Island Family Resort (Hilton / Centro class)",
+      "score_0_10": 9.4,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.4,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 93/100)",
+          "Wheelchair access is well provided for (88/100)",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:AE:DXB:downtown-five-star",
+      "name": "Downtown Five-Star (Address / Armani class)",
+      "score_0_10": 9.4,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 9.4,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "Wheelchair access is well provided for (92/100)",
+          "International-standard hospital within 2 km"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)",
+          "Heavily crowded (78/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:AE:DXB:deira-midscale",
+      "name": "Deira Midscale (Rove / Premier Inn class)",
+      "score_0_10": 8.7,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8.7,
+        "reasons": [
+          "Lots that children actively enjoy",
+          "Strong general safety record (safety index 92/100)",
+          "International-standard hospital within 4 km",
+          "Reliable food hygiene standards"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)",
+          "Heavily crowded (78/100 crowd pressure)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:AE:RKT:al-marjan-beach-resort",
+      "name": "Al Marjan Island Beach Resort (Rixos / Hilton class)",
+      "score_0_10": 8,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 8,
+        "reasons": [
+          "Strong general safety record (safety index 92/100)",
+          "Calm, shallow water suitable for children",
+          "Wheelchair access is well provided for (80/100)",
+          "Mild, kid-friendly food easy to order"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 44°C)"
+        ]
+      }
+    },
+    {
+      "entity_id": "hotel:AE:SHJ:heritage-boutique",
+      "name": "Heart of Sharjah Heritage Boutique (Al Bait class)",
+      "score_0_10": 7.1,
+      "eligible": true,
+      "explanation": {
+        "persona": "child_friendly+family_trip+wheelchair_friendly",
+        "score": 7.1,
+        "reasons": [
+          "Strong general safety record (safety index 92/100)",
+          "Lots that children actively enjoy",
+          "International-standard hospital within 5 km",
+          "Reliable food hygiene standards"
+        ],
+        "cautions": [
+          "High heat stress (peak heat index 45°C)"
+        ]
+      }
+    }
+  ]
+}

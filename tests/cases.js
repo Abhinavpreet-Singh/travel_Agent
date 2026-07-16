@@ -141,4 +141,88 @@ export const cases = [
       citiesInShortlist: ['Bangkok'],
     },
   },
+
+  // ---- country_catalog_isolation (Round 22) ---------------------------------
+  // The multi-country guarantee, asserted from BOTH directions. These are the
+  // cases that would catch a shared/leaky catalog loader, a cached `data`
+  // singleton bleeding across queries, or a country fork in the planning code.
+  {
+    name: 'country_catalog_isolation_uae',
+    query: 'trip to Dubai',
+    note: 'A UAE query must be planned from the UAE catalog ALONE. No Thai city may appear anywhere in any of the four output documents.',
+    expect: {
+      country: 'uae',
+      countryVia: 'city', // "Dubai" uniquely identifies the UAE — no country named
+      noCatalogLeakage: ['Bangkok', 'Phuket', 'Chiang Mai', 'Pattaya'],
+    },
+  },
+  {
+    name: 'country_catalog_isolation_thailand',
+    query: 'trip to Thailand',
+    note: 'The mirror case: adding the UAE catalog must not leak a single Emirati entity into a Thailand trip.',
+    expect: {
+      country: 'thailand',
+      countryVia: 'country_name',
+      noCatalogLeakage: ['Dubai', 'Abu Dhabi', 'Sharjah', 'Burj Khalifa', 'Ras Al Khaimah'],
+    },
+  },
+  {
+    name: 'country_catalog_isolation_cross_query',
+    query: 'family trip to Sharjah with 2 kids aged 6 and 9',
+    note: 'Catalogs are cached and reused across queries — this runs after Thailand cases in the same process, so a leak through the cache or a stale module-level catalog shows up here.',
+    expect: {
+      country: 'uae',
+      personas: ['child_friendly', 'family_trip'],
+      noCatalogLeakage: ['Bangkok', 'Phuket', 'Chiang Mai', 'Pattaya', 'Krabi', 'Koh '],
+    },
+  },
+
+  // ---- UAE v1: the same engine, a different catalog -------------------------
+  // These assert BEHAVIOUR, not just isolation: if the planning engine is truly
+  // country-agnostic, personas must steer a UAE trip the same way they steer a
+  // Thai one — driven purely by the catalog's data.
+  {
+    name: 'uae_friends_week',
+    query: '5 friends travelling to Dubai for a week',
+    note: 'The Round 22 success criterion. Must run the identical pipeline and produce all four documents. Desert safari is the group/party-weighted headline; the UAE essentials vocabulary (desert/souk) comes from the catalog, never from engine code.',
+    expect: {
+      country: 'uae',
+      personas: ['friends_trip'],
+      activitiesInShortlist: ['Desert Safari'],
+      essentials: { desert: true, souk: true },
+      minActivities: 5,
+    },
+  },
+  {
+    name: 'uae_senior_week',
+    query: 'trip to UAE with my 72 year old grandfather for a week',
+    note: 'Persona logic must transfer to a new catalog with no new code: a 72-year-old gets cool, step-free, hospital-near culture — and must NOT be sent dune-bashing (pregnancy/exertion/heat data on the safari, not a UAE special case).',
+    expect: {
+      country: 'uae',
+      personas: ['senior_citizen'],
+      citiesInShortlist: ['Dubai', 'Abu Dhabi'],
+      minExperienceFit: 0.4,
+      essentials: { desert: false }, // the desert safari is correctly not in a senior shortlist
+    },
+  },
+  {
+    name: 'uae_family_kids',
+    query: 'family trip to abu dhabi with 2 kids aged 6 and 9, 1 week',
+    note: 'Kid-activity density in the catalog — not a hardcoded rule — is what surfaces Ferrari World / Yas Island for a family.',
+    expect: {
+      country: 'uae',
+      personas: ['child_friendly', 'family_trip'],
+      activitiesInShortlist: ['Ferrari World'],
+    },
+  },
+  {
+    name: 'uae_sharjah_dry_emirate',
+    query: 'bachelor trip to UAE for 5 days',
+    note: 'Sharjah is legally dry (alcohol_access 0, nightlife ~0 in the catalog). A bachelor trip must therefore not anchor there — and that must fall out of the DATA through the universal scoring path, with no `if (city === Sharjah)` anywhere.',
+    expect: {
+      country: 'uae',
+      personasInclude: ['bachelor_trip'],
+      citiesNotInShortlist: ['Sharjah'],
+    },
+  },
 ];

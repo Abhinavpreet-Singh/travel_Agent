@@ -1,9 +1,12 @@
 /**
- * Travelomore Core — Data Loader
+ * Travelomore Core — Filesystem + Shared Data
  *
- * Single place that reads the Thailand JSON files and resolves ancestor
- * chains. Shared by engine/generate.js (bulk scoring) and engine/cli.js
- * (single-query testing) so both always see the same data-loading behavior.
+ * JSON read/write rooted at the repo, plus the COUNTRY-INDEPENDENT inputs
+ * (signal dictionary, personas) that every catalog is scored with.
+ *
+ * Country catalogs are NOT loaded here — see engine/countries.js
+ * (loadCountryCatalog), which composes these shared inputs with one country's
+ * entity files.
  */
 
 import fs from 'node:fs';
@@ -22,53 +25,24 @@ export function writeJSON(relPath, data) {
   return full;
 }
 
-export function loadThailand() {
+let sharedCache = null;
+
+/**
+ * The inputs that do NOT vary by country: the signal dictionary every entity is
+ * normalized against, and the persona library every catalog is scored with.
+ * A persona means the same thing in Bangkok and in Dubai — that universality is
+ * the whole premise of the engine, so these load once and are shared by every
+ * country catalog.
+ */
+export function loadShared() {
+  if (sharedCache) return sharedCache;
   const dictionary = readJSON('ontology/signal_dictionary.json');
   const personaFile = readJSON('personas/personas.json');
-  const personasById = Object.fromEntries(personaFile.personas.map((p) => [p.id, p]));
-  const ALL_PERSONA_IDS = personaFile.personas.map((p) => p.id);
-
-  const countryFile = readJSON('data/thailand/country.json');
-  const cityFile = readJSON('data/thailand/cities.json');
-  const activitiesSouth = readJSON('data/thailand/activities_south.json');
-  const activitiesNorthGulf = readJSON('data/thailand/activities_north_gulf.json');
-  const activitiesSupplemental = readJSON('data/thailand/activities_supplemental.json');
-  const hotelFile = readJSON('data/thailand/hotels.json');
-  const flightFile = readJSON('data/thailand/flights.json');
-  const visaFile = readJSON('data/thailand/visa.json');
-
-  const country = countryFile.entities[0];
-  const citiesById = Object.fromEntries(cityFile.entities.map((c) => [c.id, c]));
-  const activities = [...activitiesSouth.entities, ...activitiesNorthGulf.entities, ...activitiesSupplemental.entities];
-  const hotels = hotelFile.entities;
-  const flights = flightFile.entities;
-  const visas = visaFile.entities;
-
-  const ancestorsOf = {
-    country: () => [],
-    destination_city: () => [country],
-    activity: (e) => [citiesById[e.parent_id], country],
-    hotel: (e) => [citiesById[e.parent_id], country],
-    flight: () => [country],
-    visa: () => [country],
-  };
-
-  return {
+  sharedCache = {
     dictionary,
     personaFile,
-    personasById,
-    ALL_PERSONA_IDS,
-    countryFile,
-    cityFile,
-    hotelFile,
-    flightFile,
-    visaFile,
-    country,
-    citiesById,
-    activities,
-    hotels,
-    flights,
-    visas,
-    ancestorsOf,
+    personasById: Object.fromEntries(personaFile.personas.map((p) => [p.id, p])),
+    ALL_PERSONA_IDS: personaFile.personas.map((p) => p.id),
   };
+  return sharedCache;
 }

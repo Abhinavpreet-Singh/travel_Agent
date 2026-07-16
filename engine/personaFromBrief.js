@@ -383,12 +383,16 @@ const BUDGET_RE = /(₹\s?[\d,]+(?:\.\d+)?\s?(?:l|lakh|lakhs|k)?|(?:rs\.?|inr)\s
  * shape before `derivePersonas()` ever runs. `dates`/`duration`/`budget` are
  * genuinely best-effort (free text is unbounded); anything not found is
  * `null` rather than guessed at.
+ *
+ * `countryName` only LABELS the brief ("UAE friends trip" vs "Thailand friends
+ * trip"); it is never itself a persona signal — no persona pattern matches a
+ * country name, so the same text derives the same personas in any country.
  */
-export function parseFreeTextToBrief(text = '') {
+export function parseFreeTextToBrief(text = '', countryName = 'Thailand') {
   const roster = parseGroupComposition(text);
 
   const tripTypes = TRIP_TYPE_LABELS.filter(([, re]) => matchesPositively(text, re)).map(([label]) => label);
-  const destinationType = tripTypes.length ? `Thailand ${tripTypes.join(' + ')} trip` : 'Thailand trip';
+  const destinationType = tripTypes.length ? `${countryName} ${tripTypes.join(' + ')} trip` : `${countryName} trip`;
 
   const dateMatch = text.match(DATE_RANGE_RE) ?? text.match(DATE_SINGLE_RE);
 

@@ -24,7 +24,7 @@ const has = (names, wanted) => names.some((n) => n.toLowerCase().includes(wanted
 
 /** Run one case; return { name, checks: [{ ok, label, detail }] }. */
 function runCase(tc) {
-  const { ranked, planner } = evaluateQuery(tc.query);
+  const { recipe, ranked, context, planner } = evaluateQuery(tc.query);
   const personas = ranked.query.personas ?? [];
   const cityNames = (ranked.recommended_cities ?? []).map((c) => c.name);
   const activityCityNames = (ranked.recommended_activities ?? []).map((a) => a.city).filter(Boolean);
@@ -32,6 +32,33 @@ function runCase(tc) {
   const e = tc.expect ?? {};
   const checks = [];
   const check = (cond, label, detail = '') => checks.push({ ok: !!cond, label, detail });
+
+  if (e.country) check(ranked.country === e.country, `country resolves to "${e.country}"`, `got "${ranked.country}"`);
+  if (e.countryVia) check(recipe.country_resolution?.via === e.countryVia, `country resolved via ${e.countryVia}`, `got "${recipe.country_resolution?.via}"`);
+
+  // COUNTRY CATALOG ISOLATION: no entity from another country's catalog may
+  // appear ANYWHERE in the output — not in the ranked lists, not in a route, not
+  // in an excluded_options reason, not in a planner rule. Scanning the raw
+  // serialized documents (rather than just the city list) is deliberate: leakage
+  // through a field nobody thought to assert on is exactly the failure this
+  // guards. A hit is a hard fail — a Thailand trip must never see Burj Khalifa.
+  if (e.noCatalogLeakage) {
+    const blob = JSON.stringify({ recipe, ranked, context, planner });
+    for (const term of e.noCatalogLeakage) {
+      const leaked = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(blob);
+      check(!leaked, `no catalog leakage: "${term}"`, leaked ? `"${term}" leaked into the output` : '');
+    }
+  }
+  if (e.activitiesInShortlist)
+    for (const a of e.activitiesInShortlist)
+      check(
+        (ranked.recommended_activities ?? []).some((x) => x.name.toLowerCase().includes(a.toLowerCase())),
+        `activities include "${a}"`,
+        `got: ${(ranked.recommended_activities ?? []).map((x) => x.name).join(', ') || '(none)'}`
+      );
+  if (e.essentials)
+    for (const [key, want] of Object.entries(e.essentials))
+      check(planner?.first_timer_essentials?.[key] === want, `first_timer_essentials.${key} == ${want}`, `got ${planner?.first_timer_essentials?.[key]}`);
 
   if (e.personas) check(sameSet(personas, e.personas), `personas == [${e.personas.join(', ')}]`, `got [${personas.join(', ')}]`);
   if (e.personasInclude)
@@ -55,8 +82,14 @@ function runCase(tc) {
     check(offenders.length === 0, `every recommended activity has experience_fit >= ${e.minExperienceFit}`, offenders.length ? offenders.map((a) => `${a.name} (${a.experience_fit})`).join('; ') : '');
   }
 
-  // Universal invariant: every recommended activity lives in a recommended city.
-  const citySet = new Set(cityNames);
+  // Universal invariant: every recommended activity lives in a city the trip
+  // actually visits. When the query PINS a city ("trip to Dubai", "trip to
+  // Phuket") the engine skips city ranking entirely — recommended_cities is
+  // undefined by design and the route IS the pinned city — so fall back to the
+  // route there. Without the fallback every activity in a pinned-city query
+  // reads as an orphan against an empty set. Country-agnostic: pinned Phuket
+  // and pinned Dubai behave identically.
+  const citySet = new Set(cityNames.length ? cityNames : ranked.itinerary_route ?? []);
   const orphans = [...new Set(activityCityNames.filter((c) => !citySet.has(c)))];
   check(orphans.length === 0, 'activities coherent with recommended cities', orphans.length ? `orphan activity cities: ${orphans.join(', ')}` : '');
 

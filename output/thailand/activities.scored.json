@@ -1,6 +1,6 @@
 {
   "schema": "travelomore/activity/1.0.0",
-  "notes": "Merged from activities_south.json + activities_north_gulf.json, then scored.",
+  "notes": "Merged from this country's activity files (see data/countries/thailand/catalog.json), then scored.",
   "entities": [
     {
       "id": "act:TH:BKK:grand-palace",
@@ -403,6 +403,29 @@
             "cautions": [
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (95/100 crowd pressure)"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6967,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (95/100 crowd pressure)",
+              "Little scenic driving value"
             ]
           }
         },
@@ -994,6 +1017,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7186,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (80/100 crowd pressure)",
+              "Little scenic driving value"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -1550,6 +1596,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6566,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -2085,6 +2154,28 @@
               "140 direct weekly flights from India"
             ],
             "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7212,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value"
+            ]
           }
         },
         "honeymoon": {
@@ -2633,6 +2724,29 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (95/100 crowd pressure)",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6445,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (95/100 crowd pressure)",
+              "Little scenic driving value"
             ]
           }
         },
@@ -3226,6 +3340,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6672,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (88/100 crowd pressure)",
+              "Little scenic driving value"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -3788,6 +3925,29 @@
               "Strong general safety record (safety index 70/100)"
             ],
             "cautions": [
+              "Heavily crowded (65/100 crowd pressure)"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7165,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value",
               "Heavily crowded (65/100 crowd pressure)"
             ]
           }
@@ -4359,6 +4519,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.655,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (92/100 crowd pressure)",
+              "Little scenic driving value"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -4915,6 +5098,29 @@
             ],
             "cautions": [
               "Noisy environment, especially at night",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6392,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value",
               "Heavily crowded (70/100 crowd pressure)"
             ]
           }
@@ -5490,6 +5696,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6829,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (85/100 crowd pressure)",
+              "Little scenic driving value"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -6053,6 +6282,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5673,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.7,
+            "reasons": [
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Very little nightlife",
+              "Little scenic driving value"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -6586,6 +6838,28 @@
               "Extremely photogenic"
             ],
             "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6378,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Dense nightlife scene",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.8 h)",
+              "140 direct weekly flights from India"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value"
+            ]
           }
         },
         "honeymoon": {
@@ -7158,6 +7432,28 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (92/100 crowd pressure)",
               "Noisy environment, especially at night",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6477,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Quick transfer from the gateway airport (~2 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (92/100 crowd pressure)",
               "No direct flights from India — connection required"
             ]
           }
@@ -7742,6 +8038,28 @@
               "Heavily crowded (65/100 crowd pressure)",
               "Noisy environment, especially at night",
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6634,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Quick transfer from the gateway airport (~2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (65/100 crowd pressure)"
             ]
           }
         },
@@ -8338,6 +8656,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7302,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.3,
+            "reasons": [
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~2 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (80/100 crowd pressure)",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -8904,6 +9244,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7324,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -9440,6 +9801,27 @@
             ],
             "cautions": [
               "Noisy environment, especially at night",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7209,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
               "No direct flights from India — connection required"
             ]
           }
@@ -10032,6 +10414,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6636,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Heavily crowded (72/100 crowd pressure)",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -10610,6 +11014,27 @@
             ],
             "cautions": [
               "Noisy environment, especially at night",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6861,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.9,
+            "reasons": [
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~2 h)",
+              "Extremely photogenic"
+            ],
+            "cautions": [
               "No direct flights from India — connection required"
             ]
           }
@@ -11194,6 +11619,27 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (90/100 crowd pressure)",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7346,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.3,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (90/100 crowd pressure)"
             ]
           }
         },
@@ -11806,6 +12252,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7933,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (95/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -12402,6 +12869,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8066,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -12979,6 +13467,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8054,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Extremely photogenic",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -13523,6 +14032,25 @@
             "cautions": []
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8083,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": []
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -14042,6 +14570,25 @@
             "cautions": [
               "Noisy environment, especially at night"
             ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7127,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": []
           }
         },
         "honeymoon": {
@@ -14587,6 +15134,25 @@
             "cautions": [
               "Noisy environment, especially at night"
             ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7958,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Strong value for money"
+            ],
+            "cautions": []
           }
         },
         "honeymoon": {
@@ -15141,6 +15707,27 @@
             "cautions": [
               "Heavily crowded (65/100 crowd pressure)",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8399,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.4,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~1 h)",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (65/100 crowd pressure)"
             ]
           }
         },
@@ -15725,6 +16312,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7109,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -16285,6 +16893,27 @@
             "cautions": [
               "Heavily crowded (70/100 crowd pressure)",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7318,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.3,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": [
+              "Heavily crowded (70/100 crowd pressure)"
             ]
           }
         },
@@ -16890,6 +17519,28 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (72/100 crowd pressure)",
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7467,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (72/100 crowd pressure)"
             ]
           }
         },
@@ -17505,6 +18156,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7057,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -18065,6 +18737,27 @@
               "Strong value for money",
               "Quick transfer from the gateway airport (~1.2 h)",
               "Excellent spa and wellness options"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6963,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -18659,6 +19352,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7054,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -19223,6 +19937,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7466,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -19779,6 +20514,27 @@
               "Strong value for money",
               "Excellent spa and wellness options",
               "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7201,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -20388,6 +21144,29 @@
               "Heavily crowded (92/100 crowd pressure)",
               "No direct flights from India — connection required",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7265,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene",
+              "Strong value for money"
+            ],
+            "cautions": [
+              "Heavily crowded (92/100 crowd pressure)",
+              "Little scenic driving value",
+              "No direct flights from India — connection required"
             ]
           }
         },
@@ -21043,6 +21822,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7181,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Little scenic driving value",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -21676,6 +22478,29 @@
               "Heavily crowded (88/100 crowd pressure)",
               "Noisy environment, especially at night",
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6715,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Little scenic driving value",
+              "No direct flights from India — connection required",
+              "Heavily crowded (88/100 crowd pressure)"
             ]
           }
         },
@@ -22327,6 +23152,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6668,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Little scenic driving value",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -22891,6 +23739,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7526,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -23425,6 +24294,28 @@
               "Excellent spa and wellness options",
               "Extremely photogenic",
               "Strong value for money",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (65/100 crowd pressure)"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7179,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
               "Quick transfer from the gateway airport (~0.6 h)"
             ],
             "cautions": [
@@ -24007,6 +24898,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7208,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -24542,6 +25454,27 @@
               "Extremely photogenic",
               "Rarely overcrowded",
               "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7069,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Strong general safety record (safety index 74/100)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -25096,6 +26029,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8142,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.1,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -25620,6 +26574,27 @@
               "Excellent spa and wellness options",
               "Extremely photogenic",
               "Strong value for money",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7553,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.6,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
               "Quick transfer from the gateway airport (~0.6 h)"
             ],
             "cautions": [
@@ -26296,6 +27271,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6834,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.8,
+            "reasons": [
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (98/100 crowd pressure)",
+              "No direct flights from India — connection required",
+              "Water operator standards are inconsistent"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -26921,6 +27919,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6596,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -27514,6 +28534,28 @@
               "Excellent spa and wellness options",
               "Strong value for money",
               "Quiet environment"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.786,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -28144,6 +29186,28 @@
               "Strong value for money",
               "Excellent spa and wellness options",
               "Strong general safety record (safety index 64/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6433,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Regulated, well-run water operators",
+              "Dense nightlife scene"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -28783,6 +29847,29 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (72/100 crowd pressure)",
               "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6766,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Instantly recognisable landmarks",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (72/100 crowd pressure)",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -29429,6 +30516,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6579,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Regulated, well-run water operators"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -29980,6 +31089,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6656,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -30513,6 +31644,29 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (72/100 crowd pressure)",
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6709,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Heavily crowded (72/100 crowd pressure)"
             ]
           }
         },
@@ -31057,6 +32211,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6572,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -31560,6 +32736,28 @@
               "Quick transfer from the gateway airport (~0.4 h)"
             ],
             "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6603,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required"
             ]
           }
@@ -32100,6 +33298,29 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (92/100 crowd pressure)",
               "Noisy environment, especially at night",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6482,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (92/100 crowd pressure)",
               "No direct flights from India — connection required"
             ]
           }
@@ -32682,6 +33903,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6544,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -33232,6 +34475,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6712,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -33750,6 +35015,29 @@
               "Heavily crowded (70/100 crowd pressure)",
               "No direct flights from India — connection required",
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6125,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.1,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Heavily crowded (70/100 crowd pressure)"
             ]
           }
         },
@@ -34279,6 +35567,28 @@
               "Quick transfer from the gateway airport (~0.4 h)"
             ],
             "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6567,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required"
             ]
           }
@@ -34823,6 +36133,29 @@
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (72/100 crowd pressure)",
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.646,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Heavily crowded (72/100 crowd pressure)"
             ]
           }
         },
@@ -35383,6 +36716,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6499,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -35934,6 +37290,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6119,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.1,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -36558,6 +37937,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6275,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.3,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Long comfortable-weather window",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -37172,6 +38574,29 @@
               "Long comfortable-weather window"
             ],
             "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5521,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Long comfortable-weather window",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
             ]
@@ -37804,6 +39229,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6308,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Long comfortable-weather window",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -38330,6 +39778,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5534,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -38831,6 +40302,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6055,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.1,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Extremely photogenic",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -39348,6 +40842,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5493,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -39915,6 +41432,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5772,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -40448,6 +41988,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.558,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -41024,6 +42587,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5805,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -41590,6 +43176,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5588,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -42168,6 +43777,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5939,
+          "score_0_10": 5.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -42786,6 +44418,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6541,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -43409,6 +45064,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6391,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -43998,6 +45676,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6439,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -44582,6 +46283,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7035,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -45190,6 +46914,29 @@
               "Strong value for money",
               "Rarely overcrowded",
               "Strong general safety record (safety index 76/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6295,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.3,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 76/100)",
+              "Genuinely scenic driving routes"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -45826,6 +47573,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6228,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.2,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 76/100)",
+              "Rarely overcrowded"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -46393,6 +48163,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5477,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -46956,6 +48749,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5049,
+          "score_0_10": 5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -47497,6 +49313,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5505,
+          "score_0_10": 5.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Quick transfer from the gateway airport (~1.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -48065,6 +49904,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6082,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.1,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 80/100)",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -48653,6 +50515,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5897,
+          "score_0_10": 5.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.9,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Rarely overcrowded"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -49226,6 +51111,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5581,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.6,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -49824,6 +51732,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6711,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -50428,6 +52359,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6462,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -51014,6 +52968,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6034,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Extremely photogenic",
+              "Rarely overcrowded"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Party scene is thin",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -51626,6 +53603,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6056,
+          "score_0_10": 6.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.1,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 76/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -52213,6 +54213,29 @@
               "Strong value for money",
               "Strong general safety record (safety index 76/100)",
               "Short hop from India (~4.2 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7007,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 76/100)",
+              "Genuinely scenic driving routes"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -52848,6 +54871,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6373,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Rarely overcrowded",
+              "Strong general safety record (safety index 76/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Long onward transfer (~5.5 h) after landing",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -53422,6 +55468,28 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Noisy environment, especially at night",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6421,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Dense nightlife scene",
+              "World-class party scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -54017,6 +56085,28 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Noisy environment, especially at night",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6873,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.9,
+            "reasons": [
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
             ]
           }
@@ -54623,6 +56713,28 @@
               "Strong value for money",
               "Rarely overcrowded",
               "Excellent spa and wellness options"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6792,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Regulated, well-run water operators"
             ],
             "cautions": [
               "No direct flights from India — connection required",
@@ -55254,6 +57366,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6187,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.2,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Rarely overcrowded",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -55797,6 +57931,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6458,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -56321,6 +58478,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6389,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.4,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -56891,6 +59071,29 @@
               "Excellent spa and wellness options"
             ],
             "cautions": [
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5623,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.6,
+            "reasons": [
+              "Strong value for money",
+              "Long comfortable-weather window",
+              "Genuinely scenic driving routes",
+              "Strong general safety record (safety index 78/100)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
             ]
@@ -57480,6 +59683,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5297,
+          "score_0_10": 5.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.3,
+            "reasons": [
+              "Strong value for money",
+              "Long comfortable-weather window",
+              "Genuinely scenic driving routes",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -58027,6 +60253,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.675,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.8,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -58524,6 +60773,29 @@
             ],
             "cautions": [
               "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5558,
+          "score_0_10": 5.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.6,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 80/100)",
+              "Extremely photogenic",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Very little nightlife",
+              "Party scene is thin"
             ]
           }
         },
@@ -59059,6 +61331,29 @@
               "No direct flights from India — connection required",
               "Heavily crowded (65/100 crowd pressure)",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5657,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 78/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -59623,6 +61918,29 @@
             "cautions": [
               "No direct flights from India — connection required",
               "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5283,
+          "score_0_10": 5.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 5.3,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 78/100)",
+              "Genuinely scenic driving routes"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required",
+              "Very little nightlife"
             ]
           }
         },
@@ -60224,6 +62542,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6891,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Little scenic driving value",
+              "No direct flights from India — connection required",
+              "Local transport is weak — private vehicle needed"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -60770,6 +63111,27 @@
               "Excellent spa and wellness options",
               "Quick transfer from the gateway airport (~1.2 h)",
               "Strong general safety record (safety index 72/100)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6321,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.3,
+            "reasons": [
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Strong general safety record (safety index 72/100)",
+              "Long comfortable-weather window"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -61341,6 +63703,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7217,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -61865,6 +64248,28 @@
             ],
             "cautions": [
               "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6964,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value"
             ]
           }
         },
@@ -62399,6 +64804,29 @@
             "cautions": [
               "Caution: Heavily overtouristed — hard to get quiet time as a couple",
               "Heavily crowded (75/100 crowd pressure)"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6925,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.9,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Heavily crowded (75/100 crowd pressure)",
+              "Little scenic driving value"
             ]
           }
         },
@@ -62957,6 +65385,29 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6974,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~0.8 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Little scenic driving value",
+              "Heavily crowded (70/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -63498,6 +65949,25 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.736,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.4,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Quick transfer from the gateway airport (~1 h)"
+            ],
+            "cautions": []
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -64023,6 +66493,25 @@
             "cautions": [
               "Noisy environment, especially at night"
             ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8017,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": []
           }
         },
         "honeymoon": {
@@ -64564,6 +67053,25 @@
             "cautions": [
               "Noisy environment, especially at night"
             ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8673,
+          "score_0_10": 8.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.7,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong value for money",
+              "Dense nightlife scene"
+            ],
+            "cautions": []
           }
         },
         "honeymoon": {
@@ -65115,6 +67623,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.697,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Strong value for money",
+              "Dense nightlife scene",
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required",
+              "Heavily crowded (65/100 crowd pressure)"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -65661,6 +68191,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6556,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.6,
+            "reasons": [
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -66194,6 +68745,27 @@
             ],
             "cautions": [
               "Noisy environment, especially at night",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7203,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Strong value for money",
+              "Strong beach-club and day-party scene"
+            ],
+            "cautions": [
               "No direct flights from India — connection required"
             ]
           }
@@ -66743,6 +69315,28 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6544,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -67241,6 +69835,28 @@
               "Extremely photogenic"
             ],
             "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6527,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.5,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required"
             ]
           }
@@ -67772,6 +70388,28 @@
               "Extremely photogenic"
             ],
             "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6728,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6.7,
+            "reasons": [
+              "Strong value for money",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.4 h)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": [
+              "No real beach-club scene",
               "No direct flights from India — connection required"
             ]
           }
@@ -68308,6 +70946,27 @@
               "Excellent spa and wellness options",
               "Strong value for money",
               "Rarely overcrowded"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7614,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Quick transfer from the gateway airport (~0.6 h)"
             ],
             "cautions": [
               "No direct flights from India — connection required"
@@ -68861,6 +71520,27 @@
             ]
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7103,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.1,
+            "reasons": [
+              "Strong value for money",
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Quick transfer from the gateway airport (~0.6 h)"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,
@@ -69382,6 +72062,27 @@
               "Rarely overcrowded",
               "Quick transfer from the gateway airport (~0.6 h)",
               "Strong value for money"
+            ],
+            "cautions": [
+              "No direct flights from India — connection required"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6988,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~0.6 h)",
+              "Extremely photogenic"
             ],
             "cautions": [
               "No direct flights from India — connection required"

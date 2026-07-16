@@ -371,6 +371,25 @@
             "cautions": []
           }
         },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7246,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.2,
+            "reasons": [
+              "Strong value for money",
+              "190 direct weekly flights from India",
+              "Strong general safety record (safety index 68/100)",
+              "Long comfortable-weather window"
+            ],
+            "cautions": []
+          }
+        },
         "honeymoon": {
           "persona_id": "honeymoon",
           "eligible": true,

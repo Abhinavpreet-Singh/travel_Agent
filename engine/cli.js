@@ -19,24 +19,32 @@
  *   own JSON block FIRST and lets you correct it before anything is scored —
  *   press Enter to accept it as-is, or type a correction/addition.
  *
- * Every query writes its own timestamped JSON file to
- * output/thailand/queries/ (nothing is ever overwritten there) plus an
- * always-latest convenience copy at output/thailand/query_result.json, and
- * prints a compact console summary.
+ * The COUNTRY is resolved from the query itself ("trip to thailand", "friends
+ * trip to dubai" — a city that uniquely identifies a country resolves it), and
+ * decides only which catalog is loaded and where output is written. Every query
+ * writes its own timestamped JSON file to output/<country>/queries/ (nothing is
+ * ever overwritten there) plus an always-latest convenience copy at
+ * output/<country>/query_result.json, and prints a compact console summary.
  */
 
 import path from 'node:path';
 import readline from 'node:readline';
 import { pathToFileURL } from 'node:url';
 
-import { loadThailand, writeJSON, ROOT } from './loadData.js';
+import { writeJSON, ROOT } from './loadData.js';
+import { listCountries, loadCountryCatalog, resolveCountry } from './countries.js';
 import { scoreEntity, rankEntities, composePersonas } from './score.js';
 import { buildExplanation } from './explain.js';
 import { derivePersonas, parseFreeTextToBrief } from './personaFromBrief.js';
 import { experienceFitFor, BLENDS, deriveBucketListValue, classifyPersonaRoles } from './experienceFit.js';
 import { cityCoverage } from './coverage.js';
 
-const data = loadThailand();
+/**
+ * Where a query with no country signal at all ("family trip with 2 kids") lands.
+ * A fallback for an under-specified query — never a privileged country: it goes
+ * through the same resolve -> loadCountryCatalog path as any other.
+ */
+const DEFAULT_COUNTRY = 'thailand';
 
 // ---- input parsing ---------------------------------------------------------
 
@@ -77,21 +85,45 @@ function parseShorthandLine(line) {
   return hasRecognizedKey ? flags : null;
 }
 
-function findCity(query) {
+/**
+ * How `--city=<x>` is matched, strongest tier first: id suffix ("HKT" in
+ * city:TH:HKT), gateway airport code, exact name, then name substring. Split out
+ * as an ordered list so the same tiers can be applied ACROSS countries (see
+ * findCityAcrossCountries) — a weak substring hit in one country must never beat
+ * an exact-code hit in another.
+ */
+const CITY_MATCHERS = [
+  (cities, q) => cities.find((c) => c.id.toLowerCase().endsWith(':' + q)),
+  (cities, q) => cities.find((c) => (c.gateway_airport || []).some((a) => a.toLowerCase() === q)),
+  (cities, q) => cities.find((c) => c.name.toLowerCase() === q),
+  (cities, q) => cities.find((c) => c.name.toLowerCase().includes(q)),
+];
+
+function findCity(data, query) {
   if (!query) return null;
   const q = String(query).trim().toLowerCase();
-  const cities = data.cityFile.entities;
-  return (
-    cities.find((c) => c.id.toLowerCase().endsWith(':' + q)) ||
-    cities.find((c) => (c.gateway_airport || []).some((a) => a.toLowerCase() === q)) ||
-    cities.find((c) => c.name.toLowerCase() === q) ||
-    cities.find((c) => c.name.toLowerCase().includes(q)) ||
-    null
-  );
+  for (const match of CITY_MATCHERS) {
+    const hit = match(data.cityFile.entities, q);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+/** `--city=DXB` names a city, and therefore a country. Tiers outer, countries inner, so the match STRENGTH decides — not the alphabetical order of the countries. */
+function findCityAcrossCountries(query) {
+  if (!query) return null;
+  const q = String(query).trim().toLowerCase();
+  for (const match of CITY_MATCHERS) {
+    for (const slug of listCountries()) {
+      const hit = match(loadCountryCatalog(slug).cityFile.entities, q);
+      if (hit) return { country: slug, city: hit };
+    }
+  }
+  return null;
 }
 
 /** Scan free text for any known city's name (handles "Krabi (Ao Nang / Railay)" style alt names). */
-function detectCityInText(text) {
+function detectCityInText(data, text) {
   const lower = text.toLowerCase();
   const cities = [...data.cityFile.entities].sort((a, b) => b.name.length - a.name.length);
   for (const c of cities) {
@@ -107,20 +139,42 @@ function detectCityInText(text) {
   return null;
 }
 
-function resolveCity(flags, text) {
+function resolveCity(data, flags, text) {
   if (flags.city) {
-    const c = findCity(flags.city);
+    const c = findCity(data, flags.city);
     if (!c) {
       throw new Error(
-        `Unknown city "${flags.city}". Known cities: ${data.cityFile.entities.map((c) => c.name).join(', ')}`
+        `Unknown city "${flags.city}" in ${data.country.name}. Known cities: ${data.cityFile.entities.map((c) => c.name).join(', ')}`
       );
     }
     return c;
   }
-  return text ? detectCityInText(text) : null;
+  return text ? detectCityInText(data, text) : null;
 }
 
-function resolvePersonas(flags, text) {
+/**
+ * WHICH COUNTRY is this query about? Runs BEFORE any catalog is loaded — it is
+ * the only step allowed to look across countries. Everything after it sees one
+ * catalog and cannot tell which country it got.
+ *
+ * `--city=DXB` is the strongest signal (an explicitly pinned city names its own
+ * country), then the free text, then the default.
+ */
+function resolveCountryForQuery({ flags, text }) {
+  if (flags.city) {
+    const hit = findCityAcrossCountries(flags.city);
+    if (hit) return { country: hit.country, via: 'city_flag', matched: hit.city.name };
+    const known = listCountries()
+      .flatMap((slug) => loadCountryCatalog(slug).cityFile.entities.map((c) => c.name))
+      .join(', ');
+    throw new Error(`Unknown city "${flags.city}". Known cities: ${known}`);
+  }
+  const hit = resolveCountry(text);
+  if (hit) return { country: hit.country, via: hit.via, matched: hit.matched };
+  return { country: DEFAULT_COUNTRY, via: 'default', matched: null };
+}
+
+function resolvePersonas(data, flags, text, countryName) {
   if (flags.persona) {
     const ids = String(flags.persona)
       .split(',')
@@ -138,7 +192,7 @@ function resolvePersonas(flags, text) {
     // dates, duration, budget, groupComposition, extras[]) — see Developer
     // Onboarding Guide §9.1 — so a typed prompt and a real Maya conversation
     // produce the same shape before persona derivation ever runs.
-    const brief = parseFreeTextToBrief(text);
+    const brief = parseFreeTextToBrief(text, countryName);
     const derived = derivePersonas(brief);
     return { ids: derived.personas, source: 'derived', derived, brief };
   }
@@ -216,7 +270,7 @@ function weatherDependency(entity) {
  * it re-derive that from raw signal attributes (or worse, guess) is exactly
  * the kind of friction this layer exists to remove.
  */
-function entityMetadata(entity) {
+function entityMetadata(data, entity) {
   const dataConfidence = entity.meta?.data_confidence ?? null;
   if (entity.type === 'activity') {
     return {
@@ -256,7 +310,7 @@ function entityMetadata(entity) {
  * with the whole pool, since the score+metadata alone is enough for an LLM
  * to place an entity in an itinerary even without a citation-quality reason.
  */
-function rankAll(entities, ancestorsFn, persona, explainTop) {
+function rankAll(data, entities, ancestorsFn, persona, explainTop) {
   const byId = new Map(entities.map((e) => [e.id, e]));
   const ranked = rankEntities(
     entities.map((entity) => ({ entity, ancestors: ancestorsFn(entity) })),
@@ -270,7 +324,7 @@ function rankAll(entities, ancestorsFn, persona, explainTop) {
       name: r.name,
       score_0_10: r.score_0_10,
       eligible: r.eligible,
-      ...entityMetadata(entity),
+      ...entityMetadata(data, entity),
     };
     // Why an entity was excluded is cheap (r.gate_failures is already
     // computed by rankEntities above, no extra scoring needed) and always
@@ -285,7 +339,7 @@ function rankAll(entities, ancestorsFn, persona, explainTop) {
   });
 }
 
-function buildComparisonTable(entities, ancestorsFn, personas) {
+function buildComparisonTable(data, entities, ancestorsFn, personas) {
   const rows = entities.map((entity) => {
     const scores = {};
     const eligible = {};
@@ -371,7 +425,7 @@ function kCombinations(arr, k) {
  * inter-city distance costs about a point, capped at -2), documented as
  * such, not a hardcoded per-destination opinion table.
  */
-function buildCityCombinations(recommendedCities, durationDays) {
+function buildCityCombinations(data, recommendedCities, durationDays) {
   const size = comboSizeForDuration(durationDays);
   if (!size || !recommendedCities || recommendedCities.length < size) return null;
 
@@ -517,7 +571,7 @@ const CANONICAL_CATEGORY = { beach_club: 'beach', diving: 'water_sports', herita
 const canonicalCategory = (c) => CANONICAL_CATEGORY[c] ?? c;
 
 /** peak+breadth+diversity strength (0-1) of a city's own activities for this persona, or null if it has none eligible. */
-function cityActivityStrength(cityEntity, persona) {
+function cityActivityStrength(data, cityEntity, persona) {
   const acts = data.activities.filter((a) => a.parent_id === cityEntity.id);
   if (!acts.length) return null;
   const categoryById = new Map(acts.map((a) => [a.id, a.category]));
@@ -546,13 +600,13 @@ function cityActivityStrength(cityEntity, persona) {
  * photogenic the place itself is. `persona` here is the plain (non
  * duration-adjusted) persona — activity fit isn't a function of trip length.
  */
-function blendCityActivityStrength(rankedCities, persona) {
+function blendCityActivityStrength(data, rankedCities, persona) {
   if (CITY_ACTIVITY_BLEND <= 0) return rankedCities;
   return rankedCities
     .map((c) => {
       if (!c.eligible && c.eligible !== undefined) return c; // recommended list is all-eligible, but stay safe
       const entity = data.citiesById[c.entity_id];
-      const s = entity ? cityActivityStrength(entity, persona) : null;
+      const s = entity ? cityActivityStrength(data, entity, persona) : null;
       if (!s) return c;
       const base01 = c.score_0_10 / 10;
       const blended01 = (1 - CITY_ACTIVITY_BLEND) * base01 + CITY_ACTIVITY_BLEND * s.strength01;
@@ -583,7 +637,7 @@ const EXPERIENCE_BLEND = 'additive';
  * and attach the full trace (physical_fit / experience_fit / final) to each item.
  * `personaIds` are the composed persona's constituent ids → the fit axes.
  */
-function applyExperienceFit(recommended, personaIds) {
+function applyExperienceFit(data, recommended, personaIds) {
   const actById = new Map(data.activities.map((a) => [a.id, a]));
   return recommended
     .map((a) => {
@@ -620,7 +674,7 @@ const STYLE_MODIFIER_PERSONAS = new Set(['luxury', 'budget', 'wellness', 'advent
  * chosen FOR the pregnancy. Special personas (honeymoon) don't drive the
  * destination unless they ARE the majority; they get dedicated activity moments.
  */
-function buildDestinationPersona(roles, personaIds) {
+function buildDestinationPersona(data, roles, personaIds) {
   const modifiers = personaIds.filter((p) => STYLE_MODIFIER_PERSONAS.has(p) && p !== roles.majority);
   const stylePersonas = [...new Set([roles.majority, ...modifiers])];
   const style = composePersonas(stylePersonas, data.personasById);
@@ -642,6 +696,12 @@ function buildDestinationPersona(roles, personaIds) {
  * days into the richer cities (fewer changes, rule 3), active flattens it. Uses
  * largest-remainder so the total ALWAYS equals duration_days (rule 1).
  */
+// How much the route anchor's day-weight is favoured over a secondary city of
+// equal activity density. The plurality guarantee below is what actually
+// enforces anchor primacy; this only tilts the proportional split before it, so
+// a modest bias is enough. 1 = no bias (density alone decides the split).
+const ANCHOR_DAY_BIAS = 1.5;
+
 function buildDayAllocation(route, durationDays, recommendedActivities, pace) {
   if (!durationDays || !route.length) return null;
   const n = route.length;
@@ -679,7 +739,7 @@ function buildDayAllocation(route, durationDays, recommendedActivities, pace) {
   return route.map((c, i) => ({ city: c, days: alloc[i] }));
 }
 
-function runSingle(city, persona, durationDays = null) {
+function runSingle(data, city, persona, durationDays = null) {
   const cityPool = city ? [city] : data.cityFile.entities;
   const personaIds = persona.composed_from ?? [persona.id];
   const roles = classifyPersonaRoles(personaIds);
@@ -687,7 +747,7 @@ function runSingle(city, persona, durationDays = null) {
   // Destinations are chosen by the MAJORITY (style), gated by CONSTRAINTS —
   // NOT by the constraint-blended full persona (that pulled a friends trip
   // inland because a pregnancy constraint out-weighted the friends).
-  const destPersona = buildDestinationPersona(roles, personaIds);
+  const destPersona = buildDestinationPersona(data, roles, personaIds);
   const styleStrengthPersona = composePersonas(destPersona.style_personas, data.personasById);
   const durationAdj = applyDurationAdjustment(destPersona.weights, durationDays);
   const cityPersona = durationAdj.applied ? { ...destPersona, weights: durationAdj.weights } : destPersona;
@@ -696,8 +756,8 @@ function runSingle(city, persona, durationDays = null) {
   // therefore which activities are even relevant. Then fold each city's own
   // activity lineup back into its score, so an activity-rich city (Bangkok for a
   // couple) can climb even if the place itself scores mid on ambient qualities.
-  const cities = city ? null : splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, cityPersona, cityPool.length), 'city');
-  const blendedCities = city ? [] : blendCityActivityStrength(cities.recommended, styleStrengthPersona);
+  const cities = city ? null : splitRecommendedExcluded(rankAll(data, cityPool, data.ancestorsOf.destination_city, cityPersona, cityPool.length), 'city');
+  const blendedCities = city ? [] : blendCityActivityStrength(data, cities.recommended, styleStrengthPersona);
   const recommendedCities = qualityShortlist(blendedCities, {
     floor: CITY_SHORTLIST.floor,
     band: CITY_SHORTLIST.band,
@@ -710,7 +770,7 @@ function runSingle(city, persona, durationDays = null) {
   // duration (1 for <4 days, 2 for 4-7, 3 for 8+) and chosen geographically via
   // the city combinations (avg score minus distance penalty). Activities are then
   // drawn from the ROUTE, not the whole candidate set.
-  const combos = city ? null : buildCityCombinations(recommendedCities, durationDays);
+  const combos = city ? null : buildCityCombinations(data, recommendedCities, durationDays);
   const routeSize = durationDays == null ? 2 : durationDays < 4 ? 1 : durationDays < 8 ? 2 : 3;
   let itinerary_route;
   if (city) {
@@ -736,7 +796,7 @@ function runSingle(city, persona, durationDays = null) {
     const recSet = new Set(recommendedCities.map((c) => c.entity_id));
     let rejected_routes = [];
     if (roles.constraints.length) {
-      const blended = splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city').recommended;
+      const blended = splitRecommendedExcluded(rankAll(data, cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city').recommended;
       rejected_routes = blended
         .filter((c) => !recSet.has(c.entity_id))
         .slice(0, 3)
@@ -762,10 +822,10 @@ function runSingle(city, persona, durationDays = null) {
   const scopeCityIds = city ? new Set([city.id]) : new Set(data.cityFile.entities.filter((c) => routeNames.has(c.name)).map((c) => c.id));
   const activityPool = data.activities.filter((a) => scopeCityIds.has(a.parent_id));
   const activities = splitRecommendedExcluded(
-    rankAll(activityPool, data.ancestorsOf.activity, destPersona, city ? activityPool.length : ACT_SHORTLIST.ceiling),
+    rankAll(data, activityPool, data.ancestorsOf.activity, destPersona, city ? activityPool.length : ACT_SHORTLIST.ceiling),
     'activity'
   );
-  const fitted = applyExperienceFit(activities.recommended, personaIds);
+  const fitted = applyExperienceFit(data, activities.recommended, personaIds);
 
   const activityFeasible = durationDays ? Math.ceil(durationDays * ACT_SHORTLIST.perDay) : ACT_SHORTLIST.defaultCount;
   let recommendedActivities = qualityShortlist(fitted, {
@@ -783,8 +843,8 @@ function runSingle(city, persona, durationDays = null) {
     const chosen = new Set(recommendedActivities.map((a) => a.entity_id));
     for (const special of roles.special) {
       const specialP = composePersonas([special], data.personasById);
-      const pool = rankAll(activityPool, data.ancestorsOf.activity, specialP, activityPool.length).filter((r) => r.eligible && !chosen.has(r.entity_id));
-      const moment = applyExperienceFit(pool, personaIds).find((a) => a.experience_fit >= 0.5);
+      const pool = rankAll(data, activityPool, data.ancestorsOf.activity, specialP, activityPool.length).filter((r) => r.eligible && !chosen.has(r.entity_id));
+      const moment = applyExperienceFit(data, pool, personaIds).find((a) => a.experience_fit >= 0.5);
       if (moment) {
         recommendedActivities.push({ ...moment, moment_for: special });
         chosen.add(moment.entity_id);
@@ -832,7 +892,7 @@ function runSingle(city, persona, durationDays = null) {
   };
 }
 
-function runCompare(city, personaIds) {
+function runCompare(data, city, personaIds) {
   const personas = personaIds.map((id) => data.personasById[id]);
 
   if (city) {
@@ -842,14 +902,14 @@ function runCompare(city, personaIds) {
       scope: 'city',
       city: { id: city.id, name: city.name },
       personas: personaIds,
-      activities_comparison: buildComparisonTable(activityPool, data.ancestorsOf.activity, personas),
-      hotels_comparison: buildComparisonTable(hotelPool, data.ancestorsOf.hotel, personas),
+      activities_comparison: buildComparisonTable(data, activityPool, data.ancestorsOf.activity, personas),
+      hotels_comparison: buildComparisonTable(data, hotelPool, data.ancestorsOf.hotel, personas),
       per_persona_top: Object.fromEntries(
         personas.map((persona) => [
           persona.id,
           {
-            top_activities: rankAll(activityPool, data.ancestorsOf.activity, persona, Math.min(8, activityPool.length)),
-            top_hotels: rankAll(hotelPool, data.ancestorsOf.hotel, persona, hotelPool.length),
+            top_activities: rankAll(data, activityPool, data.ancestorsOf.activity, persona, Math.min(8, activityPool.length)),
+            top_hotels: rankAll(data, hotelPool, data.ancestorsOf.hotel, persona, hotelPool.length),
           },
         ])
       ),
@@ -859,9 +919,9 @@ function runCompare(city, personaIds) {
   return {
     scope: 'country_cities',
     personas: personaIds,
-    cities_comparison: buildComparisonTable(data.cityFile.entities, data.ancestorsOf.destination_city, personas),
+    cities_comparison: buildComparisonTable(data, data.cityFile.entities, data.ancestorsOf.destination_city, personas),
     per_persona_top_cities: Object.fromEntries(
-      personas.map((persona) => [persona.id, rankAll(data.cityFile.entities, data.ancestorsOf.destination_city, persona, 8)])
+      personas.map((persona) => [persona.id, rankAll(data, data.cityFile.entities, data.ancestorsOf.destination_city, persona, 8)])
     ),
   };
 }
@@ -948,8 +1008,14 @@ function determineCompareMode({ flags, personaSource, personaIds }) {
  * the two as separate files).
  */
 function buildExtraction({ flags, text }) {
-  const city = resolveCity(flags, text);
-  const pr = resolvePersonas(flags, text);
+  // COUNTRY FIRST: resolve it, load that catalog, and hand the catalog to
+  // everything downstream. This is the ONLY place a country is chosen; no
+  // scoring, strategy, allocation or planner code below reads a country name.
+  const countryHit = resolveCountryForQuery({ flags, text });
+  const data = loadCountryCatalog(countryHit.country);
+
+  const city = resolveCity(data, flags, text);
+  const pr = resolvePersonas(data, flags, text, data.country.name);
   const compareMode = determineCompareMode({ flags, personaSource: pr.source, personaIds: pr.ids });
   // In compare mode each persona is scored on its own — a blended weight
   // vector across e.g. senior_citizen + bachelor_trip would represent
@@ -961,6 +1027,9 @@ function buildExtraction({ flags, text }) {
   return {
     flags,
     text,
+    country: countryHit.country,
+    countryResolution: countryHit,
+    catalog: data,
     city,
     personaIds: pr.ids,
     personaSource: pr.source,
@@ -982,10 +1051,13 @@ export function evaluateQuery(input) {
   const parsed = typeof input === 'string' ? { flags: {}, text: input } : { flags: input.flags ?? {}, text: input.text ?? '' };
   const ext = buildExtraction(parsed);
   const durationDays = parseDurationDays(ext.brief?.duration);
-  const rankedResult = ext.compareMode ? runCompare(ext.city, ext.personaIds) : runSingle(ext.city, ext.composed, durationDays);
+  const rankedResult = ext.compareMode
+    ? runCompare(ext.catalog, ext.city, ext.personaIds)
+    : runSingle(ext.catalog, ext.city, ext.composed, durationDays);
   const recipe = recipeToJSON(ext);
   const ranked = {
     mode: ext.compareMode ? 'compare' : 'single',
+    country: ext.country,
     query: { text: ext.text || null, resolved_city: ext.city?.id ?? null, personas: ext.personaIds },
     ...rankedResult,
   };
@@ -1016,7 +1088,7 @@ const mobilityRequirement = (ids) =>
  * (a family reads kid/safety; a couple reads romance/quiet). This is the "feed the
  * reasoning, not just the verdict" part — a decomposed score, not one opaque number.
  */
-function signalBreakdown(entity, ancestors, persona, n) {
+function signalBreakdown(data, entity, ancestors, persona, n) {
   const r = scoreEntity(entity, ancestors, persona, data.dictionary);
   return Object.fromEntries(
     [...r.contributions]
@@ -1024,6 +1096,35 @@ function signalBreakdown(entity, ancestors, persona, n) {
       .slice(0, n)
       .map((c) => [c.signal_id, Math.round(c.value * 100)])
   );
+}
+
+/**
+ * FIRST-TIMER ESSENTIALS — "what would it be absurd to miss on a first visit?"
+ *
+ * The QUESTION is universal; the ANSWER is country-specific (Thailand: thai
+ * food, a market, a beach. UAE: emirati food, a souk, the desert). So the rules
+ * are CATALOG DATA (catalog.json -> planning_profile.first_timer_essentials)
+ * and this evaluator is generic — the engine never names a cuisine or a
+ * country. A rule fires on activity category, a name pattern, or a
+ * bucket-list-value floor; key order follows the catalog, so the output reads
+ * in the order the catalog author intended.
+ *
+ * @param items {{category: string, name: string, bucketListValue: number|null}[]}
+ */
+function firstTimerEssentials(data, items) {
+  const rules = data.planningProfile?.first_timer_essentials ?? [];
+  const out = {};
+  for (const rule of rules) out[rule.key] = false;
+  for (const item of items) {
+    for (const rule of rules) {
+      if (out[rule.key]) continue;
+      const byCategory = rule.categories?.includes(item.category);
+      const byName = rule.name_matches && new RegExp(rule.name_matches, 'i').test(item.name ?? '');
+      const byBucket = rule.min_bucket_list_value != null && (item.bucketListValue ?? 0) >= rule.min_bucket_list_value;
+      if (byCategory || byName || byBucket) out[rule.key] = true;
+    }
+  }
+  return out;
 }
 
 /**
@@ -1035,6 +1136,7 @@ function signalBreakdown(entity, ancestors, persona, n) {
  * information-dense. Order still encodes rank; the score makes the gaps legible.
  */
 export function buildLLMContext(ext, rankedResult) {
+  const data = ext.catalog;
   const roster = ext.derived?.roster;
   const persona = ext.composed; // single composed persona in this mode
   const ids = ext.personaIds;
@@ -1047,7 +1149,7 @@ export function buildLLMContext(ext, rankedResult) {
   if (roster?.has_senior_adult) group.seniors = true;
 
   const trip_profile = {
-    destination: ext.city?.name ? `Thailand — ${ext.city.name}` : 'Thailand',
+    destination: ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name,
     ...(durationDays ? { duration_days: durationDays } : {}),
     ...(Object.keys(group).length ? { group } : {}),
     personas: ids,
@@ -1073,7 +1175,7 @@ export function buildLLMContext(ext, rankedResult) {
       // repeated; high variety = a genuinely diverse week. The itinerary LLM
       // should prefer variety for multi-day trips (esp. families/kids).
       ...(c.activity_variety != null ? { activity_variety: c.activity_variety } : {}),
-      ...(entity ? { breakdown: signalBreakdown(entity, [data.country], persona, 5) } : {}),
+      ...(entity ? { breakdown: signalBreakdown(data, entity, [data.country], persona, 5) } : {}),
     };
   });
 
@@ -1086,9 +1188,9 @@ export function buildLLMContext(ext, rankedResult) {
       city: a.city,
       ...(a.moment_for ? { moment_for: a.moment_for } : {}),
       score: Math.round(a.score_0_10 * 10), // final = physical ⊕ experience_fit
-      // bucket_list_value: how much this is a REASON to visit Thailand (Grand
-      // Palace 98, aquarium ~15). The planner uses this so a first-timer's trip
-      // isn't mall/café/spa — it's NOT folded into the score, it's a separate
+      // bucket_list_value: how much this is a REASON to make the trip at all
+      // (Grand Palace 98, aquarium ~15). The planner uses this so a first-timer's
+      // trip isn't mall/café/spa — it's NOT folded into the score, it's a separate
       // axis the planner balances (see the planner prompt).
       ...(entity ? { bucket_list_value: deriveBucketListValue(entity) } : {}),
       ...(entity?.category ? { style: entity.category } : {}),
@@ -1096,23 +1198,19 @@ export function buildLLMContext(ext, rankedResult) {
       ...(a.experience_fit != null ? { experience_fit: Math.round(a.experience_fit * 100) } : {}),
       ...(a.fit_reason?.length ? { fit_reason: a.fit_reason } : {}),
       ...(a.duration_hours != null ? { duration_hours: a.duration_hours } : {}),
-      ...(entity ? { signals: signalBreakdown(entity, [parentCity, data.country], persona, 4) } : {}),
+      ...(entity ? { signals: signalBreakdown(data, entity, [parentCity, data.country], persona, 4) } : {}),
     };
   });
 
-  // STEP 7 support: which "first-time Thailand" essentials the candidate pool
-  // covers, so the planner (and we) can see at a glance if the trip would miss
-  // culture / beach / thai food / market / an iconic experience. Derived from
-  // category + bucket_list, not authored.
-  const firstTimer = { culture: false, beach: false, thai_food: false, market: false, iconic: false };
-  for (const a of activity_ranking) {
-    const cat = a.style ?? '';
-    if (['heritage', 'culture', 'heritage_wellness'].includes(cat)) firstTimer.culture = true;
-    if (['beach', 'island_hopping', 'beach_club'].includes(cat)) firstTimer.beach = true;
-    if (['food', 'dining'].includes(cat)) firstTimer.thai_food = true;
-    if (cat === 'shopping' || /market/i.test(a.activity)) firstTimer.market = true;
-    if ((a.bucket_list_value ?? 0) >= 80) firstTimer.iconic = true;
-  }
+  // STEP 7 support: which first-visit essentials the candidate pool covers, so
+  // the planner (and we) can see at a glance if the trip would miss the things
+  // it would be absurd to go home without. Which essentials those ARE comes from
+  // the catalog; the evaluation is generic. Derived from category + bucket_list,
+  // not authored per city.
+  const firstTimer = firstTimerEssentials(
+    data,
+    activity_ranking.map((a) => ({ category: a.style ?? '', name: a.activity, bucketListValue: a.bucket_list_value }))
+  );
 
   // Exclusions grouped by reason so `avoid` is a few lines, not 20 rows.
   const avoidMap = new Map();
@@ -1144,6 +1242,7 @@ export function buildLLMContext(ext, rankedResult) {
  * ranked; the planner must not re-rank or invent — those are encoded as rules.
  */
 export function plannerContextBuilder(ext, rankedResult) {
+  const data = ext.catalog;
   const roster = ext.derived?.roster;
   const strategy = rankedResult.destination_strategy;
   const missing = [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
@@ -1157,7 +1256,7 @@ export function plannerContextBuilder(ext, rankedResult) {
   if (roster?.has_senior_adult) group.seniors = true;
 
   const brief = {
-    destination: ext.city?.name ? `Thailand — ${ext.city.name}` : 'Thailand',
+    destination: ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name,
     ...(durationDays ? { duration_days: durationDays } : {}),
     ...(Object.keys(group).length ? { group } : {}),
     majority: strategy?.majority_persona ?? ids[0] ?? 'default',
@@ -1181,17 +1280,14 @@ export function plannerContextBuilder(ext, rankedResult) {
 
   // Activities: grouped by city, name + style + hours only. No scores/fit/bucket/signals.
   const selected_activities = {};
-  const firstTimer = { culture: false, beach: false, thai_food: false, market: false, iconic: false };
+  const essentialItems = [];
   for (const a of rankedResult.recommended_activities ?? []) {
     const entity = activityById.get(a.entity_id);
     const cat = entity?.category ?? '';
     (selected_activities[a.city] ??= []).push({ name: a.name, ...(cat ? { style: cat } : {}), ...(a.duration_hours != null ? { hrs: a.duration_hours } : {}), ...(a.moment_for ? { moment_for: a.moment_for } : {}) });
-    if (['heritage', 'culture', 'heritage_wellness'].includes(cat)) firstTimer.culture = true;
-    if (['beach', 'island_hopping', 'beach_club'].includes(cat)) firstTimer.beach = true;
-    if (['food', 'dining'].includes(cat)) firstTimer.thai_food = true;
-    if (cat === 'shopping' || /market/i.test(a.name)) firstTimer.market = true;
-    if (entity && deriveBucketListValue(entity) >= 80) firstTimer.iconic = true;
+    essentialItems.push({ category: cat, name: a.name, bucketListValue: entity ? deriveBucketListValue(entity) : null });
   }
+  const firstTimer = firstTimerEssentials(data, essentialItems);
 
   // Avoid: since the planner may pick ONLY from selected_activities, enumerating
   // every excluded activity by name is redundant — keep the reason + a few
@@ -1225,7 +1321,10 @@ export function plannerContextBuilder(ext, rankedResult) {
     ...(day_allocation ? ['day_allocation is AUTHORITATIVE — give each city exactly its allocated number of days; do not change the split.'] : []),
     'Schedule ONLY activities listed in selected_activities — never invent or substitute one.',
     'brief.majority drives the trip style; brief.constraints only restrict; special_moments_for get 1-2 dedicated moments each.',
-    'Max 2 activities of the same style across the whole trip — vary temple / market / beach / food / cruise.',
+    // The RULE is universal (never stack one style); only the illustrative
+    // styles are country-specific, so they come from the catalog — a UAE brief
+    // must not be told to vary its "temples".
+    `Max 2 activities of the same style across the whole trip — vary ${data.planningProfile?.style_variety_examples ?? 'the styles'}.`,
     'Cover every first_timer_essentials that is true; if one is false, say so (do not fabricate a place).',
     'Honor avoid, safety_priority, mobility and children ages; cluster by city; minimize transfers; fit the duration exactly.',
     ...(catalog_gaps.length ? ['catalog_gaps: these route cities lack an activity for a style they are known for — note it or fill from general knowledge, do not pretend it is covered.'] : []),
@@ -1326,6 +1425,10 @@ function classifyConfidence(ext) {
 function recipeToJSON(ext) {
   const base = {
     input_text: ext.text || null,
+    country: ext.country,
+    // How the country was picked — named outright, implied by a city that only
+    // exists in one catalog, or the fallback for a query that named neither.
+    country_resolution: { via: ext.countryResolution.via, matched: ext.countryResolution.matched },
     resolved_city: ext.city ? { id: ext.city.id, name: ext.city.name } : null,
     personas: ext.personaIds,
     persona_source: ext.personaSource, // 'explicit' | 'derived' | 'fallback'
@@ -1374,9 +1477,10 @@ function writeAndSummarize(ext) {
   // ext.composed is an array (one composed persona per id) in compare mode,
   // and a single composed persona otherwise — see buildExtraction.
   const durationDays = parseDurationDays(ext.brief?.duration);
-  const rankedResult = compareMode ? runCompare(city, personaIds) : runSingle(city, ext.composed, durationDays);
+  const rankedResult = compareMode ? runCompare(ext.catalog, city, personaIds) : runSingle(ext.catalog, city, ext.composed, durationDays);
   const ranked = {
     mode: compareMode ? 'compare' : 'single',
+    country: ext.country,
     query: { text: ext.text || null, resolved_city: city?.id ?? null, personas: personaIds },
     ...rankedResult,
   };
@@ -1384,19 +1488,22 @@ function writeAndSummarize(ext) {
   queryCounter += 1;
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const n = String(queryCounter).padStart(3, '0');
-  const recipePath = writeJSON(`output/thailand/queries/${stamp}_${n}.recipe.json`, recipe);
-  const rankedPath = writeJSON(`output/thailand/queries/${stamp}_${n}.ranked.json`, ranked);
-  writeJSON('output/thailand/query_result.recipe.json', recipe); // always-latest convenience copies
-  writeJSON('output/thailand/query_result.ranked.json', ranked);
+  // The resolved country decides the output folder — the ONLY thing it decides
+  // outside catalog selection. File names and shapes are identical everywhere.
+  const out = `output/${ext.country}`;
+  const recipePath = writeJSON(`${out}/queries/${stamp}_${n}.recipe.json`, recipe);
+  const rankedPath = writeJSON(`${out}/queries/${stamp}_${n}.ranked.json`, ranked);
+  writeJSON(`${out}/query_result.recipe.json`, recipe); // always-latest convenience copies
+  writeJSON(`${out}/query_result.ranked.json`, ranked);
 
   let plannerPath = null;
   if (!compareMode) {
     const context = buildLLMContext(ext, rankedResult);
-    writeJSON(`output/thailand/queries/${stamp}_${n}.context.json`, context);
-    writeJSON('output/thailand/query_result.context.json', context);
+    writeJSON(`${out}/queries/${stamp}_${n}.context.json`, context);
+    writeJSON(`${out}/query_result.context.json`, context);
     const planner = plannerContextBuilder(ext, rankedResult);
-    plannerPath = writeJSON(`output/thailand/queries/${stamp}_${n}.planner.json`, planner);
-    writeJSON('output/thailand/query_result.planner.json', planner);
+    plannerPath = writeJSON(`${out}/queries/${stamp}_${n}.planner.json`, planner);
+    writeJSON(`${out}/query_result.planner.json`, planner);
   }
 
   if (compareMode) {
@@ -1462,11 +1569,20 @@ Examples:
 In interactive mode, either type free text or the shorthand:
   city:HKT persona:bachelor_trip
 
-Valid persona ids:
-  ${data.ALL_PERSONA_IDS.join(', ')}
+The country is resolved from the query — name it ("trip to thailand") or just
+name a city that only one country has ("friends trip to dubai"). Output is
+written to output/<country>/. With no country signal at all: ${DEFAULT_COUNTRY}.
 
-Known cities:
-  ${data.cityFile.entities.map((c) => c.name).join(', ')}
+Valid persona ids:
+  ${loadCountryCatalog(DEFAULT_COUNTRY).ALL_PERSONA_IDS.join(', ')}
+
+Known cities by country:
+${listCountries()
+  .map((slug) => {
+    const c = loadCountryCatalog(slug);
+    return `  ${c.country.name} (${slug}):\n    ${c.cityFile.entities.map((x) => x.name).join(', ')}`;
+  })
+  .join('\n')}
 `);
 }
 
