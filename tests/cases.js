@@ -44,6 +44,7 @@ export const cases = [
       personas: ['young_couple'],
       topCityOneOf: ['Phuket'],
       citiesInShortlist: ['Phuket', 'Koh Samui'],
+      beachEssential: true, // beach persona + beach city in route ⇒ a beach activity must surface
     },
   },
   {

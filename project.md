@@ -195,6 +195,98 @@ Phuket's safety/hospital data" or "check Pai's actual transfer time") and
 I'll do a properly-scoped pass with cited sources, rather than a shallow
 pass across everything that looks thorough but isn't reliable.
 
+### Round 21 (2026-07-15) — Day Allocation layer (nights-per-city, out of the LLM's hands)
+The "unresolved decision layer": how many nights per city. `buildDayAllocation()`
+now decides it deterministically. Every route city gets >= 1 day (rule 4:
+special-moment cities are in-route, so guaranteed an overnight); the remaining
+days split by ACTIVITY DENSITY (rule 2 — count of recommended activities per
+city), with PACE skewing it (relaxed exponent 1.6 concentrates into the richer
+cities → fewer changes, rule 3; active 0.7 flattens). Largest-remainder
+distribution guarantees the total ALWAYS equals duration_days (rule 1).
+
+Output `city_allocation = [{city, days}]` (in ranked + planner as `day_allocation`,
+flagged AUTHORITATIVE in planning_rules). Examples: friends+pregnancy 7d relaxed →
+Phuket 4 + Koh Samui 3; young_couple 7d active → Phuket 5 + Krabi 2; backpacker
+14d → Bangkok 5 + Chiang Mai 4 + Pattaya 5. Null when duration unknown (falls to
+needs_confirmation). Benchmarks `allocation_sums_to_duration` +
+`allocation_matches_route` (+ every-city->=1-day) as universal invariants; 11/11
+green. The planner now receives route + nights-per-city + activities — it
+sequences days, it no longer decides structure.
+
+### Round 20 (2026-07-15) — Catalog coverage analysis (surface DATA gaps, not scoring gaps)
+Round 19 hit a data hole (a beach city routed but no calm-beach activity existed).
+This round makes such holes visible. `engine/coverage.js`: for each city, compare
+its style-bearing tags (beach/nightlife/heritage/cultural/wellness/food/nature/
+island) against the activity CATEGORIES actually present, and emit the missing
+styles — `{ city, city_tags, available_styles, missing_styles }`.
+
+Real finding: 1/17 cities has a gap — **Chiang Mai is tagged `wellness` but has NO
+wellness-category activity** (a genuine authoring hole; Chiang Mai is famous for
+spa/wellness retreats). The rest are clean.
+
+Runnable via `npm run coverage` (full report). Also wired into the planner:
+`plannerContextBuilder` now emits `catalog_gaps` for the ROUTE cities plus a
+planning rule — so a wellness trip routing through Chiang Mai tells the planner
+"this city can't deliver wellness from the list; note it or fill from general
+knowledge," instead of silently omitting the vibe. Fixed a latent bug found in
+passing: `itinerary_route` was returned as undefined in single-city (pinned) mode,
+which blanked planner.selected_route for `--city=` queries. 11/11 benchmark green.
+
+### Round 19 (2026-07-15) — Activity Strategy layer + real route generation
+Completes the Round-17 symmetry (deferred there): the majority-drives /
+constraints-gate split now applies to ACTIVITIES too, and the engine generates an
+actual duration-sized route.
+
+1. **Activity Strategy** — activities are ranked by the DESTINATION persona
+   (majority style + constraint gates), not the full constraint-blended persona.
+   So a friends trip surfaces beach/social activities while pregnancy still gates
+   unsafe ones and experience_fit demotes inappropriate ones. Verified:
+   young_couple now yields beach activities (beach:true); the deferred Round-17
+   "beach:false" is fixed for unconstrained beach personas.
+2. **candidate_cities vs itinerary_route** — separated. `recommended_cities` is
+   the candidate shortlist; new `itinerary_route` is the ACTUAL cities visited,
+   sized to duration (1/<4d, 2/4-7d, 3/8d+). The route ANCHORS on the #1 candidate
+   (else the combo distance-penalty dropped geographically-isolated Phuket for a
+   friends trip), then fills via the best anchor-containing city combination.
+3. **Special moments** — each special persona (honeymoon…) gets ONE dedicated
+   in-route activity injected (`moment_for`) even if the majority ranking didn't
+   surface it — a "Chao Phraya dinner cruise ★ moment_for honeymoon" on a friends
+   trip. Must still pass constraints + the experience-fit floor.
+4. **first_timer_essentials recomputed** from the post-strategy, route-scoped
+   activity pool (it derives from recommended_activities, which is now the
+   activity-strategy output).
+5. Benchmark `beach_city_implies_beach_activity` on young_couple; the same-route
+   invariant now checks planner.selected_route === itinerary_route. 11/11 green.
+
+Activities now come from the ROUTE (not all candidates); planner `selected_route`
+is the itinerary_route. Known data gap (not an engine bug): a PREGNANT beach trip
+still shows beach:false because the dataset's Phuket/Samui beach activities are
+all boat/party/water-sports (constraint-demoted) — there is no "calm beach day"
+activity authored; the route does now visit the beach cities regardless.
+
+### Round 18 (2026-07-15) — Planner context compression (< 1000 tokens, route authoritative)
+`context.json` grew rich (scores, signal breakdowns, physical/experience fit,
+bucket values) — great for audit, wasteful to send to the planner LLM. Added
+`plannerContextBuilder()` producing the COMPRESSED hand-off actually sent to the
+planner: `{ brief, selected_route, selected_activities, planning_rules,
+first_timer_essentials, avoid }`. It strips ALL ranking internals (verified: no
+score/breakdown/bucket/physical_fit/experience_fit/signals/*_0_10 anywhere) and
+keeps only what a planner needs to SCHEDULE.
+
+Compression choices: `selected_route` is a bare ordered city-name array (route is
+AUTHORITATIVE — encoded as rule #1, no reasons needed); `selected_activities` is
+grouped by city with name/style/hrs only; `avoid` caps names to 4 + "(+N more)"
+since the planner may pick ONLY from selected_activities (rule #2), making a full
+avoid enumeration redundant. Result: ~650-720 tokens per query, ALL under the
+1000 target — an 85-93% reduction vs the full `ranked.json` engine output (47-57%
+vs the already-lean context.json).
+
+`planner.json` is now the "send this" doc; context/recipe/ranked demoted to audit
+copies. Benchmark: added a UNIVERSAL invariant
+`compressed_context_produces_same_route` (planner.selected_route must equal the
+ranked route, in order) — guards every case, so compression can never silently
+change the route. 11/11 green.
+
 ### Round 17 (2026-07-15) — Destination Strategy layer: majority drives, constraints only gate
 The weakest remaining layer (per audit): city selection blended ALL personas into
 one score, so a pregnancy CONSTRAINT out-weighted a friends MAJORITY and pulled a

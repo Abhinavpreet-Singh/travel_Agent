@@ -34,6 +34,7 @@ import { scoreEntity, rankEntities, composePersonas } from './score.js';
 import { buildExplanation } from './explain.js';
 import { derivePersonas, parseFreeTextToBrief } from './personaFromBrief.js';
 import { experienceFitFor, BLENDS, deriveBucketListValue, classifyPersonaRoles } from './experienceFit.js';
+import { cityCoverage } from './coverage.js';
 
 const data = loadThailand();
 
@@ -633,6 +634,51 @@ function buildDestinationPersona(roles, personaIds) {
   };
 }
 
+/**
+ * DAY ALLOCATION (Round 21): decide nights-per-city so the planner LLM never has
+ * to. Every route city gets >= 1 day (rule 4: special-moment cities are in the
+ * route, so they're guaranteed an overnight); the remaining days are split by
+ * ACTIVITY DENSITY (rule 2), with PACE skewing the split — relaxed concentrates
+ * days into the richer cities (fewer changes, rule 3), active flattens it. Uses
+ * largest-remainder so the total ALWAYS equals duration_days (rule 1).
+ */
+function buildDayAllocation(route, durationDays, recommendedActivities, pace) {
+  if (!durationDays || !route.length) return null;
+  const n = route.length;
+  if (durationDays <= n) return route.map((c) => ({ city: c, days: 1 })).slice(0, durationDays); // degenerate guard
+
+  const density = Object.fromEntries(route.map((c) => [c, 0]));
+  for (const a of recommendedActivities) if (a.city in density) density[a.city] += 1;
+  const exp = pace === 'relaxed' ? 1.6 : pace === 'active' ? 0.7 : 1;
+  // ANCHOR BIAS (Round 22): the route anchor (route[0], the #1 city) is the base
+  // the trip is built around — it must not lose the majority of days just because
+  // a secondary city has a denser catalogue. Bias its weight, then GUARANTEE it
+  // keeps a plurality below.
+  const weights = route.map((c, i) => Math.pow(Math.max(1, density[c]), exp) * (i === 0 ? ANCHOR_DAY_BIAS : 1));
+
+  const remaining = durationDays - n; // after 1-per-city floor
+  const totalW = weights.reduce((a, b) => a + b, 0) || 1;
+  const quotas = weights.map((w) => (remaining * w) / totalW);
+  const alloc = quotas.map((q) => 1 + Math.floor(q));
+  const leftover = durationDays - alloc.reduce((a, b) => a + b, 0);
+  const byFrac = quotas.map((q, i) => ({ i, f: q - Math.floor(q) })).sort((a, b) => b.f - a.f);
+  for (let k = 0; k < leftover; k++) alloc[byFrac[k % n].i] += 1;
+
+  // Intent guarantee: while any non-anchor city has MORE days than the anchor,
+  // move one day from the largest such city (that can spare it) to the anchor.
+  // Density still decides the split AMONG the non-anchor cities; it just can't
+  // override the anchor's primacy. Converges in <= duration steps.
+  for (let guard = 0; guard < durationDays; guard++) {
+    let take = -1;
+    for (let i = 1; i < n; i++) if (alloc[i] > alloc[0] && alloc[i] > 1 && (take === -1 || alloc[i] > alloc[take])) take = i;
+    if (take === -1) break;
+    alloc[take] -= 1;
+    alloc[0] += 1;
+  }
+
+  return route.map((c, i) => ({ city: c, days: alloc[i] }));
+}
+
 function runSingle(city, persona, durationDays = null) {
   const cityPool = city ? [city] : data.cityFile.entities;
   const personaIds = persona.composed_from ?? [persona.id];
@@ -659,6 +705,30 @@ function runSingle(city, persona, durationDays = null) {
     ceiling: CITY_SHORTLIST.ceiling,
   });
 
+  // ROUTE GENERATION (Step 2/3): candidate_cities is the shortlist above; the
+  // itinerary_route is the actual set of cities the trip VISITS, sized to
+  // duration (1 for <4 days, 2 for 4-7, 3 for 8+) and chosen geographically via
+  // the city combinations (avg score minus distance penalty). Activities are then
+  // drawn from the ROUTE, not the whole candidate set.
+  const combos = city ? null : buildCityCombinations(recommendedCities, durationDays);
+  const routeSize = durationDays == null ? 2 : durationDays < 4 ? 1 : durationDays < 8 ? 2 : 3;
+  let itinerary_route;
+  if (city) {
+    itinerary_route = [city.name];
+  } else {
+    // The #1 candidate ANCHORS the route — otherwise the combo's distance penalty
+    // can drop a geographically-isolated top city (Phuket for friends) in favour
+    // of a convenient-but-weaker pair. Fill the rest with the best combo that
+    // KEEPS the anchor; fall back to the next-best candidates.
+    const anchor = recommendedCities[0]?.name;
+    if (routeSize <= 1 || !anchor) {
+      itinerary_route = recommendedCities.slice(0, Math.max(1, routeSize)).map((c) => c.name);
+    } else {
+      const comboWithAnchor = combos?.find((c) => c.cities.includes(anchor) && c.cities.length === routeSize);
+      itinerary_route = comboWithAnchor?.cities ?? [anchor, ...recommendedCities.slice(1, routeSize).map((c) => c.name)];
+    }
+  }
+
   // Destination strategy report (majority vs constraint routing, incl. cities
   // rejected for UNDERSERVING the majority — a concept the engine lacked before).
   let destination_strategy = null;
@@ -666,8 +736,6 @@ function runSingle(city, persona, durationDays = null) {
     const recSet = new Set(recommendedCities.map((c) => c.entity_id));
     let rejected_routes = [];
     if (roles.constraints.length) {
-      // What the OLD constraint-blended ranking would have chosen — its top
-      // picks that the majority-driven ranking dropped underserve the majority.
       const blended = splitRecommendedExcluded(rankAll(cityPool, data.ancestorsOf.destination_city, persona, cityPool.length), 'city').recommended;
       rejected_routes = blended
         .filter((c) => !recSet.has(c.entity_id))
@@ -678,40 +746,56 @@ function runSingle(city, persona, durationDays = null) {
       majority_persona: roles.majority,
       constraint_personas: roles.constraints,
       special_personas: roles.special,
-      recommended_route: recommendedCities.map((c) => ({ city: c.name, reason: c.why?.[0] ?? `${roles.majority} fit` })),
+      candidate_cities: recommendedCities.map((c) => ({ city: c.name, reason: c.why?.[0] ?? `${roles.majority} fit` })),
+      itinerary_route,
       rejected_routes,
     };
   }
 
-  // Activities are scoped to the cities we actually recommend (or the one
-  // requested city). Cities and activities used to be ranked in two independent
-  // country-wide passes, which let a top activity surface in a city that didn't
-  // make the shortlist (e.g. a romantic Bangkok dinner cruise for a couple whose
-  // recommended cities are Chiang Mai + Koh Samui — Bangkok scores low as a
-  // couple CITY but has couple-friendly activities). An itinerary is built
-  // INSIDE the chosen cities, so an activity in a city we're not sending you to
-  // is noise. Scoping here keeps the two lists coherent.
-  const scopeCityIds = city ? new Set([city.id]) : new Set(recommendedCities.map((c) => c.entity_id));
+  // ACTIVITY STRATEGY (Step 1): activities come from the ROUTE cities and are
+  // ranked by the DESTINATION persona (majority style + constraint gates) — NOT
+  // the full constraint-blended persona. So a friends trip surfaces beach/social
+  // activities, pregnancy still GATES unsafe ones (pregnancy_safe/altitude), and
+  // experience_fit demotes inappropriate ones. This is the Round-17 fix applied
+  // one layer down: destinations AND activities are now majority-driven.
+  const routeNames = new Set(itinerary_route);
+  const scopeCityIds = city ? new Set([city.id]) : new Set(data.cityFile.entities.filter((c) => routeNames.has(c.name)).map((c) => c.id));
   const activityPool = data.activities.filter((a) => scopeCityIds.has(a.parent_id));
   const activities = splitRecommendedExcluded(
-    rankAll(activityPool, data.ancestorsOf.activity, persona, city ? activityPool.length : ACT_SHORTLIST.ceiling),
+    rankAll(activityPool, data.ancestorsOf.activity, destPersona, city ? activityPool.length : ACT_SHORTLIST.ceiling),
     'activity'
   );
-
-  // EXPERIENCE-FIT LAYER: physical fit (score above) answers "is it safe/easy?";
-  // experience_fit answers "is it the right KIND of experience?" Blend the two so
-  // a rooftop bar stops out-ranking a temple for a 72-year-old. ADDITIVE was
-  // selected over multiplicative (see experienceFit.js / project.md Round 15): it
-  // cut contradictions equally but preserved the most recommendation diversity.
-  const fitted = applyExperienceFit(activities.recommended, persona.composed_from ?? [persona.id]);
+  const fitted = applyExperienceFit(activities.recommended, personaIds);
 
   const activityFeasible = durationDays ? Math.ceil(durationDays * ACT_SHORTLIST.perDay) : ACT_SHORTLIST.defaultCount;
-  const recommendedActivities = qualityShortlist(fitted, {
+  let recommendedActivities = qualityShortlist(fitted, {
     floor: ACT_SHORTLIST.floor,
     band: ACT_SHORTLIST.band,
     feasible: activityFeasible,
     ceiling: ACT_SHORTLIST.ceiling,
   });
+
+  // SPECIAL MOMENTS (Step 1): each special persona (honeymoon, bachelor/ette)
+  // gets ONE dedicated activity injected even if the majority ranking didn't
+  // surface it — a romantic dinner on a friends trip. It must still be in-route,
+  // pass constraints, and clear the experience-fit floor for everyone.
+  if (!city && roles.special.length) {
+    const chosen = new Set(recommendedActivities.map((a) => a.entity_id));
+    for (const special of roles.special) {
+      const specialP = composePersonas([special], data.personasById);
+      const pool = rankAll(activityPool, data.ancestorsOf.activity, specialP, activityPool.length).filter((r) => r.eligible && !chosen.has(r.entity_id));
+      const moment = applyExperienceFit(pool, personaIds).find((a) => a.experience_fit >= 0.5);
+      if (moment) {
+        recommendedActivities.push({ ...moment, moment_for: special });
+        chosen.add(moment.entity_id);
+      }
+    }
+  }
+
+  // DAY ALLOCATION (Round 21): authoritative nights-per-city, computed from
+  // activity density + pace, so the planner never guesses. Uses the final
+  // recommendedActivities (incl. injected special moments) as the density signal.
+  const city_allocation = buildDayAllocation(itinerary_route, durationDays, recommendedActivities, tripPace(personaIds));
 
   // Totals before the cut + why the shortlist is the size it is, so the output
   // is honest about being a needs-based subset ("8 of 47", not "the best 8").
@@ -736,8 +820,10 @@ function runSingle(city, persona, durationDays = null) {
     duration_adjustment: durationAdj.applied
       ? { applied: true, duration_days: durationAdj.duration_days, note: durationAdj.note }
       : { applied: false },
-    recommended_cities: city ? undefined : recommendedCities,
-    recommended_city_combinations: city ? undefined : buildCityCombinations(recommendedCities, durationDays),
+    recommended_cities: city ? undefined : recommendedCities, // candidate_cities
+    itinerary_route, // the actual cities visited ([city.name] when a city is pinned)
+    city_allocation, // authoritative nights-per-city (null if duration unknown)
+    recommended_city_combinations: city ? undefined : combos,
     recommended_activities: recommendedActivities,
     excluded_options: [...(cities?.excluded ?? []), ...activities.excluded].slice(0, MAX_EXCLUDED),
     eligible_totals: eligibleTotals,
@@ -904,7 +990,8 @@ export function evaluateQuery(input) {
     ...rankedResult,
   };
   const context = ext.compareMode ? null : buildLLMContext(ext, rankedResult);
-  return { ext, recipe, ranked, context };
+  const planner = ext.compareMode ? null : plannerContextBuilder(ext, rankedResult);
+  return { ext, recipe, ranked, context, planner };
 }
 
 // Enough ranked candidates for the LLM to build a week from; it fleshes out the
@@ -997,6 +1084,7 @@ export function buildLLMContext(ext, rankedResult) {
     return {
       activity: a.name,
       city: a.city,
+      ...(a.moment_for ? { moment_for: a.moment_for } : {}),
       score: Math.round(a.score_0_10 * 10), // final = physical ⊕ experience_fit
       // bucket_list_value: how much this is a REASON to visit Thailand (Grand
       // Palace 98, aquarium ~15). The planner uses this so a first-timer's trip
@@ -1042,6 +1130,115 @@ export function buildLLMContext(ext, rankedResult) {
     city_ranking,
     activity_ranking,
     first_timer_essentials: firstTimer,
+    ...(avoid.length ? { avoid } : {}),
+  };
+}
+
+/**
+ * The COMPRESSED planner hand-off — what the itinerary LLM actually receives.
+ * context.json is the rich, score-laden analysis doc (audit); this strips ALL
+ * ranking-engine internals (signal breakdowns, 0-100 scores, bucket values,
+ * physical/experience fit) and keeps only what a planner needs to SCHEDULE:
+ * the authoritative route, the allowed activities, the constraints, the avoid
+ * list, and the rules. Target < ~1000 input tokens. The engine has already
+ * ranked; the planner must not re-rank or invent — those are encoded as rules.
+ */
+export function plannerContextBuilder(ext, rankedResult) {
+  const roster = ext.derived?.roster;
+  const strategy = rankedResult.destination_strategy;
+  const missing = [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
+  const durationDays = parseDurationDays(ext.brief?.duration);
+  const ids = ext.personaIds;
+  const activityById = new Map(data.activities.map((a) => [a.id, a]));
+
+  const group = {};
+  if (roster?.adults != null) group.adults = roster.adults;
+  if (roster?.children_ages?.length) group.children = roster.children_ages;
+  if (roster?.has_senior_adult) group.seniors = true;
+
+  const brief = {
+    destination: ext.city?.name ? `Thailand — ${ext.city.name}` : 'Thailand',
+    ...(durationDays ? { duration_days: durationDays } : {}),
+    ...(Object.keys(group).length ? { group } : {}),
+    majority: strategy?.majority_persona ?? ids[0] ?? 'default',
+    ...(strategy?.constraint_personas?.length ? { constraints: strategy.constraint_personas } : {}),
+    ...(strategy?.special_personas?.length ? { special_moments_for: strategy.special_personas } : {}),
+    pace: tripPace(ids),
+    ...(safetyPriority(ids) === 'high' ? { safety_priority: 'high' } : {}),
+    ...(mobilityRequirement(ids) !== 'normal' ? { mobility: mobilityRequirement(ids) } : {}),
+    ...(ext.brief?.budget ? { budget: ext.brief.budget } : {}),
+    ...(ext.brief?.dates ? { dates: ext.brief.dates } : {}),
+    ...(missing.length ? { needs_confirmation: missing } : {}),
+  };
+
+  // Route: the ACTUAL itinerary route (the cities the trip visits), authoritative
+  // and terse — ordered city names only. The engine already decided; the planner
+  // schedules within them and needs no reasons.
+  const selected_route = rankedResult.itinerary_route ?? (rankedResult.recommended_cities ?? []).map((c) => c.name);
+  // Authoritative nights-per-city — the planner allocates activities within these
+  // day budgets, it does not decide how long to stay anywhere.
+  const day_allocation = rankedResult.city_allocation ?? null;
+
+  // Activities: grouped by city, name + style + hours only. No scores/fit/bucket/signals.
+  const selected_activities = {};
+  const firstTimer = { culture: false, beach: false, thai_food: false, market: false, iconic: false };
+  for (const a of rankedResult.recommended_activities ?? []) {
+    const entity = activityById.get(a.entity_id);
+    const cat = entity?.category ?? '';
+    (selected_activities[a.city] ??= []).push({ name: a.name, ...(cat ? { style: cat } : {}), ...(a.duration_hours != null ? { hrs: a.duration_hours } : {}), ...(a.moment_for ? { moment_for: a.moment_for } : {}) });
+    if (['heritage', 'culture', 'heritage_wellness'].includes(cat)) firstTimer.culture = true;
+    if (['beach', 'island_hopping', 'beach_club'].includes(cat)) firstTimer.beach = true;
+    if (['food', 'dining'].includes(cat)) firstTimer.thai_food = true;
+    if (cat === 'shopping' || /market/i.test(a.name)) firstTimer.market = true;
+    if (entity && deriveBucketListValue(entity) >= 80) firstTimer.iconic = true;
+  }
+
+  // Avoid: since the planner may pick ONLY from selected_activities, enumerating
+  // every excluded activity by name is redundant — keep the reason + a few
+  // examples so the intent is clear without paying for the full list.
+  const avoidMap = new Map();
+  for (const e of rankedResult.excluded_options ?? []) {
+    if (e.type === 'hotel') continue;
+    if (!avoidMap.has(e.reason)) avoidMap.set(e.reason, []);
+    avoidMap.get(e.reason).push(e.name);
+  }
+  const avoid = [...avoidMap].map(([why, names]) => {
+    const shown = names.slice(0, 4).join(', ');
+    return { what: names.length > 4 ? `${shown} (+${names.length - 4} more)` : shown, why };
+  });
+
+  // Catalog gaps for the ROUTE cities: a style the city is known for but that the
+  // catalog has no activity for (Round 20). Tells the planner a route city can't
+  // fully deliver its own vibe from the provided list — so it should note the gap
+  // (or fill it from general knowledge) rather than silently omitting it.
+  const catalog_gaps = selected_route
+    .map((name) => {
+      const cityEntity = data.cityFile.entities.find((c) => c.name === name);
+      if (!cityEntity) return null;
+      const cov = cityCoverage(cityEntity, data.activities);
+      return cov.missing_styles.length ? { city: name, missing_styles: cov.missing_styles } : null;
+    })
+    .filter(Boolean);
+
+  const planning_rules = [
+    'The route is AUTHORITATIVE — schedule within these cities; never re-rank, add, or drop a city.',
+    ...(day_allocation ? ['day_allocation is AUTHORITATIVE — give each city exactly its allocated number of days; do not change the split.'] : []),
+    'Schedule ONLY activities listed in selected_activities — never invent or substitute one.',
+    'brief.majority drives the trip style; brief.constraints only restrict; special_moments_for get 1-2 dedicated moments each.',
+    'Max 2 activities of the same style across the whole trip — vary temple / market / beach / food / cruise.',
+    'Cover every first_timer_essentials that is true; if one is false, say so (do not fabricate a place).',
+    'Honor avoid, safety_priority, mobility and children ages; cluster by city; minimize transfers; fit the duration exactly.',
+    ...(catalog_gaps.length ? ['catalog_gaps: these route cities lack an activity for a style they are known for — note it or fill from general knowledge, do not pretend it is covered.'] : []),
+  ];
+
+  return {
+    brief,
+    selected_route,
+    ...(day_allocation ? { day_allocation } : {}),
+    selected_activities,
+    planning_rules,
+    first_timer_essentials: firstTimer,
+    ...(catalog_gaps.length ? { catalog_gaps } : {}),
     ...(avoid.length ? { avoid } : {}),
   };
 }
@@ -1192,11 +1389,14 @@ function writeAndSummarize(ext) {
   writeJSON('output/thailand/query_result.recipe.json', recipe); // always-latest convenience copies
   writeJSON('output/thailand/query_result.ranked.json', ranked);
 
-  let contextPath = null;
+  let plannerPath = null;
   if (!compareMode) {
     const context = buildLLMContext(ext, rankedResult);
-    contextPath = writeJSON(`output/thailand/queries/${stamp}_${n}.context.json`, context);
+    writeJSON(`output/thailand/queries/${stamp}_${n}.context.json`, context);
     writeJSON('output/thailand/query_result.context.json', context);
+    const planner = plannerContextBuilder(ext, rankedResult);
+    plannerPath = writeJSON(`output/thailand/queries/${stamp}_${n}.planner.json`, planner);
+    writeJSON('output/thailand/query_result.planner.json', planner);
   }
 
   if (compareMode) {
@@ -1213,12 +1413,11 @@ function writeAndSummarize(ext) {
   if (compareMode) printCompare(rankedResult);
   else printSingle(rankedResult);
 
-  if (contextPath) console.log(`\n► LLM context (send THIS — lean, no scores):  ${path.relative(ROOT, contextPath)}`);
-  console.log(`  Recipe JSON (audit: weights/gates/brief):   ${path.relative(ROOT, recipePath)}`);
-  console.log(`  Ranked JSON (audit: full scored lists):     ${path.relative(ROOT, rankedPath)}`);
-  console.log(
-    `  Latest copies: query_result.context.json${contextPath ? '' : ''}, query_result.recipe.json, query_result.ranked.json`
-  );
+  if (plannerPath) console.log(`\n► Planner JSON (send THIS to the itinerary LLM — compressed): ${path.relative(ROOT, plannerPath)}`);
+  console.log(`  Context JSON (audit: rich, scores + fit + breakdowns):     ${path.relative(ROOT, recipePath.replace('recipe', 'context'))}`);
+  console.log(`  Recipe JSON  (audit: weights/gates/brief):                 ${path.relative(ROOT, recipePath)}`);
+  console.log(`  Ranked JSON  (audit: full scored lists):                   ${path.relative(ROOT, rankedPath)}`);
+  console.log(`  Latest copies: query_result.planner.json (+ .context/.recipe/.ranked audit copies)`);
   console.log('-'.repeat(64) + '\n');
 }
 

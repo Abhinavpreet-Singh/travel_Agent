@@ -24,7 +24,7 @@ const has = (names, wanted) => names.some((n) => n.toLowerCase().includes(wanted
 
 /** Run one case; return { name, checks: [{ ok, label, detail }] }. */
 function runCase(tc) {
-  const { ranked } = evaluateQuery(tc.query);
+  const { ranked, planner } = evaluateQuery(tc.query);
   const personas = ranked.query.personas ?? [];
   const cityNames = (ranked.recommended_cities ?? []).map((c) => c.name);
   const activityCityNames = (ranked.recommended_activities ?? []).map((a) => a.city).filter(Boolean);
@@ -59,6 +59,34 @@ function runCase(tc) {
   const citySet = new Set(cityNames);
   const orphans = [...new Set(activityCityNames.filter((c) => !citySet.has(c)))];
   check(orphans.length === 0, 'activities coherent with recommended cities', orphans.length ? `orphan activity cities: ${orphans.join(', ')}` : '');
+
+  // Universal invariant (Round 18/19): the COMPRESSED planner route must equal
+  // the engine's itinerary_route, in order — compression must never change it.
+  if (planner) {
+    const route = planner.selected_route ?? [];
+    const engineRoute = ranked.itinerary_route ?? [];
+    const same = route.length === engineRoute.length && route.every((c, i) => c === engineRoute[i]);
+    check(same, 'compressed_context_produces_same_route', same ? '' : `planner ${JSON.stringify(route)} vs engine route ${JSON.stringify(engineRoute)}`);
+  }
+
+  // Round 21: day allocation must sum to the trip duration and cover exactly the route.
+  if (planner?.day_allocation) {
+    const alloc = planner.day_allocation;
+    const sum = alloc.reduce((s, a) => s + a.days, 0);
+    const dur = planner.brief?.duration_days;
+    if (dur != null) check(sum === dur, 'allocation_sums_to_duration', sum === dur ? '' : `sum ${sum} vs duration ${dur}`);
+    const allocCities = alloc.map((a) => a.city);
+    const route = planner.selected_route ?? [];
+    const same = allocCities.length === route.length && allocCities.every((c, i) => c === route[i]);
+    check(same, 'allocation_matches_route', same ? '' : `${JSON.stringify(allocCities)} vs route ${JSON.stringify(route)}`);
+    check(alloc.every((a) => a.days >= 1), 'every allocated city has >= 1 day', '');
+  }
+
+  // Round 19: a beach-oriented persona whose route includes a beach city must get
+  // a beach activity in the pool (the activity-strategy fix — no more beach:false).
+  if (e.beachEssential) {
+    check(planner?.first_timer_essentials?.beach === true, 'beach city in route implies a beach activity', planner?.first_timer_essentials?.beach ? '' : `beach=false; route=${JSON.stringify(ranked.itinerary_route)}`);
+  }
 
   return { name: tc.name, note: tc.note, checks };
 }
