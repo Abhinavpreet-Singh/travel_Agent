@@ -1,0 +1,633 @@
+{
+  "schema": "travelomore/destination_country/1.0.0",
+  "entities": [
+    {
+      "id": "country:AE",
+      "type": "destination_country",
+      "iso2": "AE",
+      "iso3": "ARE",
+      "name": "United Arab Emirates",
+      "aliases": [
+        "UAE",
+        "U.A.E.",
+        "Emirates",
+        "the Emirates"
+      ],
+      "region": "Middle East",
+      "currency": "AED",
+      "primary_language": [
+        "ar"
+      ],
+      "timezone": "Asia/Dubai",
+      "utc_offset_from_ist": "-1:30",
+      "gateway_airports": [
+        "DXB",
+        "AUH",
+        "SHJ",
+        "RKT",
+        "DWC"
+      ],
+      "summary": "India's shortest-haul and highest-frequency outbound market: sub-4-hour flights from every Indian metro, near-hourly connectivity, universal English and Hindi, the largest Indian expatriate community anywhere, and a spread that covers skyline landmarks, desert, mall-scale shopping, calm Gulf beaches and mountains inside four small, road-connected emirates. The trade-off against Thailand is cost and heat, not infrastructure.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "shoulder_months": [
+        4,
+        10
+      ],
+      "avoid_months": [
+        6,
+        7,
+        8
+      ],
+      "seasonality_note": "The year is governed by heat, not rain: Nov-Mar is near-perfect (25-30°C) and is peak season; Jun-Sep is genuinely punishing (45°C+, high Gulf humidity) and pushes the whole trip indoors — outdoor activities (desert, beaches, Corniche, Jebel Jais) lose most of their value, though malls, museums and indoor attractions are unaffected.",
+      "tags": [
+        "beginner_friendly",
+        "package_ready",
+        "luxury",
+        "shopping",
+        "family_friendly",
+        "photogenic",
+        "desert",
+        "beach",
+        "food"
+      ],
+      "attributes": {
+        "safety_index_0_100": 90,
+        "female_solo_safety_index_0_100": 86,
+        "night_safety_index_0_100": 90,
+        "scam_incidence_index_0_100": 25,
+        "street_harassment_index_0_100": 15,
+        "water_safety_index_0_100": 80,
+        "road_fatality_per_100k": 8.4,
+        "emergency_response_index_0_100": 90,
+        "intl_hospital_quality_index_0_100": 90,
+        "pharmacy_density_index_0_100": 92,
+        "medevac_ease_index_0_100": 92,
+        "dengue_malaria_risk_index_0_100": 8,
+        "zika_risk_level": "none",
+        "food_hygiene_index_0_100": 88,
+        "tap_water_potable": "filtered_only",
+        "pm25_annual_ug_m3": 38,
+        "pediatric_care_index_0_100": 88,
+        "obstetric_care_index_0_100": 88,
+        "wheelchair_infrastructure_index_0_100": 84,
+        "accessible_transport_index_0_100": 80,
+        "weather_comfort_index_0_100": 48,
+        "direct_flights_from_india_weekly": 380,
+        "avg_flight_hours_from_india": 3.3,
+        "transport_comfort_index_0_100": 88,
+        "self_drive_index_0_100": 80,
+        "road_quality_index_0_100": 95,
+        "scenic_drive_index_0_100": 68,
+        "fuel_stop_index_0_100": 92,
+        "avg_daily_cost_per_pax_inr": 9500,
+        "value_index_0_100": 58,
+        "beer_500ml_price_inr": 900,
+        "alcohol_access_index_0_100": 55,
+        "english_index_0_100": 92,
+        "tourist_infra_index_0_100": 96,
+        "tourist_police_index_0_100": 88,
+        "card_upi_acceptance_index_0_100": 90,
+        "visa_ease_index_0_100": 76,
+        "veg_food_index_0_100": 90,
+        "indian_food_index_0_100": 98,
+        "drone_policy": "restricted",
+        "avg_wifi_mbps": 120
+      },
+      "meta": {
+        "data_confidence": 0.74,
+        "last_verified": "2026-07-16",
+        "volatility": {
+          "visa_ease_index_0_100": "high",
+          "avg_daily_cost_per_pax_inr": "medium",
+          "direct_flights_from_india_weekly": "medium",
+          "pm25_annual_ug_m3": "seasonal"
+        },
+        "review_status": "editorial_draft",
+        "reviewer": null
+      },
+      "provenance": [
+        {
+          "attributes": [
+            "visa_ease_index_0_100"
+          ],
+          "source_type": "policy",
+          "source": "UAE e-visa / visa-on-arrival policy for Indian passport holders (VoA for holders of a valid US/UK/EU visa or green card; pre-arranged e-visa otherwise). Not scored from a live source — treat as a directional prior only.",
+          "method": "expert_estimate",
+          "confidence": 0.6,
+          "requires_live_verification": true,
+          "last_verified": "2026-07-16"
+        },
+        {
+          "attributes": [
+            "road_fatality_per_100k"
+          ],
+          "source_type": "statistical",
+          "source": "WHO Global Status Report on Road Safety — UAE sits well below the regional average and far below Thailand",
+          "method": "published_statistic",
+          "confidence": 0.85,
+          "last_verified": "2026-07-16"
+        },
+        {
+          "attributes": [
+            "dengue_malaria_risk_index_0_100",
+            "zika_risk_level"
+          ],
+          "source_type": "health_authority",
+          "source": "CDC/WHO country risk classification — the UAE is malaria-free with no endemic Zika transmission; arid climate suppresses vector load",
+          "method": "published_classification",
+          "confidence": 0.9,
+          "last_verified": "2026-07-16"
+        },
+        {
+          "attributes": [
+            "safety_index_0_100",
+            "female_solo_safety_index_0_100",
+            "night_safety_index_0_100",
+            "scam_incidence_index_0_100",
+            "street_harassment_index_0_100",
+            "tourist_infra_index_0_100",
+            "english_index_0_100",
+            "value_index_0_100",
+            "veg_food_index_0_100",
+            "indian_food_index_0_100",
+            "food_hygiene_index_0_100"
+          ],
+          "source_type": "editorial_index",
+          "source": "Composite of aggregated traveller-review sentiment, Numbeo safety indices and Travelomore desk research. Calibrated on the SAME rubric as Thailand so cross-country comparison is meaningful.",
+          "method": "expert_estimate",
+          "confidence": 0.7,
+          "last_verified": "2026-07-16"
+        },
+        {
+          "attributes": [
+            "direct_flights_from_india_weekly",
+            "avg_flight_hours_from_india",
+            "avg_daily_cost_per_pax_inr",
+            "beer_500ml_price_inr"
+          ],
+          "source_type": "market",
+          "source": "Airline schedule scrape (DEL/BOM/BLR/MAA/CCU/HYD → DXB/AUH/SHJ) + Travelomore booked-basket averages. The India-UAE corridor is among the densest international air routes in the world.",
+          "method": "market_sample",
+          "confidence": 0.72,
+          "last_verified": "2026-07-16"
+        },
+        {
+          "attributes": [
+            "tap_water_potable"
+          ],
+          "source_type": "editorial_index",
+          "source": "Municipal desalinated supply is treated to a potable standard at source, but rooftop-tank storage means bottled/filtered is the near-universal practice — scored filtered_only rather than safe.",
+          "method": "expert_estimate",
+          "confidence": 0.75,
+          "last_verified": "2026-07-16"
+        }
+      ],
+      "validation": {
+        "required_attributes_present": true,
+        "unmapped_attributes": [],
+        "signal_coverage": null,
+        "computed_at": null
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7641,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.6,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 90/100)",
+              "380 direct weekly flights from India",
+              "Short hop from India (~3.3 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5378,
+          "score_0_10": 5.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 5.4,
+            "reasons": [
+              "380 direct weekly flights from India",
+              "Strong general safety record (safety index 90/100)"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹900 a beer)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8419,
+          "score_0_10": 8.4,
+          "signal_coverage": 0.857,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8.4,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "International-standard hospitals (quality index 90/100)",
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source"
+            ],
+            "cautions": []
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4602,
+          "score_0_10": 4.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 4.6,
+            "reasons": [
+              "Comfortable to move around after dark",
+              "380 direct weekly flights from India"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹900 a beer)"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.819,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8.2,
+            "reasons": [
+              "Well established as safe for solo female travellers (86/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Low tout and scam pressure"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9519,
+          "score_0_10": 9.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 9.5,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "380 direct weekly flights from India",
+              "English widely understood in tourist areas",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6534,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.5,
+            "reasons": [
+              "Fast connectivity (~120 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 90/100)"
+            ],
+            "cautions": [
+              "Drone use is restricted"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7679,
+          "score_0_10": 7.7,
+          "signal_coverage": 0.698,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.7,
+            "reasons": [
+              "International-standard hospitals (quality index 90/100)",
+              "Wheelchair access is well provided for (84/100)",
+              "Fast emergency response and tourist assistance",
+              "Pharmacies widely available"
+            ],
+            "cautions": []
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.874,
+          "score_0_10": 8.7,
+          "signal_coverage": 0.833,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 8.7,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "Reliable food hygiene standards",
+              "Paediatric care readily available"
+            ],
+            "cautions": []
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7635,
+          "score_0_10": 7.6,
+          "signal_coverage": 0.7,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.6,
+            "reasons": [
+              "Paediatric care readily available",
+              "Reliable food hygiene standards",
+              "Low dengue/malaria risk"
+            ],
+            "cautions": []
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8626,
+          "score_0_10": 8.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 8.6,
+            "reasons": [
+              "Well established as safe for solo female travellers (86/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8245,
+          "score_0_10": 8.2,
+          "signal_coverage": 0.855,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 8.2,
+            "reasons": [
+              "No meaningful Zika signal",
+              "Obstetric/maternity care available locally",
+              "Reliable food hygiene standards",
+              "Low dengue/malaria risk"
+            ],
+            "cautions": []
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7811,
+          "score_0_10": 7.8,
+          "signal_coverage": 0.865,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 7.8,
+            "reasons": [
+              "Wheelchair access is well provided for (84/100)",
+              "Accessible taxis/transfers can be booked"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8003,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 8,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Comparatively safe roads",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": []
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7884,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7.9,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "380 direct weekly flights from India",
+              "Reliable food hygiene standards",
+              "Short hop from India (~3.3 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8017,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "380 direct weekly flights from India",
+              "Reliable food hygiene standards",
+              "Regulated, well-run water operators"
+            ],
+            "cautions": []
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8086,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 8.1,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "380 direct weekly flights from India",
+              "Reliable food hygiene standards",
+              "Short hop from India (~3.3 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9226,
+          "score_0_10": 9.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 9.2,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "International-standard hospitals (quality index 90/100)",
+              "Strong general safety record (safety index 90/100)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7161,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 7.2,
+            "reasons": [
+              "Strong general safety record (safety index 90/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "380 direct weekly flights from India",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7727,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 7.7,
+            "reasons": [
+              "Regulated, well-run water operators",
+              "Strong general safety record (safety index 90/100)",
+              "Comparatively safe roads",
+              "380 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.676,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 6.8,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Strong general safety record (safety index 90/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.93,
+          "score_0_10": 9.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 9.3,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Indian restaurants widely available",
+              "Strong general safety record (safety index 90/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7956,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 8,
+            "reasons": [
+              "Fast connectivity (~120 Mbps) — uploads are painless",
+              "English widely understood in tourist areas",
+              "Strong general safety record (safety index 90/100)",
+              "International-standard hospitals (quality index 90/100)"
+            ],
+            "cautions": []
+          }
+        }
+      }
+    }
+  ]
+}

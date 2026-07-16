@@ -23,26 +23,103 @@ personas/
 schemas/
   common.schema.json        shared $defs (meta, provenance, persona_score, ...)
   {country,city,activity,hotel,flight,visa}.schema.json
-data/thailand/
-  country.json, cities.json, activities_south.json, activities_north_gulf.json,
-  hotels.json, flights.json, visa.json
+data/countries/<country>/
+  catalog.json              the country's MANIFEST: which files to load (in order), plus
+                            planning_profile (first_timer_essentials, style_variety_examples)
+  country.json, cities.json, activities*.json, hotels.json, [flights.json], [visa.json]
+  # thailand/ and uae/ today. A country EXISTS because this folder exists —
+  # registration is data, not code. See "Multi-country" below.
 engine/
   normalize.js             raw attribute -> [0,1] signal, with inheritance
   score.js                 gates, weighted scoring, tag modifiers, persona composition
   explain.js               template-rendered {persona, score, reasons, cautions}
   personaFromBrief.js       Maya brief JSON -> persona id[] (heuristic bridge)
-  generate.js               CLI: scores everything, writes output/, runs a demo query
+  countries.js              country registry + resolution + loadCountryCatalog()
+  loadData.js               JSON read/write + the country-INDEPENDENT inputs (dictionary, personas)
+  generate.js               CLI: scores everything, writes output/<country>/, runs a demo query
   index.js                  public API surface (`import ... from '@travelomore/core-engine'`)
-output/thailand/
+output/<country>/
   *.scored.json             each source file, enriched with entity.persona_scores
-  thailand.full.json        the single consolidated file — country > cities > {activities, hotels} + flights + visa
+  <country>.full.json       the single consolidated file — country > cities > {activities, hotels} + flights + visa
   demo_query_result.json    one full brief -> personas -> ranked+explained result
+  queries/                  one timestamped recipe/ranked/context/planner set per query
 docs/
   ARCHITECTURE.md           this file
 project.md                  status tracker
 ```
 
 Run it: `npm run generate` (plain Node, no build step, no external dependencies).
+
+## Multi-country: Planning Engine + Catalog
+
+The engine is **country-agnostic**. It is not "the Thailand engine with a UAE
+mode" — it is one planning engine that is handed one catalog:
+
+```
+query ──▶ resolveCountry(text) ──▶ loadCountryCatalog(country) ──▶ [ the pipeline ]
+          the ONLY step that            the catalog                 knows nothing
+          looks across countries                                    about countries
+```
+
+**Country resolution** (`engine/countries.js`) happens once, before any catalog
+is loaded, and it is the only code allowed to see more than one country:
+
+1. The country is **named** — "trip to thailand", "a week in the UAE" (matched
+   against `country.json`'s `name` + `aliases`).
+2. A city **uniquely identifies** it — "friends trip to dubai" → `uae`. Only
+   when unambiguous: a city name shared by two registered countries resolves to
+   neither and falls through.
+3. Otherwise the `DEFAULT_COUNTRY` fallback (an under-specified query like
+   "family trip with 2 kids"). This is a fallback, not a privileged country —
+   it takes the identical path as any other.
+
+A named country beats a city mention, so "Dubai stopover on the way to Thailand"
+is a Thailand trip. `recipe.json` records how it resolved via
+`country_resolution: { via, matched }`.
+
+The resolved country decides exactly **two** things: which catalog is loaded, and
+which `output/<country>/` folder is written. Nothing else. Every downstream
+document (`recipe/ranked/context/planner.json`) has an identical shape in every
+country.
+
+### The rule
+
+> **Country-specific behaviour belongs ONLY in catalog data.**
+> There is no `if (country === 'uae')` anywhere in the engine — not in
+> destination strategy, activity strategy, day allocation, or planner
+> generation. If you are reaching for one, the fact you are encoding belongs in
+> that country's catalog instead.
+
+This is enforced by the `country_catalog_isolation` benchmark cases, which scan
+every output document for entities from another country's catalog.
+
+Two things that *look* like engine knowledge but are catalog data:
+
+| Fact | Wrong home | Right home |
+|---|---|---|
+| A first-timer in Thailand should eat Thai food; in the UAE, see the desert | `firstTimer.thai_food = true` in the planner | `catalog.json` → `planning_profile.first_timer_essentials` |
+| "Vary temple / market / beach" vs "vary mosque / souk / desert" | a hardcoded planner rule | `planning_profile.style_variety_examples` |
+
+The evaluator for both is generic; only the vocabulary is per-country.
+
+### Adding a country
+
+Add `data/countries/<slug>/` with a `catalog.json` manifest and the entity
+files. That is the whole procedure — no engine change, no registry edit. The
+manifest lists activity files **explicitly and in order**, because
+concatenation order feeds score tie-breaking and must be pinned by the catalog
+author rather than by filesystem sort order.
+
+What makes cross-country comparison meaningful is that every catalog is authored
+against the **same** `signal_dictionary.json` and the **same** editorial rubric —
+a persona means the same thing in Bangkok and in Dubai. The personas and the
+dictionary are loaded once (`loadShared()`) and shared by every catalog; only the
+entity data differs.
+
+Real country differences must therefore be expressed as *data*, and then they
+work for free: Sharjah is legally dry, so its `alcohol_access_index_0_100` is `0`
+and its `beer_500ml_price_inr` is **absent** (no legal price exists to score) —
+which is why a bachelor trip never anchors there, with no rule anywhere saying so.
 
 ## Ranking engine design
 
@@ -114,7 +191,7 @@ Bangkok's `senior_citizen` weights sum to 118 (raw units). A handful of the
 → modifier **−0.03**. No hard gate fails, no soft gate caps.
 
 `score_0_1 = clamp01(0.7032 − 0.03) = 0.6732` → **score_0_10 = 6.7** — exactly
-what `output/thailand/cities.scored.json` contains. This is fully
+what `output/<country>/cities.scored.json` (e.g. output/thailand/) contains. This is fully
 reproducible by hand from the source JSON; that reproducibility is the point.
 
 ### Persona stacking — composePersonas()
@@ -202,7 +279,7 @@ day-by-day plans, and conversational responses. The LLM never invents a
 score or a reason; it narrates ones the engine already computed.
 ```
 
-`output/thailand/demo_query_result.json` is a real, generated run of this
+`output/<country>/demo_query_result.json` is a real, generated run of this
 entire pipeline against a sample Thailand family/wheelchair brief — inspect
 it as a concrete example of the contract every future agent below reads.
 
@@ -251,7 +328,7 @@ as next steps in `project.md`, not silently dropped):
 | Flight Recommendation | `flights.json` scoped to the chosen country | `rankEntities` on flight routes (persona weights that include `direct_flight_access`/`flight_time_ease` dominate) |
 | Visa Agent | `visa.json` | Reads `attributes.visa_ease_index_0_100` + `provenance[].requires_live_verification` directly — **must** re-verify live before stating a visa fact to a user, never answer from this cache alone |
 | Budget Agent | `cost_efficiency` / `value_for_money` signals across all entity types | Sums `price_inr` / `price_inr_per_night` / `avg_price_inr_return_economy` for a candidate itinerary |
-| Itinerary Agent | `thailand.full.json` (country → cities → activities/hotels, pre-scored) | Picks top-N per day from `rankEntities` output, sequences by `duration_hours` + `category` diversity |
+| Itinerary Agent | `<country>.full.json` (country → cities → activities/hotels, pre-scored) | Picks top-N per day from `rankEntities` output, sequences by `duration_hours` + `category` diversity |
 | Conflict Resolution Agent | `gate_failures[]` across stacked personas | When personas disagree (e.g. `bachelor_trip` wants Pattaya nightlife, a stacked `senior_citizen` grandparent hard-gates it out), surfaces the exact gate reason rather than silently picking a winner |
 | Summary Agent | `explanation.reasons` / `.cautions` | Narrates, never invents, scores already computed upstream |
 | Family / Friends / Bachelor(ette) / Senior / Infant / Child / Female Solo / Pregnancy / Wheelchair / Road Trip / First-Timer / Content Creator Agents | Their persona's slice of `personas.json` | Each is really "call `rankEntities` with this persona id (or a stack including it)" — there is deliberately no separate code path per agent; the persona *is* the agent-specific behavior |

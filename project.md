@@ -195,6 +195,54 @@ Phuket's safety/hospital data" or "check Pai's actual transfer time") and
 I'll do a properly-scoped pass with cited sources, rather than a shallow
 pass across everything that looks thorough but isn't reliable.
 
+### Round 22 (2026-07-16) — Multi-country architecture (UAE v1): Planning Engine + Catalog
+The engine is no longer "the Thailand engine." Catalogs moved to
+`data/countries/<slug>/` behind a `catalog.json` manifest, and a country is now
+RESOLVED from the query before anything loads: by name ("trip to thailand"), or
+by a city that uniquely identifies one ("friends trip to dubai" → uae), else a
+documented `DEFAULT_COUNTRY` fallback. `loadCountryCatalog(country)` replaces
+`loadThailand()`; output goes to `output/<country>/`. Registration is DATA — a
+country exists because its folder exists, so adding one needs no engine change.
+
+The load-bearing constraint: **no country forks**. There is no
+`if (country === 'uae')` anywhere. Two things that had been hiding as engine
+logic moved into catalog data, because they are facts about a country, not about
+planning: `first_timer_essentials` (Thailand: `thai_food`; UAE: `desert`/`souk`)
+and the planner's style-variety examples ("vary temple / market / beach" vs
+"vary mosque / souk / desert"). Both evaluators are now generic.
+
+UAE v1 catalog: 4 cities (Dubai, Abu Dhabi, Sharjah, Ras Al Khaimah), 22
+activities, 5 hotels, authored against the SAME signal dictionary and editorial
+rubric as Thailand — that shared rubric is what makes a persona mean the same
+thing in both. Real country facts then work for free with no new code: Sharjah is
+legally dry (`alcohol_access_index_0_100: 0`, and `beer_500ml_price_inr` ABSENT
+rather than invented — no legal price exists to score), which is why a bachelor
+trip never anchors there. A 72-year-old gets cool indoor culture and is never
+sent dune-bashing, on the safari's own exertion/heat/pregnancy data.
+
+Verification: all 11 pre-existing Thailand benchmark cases pass unchanged, and
+recipe/ranked/context/planner were byte-compared across 18 queries before and
+after the refactor — identical, apart from the intentionally added `country` /
+`country_resolution` fields. New `country_catalog_isolation` cases scan every
+output document (not just the city list) for cross-catalog leakage, in both
+directions, including one case that runs after the Thailand cases to catch a leak
+through the catalog cache.
+
+Two pre-existing bugs surfaced and were fixed:
+- `ANCHOR_DAY_BIAS` was used but never declared (introduced in `9ae31c1`) — every
+  query with a duration threw `ReferenceError`, so the benchmark could not run at
+  all. Defined at 1.5; the plurality guarantee below it is what actually enforces
+  anchor primacy, so it only tilts the proportional split.
+- The benchmark's activity-coherence invariant failed for any query that PINS a
+  city (`recommended_cities` is undefined by design), which no existing case did.
+  Now falls back to `itinerary_route`. Country-agnostic — pinned Phuket behaved
+  identically.
+
+Known UAE v1 gaps (honest, and reported by `npm run coverage`): Dubai and Sharjah
+are tagged `food` but v1 has no food activity, and Dubai has no dedicated
+nightlife entry. `catalog_gaps` surfaces these to the planner rather than
+silently omitting them.
+
 ### Round 21 (2026-07-15) — Day Allocation layer (nights-per-city, out of the LLM's hands)
 The "unresolved decision layer": how many nights per city. `buildDayAllocation()`
 now decides it deterministically. Every route city gets >= 1 day (rule 4:
@@ -1062,8 +1110,10 @@ reference:
 ontology/    signal_dictionary.json + ontology.md
 personas/    personas.json + personas.md
 schemas/     JSON Schema (2020-12) per entity type + common.schema.json
-data/thailand/   raw entity data (source of truth, hand-authored/editorial)
-engine/      normalize.js, score.js, explain.js, personaFromBrief.js, loadData.js, generate.js, cli.js, index.js
-output/thailand/  generated — never hand-edit, regenerate via npm run generate
+data/countries/<slug>/   raw entity data per country (source of truth, hand-authored/editorial)
+                         + catalog.json manifest (file order + planning_profile).
+                         thailand/ and uae/ today; a country exists because its folder does.
+engine/      normalize.js, score.js, explain.js, personaFromBrief.js, countries.js, loadData.js, generate.js, cli.js, index.js
+output/<slug>/    generated — never hand-edit, regenerate via npm run generate
 docs/        ARCHITECTURE.md
 ```

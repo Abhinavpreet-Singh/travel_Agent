@@ -37,6 +37,11 @@ case is really about — a case that over-specifies breaks on unrelated tuning.
     // citiesNotInShortlist: ['Pai'],
     // citiesExcluded: ['Koh Tao'],        // must be hard-gated out (type city)
     // minActivities: 5, maxActivities: 40,
+    // activitiesInShortlist: ['Grand Palace'],
+    // essentials: { beach: true },        // planner.first_timer_essentials.<key>
+    // country: 'thailand',                // resolved country
+    // countryVia: 'city',                 // how it resolved: country_name | city | city_flag | default
+    // noCatalogLeakage: ['Dubai'],        // none of these may appear in ANY output doc
   },
 }
 ```
@@ -45,8 +50,26 @@ City names match by **case-insensitive substring**, so `"Krabi"` matches
 `"Krabi (Ao Nang / Railay)"`.
 
 Every case is also checked for one **universal invariant** automatically:
-*activity coherence* — every recommended activity must belong to a recommended
-city (no orphan activity in a city we're not sending you to).
+*activity coherence* — every recommended activity must belong to a city the trip
+actually visits (no orphan activity in a city we're not sending you to). When a
+query pins a city ("trip to Dubai"), the engine skips city ranking by design and
+the check falls back to `itinerary_route`.
+
+## country_catalog_isolation
+
+The multi-country guarantee (see [ARCHITECTURE.md](../docs/ARCHITECTURE.md) →
+*Multi-country*): a query about one country must be planned from that country's
+catalog **alone**.
+
+`noCatalogLeakage` scans the raw serialized `recipe` + `ranked` + `context` +
+`planner` for each forbidden term. Scanning whole documents rather than just the
+city list is deliberate — leakage through a field nobody thought to assert on is
+exactly what this is for. A hit is a hard fail: a Thailand trip must never see
+Burj Khalifa.
+
+Note the cases run **in one process**, so a leak through the catalog cache or a
+stale module-level singleton surfaces in `country_catalog_isolation_cross_query`,
+which deliberately runs after the Thailand cases.
 
 ## When a case fails
 

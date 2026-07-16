@@ -1,0 +1,93 @@
+{
+  "brief": {
+    "destination": "United Arab Emirates — Dubai",
+    "duration_days": 7,
+    "group": {
+      "adults": 5
+    },
+    "majority": "friends_trip",
+    "pace": "active",
+    "needs_confirmation": [
+      "travel dates",
+      "budget"
+    ]
+  },
+  "selected_route": [
+    "Dubai"
+  ],
+  "day_allocation": [
+    {
+      "city": "Dubai",
+      "days": 7
+    }
+  ],
+  "selected_activities": {
+    "Dubai": [
+      {
+        "name": "Red Dune Desert Safari with BBQ Camp",
+        "style": "desert",
+        "hrs": 6
+      },
+      {
+        "name": "Global Village",
+        "style": "culture",
+        "hrs": 4
+      },
+      {
+        "name": "The Dubai Fountain Show",
+        "style": "show",
+        "hrs": 1
+      },
+      {
+        "name": "Jumeirah Beach & Burj Al Arab Views",
+        "style": "beach",
+        "hrs": 3
+      },
+      {
+        "name": "The Dubai Mall",
+        "style": "shopping",
+        "hrs": 4
+      },
+      {
+        "name": "Dubai Marina Dhow Dinner Cruise",
+        "style": "scenic",
+        "hrs": 2.5
+      },
+      {
+        "name": "Museum of the Future",
+        "style": "culture",
+        "hrs": 3
+      },
+      {
+        "name": "Burj Khalifa — At the Top",
+        "style": "scenic",
+        "hrs": 2
+      }
+    ]
+  },
+  "planning_rules": [
+    "The route is AUTHORITATIVE — schedule within these cities; never re-rank, add, or drop a city.",
+    "day_allocation is AUTHORITATIVE — give each city exactly its allocated number of days; do not change the split.",
+    "Schedule ONLY activities listed in selected_activities — never invent or substitute one.",
+    "brief.majority drives the trip style; brief.constraints only restrict; special_moments_for get 1-2 dedicated moments each.",
+    "Max 2 activities of the same style across the whole trip — vary mosque / souk / beach / desert / skyline.",
+    "Cover every first_timer_essentials that is true; if one is false, say so (do not fabricate a place).",
+    "Honor avoid, safety_priority, mobility and children ages; cluster by city; minimize transfers; fit the duration exactly.",
+    "catalog_gaps: these route cities lack an activity for a style they are known for — note it or fill from general knowledge, do not pretend it is covered."
+  ],
+  "first_timer_essentials": {
+    "culture": true,
+    "beach": true,
+    "desert": true,
+    "souk": true,
+    "iconic": true
+  },
+  "catalog_gaps": [
+    {
+      "city": "Dubai",
+      "missing_styles": [
+        "food"
+      ]
+    }
+  ]
+}

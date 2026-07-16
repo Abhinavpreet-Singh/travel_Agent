@@ -1,0 +1,22 @@
+{
+  "schema": "travelomore/country_catalog/1.0.0",
+  "country": "thailand",
+  "files": {
+    "country": "country.json",
+    "cities": "cities.json",
+    "activities": ["activities_south.json", "activities_north_gulf.json", "activities_supplemental.json"],
+    "hotels": "hotels.json",
+    "flights": "flights.json",
+    "visa": "visa.json"
+  },
+  "planning_profile": {
+    "style_variety_examples": "temple / market / beach / food / cruise",
+    "first_timer_essentials": [
+      { "key": "culture", "categories": ["heritage", "culture", "heritage_wellness"] },
+      { "key": "beach", "categories": ["beach", "island_hopping", "beach_club"] },
+      { "key": "thai_food", "categories": ["food", "dining"] },
+      { "key": "market", "categories": ["shopping"], "name_matches": "market" },
+      { "key": "iconic", "min_bucket_list_value": 80 }
+    ]
+  }
+}

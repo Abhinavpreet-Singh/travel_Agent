@@ -26,6 +26,7 @@ export const EXPECTED_STYLE_TAGS = {
   wellness: ['wellness', 'heritage_wellness'],
   food: ['food', 'dining'],
   nature: ['nature', 'scenic', 'adventure', 'wildlife', 'waterfall'],
+  desert: ['desert'],
 };
 
 /**
@@ -53,15 +54,21 @@ export function analyzeCatalogCoverage(data) {
     .sort((a, b) => b.missing_styles.length - a.missing_styles.length || a.city.localeCompare(b.city));
 }
 
-// Runnable directly: `node engine/coverage.js` prints the coverage report.
+// Runnable directly: `node engine/coverage.js` reports every country;
+// `node engine/coverage.js uae` reports one.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const { loadThailand } = await import('./loadData.js');
-  const report = analyzeCatalogCoverage(loadThailand());
-  const gaps = report.filter((c) => c.missing_styles.length);
-  console.log('\nCatalog coverage — cities with gaps first\n');
-  for (const c of report) {
-    console.log(`${c.missing_styles.length ? 'GAP ' : 'ok  '} ${c.city.padEnd(26)}${c.missing_styles.length ? `missing: ${c.missing_styles.join(', ')}` : ''}`);
-    if (c.missing_styles.length) console.log(`      tags [${c.city_tags.join(', ')}]  has [${c.available_styles.join(', ')}]`);
+  const { listCountries, loadCountryCatalog } = await import('./countries.js');
+  const only = process.argv[2];
+  const countries = only ? [only] : listCountries();
+  for (const slug of countries) {
+    const catalog = loadCountryCatalog(slug);
+    const report = analyzeCatalogCoverage(catalog);
+    const gaps = report.filter((c) => c.missing_styles.length);
+    console.log(`\nCatalog coverage — ${catalog.country.name} (${slug}) — cities with gaps first\n`);
+    for (const c of report) {
+      console.log(`${c.missing_styles.length ? 'GAP ' : 'ok  '} ${c.city.padEnd(26)}${c.missing_styles.length ? `missing: ${c.missing_styles.join(', ')}` : ''}`);
+      if (c.missing_styles.length) console.log(`      tags [${c.city_tags.join(', ')}]  has [${c.available_styles.join(', ')}]`);
+    }
+    console.log(`\n${gaps.length}/${report.length} cities have catalog gaps: ${JSON.stringify(gaps.map((c) => ({ city: c.city, missing_styles: c.missing_styles })))}\n`);
   }
-  console.log(`\n${gaps.length}/${report.length} cities have catalog gaps: ${JSON.stringify(gaps.map((c) => ({ city: c.city, missing_styles: c.missing_styles })))}\n`);
 }

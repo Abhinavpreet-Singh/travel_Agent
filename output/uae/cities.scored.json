@@ -1,0 +1,2395 @@
+{
+  "schema": "travelomore/destination_city/1.0.0",
+  "parent": "country:AE",
+  "notes": "All index_0_100 fields are Travelomore editorial indices calibrated on the SAME fixed rubric as every other country catalog (see docs/normalization_rules.md §4) — that shared rubric is what makes a persona mean the same thing in Bangkok and in Dubai. Physical measures (km, hours, °C, ₹, µg/m³) are observed or market-sampled. Every city inherits unspecified signals from country:AE. Note the emirate-level alcohol split: it is real, legally grounded data (Sharjah is dry), not an editorial preference — it is exactly the kind of fact that must live here rather than in engine logic.",
+  "entities": [
+    {
+      "id": "city:AE:DXB",
+      "type": "destination_city",
+      "name": "Dubai",
+      "parent_id": "country:AE",
+      "province": "Dubai",
+      "coordinates": {
+        "lat": 25.2048,
+        "lng": 55.2708
+      },
+      "gateway_airport": [
+        "DXB",
+        "DWC"
+      ],
+      "summary": "The country's gateway and its most complete city: the world's tallest building, mall-scale shopping treated as a genuine attraction, a desert an hour from the skyline, calm Gulf beaches, the region's best metro, and a licensed nightlife scene — all built for first-timers and priced accordingly.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "tags": [
+        "city_break",
+        "nightlife",
+        "shopping",
+        "food",
+        "beginner_friendly",
+        "package_ready",
+        "walkable",
+        "family_friendly",
+        "luxury",
+        "beach",
+        "desert"
+      ],
+      "attributes": {
+        "safety_index_0_100": 92,
+        "female_solo_safety_index_0_100": 88,
+        "night_safety_index_0_100": 92,
+        "scam_incidence_index_0_100": 22,
+        "street_harassment_index_0_100": 12,
+        "water_safety_index_0_100": 82,
+        "road_fatality_per_100k": 7,
+        "emergency_response_index_0_100": 92,
+        "intl_hospital_quality_index_0_100": 92,
+        "nearest_intl_hospital_km": 2,
+        "pharmacy_density_index_0_100": 95,
+        "medevac_ease_index_0_100": 95,
+        "dengue_malaria_risk_index_0_100": 5,
+        "zika_risk_level": "none",
+        "food_hygiene_index_0_100": 90,
+        "tap_water_potable": "filtered_only",
+        "pm25_annual_ug_m3": 40,
+        "pediatric_care_index_0_100": 90,
+        "obstetric_care_index_0_100": 90,
+        "wheelchair_infrastructure_index_0_100": 88,
+        "step_free_ratio_0_1": 0.85,
+        "elevator_availability_index_0_100": 92,
+        "accessible_transport_index_0_100": 85,
+        "accessible_toilet_index_0_100": 85,
+        "public_toilet_index_0_100": 82,
+        "typical_walking_km_per_day": 4.5,
+        "terrain_type": "flat",
+        "exertion_level_1_5": 2,
+        "max_altitude_m": 10,
+        "rest_stop_index_0_100": 85,
+        "shade_seating_index_0_100": 70,
+        "stroller_friendly_index_0_100": 90,
+        "peak_heat_index_c": 45,
+        "weather_comfort_index_0_100": 50,
+        "crowd_index_0_100": 78,
+        "noise_index_0_100": 72,
+        "direct_flights_from_india_weekly": 300,
+        "avg_flight_hours_from_india": 3.2,
+        "transfer_time_from_gateway_hours": 0.4,
+        "intracity_transport_index_0_100": 85,
+        "transport_comfort_index_0_100": 90,
+        "motion_sickness_risk_index_0_100": 12,
+        "self_drive_index_0_100": 80,
+        "road_quality_index_0_100": 96,
+        "scenic_drive_index_0_100": 45,
+        "fuel_stop_index_0_100": 95,
+        "parking_index_0_100": 65,
+        "avg_daily_cost_per_pax_inr": 10500,
+        "value_index_0_100": 58,
+        "group_value_index_0_100": 55,
+        "beer_500ml_price_inr": 950,
+        "nightlife_venue_index_0_100": 88,
+        "party_scene_index_0_100": 82,
+        "alcohol_access_index_0_100": 70,
+        "late_night_food_index_0_100": 88,
+        "group_activity_index_0_100": 85,
+        "adult_entertainment_index_0_100": 55,
+        "wellness_spa_index_0_100": 88,
+        "beach_club_index_0_100": 90,
+        "kid_activity_index_0_100": 95,
+        "infant_amenity_index_0_100": 88,
+        "kids_dining_index_0_100": 90,
+        "calm_beach_index_0_100": 78,
+        "family_room_index_0_100": 88,
+        "english_index_0_100": 95,
+        "tourist_infra_index_0_100": 98,
+        "tourist_police_index_0_100": 90,
+        "card_upi_acceptance_index_0_100": 92,
+        "veg_food_index_0_100": 92,
+        "indian_food_index_0_100": 98,
+        "photogenic_index_0_100": 92,
+        "iconic_landmark_index_0_100": 95,
+        "content_saturation_index_0_100": 90,
+        "drone_policy": "banned",
+        "avg_wifi_mbps": 130,
+        "coworking_index_0_100": 88,
+        "golden_hour_index_0_100": 80
+      },
+      "meta": {
+        "data_confidence": 0.8,
+        "last_verified": "2026-07-16",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.765,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.6,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "Strong general safety record (safety index 92/100)",
+              "300 direct weekly flights from India",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Expensive (~₹10500/person/day)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7468,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 7.5,
+            "reasons": [
+              "Plenty to do as a group",
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Extremely photogenic"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹950 a beer)",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.82,
+          "score_0_10": 8.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8.2,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 92/100)",
+              "Mild, kid-friendly food easy to order",
+              "International-standard hospitals (quality index 92/100)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.728,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 7.3,
+            "reasons": [
+              "Dense nightlife scene",
+              "World-class party scene",
+              "Strong beach-club and day-party scene",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹950 a beer)",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8753,
+          "score_0_10": 8.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 8.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Extremely photogenic",
+              "Dense nightlife scene",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9659,
+          "score_0_10": 9.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 9.7,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "300 direct weekly flights from India",
+              "English widely understood in tourist areas",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6173,
+          "score_0_10": 6.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.2,
+            "reasons": [
+              "Extremely photogenic",
+              "Instantly recognisable landmarks",
+              "Fast connectivity (~130 Mbps) — uploads are painless",
+              "Easy golden-hour access to hero locations"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Drone use is banned",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7612,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.6,
+            "reasons": [
+              "International-standard hospital within 2 km",
+              "International-standard hospitals (quality index 92/100)",
+              "Comfortable, air-conditioned transport",
+              "Wheelchair access is well provided for (88/100)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7614,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.6,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 92/100)",
+              "Reliable food hygiene standards",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7387,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.4,
+            "reasons": [
+              "Cots, changing rooms and formula readily available",
+              "International-standard hospital within 2 km",
+              "Paediatric care readily available",
+              "Stroller-friendly paths and entrances"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)",
+              "Noisy environment, especially at night",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9016,
+          "score_0_10": 9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 9,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Excellent local transport (metro/ride-hailing)"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7358,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7.4,
+            "reasons": [
+              "No meaningful Zika signal",
+              "Obstetric/maternity care available locally",
+              "International-standard hospital within 2 km",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8312,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 8.3,
+            "reasons": [
+              "Wheelchair access is well provided for (88/100)",
+              "Mostly step-free routes",
+              "Accessible taxis/transfers can be booked",
+              "Accessible toilets available at key sites"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7489,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 7.5,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Comparatively safe roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)",
+              "Expensive (~₹10500/person/day)"
+            ]
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Heavily overtouristed — hard to get quiet time as a couple",
+              "signal": "crowd_pressure_low",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.21999999999999997
+            }
+          ],
+          "score_0_1": 0.702,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Excellent spa and wellness options",
+              "Strong general safety record (safety index 92/100)",
+              "Quick transfer from the gateway airport (~0.4 h)"
+            ],
+            "cautions": [
+              "Caution: Heavily overtouristed — hard to get quiet time as a couple",
+              "Heavily crowded (78/100 crowd pressure)",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8488,
+          "score_0_10": 8.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 8.5,
+            "reasons": [
+              "Strong beach-club and day-party scene",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Dense nightlife scene"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Privacy is the whole point of a honeymoon — this is too crowded",
+              "signal": "crowd_pressure_low",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0.21999999999999997
+            }
+          ],
+          "score_0_1": 0.659,
+          "score_0_10": 6.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 6.6,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Quick transfer from the gateway airport (~0.4 h)"
+            ],
+            "cautions": [
+              "Caution: Privacy is the whole point of a honeymoon — this is too crowded",
+              "Heavily crowded (78/100 crowd pressure)",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7784,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 7.8,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Extremely photogenic",
+              "Mature, well-oiled tourist infrastructure",
+              "International-standard hospitals (quality index 92/100)"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6856,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 6.9,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "300 direct weekly flights from India",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "Expensive (~₹10500/person/day)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6681,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 6.7,
+            "reasons": [
+              "Extremely photogenic",
+              "Regulated, well-run water operators",
+              "Comparatively safe roads",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [
+            {
+              "kind": "soft",
+              "reason": "Too crowded to deliver a genuine wellness/retreat atmosphere",
+              "signal": "crowd_pressure_low",
+              "op": ">=",
+              "required_value": 0.3,
+              "actual_value": 0.21999999999999997
+            }
+          ],
+          "score_0_1": 0.569,
+          "score_0_10": 5.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 5.7,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": [
+              "Caution: Too crowded to deliver a genuine wellness/retreat atmosphere",
+              "Heavily crowded (78/100 crowd pressure)",
+              "Noisy environment, especially at night"
+            ]
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9207,
+          "score_0_10": 9.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 9.2,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Extremely photogenic",
+              "Food available all night"
+            ],
+            "cautions": [
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7692,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 7.7,
+            "reasons": [
+              "Fast connectivity (~130 Mbps) — uploads are painless",
+              "Strong coworking/creator ecosystem",
+              "English widely understood in tourist areas",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": [
+              "Expensive (~₹10500/person/day)",
+              "Heavily crowded (78/100 crowd pressure)"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "city:AE:AUH",
+      "type": "destination_city",
+      "name": "Abu Dhabi",
+      "parent_id": "country:AE",
+      "province": "Abu Dhabi",
+      "coordinates": {
+        "lat": 24.4539,
+        "lng": 54.3773
+      },
+      "gateway_airport": [
+        "AUH"
+      ],
+      "summary": "The capital, and the culture-and-family counterweight to Dubai: the Grand Mosque and the Louvre carry genuine gravity, Yas Island holds the region's best theme parks, and the Corniche is a calm, walkable, shallow-water waterfront. Quieter, cheaper and slower than Dubai, with weaker public transport.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "tags": [
+        "city_break",
+        "heritage",
+        "cultural",
+        "family_friendly",
+        "beach",
+        "luxury",
+        "package_ready",
+        "beginner_friendly",
+        "walkable"
+      ],
+      "attributes": {
+        "safety_index_0_100": 93,
+        "female_solo_safety_index_0_100": 90,
+        "night_safety_index_0_100": 93,
+        "scam_incidence_index_0_100": 18,
+        "street_harassment_index_0_100": 10,
+        "water_safety_index_0_100": 84,
+        "road_fatality_per_100k": 7.5,
+        "emergency_response_index_0_100": 90,
+        "intl_hospital_quality_index_0_100": 90,
+        "nearest_intl_hospital_km": 3,
+        "pharmacy_density_index_0_100": 90,
+        "medevac_ease_index_0_100": 90,
+        "dengue_malaria_risk_index_0_100": 5,
+        "zika_risk_level": "none",
+        "food_hygiene_index_0_100": 90,
+        "tap_water_potable": "filtered_only",
+        "pm25_annual_ug_m3": 42,
+        "pediatric_care_index_0_100": 88,
+        "obstetric_care_index_0_100": 88,
+        "wheelchair_infrastructure_index_0_100": 88,
+        "step_free_ratio_0_1": 0.85,
+        "elevator_availability_index_0_100": 90,
+        "accessible_transport_index_0_100": 78,
+        "accessible_toilet_index_0_100": 85,
+        "public_toilet_index_0_100": 80,
+        "typical_walking_km_per_day": 4,
+        "terrain_type": "flat",
+        "exertion_level_1_5": 2,
+        "max_altitude_m": 8,
+        "rest_stop_index_0_100": 85,
+        "shade_seating_index_0_100": 68,
+        "stroller_friendly_index_0_100": 88,
+        "peak_heat_index_c": 45,
+        "weather_comfort_index_0_100": 48,
+        "crowd_index_0_100": 55,
+        "noise_index_0_100": 55,
+        "direct_flights_from_india_weekly": 90,
+        "avg_flight_hours_from_india": 3.4,
+        "transfer_time_from_gateway_hours": 0.5,
+        "intracity_transport_index_0_100": 62,
+        "transport_comfort_index_0_100": 85,
+        "motion_sickness_risk_index_0_100": 12,
+        "self_drive_index_0_100": 82,
+        "road_quality_index_0_100": 96,
+        "scenic_drive_index_0_100": 55,
+        "fuel_stop_index_0_100": 92,
+        "parking_index_0_100": 78,
+        "avg_daily_cost_per_pax_inr": 9000,
+        "value_index_0_100": 62,
+        "group_value_index_0_100": 60,
+        "beer_500ml_price_inr": 900,
+        "nightlife_venue_index_0_100": 62,
+        "party_scene_index_0_100": 55,
+        "alcohol_access_index_0_100": 65,
+        "late_night_food_index_0_100": 75,
+        "group_activity_index_0_100": 72,
+        "adult_entertainment_index_0_100": 35,
+        "wellness_spa_index_0_100": 85,
+        "beach_club_index_0_100": 75,
+        "kid_activity_index_0_100": 92,
+        "infant_amenity_index_0_100": 85,
+        "kids_dining_index_0_100": 88,
+        "calm_beach_index_0_100": 88,
+        "family_room_index_0_100": 88,
+        "english_index_0_100": 92,
+        "tourist_infra_index_0_100": 92,
+        "tourist_police_index_0_100": 88,
+        "card_upi_acceptance_index_0_100": 90,
+        "veg_food_index_0_100": 90,
+        "indian_food_index_0_100": 96,
+        "photogenic_index_0_100": 90,
+        "iconic_landmark_index_0_100": 88,
+        "content_saturation_index_0_100": 72,
+        "drone_policy": "banned",
+        "avg_wifi_mbps": 120,
+        "coworking_index_0_100": 72,
+        "golden_hour_index_0_100": 82
+      },
+      "meta": {
+        "data_confidence": 0.78,
+        "last_verified": "2026-07-16",
+        "review_status": "editorial_draft"
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.767,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.7,
+            "reasons": [
+              "Strong general safety record (safety index 93/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "90 direct weekly flights from India",
+              "Extremely photogenic"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6377,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 6.4,
+            "reasons": [
+              "Plenty to do as a group",
+              "90 direct weekly flights from India",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 93/100)"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹900 a beer)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8678,
+          "score_0_10": 8.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8.7,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 93/100)",
+              "Mild, kid-friendly food easy to order",
+              "International-standard hospitals (quality index 90/100)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5315,
+          "score_0_10": 5.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 5.3,
+            "reasons": [
+              "Dense nightlife scene",
+              "Strong beach-club and day-party scene",
+              "Comfortable to move around after dark",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹900 a beer)",
+              "Little adult entertainment infrastructure"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7732,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7.7,
+            "reasons": [
+              "Well established as safe for solo female travellers (90/100)",
+              "Extremely photogenic",
+              "Comfortable to move around after dark",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": []
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.9531,
+          "score_0_10": 9.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 9.5,
+            "reasons": [
+              "Mature, well-oiled tourist infrastructure",
+              "90 direct weekly flights from India",
+              "English widely understood in tourist areas",
+              "Simple entry process for Indian passports"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6373,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Fast connectivity (~120 Mbps) — uploads are painless",
+              "Instantly recognisable landmarks",
+              "Easy golden-hour access to hero locations"
+            ],
+            "cautions": [
+              "Drone use is banned",
+              "Saturated on social — hard to stand out"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8104,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 8.1,
+            "reasons": [
+              "International-standard hospital within 3 km",
+              "International-standard hospitals (quality index 90/100)",
+              "Comfortable, air-conditioned transport",
+              "Wheelchair access is well provided for (88/100)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8335,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 8.3,
+            "reasons": [
+              "Lots that children actively enjoy",
+              "Strong general safety record (safety index 93/100)",
+              "Reliable food hygiene standards",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8039,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 8,
+            "reasons": [
+              "Cots, changing rooms and formula readily available",
+              "International-standard hospital within 3 km",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8837,
+          "score_0_10": 8.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 8.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (90/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7738,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7.7,
+            "reasons": [
+              "No meaningful Zika signal",
+              "Obstetric/maternity care available locally",
+              "International-standard hospital within 3 km",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8369,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 8.4,
+            "reasons": [
+              "Wheelchair access is well provided for (88/100)",
+              "Mostly step-free routes",
+              "Accessible toilets available at key sites",
+              "Lifts available where needed"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7846,
+          "score_0_10": 7.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 7.8,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Comparatively safe roads",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": []
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7493,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Excellent spa and wellness options",
+              "Strong general safety record (safety index 93/100)",
+              "Quick transfer from the gateway airport (~0.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7907,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong beach-club and day-party scene",
+              "Strong general safety record (safety index 93/100)",
+              "Quick transfer from the gateway airport (~0.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7527,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 7.5,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 93/100)",
+              "Quick transfer from the gateway airport (~0.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7934,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 7.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Excellent spa and wellness options",
+              "Mature, well-oiled tourist infrastructure",
+              "International-standard hospitals (quality index 90/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7097,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 7.1,
+            "reasons": [
+              "Strong general safety record (safety index 93/100)",
+              "Mature, well-oiled tourist infrastructure",
+              "90 direct weekly flights from India",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7061,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 7.1,
+            "reasons": [
+              "Regulated, well-run water operators",
+              "Extremely photogenic",
+              "Strong general safety record (safety index 93/100)",
+              "Comparatively safe roads"
+            ],
+            "cautions": [
+              "Saturated on social — hard to stand out"
+            ]
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6694,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 6.7,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Reliable food hygiene standards",
+              "Strong general safety record (safety index 93/100)",
+              "Vegetarian food easy to source"
+            ],
+            "cautions": [
+              "Air quality dips seasonally (PM2.5 42 µg/m³ annual)"
+            ]
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8447,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 8.4,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Extremely photogenic",
+              "Indian restaurants widely available"
+            ],
+            "cautions": []
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.769,
+          "score_0_10": 7.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 7.7,
+            "reasons": [
+              "Fast connectivity (~120 Mbps) — uploads are painless",
+              "Strong coworking/creator ecosystem",
+              "Strong general safety record (safety index 93/100)",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": []
+          }
+        }
+      }
+    },
+    {
+      "id": "city:AE:SHJ",
+      "type": "destination_city",
+      "name": "Sharjah",
+      "parent_id": "country:AE",
+      "province": "Sharjah",
+      "coordinates": {
+        "lat": 25.3463,
+        "lng": 55.4209
+      },
+      "gateway_airport": [
+        "SHJ"
+      ],
+      "summary": "The UAE's cultural capital and its most conservative emirate: restored heritage quarters, the region's strongest Islamic-art museum, and a souk culture that Dubai has largely replaced with malls. Alcohol is illegal emirate-wide and nightlife effectively does not exist — which makes it the cheapest, quietest and most culturally intact base in the country, and the wrong one for a party trip.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "tags": [
+        "heritage",
+        "cultural",
+        "food",
+        "value",
+        "family_friendly",
+        "walkable"
+      ],
+      "attributes": {
+        "safety_index_0_100": 92,
+        "female_solo_safety_index_0_100": 88,
+        "night_safety_index_0_100": 90,
+        "scam_incidence_index_0_100": 22,
+        "street_harassment_index_0_100": 14,
+        "water_safety_index_0_100": 78,
+        "road_fatality_per_100k": 8,
+        "emergency_response_index_0_100": 85,
+        "intl_hospital_quality_index_0_100": 78,
+        "nearest_intl_hospital_km": 5,
+        "pharmacy_density_index_0_100": 85,
+        "medevac_ease_index_0_100": 80,
+        "dengue_malaria_risk_index_0_100": 5,
+        "zika_risk_level": "none",
+        "food_hygiene_index_0_100": 85,
+        "tap_water_potable": "filtered_only",
+        "pm25_annual_ug_m3": 45,
+        "pediatric_care_index_0_100": 80,
+        "obstetric_care_index_0_100": 80,
+        "wheelchair_infrastructure_index_0_100": 72,
+        "step_free_ratio_0_1": 0.7,
+        "elevator_availability_index_0_100": 78,
+        "accessible_transport_index_0_100": 60,
+        "accessible_toilet_index_0_100": 70,
+        "public_toilet_index_0_100": 70,
+        "typical_walking_km_per_day": 4,
+        "terrain_type": "flat",
+        "exertion_level_1_5": 2,
+        "max_altitude_m": 8,
+        "rest_stop_index_0_100": 70,
+        "shade_seating_index_0_100": 60,
+        "stroller_friendly_index_0_100": 75,
+        "peak_heat_index_c": 45,
+        "weather_comfort_index_0_100": 47,
+        "crowd_index_0_100": 55,
+        "noise_index_0_100": 60,
+        "direct_flights_from_india_weekly": 60,
+        "avg_flight_hours_from_india": 3.4,
+        "transfer_time_from_gateway_hours": 0.5,
+        "intracity_transport_index_0_100": 52,
+        "transport_comfort_index_0_100": 72,
+        "motion_sickness_risk_index_0_100": 15,
+        "self_drive_index_0_100": 78,
+        "road_quality_index_0_100": 92,
+        "scenic_drive_index_0_100": 45,
+        "fuel_stop_index_0_100": 90,
+        "parking_index_0_100": 72,
+        "avg_daily_cost_per_pax_inr": 6000,
+        "value_index_0_100": 78,
+        "group_value_index_0_100": 75,
+        "nightlife_venue_index_0_100": 15,
+        "party_scene_index_0_100": 8,
+        "alcohol_access_index_0_100": 0,
+        "late_night_food_index_0_100": 70,
+        "group_activity_index_0_100": 45,
+        "adult_entertainment_index_0_100": 0,
+        "wellness_spa_index_0_100": 60,
+        "beach_club_index_0_100": 20,
+        "kid_activity_index_0_100": 75,
+        "infant_amenity_index_0_100": 75,
+        "kids_dining_index_0_100": 82,
+        "calm_beach_index_0_100": 70,
+        "family_room_index_0_100": 78,
+        "english_index_0_100": 85,
+        "tourist_infra_index_0_100": 78,
+        "tourist_police_index_0_100": 80,
+        "card_upi_acceptance_index_0_100": 85,
+        "veg_food_index_0_100": 92,
+        "indian_food_index_0_100": 96,
+        "photogenic_index_0_100": 78,
+        "iconic_landmark_index_0_100": 70,
+        "content_saturation_index_0_100": 45,
+        "drone_policy": "banned",
+        "avg_wifi_mbps": 100,
+        "coworking_index_0_100": 55,
+        "golden_hour_index_0_100": 75
+      },
+      "meta": {
+        "data_confidence": 0.74,
+        "last_verified": "2026-07-16",
+        "review_status": "editorial_draft",
+        "notes": "beer_500ml_price_inr is deliberately ABSENT rather than zero or high: alcohol sale is illegal in Sharjah, so no legal price exists to score. A missing attribute drops the alcohol_affordability signal for this city instead of asserting a fabricated one; alcohol_access_index_0_100: 0 is what carries the real constraint."
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.763,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.6,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "60 direct weekly flights from India",
+              "Strong value for money",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5092,
+          "score_0_10": 5.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 5.1,
+            "reasons": [
+              "Villas and group rates bring per-head cost down",
+              "60 direct weekly flights from India",
+              "Strong general safety record (safety index 92/100)",
+              "Low daily spend (~₹6000/person/day)"
+            ],
+            "cautions": [
+              "Very little nightlife",
+              "Party scene is thin",
+              "Expensive drinks (~₹900 a beer)"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8046,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 8,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Lots that children actively enjoy",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": false,
+          "gate_failures": [
+            {
+              "kind": "hard",
+              "reason": "Alcohol restrictions make this unsuitable for a bachelor trip",
+              "signal": "alcohol_availability",
+              "op": ">=",
+              "required_value": 0.35,
+              "actual_value": 0
+            }
+          ],
+          "score_0_1": 0,
+          "score_0_10": 0,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 0,
+            "reasons": [],
+            "cautions": [
+              "Excluded: Alcohol restrictions make this unsuitable for a bachelor trip"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5771,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 5.8,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Comfortable to move around after dark",
+              "Extremely photogenic",
+              "Low reported street harassment"
+            ],
+            "cautions": [
+              "Very little nightlife",
+              "Party scene is thin",
+              "Alcohol access is restricted"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8486,
+          "score_0_10": 8.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 8.5,
+            "reasons": [
+              "60 direct weekly flights from India",
+              "English widely understood in tourist areas",
+              "Simple entry process for Indian passports",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.626,
+          "score_0_10": 6.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 6.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Fast connectivity (~100 Mbps) — uploads are painless",
+              "Easy golden-hour access to hero locations",
+              "Instantly recognisable landmarks"
+            ],
+            "cautions": [
+              "Drone use is banned"
+            ]
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7391,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 7.4,
+            "reasons": [
+              "International-standard hospital within 5 km",
+              "International-standard hospitals (quality index 78/100)",
+              "flat terrain",
+              "No altitude risk (8 m)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7562,
+          "score_0_10": 7.6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 7.6,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Lots that children actively enjoy",
+              "Reliable food hygiene standards",
+              "Mild, kid-friendly food easy to order"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7444,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 7.4,
+            "reasons": [
+              "Cots, changing rooms and formula readily available",
+              "International-standard hospital within 5 km",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Paediatric care readily available"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8381,
+          "score_0_10": 8.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 8.4,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "English widely understood in tourist areas"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7329,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 7.3,
+            "reasons": [
+              "No meaningful Zika signal",
+              "Obstetric/maternity care available locally",
+              "Reliable food hygiene standards",
+              "International-standard hospital within 5 km"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 45°C)"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7134,
+          "score_0_10": 7.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 7.1,
+            "reasons": [
+              "Wheelchair access is well provided for (72/100)",
+              "flat terrain",
+              "Mostly step-free routes",
+              "Lifts available where needed"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7452,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 7.5,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Comparatively safe roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Fuel and rest stops at regular intervals"
+            ],
+            "cautions": []
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6973,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "Strong value for money"
+            ],
+            "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6001,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 6,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong value for money",
+              "Strong general safety record (safety index 92/100)",
+              "Quick transfer from the gateway airport (~0.5 h)"
+            ],
+            "cautions": [
+              "No real beach-club scene",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6866,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 6.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Quick transfer from the gateway airport (~0.5 h)",
+              "60 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6863,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 6.9,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "International-standard hospitals (quality index 78/100)",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8005,
+          "score_0_10": 8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 8,
+            "reasons": [
+              "Strong value for money",
+              "Strong general safety record (safety index 92/100)",
+              "Low daily spend (~₹6000/person/day)",
+              "60 direct weekly flights from India"
+            ],
+            "cautions": []
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6836,
+          "score_0_10": 6.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 6.8,
+            "reasons": [
+              "Regulated, well-run water operators",
+              "Strong general safety record (safety index 92/100)",
+              "Comparatively safe roads",
+              "Extremely photogenic"
+            ],
+            "cautions": []
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.596,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 6,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Strong general safety record (safety index 92/100)",
+              "Excellent spa and wellness options"
+            ],
+            "cautions": [
+              "Air quality dips seasonally (PM2.5 45 µg/m³ annual)"
+            ]
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.87,
+          "score_0_10": 8.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 8.7,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Vegetarian food easy to source",
+              "Indian restaurants widely available",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7512,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 7.5,
+            "reasons": [
+              "Fast connectivity (~100 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 92/100)",
+              "English widely understood in tourist areas",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        }
+      }
+    },
+    {
+      "id": "city:AE:RKT",
+      "type": "destination_city",
+      "name": "Ras Al Khaimah",
+      "parent_id": "country:AE",
+      "province": "Ras Al Khaimah",
+      "coordinates": {
+        "lat": 25.7895,
+        "lng": 55.9432
+      },
+      "gateway_airport": [
+        "RKT"
+      ],
+      "summary": "The outdoors emirate and the closest the UAE gets to nature travel: Jebel Jais (the country's highest peak) with a genuinely spectacular mountain road, quiet shallow Gulf beaches, and desert camps without the Dubai queue. Cooler, emptier and cheaper than Dubai, but thinner on hospitals and public transport.",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "tags": [
+        "nature",
+        "beach",
+        "adventure",
+        "package_ready",
+        "desert"
+      ],
+      "attributes": {
+        "safety_index_0_100": 92,
+        "female_solo_safety_index_0_100": 88,
+        "night_safety_index_0_100": 90,
+        "scam_incidence_index_0_100": 18,
+        "street_harassment_index_0_100": 12,
+        "water_safety_index_0_100": 80,
+        "road_fatality_per_100k": 8,
+        "emergency_response_index_0_100": 78,
+        "intl_hospital_quality_index_0_100": 68,
+        "nearest_intl_hospital_km": 12,
+        "pharmacy_density_index_0_100": 72,
+        "medevac_ease_index_0_100": 70,
+        "dengue_malaria_risk_index_0_100": 5,
+        "zika_risk_level": "none",
+        "food_hygiene_index_0_100": 82,
+        "tap_water_potable": "filtered_only",
+        "pm25_annual_ug_m3": 35,
+        "pediatric_care_index_0_100": 68,
+        "obstetric_care_index_0_100": 68,
+        "wheelchair_infrastructure_index_0_100": 62,
+        "step_free_ratio_0_1": 0.55,
+        "elevator_availability_index_0_100": 68,
+        "accessible_transport_index_0_100": 45,
+        "accessible_toilet_index_0_100": 58,
+        "public_toilet_index_0_100": 60,
+        "typical_walking_km_per_day": 3.5,
+        "terrain_type": "rolling",
+        "exertion_level_1_5": 2,
+        "max_altitude_m": 300,
+        "rest_stop_index_0_100": 65,
+        "shade_seating_index_0_100": 55,
+        "stroller_friendly_index_0_100": 65,
+        "peak_heat_index_c": 44,
+        "weather_comfort_index_0_100": 52,
+        "crowd_index_0_100": 35,
+        "noise_index_0_100": 35,
+        "direct_flights_from_india_weekly": 25,
+        "avg_flight_hours_from_india": 3.5,
+        "transfer_time_from_gateway_hours": 1.2,
+        "intracity_transport_index_0_100": 40,
+        "transport_comfort_index_0_100": 70,
+        "motion_sickness_risk_index_0_100": 25,
+        "self_drive_index_0_100": 85,
+        "road_quality_index_0_100": 92,
+        "scenic_drive_index_0_100": 88,
+        "fuel_stop_index_0_100": 82,
+        "parking_index_0_100": 85,
+        "avg_daily_cost_per_pax_inr": 7000,
+        "value_index_0_100": 72,
+        "group_value_index_0_100": 70,
+        "beer_500ml_price_inr": 850,
+        "nightlife_venue_index_0_100": 35,
+        "party_scene_index_0_100": 30,
+        "alcohol_access_index_0_100": 60,
+        "late_night_food_index_0_100": 50,
+        "group_activity_index_0_100": 65,
+        "adult_entertainment_index_0_100": 15,
+        "wellness_spa_index_0_100": 72,
+        "beach_club_index_0_100": 65,
+        "kid_activity_index_0_100": 62,
+        "infant_amenity_index_0_100": 65,
+        "kids_dining_index_0_100": 68,
+        "calm_beach_index_0_100": 88,
+        "family_room_index_0_100": 78,
+        "english_index_0_100": 85,
+        "tourist_infra_index_0_100": 75,
+        "tourist_police_index_0_100": 72,
+        "card_upi_acceptance_index_0_100": 82,
+        "veg_food_index_0_100": 82,
+        "indian_food_index_0_100": 88,
+        "photogenic_index_0_100": 88,
+        "iconic_landmark_index_0_100": 62,
+        "content_saturation_index_0_100": 35,
+        "drone_policy": "permit_required",
+        "avg_wifi_mbps": 90,
+        "coworking_index_0_100": 45,
+        "golden_hour_index_0_100": 88
+      },
+      "meta": {
+        "data_confidence": 0.72,
+        "last_verified": "2026-07-16",
+        "review_status": "editorial_draft",
+        "notes": "max_altitude_m is the CITY baseline (coastal/low foothills), not Jebel Jais — the 1900m summit is a property of the Jebel Jais activity, which carries its own max_altitude_m. Putting the summit altitude here would altitude-gate the entire emirate for pregnancy/senior personas over a single optional day trip."
+      },
+      "persona_scores": {
+        "default": {
+          "persona_id": "default",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7341,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "default",
+            "score": 7.3,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Extremely photogenic",
+              "Short hop from India (~3.5 h)",
+              "Strong value for money"
+            ],
+            "cautions": []
+          }
+        },
+        "friends_trip": {
+          "persona_id": "friends_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.5842,
+          "score_0_10": 5.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "friends_trip",
+            "score": 5.8,
+            "reasons": [
+              "Villas and group rates bring per-head cost down",
+              "Extremely photogenic",
+              "Plenty to do as a group",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": [
+              "Expensive drinks (~₹850 a beer)",
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
+        "family_trip": {
+          "persona_id": "family_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7154,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "family_trip",
+            "score": 7.2,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Calm, shallow water suitable for children",
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 44°C)"
+            ]
+          }
+        },
+        "bachelor_trip": {
+          "persona_id": "bachelor_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.4762,
+          "score_0_10": 4.8,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelor_trip",
+            "score": 4.8,
+            "reasons": [
+              "Villas and group rates bring per-head cost down",
+              "Comfortable to move around after dark",
+              "Strong beach-club and day-party scene",
+              "Plenty to do as a group"
+            ],
+            "cautions": [
+              "Party scene is thin",
+              "Expensive drinks (~₹850 a beer)",
+              "Little adult entertainment infrastructure"
+            ]
+          }
+        },
+        "bachelorette_trip": {
+          "persona_id": "bachelorette_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6954,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "bachelorette_trip",
+            "score": 7,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Extremely photogenic",
+              "Comfortable to move around after dark",
+              "Low reported street harassment"
+            ],
+            "cautions": [
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
+        "first_international_trip": {
+          "persona_id": "first_international_trip",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8319,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "first_international_trip",
+            "score": 8.3,
+            "reasons": [
+              "English widely understood in tourist areas",
+              "Simple entry process for Indian passports",
+              "Mature, well-oiled tourist infrastructure",
+              "Short hop from India (~3.5 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "content_creator": {
+          "persona_id": "content_creator",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6986,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "content_creator",
+            "score": 7,
+            "reasons": [
+              "Extremely photogenic",
+              "Fast connectivity (~90 Mbps) — uploads are painless",
+              "Easy golden-hour access to hero locations",
+              "Under-shot — content still feels fresh"
+            ],
+            "cautions": []
+          }
+        },
+        "senior_citizen": {
+          "persona_id": "senior_citizen",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6421,
+          "score_0_10": 6.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "senior_citizen",
+            "score": 6.4,
+            "reasons": [
+              "International-standard hospitals (quality index 68/100)",
+              "No altitude risk (300 m)",
+              "Comfortable, air-conditioned transport",
+              "Low physical exertion (level 2/5)"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 44°C)"
+            ]
+          }
+        },
+        "child_friendly": {
+          "persona_id": "child_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6728,
+          "score_0_10": 6.7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "child_friendly",
+            "score": 6.7,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Calm, shallow water suitable for children",
+              "Reliable food hygiene standards",
+              "Lots that children actively enjoy"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 44°C)"
+            ]
+          }
+        },
+        "infant_friendly": {
+          "persona_id": "infant_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6475,
+          "score_0_10": 6.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "infant_friendly",
+            "score": 6.5,
+            "reasons": [
+              "Quick transfer from the gateway airport (~1.2 h)",
+              "Reliable food hygiene standards",
+              "Cots, changing rooms and formula readily available",
+              "Low dengue/malaria risk"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 44°C)"
+            ]
+          }
+        },
+        "female_solo": {
+          "persona_id": "female_solo",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7937,
+          "score_0_10": 7.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "female_solo",
+            "score": 7.9,
+            "reasons": [
+              "Well established as safe for solo female travellers (88/100)",
+              "Comfortable to move around after dark",
+              "Low reported street harassment",
+              "Low tout and scam pressure"
+            ],
+            "cautions": []
+          }
+        },
+        "pregnancy_friendly": {
+          "persona_id": "pregnancy_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6855,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "pregnancy_friendly",
+            "score": 6.9,
+            "reasons": [
+              "No meaningful Zika signal",
+              "Reliable food hygiene standards",
+              "Low dengue/malaria risk",
+              "Obstetric/maternity care available locally"
+            ],
+            "cautions": [
+              "High heat stress (peak heat index 44°C)"
+            ]
+          }
+        },
+        "wheelchair_friendly": {
+          "persona_id": "wheelchair_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6014,
+          "score_0_10": 6,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wheelchair_friendly",
+            "score": 6,
+            "reasons": [
+              "Wheelchair access is well provided for (62/100)",
+              "Parking is easy to find",
+              "Lifts available where needed",
+              "Rarely overcrowded"
+            ],
+            "cautions": []
+          }
+        },
+        "road_trip_friendly": {
+          "persona_id": "road_trip_friendly",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8086,
+          "score_0_10": 8.1,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "road_trip_friendly",
+            "score": 8.1,
+            "reasons": [
+              "Well-surfaced, well-signed roads",
+              "Self-drive is practical (IDP accepted, easy rentals)",
+              "Genuinely scenic driving routes",
+              "Comparatively safe roads"
+            ],
+            "cautions": []
+          }
+        },
+        "couple": {
+          "persona_id": "couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7379,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "couple",
+            "score": 7.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Excellent spa and wellness options",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "young_couple": {
+          "persona_id": "young_couple",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7492,
+          "score_0_10": 7.5,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "young_couple",
+            "score": 7.5,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Strong value for money",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": [
+              "Very little nightlife",
+              "Party scene is thin"
+            ]
+          }
+        },
+        "honeymoon": {
+          "persona_id": "honeymoon",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.738,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "honeymoon",
+            "score": 7.4,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Excellent spa and wellness options",
+              "Quick transfer from the gateway airport (~1.2 h)"
+            ],
+            "cautions": []
+          }
+        },
+        "luxury": {
+          "persona_id": "luxury",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7316,
+          "score_0_10": 7.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "luxury",
+            "score": 7.3,
+            "reasons": [
+              "Extremely photogenic",
+              "Strong general safety record (safety index 92/100)",
+              "Excellent spa and wellness options",
+              "Mature, well-oiled tourist infrastructure"
+            ],
+            "cautions": []
+          }
+        },
+        "budget": {
+          "persona_id": "budget",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7196,
+          "score_0_10": 7.2,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "budget",
+            "score": 7.2,
+            "reasons": [
+              "Strong general safety record (safety index 92/100)",
+              "Strong value for money",
+              "Low daily spend (~₹7000/person/day)",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        },
+        "adventure": {
+          "persona_id": "adventure",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.8318,
+          "score_0_10": 8.3,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "adventure",
+            "score": 8.3,
+            "reasons": [
+              "Genuinely scenic driving routes",
+              "Extremely photogenic",
+              "Regulated, well-run water operators",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "wellness": {
+          "persona_id": "wellness",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6919,
+          "score_0_10": 6.9,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "wellness",
+            "score": 6.9,
+            "reasons": [
+              "Excellent spa and wellness options",
+              "Reliable food hygiene standards",
+              "Strong general safety record (safety index 92/100)",
+              "Rarely overcrowded"
+            ],
+            "cautions": []
+          }
+        },
+        "foodie": {
+          "persona_id": "foodie",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.7428,
+          "score_0_10": 7.4,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "foodie",
+            "score": 7.4,
+            "reasons": [
+              "Reliable food hygiene standards",
+              "Extremely photogenic",
+              "Vegetarian food easy to source",
+              "Strong general safety record (safety index 92/100)"
+            ],
+            "cautions": []
+          }
+        },
+        "digital_nomad": {
+          "persona_id": "digital_nomad",
+          "eligible": true,
+          "gate_failures": [],
+          "score_0_1": 0.6989,
+          "score_0_10": 7,
+          "signal_coverage": 1,
+          "explanation": {
+            "persona": "digital_nomad",
+            "score": 7,
+            "reasons": [
+              "Fast connectivity (~90 Mbps) — uploads are painless",
+              "Strong general safety record (safety index 92/100)",
+              "English widely understood in tourist areas",
+              "Reliable food hygiene standards"
+            ],
+            "cautions": []
+          }
+        }
+      }
+    }
+  ]
+}
