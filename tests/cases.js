@@ -7,6 +7,11 @@
  * instead of eyeballing outputs by hand.
  *
  * Assertion keys (all optional; a case asserts only what it cares about):
+ *   country           string|null  ranked.country must equal this — null asserts "must NOT resolve one"
+ *   countryVia        string    how it resolved: brief_country | brief_destination | city_flag | country_name | city | unresolved
+ *   needsConfirmation string[]  each must appear in needs_confirmation in the planner, context AND ranked docs
+ *   needsConfirmationFirst string  the FIRST question asked must be this one
+ *   nothingPlanned    true      no route, no cities, no activities, and a null planner destination
  *   personas          string[]  derived personas must equal this set exactly (order-independent)
  *   personasInclude   string[]  each of these must be among the derived personas (stacked-persona cases)
  *   topCityOneOf      string[]  the #1 recommended city must be one of these
@@ -215,6 +220,102 @@ export const cases = [
       activitiesInShortlist: ['Ferrari World'],
     },
   },
+  // ---- unresolved_country_requires_confirmation (Round 23) ------------------
+  // The engine used to answer a question nobody asked: with no country signal at
+  // all it defaulted to Thailand and returned a confident Thai itinerary, with
+  // nothing in the output admitting the destination had been GUESSED. Now it
+  // asks. Each case asserts BOTH halves: the question is raised, and nothing was
+  // planned in the meantime — a Thai plan plus a "which country?" note would
+  // still be the same bug, because the plan is what a reader acts on.
+  {
+    name: 'unresolved_country_requires_confirmation',
+    query: 'trip with friends',
+    note: 'The canonical case. A real trip signal (friends) and no destination whatsoever — personas still derive (the persona library is country-independent), the country does not, and no catalog is loaded to fake it.',
+    expect: {
+      country: null,
+      countryVia: 'unresolved',
+      personas: ['friends_trip'],
+      needsConfirmation: ['destination country'],
+      needsConfirmationFirst: 'destination country', // the blocker leads; budget/dates are refinements
+      nothingPlanned: true,
+      // The no-silent-Thailand guarantee, asserted the same way Round 22 asserts
+      // catalog isolation: scan every output document. Before this round, all of
+      // these leaked — a Thai route, Thai activities, a "Thailand friends trip"
+      // brief label — into a query that never named a country.
+      noCatalogLeakage: ['Thailand', 'Bangkok', 'Phuket', 'Chiang Mai', 'Dubai', 'Abu Dhabi'],
+    },
+  },
+  {
+    name: 'unresolved_country_duration_only',
+    query: '7 day vacation',
+    note: 'A duration is not a destination. The trip is plannable in every respect EXCEPT the one that decides the catalog — which is exactly when the old default was most tempting and most wrong.',
+    expect: {
+      country: null,
+      countryVia: 'unresolved',
+      needsConfirmation: ['destination country'],
+      nothingPlanned: true,
+      noCatalogLeakage: ['Thailand', 'Bangkok', 'Dubai'],
+    },
+  },
+  {
+    name: 'unresolved_country_dates_only',
+    query: 'traveling next month',
+    note: 'Neither does a date. Guards the third example from the round spec.',
+    expect: {
+      country: null,
+      countryVia: 'unresolved',
+      needsConfirmation: ['destination country'],
+      nothingPlanned: true,
+      noCatalogLeakage: ['Thailand', 'Bangkok', 'Dubai'],
+    },
+  },
+  {
+    name: 'unresolved_country_no_city_question',
+    query: 'honeymoon for 5 days',
+    note: 'With no country, "which city" must NOT be asked — it is unanswerable until the country is known, and its wording ("scored across all cities") would be a lie about work that never happened. Ask one question, the one that unblocks the rest.',
+    expect: {
+      country: null,
+      needsConfirmation: ['destination country'],
+      needsConfirmationNotIncluding: ['which city'],
+      nothingPlanned: true,
+    },
+  },
+
+  // ---- country resolution priority (Round 23) --------------------------------
+  // explicit brief.country > explicit brief.destination > city lookup > text inference.
+  // Each case pits one tier against a WEAKER tier that names a different country,
+  // so a regression in the order shows up as the wrong catalog, not a near-miss.
+  {
+    name: 'country_priority_brief_country_beats_text',
+    query: { brief: { country: 'uae', groupComposition: '5 friends' }, text: 'friends trip, we stop in Bangkok on the way' },
+    note: 'An explicit country field outranks anything inferred from prose. A Bangkok layover mentioned in the text must not reroute a stated UAE trip to Thailand.',
+    expect: {
+      country: 'uae',
+      countryVia: 'brief_country',
+      noCatalogLeakage: ['Chiang Mai', 'Phuket', 'Pattaya'],
+    },
+  },
+  {
+    name: 'country_priority_brief_destination_city',
+    query: { brief: { destination: 'Dubai', groupComposition: '2 adults' }, text: 'a week away' },
+    note: 'brief.destination names a city as readily as a country — it resolves the country AND pins the city, the same way --city= would.',
+    expect: {
+      country: 'uae',
+      countryVia: 'brief_destination',
+      resolvedCity: 'Dubai',
+    },
+  },
+  {
+    name: 'country_priority_city_flag_beats_text',
+    query: { flags: { city: 'DXB' }, text: 'friends trip to thailand' },
+    note: 'A pinned city is a stronger statement than a country named in prose — the flag wins, and the text is not allowed to half-apply a different catalog.',
+    expect: {
+      country: 'uae',
+      countryVia: 'city_flag',
+      resolvedCity: 'Dubai',
+    },
+  },
+
   {
     name: 'uae_sharjah_dry_emirate',
     query: 'bachelor trip to UAE for 5 days',

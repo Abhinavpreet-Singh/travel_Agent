@@ -21,9 +21,11 @@
  *
  * The COUNTRY is resolved from the query itself ("trip to thailand", "friends
  * trip to dubai" — a city that uniquely identifies a country resolves it), and
- * decides only which catalog is loaded and where output is written. Every query
- * writes its own timestamped JSON file to output/<country>/queries/ (nothing is
- * ever overwritten there) plus an always-latest convenience copy at
+ * decides only which catalog is loaded and where output is written. A query that
+ * resolves to no country is NOT defaulted to one: it comes back with
+ * country:null and asks (see resolveCountryForQuery / unresolvedRanking). Every
+ * query writes its own timestamped JSON file to output/<country>/queries/
+ * (nothing is ever overwritten there) plus an always-latest convenience copy at
  * output/<country>/query_result.json, and prints a compact console summary.
  */
 
@@ -31,8 +33,8 @@ import path from 'node:path';
 import readline from 'node:readline';
 import { pathToFileURL } from 'node:url';
 
-import { writeJSON, ROOT } from './loadData.js';
-import { listCountries, loadCountryCatalog, resolveCountry } from './countries.js';
+import { writeJSON, ROOT, loadShared } from './loadData.js';
+import { listCountries, loadCountryCatalog, resolveCountry, matchCountryValue } from './countries.js';
 import { scoreEntity, rankEntities, composePersonas } from './score.js';
 import { buildExplanation } from './explain.js';
 import { derivePersonas, parseFreeTextToBrief } from './personaFromBrief.js';
@@ -40,11 +42,20 @@ import { experienceFitFor, BLENDS, deriveBucketListValue, classifyPersonaRoles }
 import { cityCoverage } from './coverage.js';
 
 /**
- * Where a query with no country signal at all ("family trip with 2 kids") lands.
- * A fallback for an under-specified query — never a privileged country: it goes
- * through the same resolve -> loadCountryCatalog path as any other.
+ * There is NO default country. A query with no country signal at all ("7 day
+ * vacation", "trip with friends") resolves to country:null and asks for it —
+ * see resolveCountryForQuery. Thailand used to be the fallback here, which meant
+ * the engine answered a question nobody asked: a query that never mentioned
+ * Thailand came back with a confident Thai itinerary, and nothing in the output
+ * said the destination had been GUESSED. The country is the one input with no
+ * scoring fallback (the catalog IS the country), so it is the one input worth
+ * stopping for.
  */
-const DEFAULT_COUNTRY = 'thailand';
+const UNRESOLVED_OUTPUT_DIR = '_unresolved';
+
+/** The one question that unblocks the whole pipeline. Its short label is what `needs_confirmation` carries. */
+const COUNTRY_MISSING =
+  'destination country not resolved — the query names no country, and no city that identifies one; nothing can be ranked until it does';
 
 // ---- input parsing ---------------------------------------------------------
 
@@ -64,7 +75,11 @@ function parseArgv(argv) {
 }
 
 /** `city:HKT persona:bachelor_trip,senior_citizen` typed inline -> the same flags parseArgv would produce. */
-const RECOGNIZED_FLAG_KEYS = new Set(['city', 'persona', 'compare', 'stack', 'rank']);
+// `country` is here so that `country:thailand` — the natural way to answer the
+// interactive "destination country?" prompt — is read as the explicit statement
+// it is, at the top of the resolution priority, rather than as free text to
+// infer from.
+const RECOGNIZED_FLAG_KEYS = new Set(['country', 'city', 'persona', 'compare', 'stack', 'rank']);
 
 function parseShorthandLine(line) {
   const tokens = line.trim().split(/\s+/).filter(Boolean);
@@ -139,7 +154,7 @@ function detectCityInText(data, text) {
   return null;
 }
 
-function resolveCity(data, flags, text) {
+function resolveCity(data, flags, brief, text) {
   if (flags.city) {
     const c = findCity(data, flags.city);
     if (!c) {
@@ -149,6 +164,14 @@ function resolveCity(data, flags, text) {
     }
     return c;
   }
+  // An explicit destination field names a city ("Dubai") as readily as a country
+  // ("Thailand") — when it names one of THIS country's cities, it pins it, the
+  // same way --city= would. When it named the country, no city matches and we
+  // fall through to the text scan, as before.
+  if (brief?.destination) {
+    const c = findCity(data, brief.destination);
+    if (c) return c;
+  }
   return text ? detectCityInText(data, text) : null;
 }
 
@@ -157,10 +180,41 @@ function resolveCity(data, flags, text) {
  * the only step allowed to look across countries. Everything after it sees one
  * catalog and cannot tell which country it got.
  *
- * `--city=DXB` is the strongest signal (an explicitly pinned city names its own
- * country), then the free text, then the default.
+ * Priority, strongest first — an EXPLICIT field always beats something inferred
+ * from prose:
+ *   1. brief.country     — a country field Maya filled in. `--country=uae` is
+ *                          the CLI's way of stating the same thing.
+ *   2. brief.destination — an explicit destination field: a country, or a city
+ *                          that names its country.
+ *   3. city lookup       — `--city=DXB` pins a city, and therefore its country.
+ *   4. text inference    — a country, or a uniquely-identifying city, named in
+ *                          the free text (see countries.js::resolveCountry).
+ * Nothing matched -> `{ country: null }`. No default, no guess.
+ *
+ * An explicit value naming a country we have no catalog for (`--country=vietnam`,
+ * `brief.destination = "Bali"`) THROWS instead of falling through to a weaker
+ * signal. Two different failures deserve two different answers: "I don't know
+ * where you're going" is a question to ask the traveller, while "you said Bali
+ * and we don't cover Bali" is an answer — and quietly planning the UAE because
+ * the same text mentioned a Dubai layover is exactly the silent-wrong-country
+ * bug this ordering exists to prevent.
  */
-function resolveCountryForQuery({ flags, text }) {
+function resolveCountryForQuery({ flags, text, brief }) {
+  const explicitCountry = brief?.country ?? flags.country;
+  if (explicitCountry) {
+    const slug = matchCountryValue(explicitCountry);
+    if (!slug) throw new Error(`Unknown country "${explicitCountry}". Registered countries: ${listCountries().join(', ') || '(none)'}`);
+    return { country: slug, via: 'brief_country', matched: String(explicitCountry) };
+  }
+
+  if (brief?.destination) {
+    const slug = matchCountryValue(brief.destination);
+    if (slug) return { country: slug, via: 'brief_destination', matched: String(brief.destination) };
+    const hit = findCityAcrossCountries(brief.destination);
+    if (hit) return { country: hit.country, via: 'brief_destination', matched: hit.city.name };
+    throw new Error(`Unknown destination "${brief.destination}". Registered countries: ${listCountries().join(', ') || '(none)'}`);
+  }
+
   if (flags.city) {
     const hit = findCityAcrossCountries(flags.city);
     if (hit) return { country: hit.country, via: 'city_flag', matched: hit.city.name };
@@ -169,32 +223,45 @@ function resolveCountryForQuery({ flags, text }) {
       .join(', ');
     throw new Error(`Unknown city "${flags.city}". Known cities: ${known}`);
   }
+
   const hit = resolveCountry(text);
   if (hit) return { country: hit.country, via: hit.via, matched: hit.matched };
-  return { country: DEFAULT_COUNTRY, via: 'default', matched: null };
+  return { country: null, via: 'unresolved', matched: null };
 }
 
-function resolvePersonas(data, flags, text, countryName) {
+/**
+ * @param personaLib - a loaded catalog, or the shared persona library when the
+ *   country is unresolved. Personas and the signal dictionary are
+ *   country-INDEPENDENT, so both expose the same personasById/ALL_PERSONA_IDS.
+ */
+function resolvePersonas(personaLib, flags, brief, text, countryName) {
   if (flags.persona) {
     const ids = String(flags.persona)
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean);
     for (const id of ids) {
-      if (!data.personasById[id]) {
-        throw new Error(`Unknown persona "${id}". Valid ids: ${data.ALL_PERSONA_IDS.join(', ')}`);
+      if (!personaLib.personasById[id]) {
+        throw new Error(`Unknown persona "${id}". Valid ids: ${personaLib.ALL_PERSONA_IDS.join(', ')}`);
       }
     }
     return { ids, source: 'explicit', derived: null, brief: null };
+  }
+  // A brief handed in directly (Maya's stored chat_sessions.brief) IS the
+  // extraction — derive from it rather than from a raw text reconstruction of
+  // the same conversation.
+  if (brief) {
+    const derived = derivePersonas(brief);
+    return { ids: derived.personas, source: 'derived', derived, brief };
   }
   if (text) {
     // Parse into Maya's exact stored brief shape first (destinationType,
     // dates, duration, budget, groupComposition, extras[]) — see Developer
     // Onboarding Guide §9.1 — so a typed prompt and a real Maya conversation
     // produce the same shape before persona derivation ever runs.
-    const brief = parseFreeTextToBrief(text, countryName);
-    const derived = derivePersonas(brief);
-    return { ids: derived.personas, source: 'derived', derived, brief };
+    const parsed = parseFreeTextToBrief(text, countryName);
+    const derived = derivePersonas(parsed);
+    return { ids: derived.personas, source: 'derived', derived, brief: parsed };
   }
   return { ids: ['default'], source: 'fallback', derived: null, brief: null };
 }
@@ -963,6 +1030,14 @@ function printSingle(result) {
   }
 }
 
+/** The console face of the no-default rule: say plainly that nothing was ranked and why, rather than printing an empty "Recommended cities (0 of 0)" table that reads like a bug. */
+function printUnresolvedCountry(result) {
+  console.log(`Destination country: UNRESOLVED — nothing was ranked.`);
+  console.log(`  This query names no country, and no city that identifies one. The engine will not pick one for you.`);
+  console.log(`  Still needed: ${result.needs_confirmation.join(', ')}`);
+  console.log(`  Registered countries: ${listCountries().join(', ')} — name one ("... to thailand") or pass --country=uae.`);
+}
+
 function printCompare(result) {
   const table = result.cities_comparison || result.activities_comparison;
   const label = result.cities_comparison ? 'cities' : 'activities';
@@ -1007,23 +1082,30 @@ function determineCompareMode({ flags, personaSource, personaIds }) {
  * from the ranked entities it produces (see writeAndSummarize, which writes
  * the two as separate files).
  */
-function buildExtraction({ flags, text }) {
+function buildExtraction({ flags, text, brief: inputBrief = null }) {
   // COUNTRY FIRST: resolve it, load that catalog, and hand the catalog to
   // everything downstream. This is the ONLY place a country is chosen; no
   // scoring, strategy, allocation or planner code below reads a country name.
-  const countryHit = resolveCountryForQuery({ flags, text });
-  const data = loadCountryCatalog(countryHit.country);
+  const countryHit = resolveCountryForQuery({ flags, text, brief: inputBrief });
+  // No country -> no catalog. `catalog: null` is what every downstream branch
+  // keys off, so an unresolved country cannot be half-handled: there is nothing
+  // to rank against, and no country's data is silently standing in.
+  const data = countryHit.country ? loadCountryCatalog(countryHit.country) : null;
+  // Personas ARE still derivable — they're country-independent — so an
+  // unresolved query can still report "this is a friends trip, I just need to
+  // know where," rather than failing outright with nothing to show.
+  const personaLib = data ?? loadShared();
 
-  const city = resolveCity(data, flags, text);
-  const pr = resolvePersonas(data, flags, text, data.country.name);
+  const city = data ? resolveCity(data, flags, inputBrief, text) : null;
+  const pr = resolvePersonas(personaLib, flags, inputBrief, text, data?.country.name ?? null);
   const compareMode = determineCompareMode({ flags, personaSource: pr.source, personaIds: pr.ids });
   // In compare mode each persona is scored on its own — a blended weight
   // vector across e.g. senior_citizen + bachelor_trip would represent
   // neither and would contradict the ranked.json, which scores them
   // separately. Only single/stack mode gets one true composed persona.
   const composed = compareMode
-    ? pr.ids.map((id) => composePersonas([id], data.personasById))
-    : composePersonas(pr.ids, data.personasById);
+    ? pr.ids.map((id) => composePersonas([id], personaLib.personasById))
+    : composePersonas(pr.ids, personaLib.personasById);
   return {
     flags,
     text,
@@ -1041,19 +1123,53 @@ function buildExtraction({ flags, text }) {
 }
 
 /**
+ * What a query whose country never resolved produces INSTEAD of a ranking. The
+ * catalog IS the country, so there is genuinely nothing to score: every list is
+ * empty BY CONSTRUCTION, not by a cutoff. Field names match a real result so no
+ * consumer needs a special case to read it — a caller that ignores
+ * `needs_confirmation` sees an empty plan, never a plausible wrong one.
+ */
+function unresolvedRanking(ext) {
+  return {
+    needs_confirmation: needsConfirmation(ext),
+    recommended_cities: [],
+    itinerary_route: [],
+    city_allocation: null,
+    recommended_city_combinations: null,
+    recommended_activities: [],
+    excluded_options: [],
+    eligible_totals: { cities: 0, activities: 0 },
+    shortlist_rationale:
+      'Nothing was ranked: the destination country is unresolved, and a catalog cannot be loaded without one. ' +
+      'The engine does not pick a country on the traveller\'s behalf — ask for the item(s) in needs_confirmation and re-run.',
+    destination_strategy: null,
+  };
+}
+
+/** The mode branches + the unresolved-country short-circuit, in ONE place so evaluateQuery() and the CLI can never disagree about what a query produced. */
+function runRanking(ext) {
+  if (!ext.country) return unresolvedRanking(ext);
+  const durationDays = parseDurationDays(ext.brief?.duration);
+  return ext.compareMode
+    ? runCompare(ext.catalog, ext.city, ext.personaIds)
+    : runSingle(ext.catalog, ext.city, ext.composed, durationDays);
+}
+
+/**
  * Programmatic entry point — the same pipeline `writeAndSummarize` runs, but
  * with NO console output and NO files written. Returns the two source-of-truth
  * documents so callers (the benchmark suite, tests, future services) can assert
  * on real engine output instead of re-implementing scoring. Accepts a raw query
- * string or a `{ flags, text }` object (flags mirror the CLI: city, persona, …).
+ * string, or a `{ flags, text, brief }` object — flags mirror the CLI (country,
+ * city, persona, …) and `brief` is Maya's stored chat_sessions.brief.
  */
 export function evaluateQuery(input) {
-  const parsed = typeof input === 'string' ? { flags: {}, text: input } : { flags: input.flags ?? {}, text: input.text ?? '' };
+  const parsed =
+    typeof input === 'string'
+      ? { flags: {}, text: input }
+      : { flags: input.flags ?? {}, text: input.text ?? '', brief: input.brief ?? null };
   const ext = buildExtraction(parsed);
-  const durationDays = parseDurationDays(ext.brief?.duration);
-  const rankedResult = ext.compareMode
-    ? runCompare(ext.catalog, ext.city, ext.personaIds)
-    : runSingle(ext.catalog, ext.city, ext.composed, durationDays);
+  const rankedResult = runRanking(ext);
   const recipe = recipeToJSON(ext);
   const ranked = {
     mode: ext.compareMode ? 'compare' : 'single',
@@ -1112,7 +1228,7 @@ function signalBreakdown(data, entity, ancestors, persona, n) {
  * @param items {{category: string, name: string, bucketListValue: number|null}[]}
  */
 function firstTimerEssentials(data, items) {
-  const rules = data.planningProfile?.first_timer_essentials ?? [];
+  const rules = data?.planningProfile?.first_timer_essentials ?? []; // no catalog (country unresolved) -> no essentials to claim, so {}
   const out = {};
   for (const rule of rules) out[rule.key] = false;
   for (const item of items) {
@@ -1136,11 +1252,11 @@ function firstTimerEssentials(data, items) {
  * information-dense. Order still encodes rank; the score makes the gaps legible.
  */
 export function buildLLMContext(ext, rankedResult) {
-  const data = ext.catalog;
+  const data = ext.catalog; // null when the country is unresolved — every ranking list below is then empty by construction
   const roster = ext.derived?.roster;
   const persona = ext.composed; // single composed persona in this mode
   const ids = ext.personaIds;
-  const missing = [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
+  const missing = needsConfirmation(ext);
   const durationDays = parseDurationDays(ext.brief?.duration);
 
   const group = {};
@@ -1149,7 +1265,9 @@ export function buildLLMContext(ext, rankedResult) {
   if (roster?.has_senior_adult) group.seniors = true;
 
   const trip_profile = {
-    destination: ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name,
+    // Explicitly null (not omitted) when unresolved: a reader must be able to
+    // tell "we don't know where" apart from "this field wasn't included".
+    destination: data ? (ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name) : null,
     ...(durationDays ? { duration_days: durationDays } : {}),
     ...(Object.keys(group).length ? { group } : {}),
     personas: ids,
@@ -1179,7 +1297,7 @@ export function buildLLMContext(ext, rankedResult) {
     };
   });
 
-  const activityById = new Map(data.activities.map((a) => [a.id, a]));
+  const activityById = new Map((data?.activities ?? []).map((a) => [a.id, a]));
   const activity_ranking = (rankedResult.recommended_activities ?? []).slice(0, CONTEXT_ACTIVITY_CAP).map((a) => {
     const entity = activityById.get(a.entity_id);
     const parentCity = entity ? data.citiesById[entity.parent_id] : null;
@@ -1242,13 +1360,12 @@ export function buildLLMContext(ext, rankedResult) {
  * ranked; the planner must not re-rank or invent — those are encoded as rules.
  */
 export function plannerContextBuilder(ext, rankedResult) {
-  const data = ext.catalog;
+  const data = ext.catalog; // null when the country is unresolved — see the STOP branch below
   const roster = ext.derived?.roster;
   const strategy = rankedResult.destination_strategy;
-  const missing = [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
+  const missing = needsConfirmation(ext);
   const durationDays = parseDurationDays(ext.brief?.duration);
   const ids = ext.personaIds;
-  const activityById = new Map(data.activities.map((a) => [a.id, a]));
 
   const group = {};
   if (roster?.adults != null) group.adults = roster.adults;
@@ -1256,7 +1373,7 @@ export function plannerContextBuilder(ext, rankedResult) {
   if (roster?.has_senior_adult) group.seniors = true;
 
   const brief = {
-    destination: ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name,
+    destination: data ? (ext.city?.name ? `${data.country.name} — ${ext.city.name}` : data.country.name) : null,
     ...(durationDays ? { duration_days: durationDays } : {}),
     ...(Object.keys(group).length ? { group } : {}),
     majority: strategy?.majority_persona ?? ids[0] ?? 'default',
@@ -1270,6 +1387,25 @@ export function plannerContextBuilder(ext, rankedResult) {
     ...(missing.length ? { needs_confirmation: missing } : {}),
   };
 
+  // COUNTRY UNRESOLVED: an empty route carrying the usual rules is worse than no
+  // document at all — "the route is AUTHORITATIVE, schedule within these cities"
+  // over an empty list invites exactly the improvisation the rules exist to
+  // prevent, and an LLM handed a group, a duration and no destination will
+  // cheerfully supply one. Replace the rules with a stop.
+  if (!ext.country) {
+    return {
+      brief,
+      selected_route: [],
+      selected_activities: {},
+      planning_rules: [
+        'STOP — do not plan. The destination country is unresolved, so nothing has been ranked and there is no route.',
+        'Ask the traveller for brief.needs_confirmation — the destination country first — then re-run the engine with the answer.',
+        'Never infer the country from the group, the dates or the budget, and never offer one to fill the gap.',
+      ],
+      first_timer_essentials: {},
+    };
+  }
+
   // Route: the ACTUAL itinerary route (the cities the trip visits), authoritative
   // and terse — ordered city names only. The engine already decided; the planner
   // schedules within them and needs no reasons.
@@ -1279,6 +1415,7 @@ export function plannerContextBuilder(ext, rankedResult) {
   const day_allocation = rankedResult.city_allocation ?? null;
 
   // Activities: grouped by city, name + style + hours only. No scores/fit/bucket/signals.
+  const activityById = new Map(data.activities.map((a) => [a.id, a]));
   const selected_activities = {};
   const essentialItems = [];
   for (const a of rankedResult.recommended_activities ?? []) {
@@ -1374,9 +1511,19 @@ function buildConstraintSummary(ext) {
   const missing = [];
   const roster = ext.derived?.roster;
   const brief = ext.brief;
+  // Only report what's missing when there IS a described trip to sharpen (free
+  // text, or a brief handed in). An explicit --city/--persona query is a
+  // deliberate probe, not an under-specified request.
+  const described = Boolean(ext.text || ext.brief);
 
-  if (ext.city) known.push(`destination city: ${ext.city.name}`);
-  else if (ext.text) missing.push('destination city not specified — scored across all cities');
+  // The country leads, because it is the only input with no scoring fallback:
+  // the catalog IS the country. And when it's missing, DON'T also ask which
+  // city — "which city" is unanswerable until the country is known, and the
+  // city line below claims a scoring pass ("scored across all cities") that in
+  // this case never happened.
+  if (!ext.country) missing.push(COUNTRY_MISSING);
+  else if (ext.city) known.push(`destination city: ${ext.city.name}`);
+  else if (described) missing.push('destination city not specified — scored across all cities');
 
   if (roster) {
     if (roster.adults !== null) known.push(`${roster.adults} adult(s)`);
@@ -1390,11 +1537,11 @@ function buildConstraintSummary(ext) {
   }
 
   if (brief?.duration) known.push(`duration: ${brief.duration}`);
-  else if (ext.text) missing.push('travel duration not specified');
+  else if (described) missing.push('travel duration not specified');
   if (brief?.dates) known.push(`dates: ${brief.dates}`);
-  else if (ext.text) missing.push('travel dates not specified');
+  else if (described) missing.push('travel dates not specified');
   if (brief?.budget) known.push(`budget: ${brief.budget}`);
-  else if (ext.text) missing.push('budget not specified');
+  else if (described) missing.push('budget not specified');
 
   for (const extra of ext.derived?.unmatched_extras ?? []) {
     missing.push(`captured but not yet folded into scoring weights: ${extra.label} = ${extra.value}`);
@@ -1406,6 +1553,16 @@ function buildConstraintSummary(ext) {
     missing, // would sharpen the recipe if provided; scored on reasonable defaults in the meantime
   };
 }
+
+/**
+ * What to ask the traveller, as short labels — `needs_confirmation` in every
+ * document that has one (ranked, context, planner), derived from ONE source
+ * (constraints.missing) so they can never disagree about what's still unknown.
+ * Ordered by buildConstraintSummary: the destination country, when it's
+ * missing, always leads — everything else is a refinement, that one is a
+ * blocker.
+ */
+const needsConfirmation = (ext) => [...new Set(buildConstraintSummary(ext).missing.map(shortMissingLabel))];
 
 /**
  * How much of the persona detection is solid vs. guessed. 'explicit' input
@@ -1476,8 +1633,7 @@ function writeAndSummarize(ext) {
 
   // ext.composed is an array (one composed persona per id) in compare mode,
   // and a single composed persona otherwise — see buildExtraction.
-  const durationDays = parseDurationDays(ext.brief?.duration);
-  const rankedResult = compareMode ? runCompare(ext.catalog, city, personaIds) : runSingle(ext.catalog, city, ext.composed, durationDays);
+  const rankedResult = runRanking(ext);
   const ranked = {
     mode: compareMode ? 'compare' : 'single',
     country: ext.country,
@@ -1490,7 +1646,10 @@ function writeAndSummarize(ext) {
   const n = String(queryCounter).padStart(3, '0');
   // The resolved country decides the output folder — the ONLY thing it decides
   // outside catalog selection. File names and shapes are identical everywhere.
-  const out = `output/${ext.country}`;
+  // An unresolved query gets its OWN folder, not a country's: its documents
+  // record a question ("which country?"), not a plan, and must never be mistaken
+  // for one country's output.
+  const out = `output/${ext.country ?? UNRESOLVED_OUTPUT_DIR}`;
   const recipePath = writeJSON(`${out}/queries/${stamp}_${n}.recipe.json`, recipe);
   const rankedPath = writeJSON(`${out}/queries/${stamp}_${n}.ranked.json`, ranked);
   writeJSON(`${out}/query_result.recipe.json`, recipe); // always-latest convenience copies
@@ -1517,7 +1676,8 @@ function writeAndSummarize(ext) {
     console.log(`\nPersona: ${ext.composed.label}  (${weightCount} weighted signals, ${gateCount} gates)`);
   }
 
-  if (compareMode) printCompare(rankedResult);
+  if (!ext.country) printUnresolvedCountry(rankedResult);
+  else if (compareMode) printCompare(rankedResult);
   else printSingle(rankedResult);
 
   if (plannerPath) console.log(`\n► Planner JSON (send THIS to the itinerary LLM — compressed): ${path.relative(ROOT, plannerPath)}`);
@@ -1555,7 +1715,7 @@ scored/sorted lists). A summary also prints to console.
 
 Usage:
   node engine/cli.js "<free text prompt>"
-  node engine/cli.js --city=<name|code> --persona=<id[,id...]> [--stack]
+  node engine/cli.js [--country=<name|slug>] --city=<name|code> --persona=<id[,id...]> [--stack]
   node engine/cli.js                      (interactive mode)
 
 Examples:
@@ -1568,13 +1728,18 @@ Examples:
 
 In interactive mode, either type free text or the shorthand:
   city:HKT persona:bachelor_trip
+  country:uae
 
-The country is resolved from the query — name it ("trip to thailand") or just
-name a city that only one country has ("friends trip to dubai"). Output is
-written to output/<country>/. With no country signal at all: ${DEFAULT_COUNTRY}.
+The country is resolved from the query — name it ("trip to thailand"), name a
+city that only one country has ("friends trip to dubai"), or state it outright
+(--country=uae, which beats both). Output is written to output/<country>/.
+
+With NO country signal at all ("7 day vacation"), the engine does not guess and
+does not default: it returns country:null with needs_confirmation:["destination
+country"], ranks nothing, and writes to output/${UNRESOLVED_OUTPUT_DIR}/.
 
 Valid persona ids:
-  ${loadCountryCatalog(DEFAULT_COUNTRY).ALL_PERSONA_IDS.join(', ')}
+  ${loadShared().ALL_PERSONA_IDS.join(', ')}
 
 Known cities by country:
 ${listCountries()
@@ -1626,6 +1791,7 @@ const QUIT = Symbol('quit');
 
 /** "destination city not specified — scored across all cities" -> "which city" — short enough to list several on one line. */
 function shortMissingLabel(entry) {
+  if (/destination country/i.test(entry)) return 'destination country';
   if (/destination city/i.test(entry)) return 'which city';
   if (/group size/i.test(entry)) return 'group size';
   if (/travel dates/i.test(entry)) return 'travel dates';

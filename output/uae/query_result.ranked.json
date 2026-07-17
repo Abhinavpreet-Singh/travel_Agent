@@ -2,125 +2,136 @@
   "mode": "single",
   "country": "uae",
   "query": {
-    "text": "5 friends travelling to Dubai for a week",
-    "resolved_city": "city:AE:DXB",
+    "text": "trip to UAE with my girlfriend",
+    "resolved_city": null,
     "personas": [
-      "friends_trip"
+      "couple"
     ]
   },
   "persona": {
-    "id": "friends_trip",
-    "label": "Friends Trip",
+    "id": "couple",
+    "label": "Couple Trip",
     "composed_from": [
-      "friends_trip"
+      "couple"
     ]
   },
   "duration_adjustment": {
     "applied": false
   },
-  "itinerary_route": [
-    "Dubai"
-  ],
-  "city_allocation": [
+  "recommended_cities": [
     {
-      "city": "Dubai",
-      "days": 7
-    }
-  ],
-  "recommended_activities": [
-    {
-      "entity_id": "act:AE:DXB:desert-safari",
-      "name": "Red Dune Desert Safari with BBQ Camp",
-      "score_0_10": 8.1,
-      "city": "Dubai",
-      "category": "desert",
-      "duration_hours": 6,
-      "cost_band": "$$$",
-      "pace": "Moderate",
-      "best_time": "evening",
-      "weather_dependency": "high",
+      "entity_id": "city:AE:DXB",
+      "name": "Dubai",
+      "score_0_10": 7.4,
+      "province": "Dubai",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
       "data_confidence": 0.8,
       "why": [
-        "Plenty to do as a group",
-        "Dense nightlife scene",
-        "Villas and group rates bring per-head cost down",
-        "Low daily spend (~₹3200/person/day)"
+        "Rich, varied lineup — 8 strong activities across 6 categories",
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 92/100)",
+        "Quick transfer from the gateway airport (~0.4 h)"
       ],
       "caution": [
-        "Expensive drinks (~₹950 a beer)"
+        "Caution: Heavily overtouristed — hard to get quiet time as a couple",
+        "Heavily crowded (78/100 crowd pressure)",
+        "Noisy environment, especially at night"
       ],
-      "physical_fit_0_10": 8.8,
-      "experience_fit": 0.7,
-      "experience_fit_axes": [
-        "friends"
-      ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
+      "city_score_0_10": 7,
+      "activity_strength_0_10": 7.7,
+      "activity_variety": 6
     },
     {
-      "entity_id": "act:AE:DXB:global-village",
-      "name": "Global Village",
-      "score_0_10": 8,
-      "city": "Dubai",
-      "category": "culture",
-      "duration_hours": 4,
-      "cost_band": "$",
-      "pace": "Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
+      "entity_id": "city:AE:AUH",
+      "name": "Abu Dhabi",
+      "score_0_10": 7.2,
+      "province": "Abu Dhabi",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
       "data_confidence": 0.78,
       "why": [
-        "Plenty to do as a group",
-        "Low daily spend (~₹1500/person/day)",
-        "Dense nightlife scene",
-        "Villas and group rates bring per-head cost down"
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 93/100)",
+        "Quick transfer from the gateway airport (~0.5 h)"
       ],
-      "caution": [
-        "Expensive drinks (~₹950 a beer)"
-      ],
-      "physical_fit_0_10": 8.6,
-      "experience_fit": 0.7,
-      "experience_fit_axes": [
-        "friends"
-      ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
+      "caution": [],
+      "city_score_0_10": 7.5,
+      "activity_strength_0_10": 6.9,
+      "activity_variety": 4
     },
     {
-      "entity_id": "act:AE:DXB:dubai-fountain",
-      "name": "The Dubai Fountain Show",
-      "score_0_10": 7.9,
-      "city": "Dubai",
-      "category": "show",
-      "duration_hours": 1,
-      "cost_band": "Free",
-      "pace": "Very Easy",
-      "best_time": "evening",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
+      "entity_id": "city:AE:RKT",
+      "name": "Ras Al Khaimah",
+      "score_0_10": 7.2,
+      "province": "Ras Al Khaimah",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "data_confidence": 0.72,
       "why": [
-        "Low daily spend (~₹0/person/day)",
-        "Dense nightlife scene",
-        "Plenty to do as a group",
+        "Extremely photogenic",
+        "Strong general safety record (safety index 92/100)",
+        "Excellent spa and wellness options",
+        "Quick transfer from the gateway airport (~1.2 h)"
+      ],
+      "caution": [],
+      "city_score_0_10": 7.4,
+      "activity_strength_0_10": 7,
+      "activity_variety": 4
+    },
+    {
+      "entity_id": "city:AE:SHJ",
+      "name": "Sharjah",
+      "score_0_10": 6.9,
+      "province": "Sharjah",
+      "best_months": [
+        11,
+        12,
+        1,
+        2,
+        3
+      ],
+      "data_confidence": 0.74,
+      "why": [
+        "Extremely photogenic",
+        "Strong general safety record (safety index 92/100)",
+        "Quick transfer from the gateway airport (~0.5 h)",
         "Strong value for money"
       ],
-      "caution": [
-        "Expensive drinks (~₹950 a beer)"
-      ],
-      "physical_fit_0_10": 7.9,
-      "experience_fit": 0.8,
-      "experience_fit_axes": [
-        "friends"
-      ],
-      "experience_fit_binding": "friends",
-      "fit_reason": [
-        "+category:show"
-      ]
-    },
+      "caution": [],
+      "city_score_0_10": 7,
+      "activity_strength_0_10": 6.7,
+      "activity_variety": 4
+    }
+  ],
+  "itinerary_route": [
+    "Dubai",
+    "Abu Dhabi"
+  ],
+  "city_allocation": null,
+  "recommended_city_combinations": null,
+  "recommended_activities": [
     {
       "entity_id": "act:AE:DXB:jumeirah-beach",
       "name": "Jumeirah Beach & Burj Al Arab Views",
-      "score_0_10": 7.5,
+      "score_0_10": 9,
       "city": "Dubai",
       "category": "beach",
       "duration_hours": 3,
@@ -130,55 +141,27 @@
       "weather_dependency": "high",
       "data_confidence": 0.82,
       "why": [
-        "Low daily spend (~₹0/person/day)",
-        "Dense nightlife scene",
-        "Plenty to do as a group",
-        "Strong value for money"
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong value for money",
+        "Strong general safety record (safety index 92/100)"
       ],
-      "caution": [
-        "Expensive drinks (~₹950 a beer)"
-      ],
-      "physical_fit_0_10": 7.8,
-      "experience_fit": 0.7,
+      "caution": [],
+      "physical_fit_0_10": 8.4,
+      "experience_fit": 1,
       "experience_fit_axes": [
-        "friends"
+        "honeymoon"
       ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
-    },
-    {
-      "entity_id": "act:AE:DXB:dubai-mall",
-      "name": "The Dubai Mall",
-      "score_0_10": 7.4,
-      "city": "Dubai",
-      "category": "shopping",
-      "duration_hours": 4,
-      "cost_band": "Free",
-      "pace": "Easy",
-      "best_time": "flexible",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
-      "why": [
-        "Low daily spend (~₹2000/person/day)",
-        "Dense nightlife scene",
-        "Plenty to do as a group",
-        "World-class party scene"
-      ],
-      "caution": [
-        "Expensive drinks (~₹950 a beer)"
-      ],
-      "physical_fit_0_10": 7.6,
-      "experience_fit": 0.7,
-      "experience_fit_axes": [
-        "friends"
-      ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+calm_beach",
+        "+photogenic"
+      ]
     },
     {
       "entity_id": "act:AE:DXB:marina-cruise",
       "name": "Dubai Marina Dhow Dinner Cruise",
-      "score_0_10": 7.2,
+      "score_0_10": 9,
       "city": "Dubai",
       "category": "scenic",
       "duration_hours": 2.5,
@@ -188,28 +171,148 @@
       "weather_dependency": "high",
       "data_confidence": 0.78,
       "why": [
-        "Dense nightlife scene",
-        "Plenty to do as a group",
-        "Low daily spend (~₹2800/person/day)",
-        "World-class party scene"
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 92/100)",
+        "Quick transfer from the gateway airport (~0.4 h)"
+      ],
+      "caution": [],
+      "physical_fit_0_10": 8.4,
+      "experience_fit": 1,
+      "experience_fit_axes": [
+        "honeymoon"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+romantic",
+        "+photogenic"
+      ]
+    },
+    {
+      "entity_id": "act:AE:AUH:louvre-abu-dhabi",
+      "name": "Louvre Abu Dhabi",
+      "score_0_10": 8.9,
+      "city": "Abu Dhabi",
+      "category": "culture",
+      "duration_hours": 3,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.85,
+      "why": [
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 93/100)",
+        "Strong value for money"
+      ],
+      "caution": [],
+      "physical_fit_0_10": 8.2,
+      "experience_fit": 1,
+      "experience_fit_axes": [
+        "honeymoon"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+quiet",
+        "+photogenic"
+      ]
+    },
+    {
+      "entity_id": "act:AE:AUH:qasr-al-watan",
+      "name": "Qasr Al Watan (Presidential Palace)",
+      "score_0_10": 8.9,
+      "city": "Abu Dhabi",
+      "category": "heritage",
+      "duration_hours": 2.5,
+      "cost_band": "$$",
+      "pace": "Very Easy",
+      "best_time": "flexible",
+      "weather_dependency": "low",
+      "data_confidence": 0.8,
+      "why": [
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 93/100)",
+        "Quick transfer from the gateway airport (~0.5 h)"
+      ],
+      "caution": [],
+      "physical_fit_0_10": 8.2,
+      "experience_fit": 1,
+      "experience_fit_axes": [
+        "honeymoon"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+quiet",
+        "+photogenic"
+      ]
+    },
+    {
+      "entity_id": "act:AE:AUH:corniche-beach",
+      "name": "Corniche Beach",
+      "score_0_10": 8.8,
+      "city": "Abu Dhabi",
+      "category": "beach",
+      "duration_hours": 3,
+      "cost_band": "$",
+      "pace": "Very Easy",
+      "best_time": "evening",
+      "weather_dependency": "high",
+      "data_confidence": 0.82,
+      "why": [
+        "Excellent spa and wellness options",
+        "Strong value for money",
+        "Extremely photogenic",
+        "Strong general safety record (safety index 93/100)"
+      ],
+      "caution": [],
+      "physical_fit_0_10": 8,
+      "experience_fit": 1,
+      "experience_fit_axes": [
+        "honeymoon"
+      ],
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+quiet",
+        "+calm_beach"
+      ]
+    },
+    {
+      "entity_id": "act:AE:DXB:desert-safari",
+      "name": "Red Dune Desert Safari with BBQ Camp",
+      "score_0_10": 8,
+      "city": "Dubai",
+      "category": "desert",
+      "duration_hours": 6,
+      "cost_band": "$$$",
+      "pace": "Moderate",
+      "best_time": "evening",
+      "weather_dependency": "high",
+      "data_confidence": 0.8,
+      "why": [
+        "Extremely photogenic",
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 92/100)",
+        "Quick transfer from the gateway airport (~0.4 h)"
       ],
       "caution": [
-        "Expensive drinks (~₹950 a beer)"
+        "Heavily crowded (65/100 crowd pressure)"
       ],
       "physical_fit_0_10": 8,
-      "experience_fit": 0.6,
+      "experience_fit": 0.8,
       "experience_fit_axes": [
-        "friends"
+        "honeymoon"
       ],
-      "experience_fit_binding": "friends",
+      "experience_fit_binding": "honeymoon",
       "fit_reason": [
-        "-romantic"
+        "+photogenic"
       ]
     },
     {
       "entity_id": "act:AE:DXB:museum-of-the-future",
       "name": "Museum of the Future",
-      "score_0_10": 7.2,
+      "score_0_10": 7.6,
       "city": "Dubai",
       "category": "culture",
       "duration_hours": 3,
@@ -219,57 +322,58 @@
       "weather_dependency": "low",
       "data_confidence": 0.82,
       "why": [
-        "Dense nightlife scene",
-        "Low daily spend (~₹3600/person/day)",
         "Extremely photogenic",
-        "World-class party scene"
+        "Excellent spa and wellness options",
+        "Strong general safety record (safety index 92/100)",
+        "Quick transfer from the gateway airport (~0.4 h)"
       ],
       "caution": [
-        "Expensive drinks (~₹950 a beer)"
+        "Caution: Heavily overtouristed — hard to get quiet time as a couple",
+        "Heavily crowded (78/100 crowd pressure)"
       ],
-      "physical_fit_0_10": 7.4,
-      "experience_fit": 0.7,
+      "physical_fit_0_10": 7.3,
+      "experience_fit": 0.8,
       "experience_fit_axes": [
-        "friends"
+        "honeymoon"
       ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
-    },
-    {
-      "entity_id": "act:AE:DXB:burj-khalifa",
-      "name": "Burj Khalifa — At the Top",
-      "score_0_10": 7.2,
-      "city": "Dubai",
-      "category": "scenic",
-      "duration_hours": 2,
-      "cost_band": "$$$",
-      "pace": "Very Easy",
-      "best_time": "evening",
-      "weather_dependency": "low",
-      "data_confidence": 0.85,
-      "why": [
-        "Dense nightlife scene",
-        "Low daily spend (~₹3800/person/day)",
-        "Extremely photogenic",
-        "World-class party scene"
-      ],
-      "caution": [
-        "Expensive drinks (~₹950 a beer)"
-      ],
-      "physical_fit_0_10": 7.4,
-      "experience_fit": 0.7,
-      "experience_fit_axes": [
-        "friends"
-      ],
-      "experience_fit_binding": "friends",
-      "fit_reason": []
+      "experience_fit_binding": "honeymoon",
+      "fit_reason": [
+        "+photogenic"
+      ]
     }
   ],
   "excluded_options": [],
   "eligible_totals": {
-    "cities": null,
-    "activities": 8
+    "cities": 4,
+    "activities": 14
   },
-  "shortlist_rationale": "Activities are drawn only from the recommended cities (Dubai), so the two lists stay coherent for itinerary planning. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 21 for 7 day(s) (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona.",
-  "destination_strategy": null
+  "shortlist_rationale": "Activities are drawn only from the recommended cities (Dubai, Abu Dhabi, Ras Al Khaimah, Sharjah), so the two lists stay coherent for itinerary planning. City ranking blends ambient fit (50%) with the strength of each city's own activity lineup for this persona (50%) — so an activity-rich city (e.g. Bangkok for a couple) can earn a place even if the location itself scores only mid on ambient qualities; see city_score_0_10 vs activity_strength_0_10 on each city. Shortlist sized to trip need, not catalogue size: activities kept within 1.5 pts of the top score (min 6.5/10) and capped at 15 for an unspecified duration (~3/day); cities capped at 5. Fewer are returned when fewer genuinely fit the persona.",
+  "destination_strategy": {
+    "majority_persona": "couple",
+    "constraint_personas": [],
+    "special_personas": [],
+    "candidate_cities": [
+      {
+        "city": "Dubai",
+        "reason": "Rich, varied lineup — 8 strong activities across 6 categories"
+      },
+      {
+        "city": "Abu Dhabi",
+        "reason": "Extremely photogenic"
+      },
+      {
+        "city": "Ras Al Khaimah",
+        "reason": "Extremely photogenic"
+      },
+      {
+        "city": "Sharjah",
+        "reason": "Extremely photogenic"
+      }
+    ],
+    "itinerary_route": [
+      "Dubai",
+      "Abu Dhabi"
+    ],
+    "rejected_routes": []
+  }
 }

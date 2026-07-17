@@ -1,31 +1,32 @@
 {
   "brief": {
-    "destination": "Thailand",
+    "destination": "Thailand — Bangkok",
     "group": {
-      "adults": 5
+      "adults": 2
     },
-    "majority": "friends_trip",
-    "constraints": [
-      "pregnancy_friendly"
-    ],
-    "special_moments_for": [
-      "honeymoon"
-    ],
+    "majority": "couple",
     "pace": "relaxed",
-    "safety_priority": "high",
     "needs_confirmation": [
-      "which city",
       "travel duration not specified",
       "travel dates",
       "budget"
     ]
   },
   "selected_route": [
-    "Phuket",
     "Bangkok"
   ],
   "selected_activities": {
     "Bangkok": [
+      {
+        "name": "Chao Phraya dinner cruise",
+        "style": "dining",
+        "hrs": 2.5
+      },
+      {
+        "name": "Wat Pho Reclining Buddha + traditional Thai massage",
+        "style": "heritage_wellness",
+        "hrs": 2.5
+      },
       {
         "name": "Jim Thompson House & silk museum",
         "style": "heritage",
@@ -37,37 +38,29 @@
         "hrs": 3
       },
       {
-        "name": "Sea Life Bangkok Ocean World",
-        "style": "indoor_attraction",
-        "hrs": 2.5
-      },
-      {
-        "name": "Chao Phraya dinner cruise",
-        "style": "dining",
-        "hrs": 2.5,
-        "moment_for": "honeymoon"
-      }
-    ],
-    "Phuket": [
-      {
-        "name": "Trickeye 3D Museum",
-        "style": "culture",
+        "name": "Wat Arun at golden hour",
+        "style": "heritage",
         "hrs": 2
       },
       {
-        "name": "Phuket Old Town Sino-Portuguese walk",
-        "style": "culture",
+        "name": "Asiatique The Riverfront night market",
+        "style": "shopping",
         "hrs": 3
       },
       {
-        "name": "Carnival Magic / FantaSea evening show",
-        "style": "show",
-        "hrs": 4
+        "name": "Sky-bar rooftop night (Lebua / Vertigo class)",
+        "style": "nightlife",
+        "hrs": 3
       },
       {
-        "name": "Simon Cabaret show",
-        "style": "show",
-        "hrs": 1.5
+        "name": "Muay Thai at Rajadamnern Stadium",
+        "style": "sport",
+        "hrs": 3
+      },
+      {
+        "name": "Chinatown street-food tuk-tuk night tour",
+        "style": "food",
+        "hrs": 4
       }
     ]
   },
@@ -84,16 +77,6 @@
     "beach": false,
     "thai_food": true,
     "market": true,
-    "iconic": false
-  },
-  "avoid": [
-    {
-      "what": "Koh Phi Phi, Koh Phangan, Koh Tao, Pai",
-      "why": "No reliable obstetric care within reach"
-    },
-    {
-      "what": "Khao San Road bar crawl, Bangla Road, Patong, Phi Phi + Maya Bay speedboat day trip, Patong parasailing + jet-ski",
-      "why": "Activity is contraindicated in pregnancy"
-    }
-  ]
+    "iconic": true
+  }
 }

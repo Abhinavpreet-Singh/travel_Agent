@@ -112,6 +112,31 @@ export function loadCountryCatalog(country) {
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const mentions = (text, term) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(term)}(?![\\p{L}\\p{N}])`, 'iu').test(text);
 
+/**
+ * Resolve an EXPLICIT country VALUE — a `brief.country` field, a `--country=`
+ * flag — to a registered slug. Exact (trimmed, case-insensitive) match against
+ * the slug, the country's name, or one of its aliases.
+ *
+ * Deliberately exact, unlike resolveCountry() below: a field someone filled in
+ * is a statement, not prose to infer from. "uae" / "United Arab Emirates" /
+ * "U.A.E." resolve; "somewhere near the UAE" does not, and the caller is told so
+ * rather than being handed a guess.
+ *
+ * @returns {string | null} the country slug, or null if nothing matches
+ */
+export function matchCountryValue(value) {
+  if (!value || !String(value).trim()) return null;
+  const q = String(value).trim().toLowerCase();
+  for (const slug of listCountries()) {
+    if (slug.toLowerCase() === q) return slug;
+    const country = loadCountryCatalog(slug).country;
+    for (const term of [country.name, ...(country.aliases ?? [])]) {
+      if (term && term.toLowerCase() === q) return slug;
+    }
+  }
+  return null;
+}
+
 /** Every name a city answers to: "Krabi (Ao Nang / Railay)" -> Krabi, Ao Nang, Railay. */
 function cityAliases(city) {
   const names = [];
@@ -123,7 +148,10 @@ function cityAliases(city) {
 }
 
 /**
- * Which country is this query about?
+ * Which country is this query about, INFERRED FROM FREE TEXT? The weakest of the
+ * country signals and therefore the last one tried — see
+ * resolveCountryForQuery() in cli.js for the full priority order, and
+ * matchCountryValue() above for the explicit-field path.
  *
  * Two ways in, in priority order:
  *   1. The country is NAMED — "trip to thailand", "a week in the UAE" (name or

@@ -386,13 +386,16 @@ const BUDGET_RE = /(₹\s?[\d,]+(?:\.\d+)?\s?(?:l|lakh|lakhs|k)?|(?:rs\.?|inr)\s
  *
  * `countryName` only LABELS the brief ("UAE friends trip" vs "Thailand friends
  * trip"); it is never itself a persona signal — no persona pattern matches a
- * country name, so the same text derives the same personas in any country.
+ * country name, so the same text derives the same personas in any country. It
+ * defaults to NULL, not to a country: an unresolved query produces a "friends
+ * trip" brief, never a "Thailand friends trip" brief for a traveller who never
+ * said Thailand (see cli.js::resolveCountryForQuery).
  */
-export function parseFreeTextToBrief(text = '', countryName = 'Thailand') {
+export function parseFreeTextToBrief(text = '', countryName = null) {
   const roster = parseGroupComposition(text);
 
   const tripTypes = TRIP_TYPE_LABELS.filter(([, re]) => matchesPositively(text, re)).map(([label]) => label);
-  const destinationType = tripTypes.length ? `${countryName} ${tripTypes.join(' + ')} trip` : `${countryName} trip`;
+  const destinationType = `${[countryName, tripTypes.join(' + ')].filter(Boolean).join(' ')} trip`.trim();
 
   const dateMatch = text.match(DATE_RANGE_RE) ?? text.match(DATE_SINGLE_RE);
 

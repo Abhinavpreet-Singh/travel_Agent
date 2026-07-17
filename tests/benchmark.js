@@ -33,8 +33,53 @@ function runCase(tc) {
   const checks = [];
   const check = (cond, label, detail = '') => checks.push({ ok: !!cond, label, detail });
 
-  if (e.country) check(ranked.country === e.country, `country resolves to "${e.country}"`, `got "${ranked.country}"`);
+  // `e.country: null` is a real, asserted expectation (the engine must NOT
+  // resolve a country), so this tests for the key's presence — a truthiness
+  // check would silently skip exactly the case that matters most.
+  if ('country' in e) check(ranked.country === e.country, `country resolves to ${JSON.stringify(e.country)}`, `got ${JSON.stringify(ranked.country)}`);
   if (e.countryVia) check(recipe.country_resolution?.via === e.countryVia, `country resolved via ${e.countryVia}`, `got "${recipe.country_resolution?.via}"`);
+
+  // Round 23: an unresolved country must ASK, not guess. The question has to
+  // reach the documents that leave the engine (planner + context), not just sit
+  // in the audit trail — and nothing may be planned in the meantime.
+  if (e.needsConfirmation) {
+    for (const want of e.needsConfirmation) {
+      for (const [doc, list] of [
+        ['planner', planner?.brief?.needs_confirmation],
+        ['context', context?.trip_profile?.needs_confirmation],
+        ['ranked', ranked.needs_confirmation],
+      ]) {
+        check((list ?? []).includes(want), `${doc} needs_confirmation includes "${want}"`, `got ${JSON.stringify(list ?? null)}`);
+      }
+    }
+  }
+  if (e.needsConfirmationNotIncluding)
+    for (const unwanted of e.needsConfirmationNotIncluding)
+      check(
+        !(planner?.brief?.needs_confirmation ?? []).includes(unwanted),
+        `needs_confirmation does NOT ask "${unwanted}"`,
+        `got ${JSON.stringify(planner?.brief?.needs_confirmation ?? null)}`
+      );
+  if (e.resolvedCity)
+    check(
+      (recipe.resolved_city?.name ?? '').toLowerCase().includes(e.resolvedCity.toLowerCase()),
+      `resolved city is "${e.resolvedCity}"`,
+      `got ${JSON.stringify(recipe.resolved_city?.name ?? null)}`
+    );
+  if (e.needsConfirmationFirst)
+    check(
+      planner?.brief?.needs_confirmation?.[0] === e.needsConfirmationFirst,
+      `needs_confirmation leads with "${e.needsConfirmationFirst}"`,
+      `got ${JSON.stringify(planner?.brief?.needs_confirmation ?? null)}`
+    );
+  if (e.nothingPlanned) {
+    const route = ranked.itinerary_route ?? [];
+    const acts = ranked.recommended_activities ?? [];
+    const cities = ranked.recommended_cities ?? [];
+    check(route.length === 0 && acts.length === 0 && cities.length === 0, 'nothing ranked', `route ${JSON.stringify(route)}, ${cities.length} cities, ${acts.length} activities`);
+    check(Object.keys(planner?.selected_activities ?? {}).length === 0, 'planner offers no activities', `got ${JSON.stringify(Object.keys(planner?.selected_activities ?? {}))}`);
+    check(planner?.brief?.destination === null, 'planner brief.destination is null', `got ${JSON.stringify(planner?.brief?.destination)}`);
+  }
 
   // COUNTRY CATALOG ISOLATION: no entity from another country's catalog may
   // appear ANYWHERE in the output — not in the ranked lists, not in a route, not

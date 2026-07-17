@@ -1,276 +1,200 @@
 {
-  "query": "We are a group of 5 friends in Thailand and one couple is on their honeymoon and the wife is pregnant",
+  "query": "trip to bangkok with my girlfriend",
   "trip_profile": {
-    "destination": "Thailand",
+    "destination": "Thailand — Bangkok",
     "group": {
-      "adults": 5
+      "adults": 2
     },
     "personas": [
-      "honeymoon",
-      "pregnancy_friendly",
-      "friends_trip"
+      "couple"
     ],
     "persona_roles": {
-      "majority": "friends_trip",
-      "constraints": [
-        "pregnancy_friendly"
-      ],
-      "special": [
-        "honeymoon"
-      ]
+      "majority": "couple",
+      "constraints": [],
+      "special": []
     },
     "pace": "relaxed",
-    "safety_priority": "high",
+    "safety_priority": "normal",
     "mobility_requirement": "normal",
     "needs_confirmation": [
-      "which city",
       "travel duration not specified",
       "travel dates",
       "budget"
     ]
   },
-  "destination_strategy": {
-    "majority_persona": "friends_trip",
-    "constraint_personas": [
-      "pregnancy_friendly"
-    ],
-    "special_personas": [
-      "honeymoon"
-    ],
-    "candidate_cities": [
-      {
-        "city": "Phuket",
-        "reason": "Rich, varied lineup — 13 strong activities across 9 categories"
-      },
-      {
-        "city": "Bangkok",
-        "reason": "Rich, varied lineup — 14 strong activities across 8 categories"
-      },
-      {
-        "city": "Pattaya",
-        "reason": "Rich, varied lineup — 10 strong activities across 7 categories"
-      },
-      {
-        "city": "Chiang Mai",
-        "reason": "Rich, varied lineup — 8 strong activities across 5 categories"
-      },
-      {
-        "city": "Koh Samui",
-        "reason": "Rich, varied lineup — 9 strong activities across 6 categories"
-      }
-    ],
-    "itinerary_route": [
-      "Phuket",
-      "Bangkok"
-    ],
-    "rejected_routes": [
-      {
-        "city": "Chiang Rai",
-        "reason": "underserves majority persona (friends_trip) — scores on the constraint blend, not friends_trip style"
-      },
-      {
-        "city": "Hua Hin",
-        "reason": "underserves majority persona (friends_trip) — scores on the constraint blend, not friends_trip style"
-      },
-      {
-        "city": "Krabi (Ao Nang / Railay)",
-        "reason": "underserves majority persona (friends_trip) — scores on the constraint blend, not friends_trip style"
-      }
-    ]
-  },
-  "city_ranking": [
-    {
-      "city": "Phuket",
-      "score": 77,
-      "activity_variety": 9,
-      "breakdown": {
-        "photogenic_quality": 88,
-        "group_activity_density": 88,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 90,
-        "safety_general": 68
-      }
-    },
-    {
-      "city": "Bangkok",
-      "score": 77,
-      "activity_variety": 8,
-      "breakdown": {
-        "photogenic_quality": 85,
-        "group_activity_density": 85,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 88,
-        "safety_general": 70
-      }
-    },
-    {
-      "city": "Pattaya",
-      "score": 75,
-      "activity_variety": 7,
-      "breakdown": {
-        "photogenic_quality": 55,
-        "group_activity_density": 88,
-        "food_hygiene": 60,
-        "wellness_spa_quality": 70,
-        "safety_general": 60
-      }
-    },
-    {
-      "city": "Chiang Mai",
-      "score": 71,
-      "activity_variety": 5,
-      "breakdown": {
-        "photogenic_quality": 88,
-        "group_activity_density": 78,
-        "food_hygiene": 70,
-        "wellness_spa_quality": 90,
-        "safety_general": 78
-      }
-    },
-    {
-      "city": "Koh Samui",
-      "score": 68,
-      "activity_variety": 6,
-      "breakdown": {
-        "photogenic_quality": 85,
-        "group_activity_density": 72,
-        "food_hygiene": 70,
-        "wellness_spa_quality": 92,
-        "safety_general": 74
-      }
-    }
-  ],
+  "city_ranking": [],
   "activity_ranking": [
+    {
+      "activity": "Chao Phraya dinner cruise",
+      "city": "Bangkok",
+      "score": 87,
+      "bucket_list_value": 70,
+      "style": "dining",
+      "physical_fit": 79,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+romantic",
+        "+photogenic"
+      ],
+      "duration_hours": 2.5,
+      "signals": {
+        "wellness_spa_quality": 88,
+        "photogenic_quality": 85,
+        "crowd_pressure_low": 45,
+        "weather_comfort": 55
+      }
+    },
+    {
+      "activity": "Wat Pho Reclining Buddha + traditional Thai massage",
+      "city": "Bangkok",
+      "score": 83,
+      "bucket_list_value": 85,
+      "style": "heritage_wellness",
+      "physical_fit": 72,
+      "experience_fit": 100,
+      "fit_reason": [
+        "+wellness",
+        "+slow_travel"
+      ],
+      "duration_hours": 2.5,
+      "signals": {
+        "photogenic_quality": 88,
+        "wellness_spa_quality": 85,
+        "crowd_pressure_low": 30,
+        "weather_comfort": 55
+      }
+    },
     {
       "activity": "Jim Thompson House & silk museum",
       "city": "Bangkok",
-      "score": 67,
+      "score": 76,
       "bucket_list_value": 60,
       "style": "heritage",
-      "physical_fit": 65,
-      "experience_fit": 70,
+      "physical_fit": 74,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
       "duration_hours": 1.5,
       "signals": {
+        "wellness_spa_quality": 88,
         "photogenic_quality": 85,
-        "group_activity_density": 85,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 88
+        "crowd_pressure_low": 50,
+        "weather_comfort": 55
       }
     },
     {
       "activity": "ICONSIAM & Chao Phraya river light show",
       "city": "Bangkok",
-      "score": 67,
+      "score": 76,
       "bucket_list_value": 78,
       "style": "shopping",
-      "physical_fit": 65,
-      "experience_fit": 70,
+      "physical_fit": 73,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
       "duration_hours": 3,
       "signals": {
         "photogenic_quality": 90,
-        "group_activity_density": 75,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 88
+        "wellness_spa_quality": 88,
+        "crowd_pressure_low": 30,
+        "weather_comfort": 55
       }
     },
     {
-      "activity": "Sea Life Bangkok Ocean World",
+      "activity": "Wat Arun at golden hour",
       "city": "Bangkok",
-      "score": 67,
-      "bucket_list_value": 15,
-      "style": "indoor_attraction",
-      "physical_fit": 65,
-      "experience_fit": 70,
-      "duration_hours": 2.5,
-      "signals": {
-        "photogenic_quality": 70,
-        "group_activity_density": 85,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 88
-      }
-    },
-    {
-      "activity": "Trickeye 3D Museum",
-      "city": "Phuket",
-      "score": 66,
-      "bucket_list_value": 55,
-      "style": "culture",
-      "physical_fit": 64,
-      "experience_fit": 70,
+      "score": 75,
+      "bucket_list_value": 95,
+      "style": "heritage",
+      "physical_fit": 71,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
       "duration_hours": 2,
       "signals": {
-        "photogenic_quality": 88,
-        "group_activity_density": 70,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 90
+        "photogenic_quality": 97,
+        "wellness_spa_quality": 88,
+        "crowd_pressure_low": 20,
+        "weather_comfort": 55
       }
     },
     {
-      "activity": "Phuket Old Town Sino-Portuguese walk",
-      "city": "Phuket",
-      "score": 66,
-      "bucket_list_value": 55,
-      "style": "culture",
-      "physical_fit": 64,
-      "experience_fit": 70,
+      "activity": "Asiatique The Riverfront night market",
+      "city": "Bangkok",
+      "score": 75,
+      "bucket_list_value": 20,
+      "style": "shopping",
+      "physical_fit": 71,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
       "duration_hours": 3,
       "signals": {
-        "photogenic_quality": 90,
-        "group_activity_density": 60,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 90
+        "wellness_spa_quality": 88,
+        "photogenic_quality": 80,
+        "crowd_pressure_low": 25,
+        "weather_comfort": 55
       }
     },
     {
-      "activity": "Carnival Magic / FantaSea evening show",
-      "city": "Phuket",
-      "score": 66,
-      "bucket_list_value": 40,
-      "style": "show",
-      "physical_fit": 64,
-      "experience_fit": 70,
+      "activity": "Sky-bar rooftop night (Lebua / Vertigo class)",
+      "city": "Bangkok",
+      "score": 75,
+      "bucket_list_value": 75,
+      "style": "nightlife",
+      "physical_fit": 69,
+      "experience_fit": 85,
+      "fit_reason": [
+        "override:sky-bar rooftop"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "photogenic_quality": 92,
+        "wellness_spa_quality": 40,
+        "crowd_pressure_low": 35,
+        "weather_comfort": 55
+      }
+    },
+    {
+      "activity": "Muay Thai at Rajadamnern Stadium",
+      "city": "Bangkok",
+      "score": 74,
+      "bucket_list_value": 65,
+      "style": "sport",
+      "physical_fit": 70,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
+      "duration_hours": 3,
+      "signals": {
+        "wellness_spa_quality": 88,
+        "photogenic_quality": 82,
+        "crowd_pressure_low": 30,
+        "weather_comfort": 55
+      }
+    },
+    {
+      "activity": "Chinatown street-food tuk-tuk night tour",
+      "city": "Bangkok",
+      "score": 74,
+      "bucket_list_value": 55,
+      "style": "food",
+      "physical_fit": 70,
+      "experience_fit": 80,
+      "fit_reason": [
+        "+photogenic"
+      ],
       "duration_hours": 4,
       "signals": {
-        "photogenic_quality": 78,
-        "group_activity_density": 78,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 90
-      }
-    },
-    {
-      "activity": "Simon Cabaret show",
-      "city": "Phuket",
-      "score": 65,
-      "bucket_list_value": 40,
-      "style": "show",
-      "physical_fit": 62,
-      "experience_fit": 70,
-      "duration_hours": 1.5,
-      "signals": {
-        "photogenic_quality": 72,
-        "group_activity_density": 78,
-        "food_hygiene": 65,
-        "wellness_spa_quality": 90
-      }
-    },
-    {
-      "activity": "Chao Phraya dinner cruise",
-      "city": "Bangkok",
-      "moment_for": "honeymoon",
-      "score": 71,
-      "bucket_list_value": 70,
-      "style": "dining",
-      "physical_fit": 79,
-      "experience_fit": 60,
-      "fit_reason": [
-        "-romantic"
-      ],
-      "duration_hours": 2.5,
-      "signals": {
-        "photogenic_quality": 85,
-        "group_activity_density": 80,
-        "food_hygiene": 78,
-        "wellness_spa_quality": 88
+        "photogenic_quality": 88,
+        "wellness_spa_quality": 88,
+        "crowd_pressure_low": 15,
+        "weather_comfort": 55
       }
     }
   ],
@@ -279,16 +203,6 @@
     "beach": false,
     "thai_food": true,
     "market": true,
-    "iconic": false
-  },
-  "avoid": [
-    {
-      "what": "Koh Phi Phi, Koh Phangan, Koh Tao, Pai",
-      "why": "No reliable obstetric care within reach"
-    },
-    {
-      "what": "Khao San Road bar crawl, Bangla Road, Patong, Phi Phi + Maya Bay speedboat day trip, Patong parasailing + jet-ski",
-      "why": "Activity is contraindicated in pregnancy"
-    }
-  ]
+    "iconic": true
+  }
 }
